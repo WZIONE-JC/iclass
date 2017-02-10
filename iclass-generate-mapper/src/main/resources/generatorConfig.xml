@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!--导入属性配置-->
+    <properties resource="generatorConfig.properties"></properties>
+
+    <!-- 指定mysql jar包位置 -->
+    <classPathEntry location="${jdbc.driverlocation}"/>
+
+    <!-- MyBatis3是默认值 -->
+    <context id="testTables" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <!-- 是否去掉自动生成的注释： true:是  false:否 -->
+            <property name="suppressAllComments" value="true"></property>
+        </commentGenerator>
+
+        <!-- 数据库连接的信息：驱动类，连接地址，用户名，密码 -->
+        <jdbcConnection driverClass="${jdbc.driverclass}"
+                        connectionURL="${jdbc.url}"
+                        userId="${jdbc.username}"
+                        password="${jdbc.password}">
+        </jdbcConnection>
+
+        <!-- 默认false,吧JDBC DECIMAL和NUMERIC类型解析为Integer，为true时，把JDBC DECIMAL和NUMERIC 类型解析为
+        java.math.BigDecimal -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"></property>
+        </javaTypeResolver>
+
+        <!-- targetProject:生成PO类的位置 -->
+        <javaModelGenerator targetPackage="com.iclass.user.mybatis.model" targetProject="src/main/java">
+            <!-- 是否允许子包，即targetPackage.schemaName.tableName -->
+            <property name="enableSubPackages" value="false"/>
+            <!-- 是否对model添加 构造函数 -->
+            <property name="constructorBased" value="true"/>
+            <!-- 是否对类CHAR类型的列的数据进行trim操作 -->
+            <property name="trimStrings" value="true"/>
+            <!-- 建立的Model对象是否 不可改变  即生成的Model对象不会有 setter方法，只有构造方法 -->
+            <property name="immutable" value="false"/>
+        </javaModelGenerator>
+
+        <!-- targetPorject:mapper映射文件生成的位置 -->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/java">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubpackages" value="false"></property>
+        </sqlMapGenerator>
+
+        <!-- targetPackage:mapper接口生成的位置 -->
+        <!-- 客户端代码，生成易于使用的针对Model对象和XML配置文件 的代码
+                type="ANNOTATEDMAPPER",生成Java Model 和基于注解的Mapper对象
+                type="MIXEDMAPPER",生成基于注解的Java Model 和相应的Mapper对象
+                type="XMLMAPPER",生成SQLMap XML文件和独立的Mapper接口
+        -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.iclass.user.mybatis.dao"
+                             targetProject="src/main/java">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubpackages" value="false"></property>
+        </javaClientGenerator>
+
+        <!-- 指定要生成的表 -->
+        <table tableName="admin"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table tableName="student"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table tableName="teacher"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table tableName="user"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+    </context>
+</generatorConfiguration>

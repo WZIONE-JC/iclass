@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.iclass.user.mybatis.dao.AdminMapper" >
+  <resultMap id="BaseResultMap" type="com.iclass.user.mybatis.model.Admin" >
+    <constructor >
+      <idArg column="UserID" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="UserName" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="FullName" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="UserPwd" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="Email" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="PhoneNumber" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    UserID, UserName, FullName, UserPwd, Email, PhoneNumber
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from admin
+    where UserID = #{userid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from admin
+    where UserID = #{userid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.iclass.user.mybatis.model.Admin" >
+    insert into admin (UserID, UserName, FullName, 
+      UserPwd, Email, PhoneNumber
+      )
+    values (#{userid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{fullname,jdbcType=VARCHAR}, 
+      #{userpwd,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{phonenumber,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.iclass.user.mybatis.model.Admin" >
+    insert into admin
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        UserID,
+      </if>
+      <if test="username != null" >
+        UserName,
+      </if>
+      <if test="fullname != null" >
+        FullName,
+      </if>
+      <if test="userpwd != null" >
+        UserPwd,
+      </if>
+      <if test="email != null" >
+        Email,
+      </if>
+      <if test="phonenumber != null" >
+        PhoneNumber,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="fullname != null" >
+        #{fullname,jdbcType=VARCHAR},
+      </if>
+      <if test="userpwd != null" >
+        #{userpwd,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phonenumber != null" >
+        #{phonenumber,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.iclass.user.mybatis.model.Admin" >
+    update admin
+    <set >
+      <if test="username != null" >
+        UserName = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="fullname != null" >
+        FullName = #{fullname,jdbcType=VARCHAR},
+      </if>
+      <if test="userpwd != null" >
+        UserPwd = #{userpwd,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        Email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phonenumber != null" >
+        PhoneNumber = #{phonenumber,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where UserID = #{userid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.iclass.user.mybatis.model.Admin" >
+    update admin
+    set UserName = #{username,jdbcType=VARCHAR},
+      FullName = #{fullname,jdbcType=VARCHAR},
+      UserPwd = #{userpwd,jdbcType=VARCHAR},
+      Email = #{email,jdbcType=VARCHAR},
+      PhoneNumber = #{phonenumber,jdbcType=VARCHAR}
+    where UserID = #{userid,jdbcType=INTEGER}
+  </update>
+</mapper>

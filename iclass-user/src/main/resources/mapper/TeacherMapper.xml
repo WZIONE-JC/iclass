@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.iclass.user.mybatis.dao.TeacherMapper" >
+  <resultMap id="BaseResultMap" type="com.iclass.user.mybatis.model.Teacher" >
+    <constructor >
+      <idArg column="TeacherID" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="TeacherCode" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="TeacherFullName" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="TeacherEmail" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="TeacherPhoneNumber" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    TeacherID, TeacherCode, TeacherFullName, TeacherEmail, TeacherPhoneNumber
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from teacher
+    where TeacherID = #{teacherid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from teacher
+    where TeacherID = #{teacherid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.iclass.user.mybatis.model.Teacher" >
+    insert into teacher (TeacherID, TeacherCode, TeacherFullName, 
+      TeacherEmail, TeacherPhoneNumber)
+    values (#{teacherid,jdbcType=INTEGER}, #{teachercode,jdbcType=VARCHAR}, #{teacherfullname,jdbcType=VARCHAR}, 
+      #{teacheremail,jdbcType=VARCHAR}, #{teacherphonenumber,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.iclass.user.mybatis.model.Teacher" >
+    insert into teacher
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="teacherid != null" >
+        TeacherID,
+      </if>
+      <if test="teachercode != null" >
+        TeacherCode,
+      </if>
+      <if test="teacherfullname != null" >
+        TeacherFullName,
+      </if>
+      <if test="teacheremail != null" >
+        TeacherEmail,
+      </if>
+      <if test="teacherphonenumber != null" >
+        TeacherPhoneNumber,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="teacherid != null" >
+        #{teacherid,jdbcType=INTEGER},
+      </if>
+      <if test="teachercode != null" >
+        #{teachercode,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherfullname != null" >
+        #{teacherfullname,jdbcType=VARCHAR},
+      </if>
+      <if test="teacheremail != null" >
+        #{teacheremail,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherphonenumber != null" >
+        #{teacherphonenumber,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.iclass.user.mybatis.model.Teacher" >
+    update teacher
+    <set >
+      <if test="teachercode != null" >
+        TeacherCode = #{teachercode,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherfullname != null" >
+        TeacherFullName = #{teacherfullname,jdbcType=VARCHAR},
+      </if>
+      <if test="teacheremail != null" >
+        TeacherEmail = #{teacheremail,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherphonenumber != null" >
+        TeacherPhoneNumber = #{teacherphonenumber,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where TeacherID = #{teacherid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.iclass.user.mybatis.model.Teacher" >
+    update teacher
+    set TeacherCode = #{teachercode,jdbcType=VARCHAR},
+      TeacherFullName = #{teacherfullname,jdbcType=VARCHAR},
+      TeacherEmail = #{teacheremail,jdbcType=VARCHAR},
+      TeacherPhoneNumber = #{teacherphonenumber,jdbcType=VARCHAR}
+    where TeacherID = #{teacherid,jdbcType=INTEGER}
+  </update>
+</mapper>
