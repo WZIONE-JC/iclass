@@ -1,7 +1,7 @@
 package com.iclass.user.service.impl;
 
 import com.iclass.user.mybatis.dao.UserMapper;
-import com.iclass.user.service.api.ValidateExist;
+import com.iclass.user.service.api.ValidateExistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
  * Created by yang.tang on 2017/2/10 14:29.
  */
 @Service
-public class ValidateExistImpl implements ValidateExist {
+public class ValidateExistServiceImpl implements ValidateExistService {
 
     /**
      * 用户mapper

@@ -20,8 +20,8 @@ public class VerificationCodeController {
     @Autowired
     VerificationCodeImpl verificationCode;
 
-    @RequestMapping("/generate")
-    public String generate(HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping(value = "/generate")
+    public String generate(HttpServletRequest request, HttpServletResponse response ) {
 
         verificationCode.genVerificationCode(request, response);
 

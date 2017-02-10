@@ -7,7 +7,7 @@ package com.iclass.user.service.api;
  *
  * 验证用户名和教职工号是否存在
  */
-public interface ValidateExist {
+public interface ValidateExistService {
 
     public Boolean isExistUsername(String username);
 

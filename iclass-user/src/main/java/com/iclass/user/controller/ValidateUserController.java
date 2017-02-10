@@ -2,7 +2,7 @@ package com.iclass.user.controller;
 
 import com.iclass.user.UserMsg.USERCODE;
 import com.iclass.user.UserMsg.UserMsg;
-import com.iclass.user.service.impl.ValidateExistImpl;
+import com.iclass.user.service.impl.ValidateExistServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ValidateUserController {
 
     @Autowired
-    private ValidateExistImpl validateIsExistImpl;
+    private ValidateExistServiceImpl validateIsExistImpl;
 
     @RequestMapping("/validateUsername/{username}")
     public UserMsg validateUsername(@PathVariable String username) {

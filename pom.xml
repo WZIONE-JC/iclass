@@ -10,7 +10,8 @@
 		<module>iclass-generate-mapper</module>
 		<module>iclass-user</module>
 		<module>iclass-verificationcode</module>
-	</modules>
+        <module>iclass-utils</module>
+    </modules>
 	<packaging>pom</packaging>
 
 	<name>iclass</name>
