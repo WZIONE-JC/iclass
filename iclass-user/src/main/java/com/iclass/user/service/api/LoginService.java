@@ -1,6 +1,6 @@
 package com.iclass.user.service.api;
 
-import javax.servlet.http.HttpServletRequest;
+import com.iclass.user.UserMsg.UserMsg;
 
 /**
  * iclass
@@ -11,7 +11,7 @@ public interface LoginService {
 
     public String getMD5Password(String password);
 
-    public boolean login(String username, String password);
+    public UserMsg login(String username, String pwd, String code);
 
-    public boolean validateVerificationCode(HttpServletRequest request, String code);
+    public boolean validateVerificationCode(String code);
 }

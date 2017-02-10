@@ -33,6 +33,12 @@
     from USER
     where usercode = #{usercode,jdbcType=VARCHAR}
   </select>
+  <select id="findByUsernameAndPassword" parameterType="java.lang.String" resultType="java.lang.String">
+    select
+    username
+    from USER
+    where username = #{username} and userpwd= #{password}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from user
     where UserID = #{userid,jdbcType=INTEGER}

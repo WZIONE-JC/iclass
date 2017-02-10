@@ -1,6 +1,7 @@
 package com.iclass.user.mybatis.dao;
 
 import com.iclass.user.mybatis.model.User;
+import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper {
     int deleteByPrimaryKey(Integer userid);
@@ -18,4 +19,6 @@ public interface UserMapper {
     String findByUsername(String username);
 
     String findByUsercode(String usercode);
+
+    String findByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
 }

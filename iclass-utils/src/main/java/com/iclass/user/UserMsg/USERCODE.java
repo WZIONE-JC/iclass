@@ -7,7 +7,7 @@ package com.iclass.user.UserMsg;
  */
 public enum USERCODE {
 
-    EXIST("1001"),NOEXIST("1002"),LOGINSUCCESS("1003"),LOGINFAILED("1004");
+    EXIST("1001"),NOEXIST("1002"),LOGINSUCCESS("1003"),LOGINFAILED("1004"),CODEERROR("1005");
 
     String value;
     String desc;

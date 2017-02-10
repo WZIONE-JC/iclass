@@ -1,6 +1,9 @@
 package com.iclass.user.controller;
 
 import com.iclass.user.UserMsg.UserMsg;
+import com.iclass.user.service.impl.LoginServiceImpl;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,9 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class LoginController {
 
+    @Autowired
+    private LoginServiceImpl loginService;
+
     @RequestMapping("/login")
-    public UserMsg login(String username, String password, String code) {
-        UserMsg userMsg = null;
+    public UserMsg login(@Param("username") String username,
+                         @Param("password")String password, String code) {
+        UserMsg userMsg = loginService.login(username, password, code);
         return userMsg;
     }
 }
