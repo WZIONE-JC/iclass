@@ -5,18 +5,20 @@ package com.iclass.user.UserMsg;
  * <p>
  * Created by yang.tang on 2017/2/10 19:03.
  */
-public enum USERCODE {
+public enum UserCode {
 
-    EXIST("1001"),NOEXIST("1002"),LOGINSUCCESS("1003"),LOGINFAILED("1004"),CODEERROR("1005");
+    USERNAMEEXISTED("1001"),USERCODEEXISTED("1002"),USERNAMECANUSE("1003"),USERCODECANUSE("1004"),
+    LOGINSUCCESS("2001"),LOGINFAILED("2002"),SIGNUPSUCCESS("2003"),SIGNUPFAILED("2004"),
+    CODECORRECT("3001"),CODENOTNULL("3002"),CODEERROR("3003");
 
     String value;
     String desc;
 
-    USERCODE(String value) {
+    UserCode(String value) {
         this.value = value;
     }
 
-    USERCODE(String value, String desc) {
+    UserCode(String value, String desc) {
         this.value = value;
         this.desc = desc;
     }

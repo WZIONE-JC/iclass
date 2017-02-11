@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <title>iClass 后台管理系统</title>
+    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"
+    />
+    <link href="assets/login/css/main.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/login/css/plugins.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/login/css/responsive.css" rel="stylesheet" type="text/css"
+    />
+    <link href="assets/login/css/icons.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/login/css/login.css" rel="stylesheet" type="text/css"/>
+     <link href="lib/sweet-alert/sweet-alert.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="assets/login/css/fontawesome/font-awesome.min.css">
+    <!--[if IE 7]>
+    <link rel="stylesheet" href="assets/login/css/fontawesome/font-awesome-ie7.min.css">
+    <![endif]-->
+    <!--[if IE 8]>
+    <link href="assets/login/css/ie8.css" rel="stylesheet" type="text/css"/>
+    <![endif]-->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700'
+          rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
+
+
+    <script type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js">
+    </script>
+    <!--[if lt IE 9]>
+    <script src="assets/login/js/libs/html5shiv.js">
+    </script>
+    <![endif]-->
+
+    <script>
+        $(document).ready(function () {
+            Login.init()
+        });
+    </script>
+</head>
+
+<body class="login">
+<div class="logo">
+    <img src="assets/login/img/logo.png" alt="logo"/>
+    <strong>
+        iClass 智能课堂助手
+    </strong>Admin
+</div>
+<div class="box">
+    <div class="content">
+        <form class="form-vertical login-form">
+            <h3 class="form-title">
+                	登录
+            </h3>
+            <div class="alert fade in alert-danger" style="display: none;">
+                <i class="icon-remove close" data-dismiss="alert">
+                </i>
+                <span id="msg"></span>
+            </div>
+            <div class="form-group">
+                <div class="input-icon">
+                    <i class="icon-user-md">
+                    </i>
+                    <select name="rolename" class="form-control innerSelect">
+                        <option value="教师">教师</option>
+                        <option value="管理员">管理员</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-icon">
+                    <i class="icon-user">
+                    </i>
+                    <input type="text" id="username" name="username" class="form-control" placeholder="用户名/教工号"
+                           maxlength="16" autofocus="autofocus" data-rule-required="true" data-rule-minlength="2" data-msg-required="请输入用户名/教工号."
+                    />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-icon">
+                    <i class="icon-lock">
+                    </i>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="密码"
+                           maxlength="16" data-rule-required="true" data-rule-minlength="6" data-msg-required="请输入密码."
+                    />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-icon">
+                    <i class="icon-picture">
+                    </i>
+                    <img class="form-control imgPicCode" id="imgcode" title="刷新" src="http://localhost:8080/iclass/VerificationCode/generate"/>
+                    <input type="text" id="checkCode" name="code" class="form-control inputPicCode"
+                           placeholder="验证码"
+                           maxlength="4" data-rule-required="true" data-rule-minlength="4" data-msg-required="请输入验证码."/>
+                </div>
+            </div>
+            <div class="form-actions">
+                <label class="checkbox pull-left">
+                    <input type="checkbox" class="uniform" name="remember">
+                    	记住密码
+                </label>
+                <button type="submit" class="submit btn btn-primary pull-right">
+                   	 登录
+                    <i class="icon-angle-right">
+                    </i>
+                </button>
+            </div>
+        </form>
+			<form class="form-vertical register-form" style="display: none;">
+				<h3 class="form-title">免费注册</h3>
+				<div class="alert fade in alert-msg" style="display: none;">
+					<!--<i class="icon-remove close" data-dismiss="alert"> </i> -->
+					<span id="reg_msg"></span>
+				</div>
+				<input type="hidden" name="roleName" value="教师" />
+				<div class="form-group">
+					<div class="input-icon">
+						<i class="icon-barcode"> </i> <input type="text"
+							id="register_userCode" name="register_userCode"
+							class="form-control" placeholder="教工号" autofocus="autofocus"
+							 data-rule-required="true" data-rule-minlength="6" data-rule-digits="true" data-msg-required="请输入教工号." />
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="input-icon">
+						<i class="icon-user"> </i> <input type="text"
+							id="register_username" name="register_username" class="form-control"
+							placeholder="用户名" autofocus="autofocus" data-rule-required="true"
+							data-rule-minlength="2" data-msg-required="请输入用户名." />
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="input-icon">
+						<i class="icon-lock"> </i> <input type="password"
+							id="register_password" name="register_password"
+							class="form-control" placeholder="密码" id="register_password"
+							data-rule-minlength="6" data-rule-required="true" data-msg-required="请输入密码." />
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="input-icon">
+						<i class="icon-ok"> </i> <input type="password"
+							id="register_password_confirm" name="register_password_confirm"
+							class="form-control" placeholder="确认密码" data-rule-required="true"
+							data-rule-equalTo="#register_password" data-msg-required="请输入密码." />
+					</div>
+				</div>
+				<h3 class="form-title">个人信息</h3>
+				<div class="form-group">
+					<div class="input-icon">
+						<i class="icon-list-alt"> </i> <input type="text"
+							id="register_userFullName" name="register_userFullName"
+							class="form-control" placeholder="真实姓名" data-rule-required="true"
+							data-rule-minlength="2" data-msg-required="请输入真实姓名." />
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="input-icon">
+						<i class="icon-circle-blank"> </i> <select id="register_userSex"
+							name="register_userSex" class="form-control innerSelect"
+							data-rule-required="true" data-msg-required="请选择性别.">
+							<option value="">选择性别</option>
+							<option value="男">男</option>
+							<option value="女">女</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="input-icon">
+						<i class="icon-calendar"> </i> <input id="register_userBirth"
+							name="register_userBirth" placeholder="出生日期"
+							onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',skin:'twoer',maxDate: '%y-%M-%d'})"
+							id="userBirth" class="form-control input-text Wdate"
+							data-rule-required="true" data-rule-date="true"
+							data-msg-required="请选择出生日期.">
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="input-icon">
+						<i class="icon-envelope"> </i> <input type="text"
+							id="register_userEmail" name="register_userEmail"
+							class="form-control" placeholder="邮箱" data-rule-required="true"
+							data-rule-email="true" data-msg-required="请输入邮箱." />
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="input-icon">
+						<i class="icon-mobile-phone"> </i> <input type="text"
+							id="register_userPhoneNum" name="register_userPhoneNum"
+							class="form-control" placeholder="手机号" maxlength="11" data-rule-required="true"
+							data-rule-digits="true" data-rule-minlength="6" data-rule-maxLength="11" 
+							data-rule-phoneNL="true" data-msg-required="请输入手机号." />
+					</div>
+				</div>
+				<!--<div class="form-group spacing-top">
+               <label class="checkbox">
+              <input type="checkbox" class="uniform" name="remember" data-rule-required="true"
+                 data-msg-required="Please accept ToS first.">
+                 I agree to the
+                 <a href="javascript:void(0);">
+                   Terms of Service
+                 </a>
+               </label>
+               <label for="remember" class="has-error help-block" generated="true" style="display:none;">
+               </label>
+             </div>-->
+				<div class="form-actions">
+					<button type="button" class="back btn btn-default pull-left">
+						<i class="icon-angle-left"> </i> 返回
+					</button>
+					<button type="submit" class="submit btn btn-primary pull-right">
+						注册 <i class="icon-angle-right"> </i>
+					</button>
+				</div>
+			</form>
+		</div>
+    <div class="inner-box">
+        <div class="content">
+            <i class="icon-remove hide-default close">
+            </i>
+            <a href="#" class="forgot-password-link">
+                	忘记密码?
+            </a>
+            <form class="form-vertical forgot-password-form hide-default">
+                <div class="form-group">
+                    <div class="input-icon">
+                        <i class="icon-envelope">
+                        </i>
+                        <input type="text" name="email" class="form-control" placeholder="输入邮箱地址"
+                               data-rule-required="true" data-rule-email="true" data-msg-required="请输入邮箱."
+                        />
+                    </div>
+                </div>
+                <button type="submit" class="submit btn btn-default btn-block">
+                  	  重置密码
+                </button>
+            </form>
+            <div class="forgot-password-done hide-default">
+                <i class="icon-ok success-icon">
+                </i>
+                <span>
+             	我们已经发送邮件到您的邮箱了!<hr>
+                    <span class="notreceived">没收到邮件?
+                        <a href="#">
+                            <span id="resend" class="resend">30</span>
+                        </a>
+                        <span id="sendlaterword">之后重新发送</span>
+                    </span>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<div class="single-sign-on">
+  <span>
+    or
+  </span>
+  <button class="btn btn-facebook btn-block">
+    <i class="icon-facebook">
+    </i>
+    Sign in with Facebook
+  </button>
+  <button class="btn btn-twitter btn-block">
+    <i class="icon-twitter">
+    </i>
+    Sign in with Twitter
+  </button>
+  <button class="btn btn-google-plus btn-block">
+    <i class="icon-google-plus">
+    </i>
+    Sign in with Google
+  </button>
+</div>-->
+<div class="footer">
+    <span class="sign-up">还没有账号？</span>
+    <a href="#" class="sign-up">
+        <span class="underline">免费注册</span>
+    </a>
+</div>
+<script type="text/javascript" src="assets/login/plugins/uniform/jquery.uniform.min.js">
+</script>
+<script type="text/javascript" src="assets/login/plugins/validation/jquery.validate.min.js">
+</script>
+<script type="text/javascript" src="assets/login/plugins/validation/additional-methods.min.js">
+</script>
+<!--jquery验证控件中文支持-->
+<script src="assets/login/plugins/validation/messages_zh.min.js">
+</script>
+<script type="text/javascript" src="lib/My97DatePicker/WdatePicker.js">
+</script>
+<script type="text/javascript" src="assets/login/plugins/nprogress/nprogress.js">
+</script>
+<script type="text/javascript" src="assets/login/js/login.js">
+</script>
+<script type="text/javascript" src="lib/sweet-alert/sweet-alert.min.js">
+</script>
+</body>
+</html>

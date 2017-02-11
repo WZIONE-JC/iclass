@@ -15,14 +15,14 @@ public class UserMsg {
 
     public UserMsg() {}
 
-    public UserMsg(USERCODE code, String msg) {
+    public UserMsg(UserCode code, UserException msg) {
         this.code = code.getValue();
-        this.msg = msg;
+        this.msg = msg.getDesc();
     }
 
-    public UserMsg(USERCODE code, String msg, String data) {
+    public UserMsg(UserCode code, UserException msg, String data) {
         this.code = code.getValue();
-        this.msg = msg;
+        this.msg = msg.getDesc();
         this.data = data;
     }
 
@@ -30,7 +30,7 @@ public class UserMsg {
         return code;
     }
 
-    public void setCode(USERCODE code) {
+    public void setCode(UserCode code) {
         this.code = code.getValue();
     }
 
@@ -38,8 +38,8 @@ public class UserMsg {
         return msg;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setMsg(UserException msg) {
+        this.msg = msg.getDesc();
     }
 
     public String getData() {

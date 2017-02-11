@@ -21,4 +21,6 @@ public interface UserMapper {
     String findByUsercode(String usercode);
 
     String findByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
+
+    String findByUsercodeAndPassword(@Param("usercode") String usercode, @Param("password") String password);
 }

@@ -35,9 +35,15 @@
   </select>
   <select id="findByUsernameAndPassword" parameterType="java.lang.String" resultType="java.lang.String">
     select
-    username
+    userattributes
     from USER
-    where username = #{username} and userpwd= #{password}
+    where username = #{username} and userpwd = #{password}
+  </select>
+  <select id="findByUsercodeAndPassword" parameterType="String" resultType="String">
+    select
+    userattributes
+    from USER
+    where usercode = #{usercode} and userpwd = #{password}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from user
