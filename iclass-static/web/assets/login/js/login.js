@@ -11,9 +11,9 @@ var Login = function () {
             $(".login-form").slideUp(350, function () {
                 $(".register-form").slideDown(350);
                 $(".sign-up").hide();
-               /* $(".forgot-password-done").hide();*/
-                 $(".forgot-password-form").show();
-                 $(".forgot-password-link").show();
+                $(".forgot-password-done").hide();
+                 // $(".forgot-password-form").show();
+                $(".forgot-password-link").hide();
             })
         });
         //返回 事件
@@ -139,56 +139,7 @@ var Login = function () {
             })
         }
     };
-    //重置密码
-    var f = function () {
-        if ($.validator) {
-            $(".forgot-password-form").validate({
-                //重置按钮提交
-                submitHandler: function (h) {
-                    //忘记密码页面上拉
-                    $(".inner-box").slideUp(350, function () {
-                        $(".forgot-password-form").hide();
-                        $(".forgot-password-link").hide();
-                        $(".inner-box .close").hide();
-                        //忘密码完成页面下拉
-                        $(".forgot-password-done").show();
-                        $(".inner-box").slideDown(350)
-                    });
-                    var setTime;
-                    var time=parseInt($(".resend").text());
-                    setTime=setInterval(function(){
-                        if(time<=1){
-                            //显示“重新发送”
-                            $(".resend").parent().addClass("resendEmail").on("click",function(){
-                                //忘记密码完成页面上拉隐藏
-                                $(".forgot-password-done").slideUp(350,function(){
-                                   //忘记密码页面消失
-                                    $(".forgot-password-done").hide();
-                                    $(".forgot-password-done .success-icon").hide();
-                                    //“之后重新发送”打开
-                                    $("#sendlaterword").show();
-                                    //设置时间
-                                    $(".resend").text("30")
-                                    //忘记密码页面下拉展开
-                                    $(".forgot-password-form").slideDown(300);
-                                    $(".forgot-password-link").slideDown(300);
-                                    $(".inner-box .close").slideDown(300);
-                                });
-                            });
-                            $(".resend").text("重新发送");
-                            $("#sendlaterword").hide(); //隐藏"之后重新发送"
-                            clearInterval(setTime);
-                            return;
-                        }
-                        time--;
-                        $(".resend").text(time);
-                    },1000);
-                    return false; //阻止提交
-                    alert("asd");
-                }
-            })
-        }
-    };
+
     //注册
     var a = function () {
         if ($.validator) {
@@ -239,6 +190,56 @@ var Login = function () {
                     	return;
                     }
                     NProgress.done();
+                }
+            })
+        }
+    };
+    //重置密码
+    var f = function () {
+        if ($.validator) {
+            $(".forgot-password-form").validate({
+                //重置按钮提交
+                submitHandler: function (h) {
+                    //忘记密码页面上拉
+                    $(".inner-box").slideUp(350, function () {
+                        $(".forgot-password-form").hide();
+                        $(".forgot-password-link").hide();
+                        $(".inner-box .close").hide();
+                        //忘密码完成页面下拉
+                        $(".forgot-password-done").show();
+                        $(".inner-box").slideDown(350)
+                    });
+                    var setTime;
+                    var time=parseInt($(".resend").text());
+                    setTime=setInterval(function(){
+                        if(time<=1){
+                            //显示“重新发送”
+                            $(".resend").parent().addClass("resendEmail").on("click",function(){
+                                //忘记密码完成页面上拉隐藏
+                                $(".forgot-password-done").slideUp(350,function(){
+                                    //忘记密码页面消失
+                                    $(".forgot-password-done").hide();
+                                    $(".forgot-password-done .success-icon").hide();
+                                    //“之后重新发送”打开
+                                    $("#sendlaterword").show();
+                                    //设置时间
+                                    $(".resend").text("30")
+                                    //忘记密码页面下拉展开
+                                    $(".forgot-password-form").slideDown(300);
+                                    $(".forgot-password-link").slideDown(300);
+                                    $(".inner-box .close").slideDown(300);
+                                });
+                            });
+                            $(".resend").text("重新发送");
+                            $("#sendlaterword").hide(); //隐藏"之后重新发送"
+                            clearInterval(setTime);
+                            return;
+                        }
+                        time--;
+                        $(".resend").text(time);
+                    },1000);
+                    return false; //阻止提交
+                    alert("asd");
                 }
             })
         }

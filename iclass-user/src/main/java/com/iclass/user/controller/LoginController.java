@@ -21,7 +21,7 @@ public class LoginController {
     @RequestMapping("/login")
     public UserMsg login(@Param("username") String username,
                          @Param("password")String password, String code) {
-        UserMsg userMsg = loginService.login(username, password, code);
-        return userMsg;
+        return loginService.login(username, password, code);
+
     }
 }

@@ -115,11 +115,11 @@
 					<!--<i class="icon-remove close" data-dismiss="alert"> </i> -->
 					<span id="reg_msg"></span>
 				</div>
-				<input type="hidden" name="roleName" value="教师" />
+				<input type="hidden" name="userrole" value="教师" />
 				<div class="form-group">
 					<div class="input-icon">
 						<i class="icon-barcode"> </i> <input type="text"
-							id="register_userCode" name="register_userCode"
+							id="register_userCode" name="usercode"
 							class="form-control" placeholder="教工号" autofocus="autofocus"
 							 data-rule-required="true" data-rule-minlength="6" data-rule-digits="true" data-msg-required="请输入教工号." />
 					</div>
@@ -127,7 +127,7 @@
 				<div class="form-group">
 					<div class="input-icon">
 						<i class="icon-user"> </i> <input type="text"
-							id="register_username" name="register_username" class="form-control"
+							id="register_username" name="username" class="form-control"
 							placeholder="用户名" autofocus="autofocus" data-rule-required="true"
 							data-rule-minlength="2" data-msg-required="请输入用户名." />
 					</div>
@@ -135,7 +135,7 @@
 				<div class="form-group">
 					<div class="input-icon">
 						<i class="icon-lock"> </i> <input type="password"
-							id="register_password" name="register_password"
+							id="register_password" name="userpassword"
 							class="form-control" placeholder="密码" id="register_password"
 							data-rule-minlength="6" data-rule-required="true" data-msg-required="请输入密码." />
 					</div>
@@ -152,7 +152,7 @@
 				<div class="form-group">
 					<div class="input-icon">
 						<i class="icon-list-alt"> </i> <input type="text"
-							id="register_userFullName" name="register_userFullName"
+							id="register_userFullName" name="userfullname"
 							class="form-control" placeholder="真实姓名" data-rule-required="true"
 							data-rule-minlength="2" data-msg-required="请输入真实姓名." />
 					</div>
@@ -160,7 +160,7 @@
 				<div class="form-group">
 					<div class="input-icon">
 						<i class="icon-circle-blank"> </i> <select id="register_userSex"
-							name="register_userSex" class="form-control innerSelect"
+							name="usersex" class="form-control innerSelect"
 							data-rule-required="true" data-msg-required="请选择性别.">
 							<option value="">选择性别</option>
 							<option value="男">男</option>
@@ -171,7 +171,7 @@
 				<div class="form-group">
 					<div class="input-icon">
 						<i class="icon-calendar"> </i> <input id="register_userBirth"
-							name="register_userBirth" placeholder="出生日期"
+							name="userbirth" placeholder="出生日期"
 							onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',skin:'twoer',maxDate: '%y-%M-%d'})"
 							id="userBirth" class="form-control input-text Wdate"
 							data-rule-required="true" data-rule-date="true"
@@ -181,7 +181,7 @@
 				<div class="form-group">
 					<div class="input-icon">
 						<i class="icon-envelope"> </i> <input type="text"
-							id="register_userEmail" name="register_userEmail"
+							id="register_userEmail" name="useremail"
 							class="form-control" placeholder="邮箱" data-rule-required="true"
 							data-rule-email="true" data-msg-required="请输入邮箱." />
 					</div>
@@ -189,9 +189,9 @@
 				<div class="form-group">
 					<div class="input-icon">
 						<i class="icon-mobile-phone"> </i> <input type="text"
-							id="register_userPhoneNum" name="register_userPhoneNum"
+							id="register_userPhoneNum" name="userphonenum"
 							class="form-control" placeholder="手机号" maxlength="11" data-rule-required="true"
-							data-rule-digits="true" data-rule-minlength="6" data-rule-maxLength="11" 
+							data-rule-digits="true" data-rule-minlength="11" data-rule-maxLength="11"
 							data-rule-phoneNL="true" data-msg-required="请输入手机号." />
 					</div>
 				</div>

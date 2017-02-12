@@ -5,13 +5,10 @@
     <constructor >
       <idArg column="StudentID" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="StudentCode" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="StudentFullName" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="StudentEmail" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="StudentPhoneNumber" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    StudentID, StudentCode, StudentFullName, StudentEmail, StudentPhoneNumber
+    StudentID, StudentCode
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -24,10 +21,8 @@
     where StudentID = #{studentid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.iclass.user.mybatis.model.Student" >
-    insert into student (StudentID, StudentCode, StudentFullName, 
-      StudentEmail, StudentPhoneNumber)
-    values (#{studentid,jdbcType=INTEGER}, #{studentcode,jdbcType=VARCHAR}, #{studentfullname,jdbcType=VARCHAR}, 
-      #{studentemail,jdbcType=VARCHAR}, #{studentphonenumber,jdbcType=VARCHAR})
+    insert into student (StudentID, StudentCode)
+    values (#{studentid,jdbcType=INTEGER}, #{studentcode,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.iclass.user.mybatis.model.Student" >
     insert into student
@@ -38,15 +33,6 @@
       <if test="studentcode != null" >
         StudentCode,
       </if>
-      <if test="studentfullname != null" >
-        StudentFullName,
-      </if>
-      <if test="studentemail != null" >
-        StudentEmail,
-      </if>
-      <if test="studentphonenumber != null" >
-        StudentPhoneNumber,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="studentid != null" >
@@ -54,15 +40,6 @@
       </if>
       <if test="studentcode != null" >
         #{studentcode,jdbcType=VARCHAR},
-      </if>
-      <if test="studentfullname != null" >
-        #{studentfullname,jdbcType=VARCHAR},
-      </if>
-      <if test="studentemail != null" >
-        #{studentemail,jdbcType=VARCHAR},
-      </if>
-      <if test="studentphonenumber != null" >
-        #{studentphonenumber,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -72,24 +49,12 @@
       <if test="studentcode != null" >
         StudentCode = #{studentcode,jdbcType=VARCHAR},
       </if>
-      <if test="studentfullname != null" >
-        StudentFullName = #{studentfullname,jdbcType=VARCHAR},
-      </if>
-      <if test="studentemail != null" >
-        StudentEmail = #{studentemail,jdbcType=VARCHAR},
-      </if>
-      <if test="studentphonenumber != null" >
-        StudentPhoneNumber = #{studentphonenumber,jdbcType=VARCHAR},
-      </if>
     </set>
     where StudentID = #{studentid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.iclass.user.mybatis.model.Student" >
     update student
-    set StudentCode = #{studentcode,jdbcType=VARCHAR},
-      StudentFullName = #{studentfullname,jdbcType=VARCHAR},
-      StudentEmail = #{studentemail,jdbcType=VARCHAR},
-      StudentPhoneNumber = #{studentphonenumber,jdbcType=VARCHAR}
+    set StudentCode = #{studentcode,jdbcType=VARCHAR}
     where StudentID = #{studentid,jdbcType=INTEGER}
   </update>
 </mapper>

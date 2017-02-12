@@ -79,6 +79,7 @@ public class LoginServiceImpl implements LoginService{
 
     @Override
     public boolean validateVerificationCode(String code) {
+        System.out.println("LoginServiceImpl.validateVerificationCode");
         if(code != null && !code.equals("")) {
             String stringCode = verificationCode.getVerificationCode();
             if(stringCode != null) {

@@ -7,22 +7,31 @@ public class User {
 
     private String username;
 
+    private String userfullname;
+
     private String usersex;
 
-    private String userpwd;
+    private String userpassword;
 
     private String userbirth;
 
-    private String userattributes;
+    private String useremail;
 
-    public User(Integer userid, String usercode, String username, String usersex, String userpwd, String userbirth, String userattributes) {
+    private String userphonenum;
+
+    private String userrole;
+
+    public User(Integer userid, String usercode, String username, String userfullname, String usersex, String userpassword, String userbirth, String useremail, String userphonenum, String userrole) {
         this.userid = userid;
         this.usercode = usercode;
         this.username = username;
+        this.userfullname = userfullname;
         this.usersex = usersex;
-        this.userpwd = userpwd;
+        this.userpassword = userpassword;
         this.userbirth = userbirth;
-        this.userattributes = userattributes;
+        this.useremail = useremail;
+        this.userphonenum = userphonenum;
+        this.userrole = userrole;
     }
 
     public User() {
@@ -53,6 +62,14 @@ public class User {
         this.username = username == null ? null : username.trim();
     }
 
+    public String getUserfullname() {
+        return userfullname;
+    }
+
+    public void setUserfullname(String userfullname) {
+        this.userfullname = userfullname == null ? null : userfullname.trim();
+    }
+
     public String getUsersex() {
         return usersex;
     }
@@ -61,12 +78,12 @@ public class User {
         this.usersex = usersex == null ? null : usersex.trim();
     }
 
-    public String getUserpwd() {
-        return userpwd;
+    public String getUserpassword() {
+        return userpassword;
     }
 
-    public void setUserpwd(String userpwd) {
-        this.userpwd = userpwd == null ? null : userpwd.trim();
+    public void setUserpassword(String userpassword) {
+        this.userpassword = userpassword == null ? null : userpassword.trim();
     }
 
     public String getUserbirth() {
@@ -77,11 +94,43 @@ public class User {
         this.userbirth = userbirth == null ? null : userbirth.trim();
     }
 
-    public String getUserattributes() {
-        return userattributes;
+    public String getUseremail() {
+        return useremail;
     }
 
-    public void setUserattributes(String userattributes) {
-        this.userattributes = userattributes == null ? null : userattributes.trim();
+    public void setUseremail(String useremail) {
+        this.useremail = useremail == null ? null : useremail.trim();
+    }
+
+    public String getUserphonenum() {
+        return userphonenum;
+    }
+
+    public void setUserphonenum(String userphonenum) {
+        this.userphonenum = userphonenum == null ? null : userphonenum.trim();
+    }
+
+    public String getUserrole() {
+        return userrole;
+    }
+
+    public void setUserrole(String userrole) {
+        this.userrole = userrole == null ? null : userrole.trim();
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userid=" + userid +
+                ", usercode='" + usercode + '\'' +
+                ", username='" + username + '\'' +
+                ", userfullname='" + userfullname + '\'' +
+                ", usersex='" + usersex + '\'' +
+                ", userpassword='" + userpassword + '\'' +
+                ", userbirth='" + userbirth + '\'' +
+                ", useremail='" + useremail + '\'' +
+                ", userphonenum='" + userphonenum + '\'' +
+                ", userrole='" + userrole + '\'' +
+                '}';
     }
 }

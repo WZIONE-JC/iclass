@@ -11,7 +11,7 @@ public class MD5Test {
 
     @Test
     public void testMD5() {
-        String str = "123456";
+        String str = "361239731";
         String r = MD5.getPwd(str);
         System.out.println(r);
     }

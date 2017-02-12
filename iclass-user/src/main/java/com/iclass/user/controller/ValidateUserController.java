@@ -23,7 +23,7 @@ public class ValidateUserController{
 
     @RequestMapping("/validateUsername/{username}")
     public UserMsg validateUsername(@PathVariable String username) {
-        System.out.println(username);
+        System.out.println("ValidateUserController.validateUsername: " + username);
         boolean result = validateIsExistImpl.isExistUsername(username);
         UserMsg userMsg;
         //如果返回true,表示存在
@@ -37,7 +37,7 @@ public class ValidateUserController{
 
     @RequestMapping(value = "/validateUsercode/{usercode}")
     public UserMsg validateUsercode(@PathVariable String usercode) {
-        System.out.println(usercode);
+        System.out.println("ValidateUserController.validateUsercode: " + usercode);
         boolean result = validateIsExistImpl.isExistUserCode(usercode);
         UserMsg userMsg;
         if(result) {

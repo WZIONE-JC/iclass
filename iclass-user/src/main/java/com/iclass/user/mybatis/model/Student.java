@@ -5,18 +5,9 @@ public class Student {
 
     private String studentcode;
 
-    private String studentfullname;
-
-    private String studentemail;
-
-    private String studentphonenumber;
-
-    public Student(Integer studentid, String studentcode, String studentfullname, String studentemail, String studentphonenumber) {
+    public Student(Integer studentid, String studentcode) {
         this.studentid = studentid;
         this.studentcode = studentcode;
-        this.studentfullname = studentfullname;
-        this.studentemail = studentemail;
-        this.studentphonenumber = studentphonenumber;
     }
 
     public Student() {
@@ -37,29 +28,5 @@ public class Student {
 
     public void setStudentcode(String studentcode) {
         this.studentcode = studentcode == null ? null : studentcode.trim();
-    }
-
-    public String getStudentfullname() {
-        return studentfullname;
-    }
-
-    public void setStudentfullname(String studentfullname) {
-        this.studentfullname = studentfullname == null ? null : studentfullname.trim();
-    }
-
-    public String getStudentemail() {
-        return studentemail;
-    }
-
-    public void setStudentemail(String studentemail) {
-        this.studentemail = studentemail == null ? null : studentemail.trim();
-    }
-
-    public String getStudentphonenumber() {
-        return studentphonenumber;
-    }
-
-    public void setStudentphonenumber(String studentphonenumber) {
-        this.studentphonenumber = studentphonenumber == null ? null : studentphonenumber.trim();
     }
 }
