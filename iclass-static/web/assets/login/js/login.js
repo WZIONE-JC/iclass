@@ -248,14 +248,14 @@ var Login = function () {
     var h = function() {
         $("#register_userCode").blur(function () {
             if ($.trim($("#register_userCode").val()) != "") {
-                var usercode = $("#register_userCode").val();
                 $.ajax({
                     type: "post",
                     dataType:"jsonp",
-                    url: rurl+"/ValidateUser/validateUsercode/" + usercode,
-                    // data: {
-                    // 	usercode: $("#register_userCode").val()
-                    // },
+                    url: rurl+"/ValidateUser/validateUsercode",
+                    jsonp:"callback",
+                    data: {
+                    	usercode: $("#register_userCode").val()
+                    },
                     timeout: 3000,
                     success: function (data) {
                     	if (data.code == "1002") {
@@ -274,15 +274,14 @@ var Login = function () {
     var i = function() {
         $("#register_username").blur(function () {
             if ($.trim($("#register_username").val()) != "") {
-                var username = $("#register_username").val();
                 $.ajax({
                     type: "post",
                     dataType:"jsonp",
-                    url: rurl+"/ValidateUser/validateUsername/" + username,
+                    url: rurl+"/ValidateUser/validateUsername",
                     jsonp: "callback",
-                    // data: {
-                    // 	username: $("#register_username").val()
-                    // },
+                    data: {
+                    	username: $("#register_username").val()
+                    },
                     timeout: 3000,
                     success: function (data) {
                         if (data.code == "1001") {
@@ -302,6 +301,34 @@ var Login = function () {
             $("#imgcode").attr("src", rurl+"/VerificationCode/generate?n=" + Math.random());
         });
     }
+    var k = function() {
+        $(function () {
+            $.ajax({
+                type: "post",
+                dataType: "jsonp",
+                url: rurl + "/getRole",
+                jsonp: "callback",
+                data: {
+                  device: "web"
+                },
+                timeout: 3000,
+                success: function (data) {
+                    var size = data.size;
+                    var rolenames = data.rolenames;
+                    var option;
+                    for(var i = 0; i < size; i ++) {
+                      option = new Option(rolenames[i].role, rolenames[i].role);
+                      $("#rolename")[0].add(option);
+                    }
+                },
+                error: function(response,data) {
+                    alert("出错了:"+response+data);
+                }
+            })
+        })
+
+
+    }
     return {
         init: function () {
             b();
@@ -314,6 +341,7 @@ var Login = function () {
             h();
             i();
             j();
+            k();
         },
     }
 }();

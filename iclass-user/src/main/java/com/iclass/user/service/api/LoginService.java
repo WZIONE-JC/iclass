@@ -11,7 +11,7 @@ public interface LoginService {
 
     public String getMD5Password(String password);
 
-    public UserMsg login(String username, String pwd, String code);
+    public UserMsg login(String rolename, String username, String pwd, String code);
 
     public boolean validateVerificationCode(String code);
 }

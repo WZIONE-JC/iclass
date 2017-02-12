@@ -5,7 +5,6 @@ import com.iclass.user.UserMsg.UserException;
 import com.iclass.user.UserMsg.UserMsg;
 import com.iclass.user.service.impl.ValidateExistServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,8 +20,8 @@ public class ValidateUserController{
     @Autowired
     private ValidateExistServiceImpl validateIsExistImpl;
 
-    @RequestMapping("/validateUsername/{username}")
-    public UserMsg validateUsername(@PathVariable String username) {
+    @RequestMapping("/validateUsername")
+    public UserMsg validateUsername(String username) {
         System.out.println("ValidateUserController.validateUsername: " + username);
         boolean result = validateIsExistImpl.isExistUsername(username);
         UserMsg userMsg;
@@ -35,8 +34,8 @@ public class ValidateUserController{
         return userMsg;
     }
 
-    @RequestMapping(value = "/validateUsercode/{usercode}")
-    public UserMsg validateUsercode(@PathVariable String usercode) {
+    @RequestMapping(value = "/validateUsercode")
+    public UserMsg validateUsercode(String usercode) {
         System.out.println("ValidateUserController.validateUsercode: " + usercode);
         boolean result = validateIsExistImpl.isExistUserCode(usercode);
         UserMsg userMsg;

@@ -2,7 +2,6 @@ package com.iclass.user.controller;
 
 import com.iclass.user.UserMsg.UserMsg;
 import com.iclass.user.service.impl.LoginServiceImpl;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,9 +18,9 @@ public class LoginController {
     private LoginServiceImpl loginService;
 
     @RequestMapping("/login")
-    public UserMsg login(@Param("username") String username,
-                         @Param("password")String password, String code) {
-        return loginService.login(username, password, code);
+    public UserMsg login(String rolename, String username,
+                         String password, String code) {
+        return loginService.login(rolename, username, password, code);
 
     }
 }

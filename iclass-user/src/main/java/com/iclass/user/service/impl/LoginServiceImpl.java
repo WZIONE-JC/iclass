@@ -33,7 +33,7 @@ public class LoginServiceImpl implements LoginService{
     }
 
     @Override
-    public UserMsg login(String username, String password, String code) {
+    public UserMsg login(String rolename, String username, String password, String code) {
 
         UserMsg userMsg;
 
@@ -42,7 +42,7 @@ public class LoginServiceImpl implements LoginService{
          * 这里我考虑是从前端去验证
          */
         boolean codeCorrect = validateVerificationCode(code);
-
+        System.out.println("LoginServiceImpl.login : " +rolename);
         /**
          * 如果登录方式是工号
          */

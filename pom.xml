@@ -7,7 +7,6 @@
 	<artifactId>iclass</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<modules>
-		<module>iclass-generate-mapper</module>
 		<module>iclass-user</module>
 		<module>iclass-utils</module>
     </modules>
@@ -26,7 +25,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.8</java.version>
+		<java.version>1.7</java.version>
 	</properties>
 
 	<dependencies>
