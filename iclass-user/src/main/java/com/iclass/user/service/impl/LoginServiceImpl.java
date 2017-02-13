@@ -10,6 +10,8 @@ import com.iclass.verificationcode.service.imp.VerificationCodeImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,7 +35,7 @@ public class LoginServiceImpl implements LoginService{
     }
 
     @Override
-    public UserMsg login(String rolename, String username, String password, String code) {
+    public UserMsg login(HttpServletRequest request, String rolename, String username, String password, String code, String callback) {
 
         UserMsg userMsg;
 
@@ -53,20 +55,31 @@ public class LoginServiceImpl implements LoginService{
             //将用户输入的密码进行加密
             String newPassword = getMD5Password(password);
 
+            HttpSession session = request.getSession();
+
+            String sessionId = session.getId();
+            StringBuilder nameAndCodeAndRole = new StringBuilder(callback+"({\"username\":");
             String result;
             // 以工号的方式登录
             if(m.matches()) {
                 System.out.println("使用工号登录");
+                //返回的result是username
                 result = userMapper.findByUsercodeAndPassword(rolename, username, newPassword);
+                nameAndCodeAndRole.append("\""+result+"\"").append(",\"usercode\":").append("\""+username+"\"");
             } else {
                 //使用用户名的方式去登录
                 System.out.println("使用用户名登录");
+                //返回的result是usercode
                 result = userMapper.findByUsernameAndPassword(rolename, username, newPassword);
+                nameAndCodeAndRole.append("\""+username+"\"").append(",\"usercode\":").append("\""+result+"\"");
             }
+            nameAndCodeAndRole.append(",\"userrole\":").append("\""+rolename+"\"").append("});");
+            System.out.println("LoginServiceImpl.login : " + nameAndCodeAndRole.toString());
             System.out.println("欢迎 " + username + " " + result + " 登录");
             if(result != null) {
                 //查找到，就显示登录成功的信息，返回给前端
                 userMsg = new UserMsg(UserCode.LOGINSUCCESS, UserException.LOGINSUCCESS);
+                session.setAttribute(sessionId, nameAndCodeAndRole.toString());
             } else {
                 //result为空，表示没有查找到用户信息
                 userMsg = new UserMsg(UserCode.LOGINFAILED, UserException.LOGINFAILED);
@@ -93,5 +106,16 @@ public class LoginServiceImpl implements LoginService{
             System.out.println("验证码不能为空");
         }
         return false;
+    }
+
+    @Override
+    public String getLoginedUserInfo(HttpServletRequest request) {
+
+        HttpSession session = request.getSession();
+        System.out.println("LoginServiceImpl.getLoginedUserInfo:sessionID" + session.getId());
+        if(session.getId() != null) {
+            return (String)session.getAttribute(session.getId());
+        }
+        return null;
     }
 }

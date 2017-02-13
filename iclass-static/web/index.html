@@ -137,7 +137,11 @@
 <script type="text/javascript" src="lib/layer/1.9.3/layer.js"></script> 
 <script type="text/javascript" src="assets/js/H-ui.js"></script>
 <script type="text/javascript" src="assets/js/H-ui.admin.js"></script>
+<script type="text/javascript" src="assets/js/person/logined.js"></script>
 <script type="text/javascript">
+    $(document).ready(function () {
+        Logined.init()
+    });
 /*资讯-添加*/
 function article_add(title,url){
 	var index = layer.open({
