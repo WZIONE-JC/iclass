@@ -13,11 +13,12 @@
       <arg column="UserEmail" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="UserPhoneNum" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="UserRole" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="UserRegisterDate" jdbcType="TIMESTAMP" javaType="java.util.Date" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
     UserID, UserCode, UserName, UserFullName, UserSex, UserPassword, UserBirth, UserEmail, 
-    UserPhoneNum, UserRole
+    UserPhoneNum, UserRole, UserRegisterDate
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -41,13 +42,13 @@
     select
     userrole
     from USER
-    where username = #{username} and userpassword = #{password}
+    where userrole = #{userrole} and username = #{username} and userpassword = #{password}
   </select>
   <select id="findByUsercodeAndPassword" parameterType="String" resultType="String">
     select
     userrole
     from USER
-    where usercode = #{usercode} and userpassword = #{password}
+    where userrole = #{userrole} and usercode = #{usercode} and userpassword = #{password}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from user
@@ -57,11 +58,11 @@
     insert into user (UserID, UserCode, UserName, 
       UserFullName, UserSex, UserPassword, 
       UserBirth, UserEmail, UserPhoneNum, 
-      UserRole)
+      UserRole, UserRegisterDate)
     values (#{userid,jdbcType=INTEGER}, #{usercode,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
       #{userfullname,jdbcType=VARCHAR}, #{usersex,jdbcType=VARCHAR}, #{userpassword,jdbcType=VARCHAR}, 
       #{userbirth,jdbcType=VARCHAR}, #{useremail,jdbcType=VARCHAR}, #{userphonenum,jdbcType=VARCHAR}, 
-      #{userrole,jdbcType=VARCHAR})
+      #{userrole,jdbcType=VARCHAR}, #{userregisterdate,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.iclass.user.mybatis.model.User" >
     insert into user
@@ -96,6 +97,9 @@
       <if test="userrole != null" >
         UserRole,
       </if>
+      <if test="userregisterdate != null" >
+        UserRegisterDate,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="userid != null" >
@@ -127,6 +131,9 @@
       </if>
       <if test="userrole != null" >
         #{userrole,jdbcType=VARCHAR},
+      </if>
+      <if test="userregisterdate != null" >
+        #{userregisterdate,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -160,6 +167,9 @@
       <if test="userrole != null" >
         UserRole = #{userrole,jdbcType=VARCHAR},
       </if>
+      <if test="userregisterdate != null" >
+        UserRegisterDate = #{userregisterdate,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where UserID = #{userid,jdbcType=INTEGER}
   </update>
@@ -173,7 +183,8 @@
       UserBirth = #{userbirth,jdbcType=VARCHAR},
       UserEmail = #{useremail,jdbcType=VARCHAR},
       UserPhoneNum = #{userphonenum,jdbcType=VARCHAR},
-      UserRole = #{userrole,jdbcType=VARCHAR}
+      UserRole = #{userrole,jdbcType=VARCHAR},
+      UserRegisterDate = #{userregisterdate,jdbcType=TIMESTAMP}
     where UserID = #{userid,jdbcType=INTEGER}
   </update>
 </mapper>

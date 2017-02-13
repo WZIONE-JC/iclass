@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * iclass
  * <p>
@@ -48,6 +51,7 @@ public class SignUpServiceImpl implements SignUpService{
             }else  {
                 //如果用户名 和 工号都不存在的话，就执行插入
                 user.setUserpassword(getMD5Password(user.getUserpassword()));
+                user.setUserregisterdate(new String(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())));
                 int result = userMapper.insert(user);
                 if (result == 1) {
                     userMsg = new UserMsg(UserCode.SIGNUPSUCCESS, UserException.SIGNUPSUCCESS);

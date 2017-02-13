@@ -3014,15 +3014,15 @@ table.dataTable thead .sorting_asc, table.dataTable thead .sorting_desc, table.d
 }
 
 table.dataTable thead .sorting {
-    background-image: url(../../images/sort_both.png)
+    background-image: url(../images/sort_both.png)
 }
 
 table.dataTable thead .sorting_asc {
-    background-image: url(../../images/sort_asc.png)
+    background-image: url(../images/sort_asc.png)
 }
 
 table.dataTable thead .sorting_desc {
-    background-image: url(../../images/sort_desc.png)
+    background-image: url(../images/sort_desc.png)
 }
 
 .dataTable td.sorting_1 {
@@ -3751,18 +3751,18 @@ label, .placeholder {
 
 /*错误*/
 .Validform_wrong {
-    background: url(../../images/icon_error_s.png) no-repeat 0 center;
+    background: url(../images/icon_error_s.png) no-repeat 0 center;
     color: #ef392b
 }
 
 /*正确*/
 .Validform_right {
-    background: url(../../images/icon_right_s.png) no-repeat 0 center
+    background: url(../images/icon_right_s.png) no-repeat 0 center
 }
 
 /*警告*/
 .Validform_warning {
-    background: url(../../images/icon_warning_s.png) no-repeat 0 center;
+    background: url(../images/icon_warning_s.png) no-repeat 0 center;
     color: #777
 }
 
@@ -7334,12 +7334,12 @@ H-ui采用Font Awesome 3.2.1的整套图标，因为是图标字体，所以可�
 */
 .acrossTab {
     height: 29px;
-    background: url(../../images/acrossTab-bg.png) repeat-x 0 0;
+    background: url(../images/acrossTab-bg.png) repeat-x 0 0;
     padding-top: 1px
 }
 
 .acrossTab li, .acrossTab li em {
-    background: url(../../images/acrossTab.png) no-repeat 0 0
+    background: url(../images/acrossTab.png) no-repeat 0 0
 }
 
 .acrossTab li {
@@ -7394,7 +7394,7 @@ H-ui采用Font Awesome 3.2.1的整套图标，因为是图标字体，所以可�
     font-size: 0;
     line-height: 0;
     cursor: pointer;
-    background: url(../../images/acrossTab-close.png) no-repeat 0 0
+    background: url(../images/acrossTab-close.png) no-repeat 0 0
 }
 
 .acrossTab li i:hover {
@@ -7437,7 +7437,7 @@ H-ui采用Font Awesome 3.2.1的整套图标，因为是图标字体，所以可�
     margin-top: -13px;
     margin-left: 20%;
     line-height: 0;
-    background: url(../../images/icon_jt2.png) no-repeat 0 0
+    background: url(../images/icon_jt2.png) no-repeat 0 0
 }
 
 /*鼠标经过*/
@@ -7932,7 +7932,7 @@ a.label:hover, a.label:focus, a.badge:hover, a.badge:focus {
 */
 .loading {
     height: 50px;
-    background: url(../../images/loading_072.gif) no-repeat center
+    background: url(../images/loading_072.gif) no-repeat center
 }
 
 /*.mask{position:fixed;top:0;left:0;z-index:999;width:100%;height:100%;background:url(../../images/backdrop.png) repeat 0 0;-moz-transition:all 0.3s ease-in;-webkit-transition:all 0.3s ease-in;-o-transition:all 0.3s ease-in;transition:all 0.3s ease-in}*/

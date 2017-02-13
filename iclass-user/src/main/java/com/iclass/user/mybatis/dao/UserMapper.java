@@ -20,7 +20,9 @@ public interface UserMapper {
 
     String findByUsercode(String usercode);
 
-    String findByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
+    String findByUsernameAndPassword(@Param("userrole") String userrole, @Param("username") String username, @Param("password") String password);
 
-    String findByUsercodeAndPassword(@Param("usercode") String usercode, @Param("password") String password);
+    String findByUsercodeAndPassword(@Param("userrole") String userrole, @Param("usercode") String usercode, @Param("password") String password);
+
+    User findUserByUsercode(@Param("usercode") String usercode);
 }

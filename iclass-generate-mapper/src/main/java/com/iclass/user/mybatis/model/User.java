@@ -1,5 +1,7 @@
 package com.iclass.user.mybatis.model;
 
+import java.util.Date;
+
 public class User {
     private Integer userid;
 
@@ -21,7 +23,9 @@ public class User {
 
     private String userrole;
 
-    public User(Integer userid, String usercode, String username, String userfullname, String usersex, String userpassword, String userbirth, String useremail, String userphonenum, String userrole) {
+    private Date userregisterdate;
+
+    public User(Integer userid, String usercode, String username, String userfullname, String usersex, String userpassword, String userbirth, String useremail, String userphonenum, String userrole, Date userregisterdate) {
         this.userid = userid;
         this.usercode = usercode;
         this.username = username;
@@ -32,6 +36,7 @@ public class User {
         this.useremail = useremail;
         this.userphonenum = userphonenum;
         this.userrole = userrole;
+        this.userregisterdate = userregisterdate;
     }
 
     public User() {
@@ -116,5 +121,13 @@ public class User {
 
     public void setUserrole(String userrole) {
         this.userrole = userrole == null ? null : userrole.trim();
+    }
+
+    public Date getUserregisterdate() {
+        return userregisterdate;
+    }
+
+    public void setUserregisterdate(Date userregisterdate) {
+        this.userregisterdate = userregisterdate;
     }
 }

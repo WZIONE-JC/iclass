@@ -82,19 +82,19 @@
                <!--enableSelectByExample="false"-->
                <!--selectByExampleQueryId="false">-->
         <!--</table>-->
-        <!--<table tableName="user"-->
-               <!--enableCountByExample="false"-->
-               <!--enableUpdateByExample="false"-->
-               <!--enableDeleteByExample="false"-->
-               <!--enableSelectByExample="false"-->
-               <!--selectByExampleQueryId="false">-->
-        <!--</table>-->
-        <table tableName="role"
+        <table tableName="user"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"
                enableSelectByExample="false"
                selectByExampleQueryId="false">
         </table>
+        <!--<table tableName="role"-->
+               <!--enableCountByExample="false"-->
+               <!--enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false">-->
+        <!--</table>-->
     </context>
 </generatorConfiguration>

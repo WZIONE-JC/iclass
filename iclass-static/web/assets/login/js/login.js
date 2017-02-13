@@ -101,7 +101,10 @@ var Login = function () {
         }
     };
     //request url
-    var rurl = "http://localhost:8080/iclass";
+    var ip = "localhost";
+    //var ip = "115.159.63.34";
+    var port = "8080";
+    var rurl = "http://"+ip+":"+port+"/iclass";
     //登录
     var d = function () {
         if ($.validator) {
@@ -119,6 +122,7 @@ var Login = function () {
                         timeout: 3000,
                         data:$(".login-form").serialize(),
                         success:function(data){
+                            //登录成功
                             if(data.code == "2001"){
                             	$(".login-form .alert-danger").hide();
                             	NProgress.done();
@@ -296,11 +300,16 @@ var Login = function () {
             }
         });
     }
+    //生成验证码
     var j = function() {
+        $(function(){
+            $("#imgcode").attr("src", rurl+"/VerificationCode/generate");
+        })
         $("#imgcode").click(function () {
             $("#imgcode").attr("src", rurl+"/VerificationCode/generate?n=" + Math.random());
         });
     }
+    //获取角色信息
     var k = function() {
         $(function () {
             $.ajax({
@@ -311,7 +320,7 @@ var Login = function () {
                 data: {
                   device: "web"
                 },
-                timeout: 3000,
+                timeout: 10000,
                 success: function (data) {
                     var size = data.size;
                     var rolenames = data.rolenames;
@@ -322,7 +331,8 @@ var Login = function () {
                     }
                 },
                 error: function(response,data) {
-                    alert("出错了:"+response+data);
+                    alert("获取角色信息出错,错误信息:"+data+",请刷新重试");
+
                 }
             })
         })

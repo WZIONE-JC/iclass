@@ -21,7 +21,9 @@ public class User {
 
     private String userrole;
 
-    public User(Integer userid, String usercode, String username, String userfullname, String usersex, String userpassword, String userbirth, String useremail, String userphonenum, String userrole) {
+    private String userregisterdate;
+
+    public User(Integer userid, String usercode, String username, String userfullname, String usersex, String userpassword, String userbirth, String useremail, String userphonenum, String userrole, String userregisterdate) {
         this.userid = userid;
         this.usercode = usercode;
         this.username = username;
@@ -32,6 +34,7 @@ public class User {
         this.useremail = useremail;
         this.userphonenum = userphonenum;
         this.userrole = userrole;
+        this.userregisterdate = userregisterdate;
     }
 
     public User() {
@@ -118,6 +121,14 @@ public class User {
         this.userrole = userrole == null ? null : userrole.trim();
     }
 
+    public String getUserregisterdate() {
+        return userregisterdate;
+    }
+
+    public void setUserregisterdate(String userregisterdate) {
+        this.userregisterdate = userregisterdate;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -131,6 +142,7 @@ public class User {
                 ", useremail='" + useremail + '\'' +
                 ", userphonenum='" + userphonenum + '\'' +
                 ", userrole='" + userrole + '\'' +
+                ", userregisterdate=" + userregisterdate +
                 '}';
     }
 }

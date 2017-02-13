@@ -57,11 +57,11 @@ public class LoginServiceImpl implements LoginService{
             // 以工号的方式登录
             if(m.matches()) {
                 System.out.println("使用工号登录");
-                result = userMapper.findByUsercodeAndPassword(username, newPassword);
+                result = userMapper.findByUsercodeAndPassword(rolename, username, newPassword);
             } else {
                 //使用用户名的方式去登录
                 System.out.println("使用用户名登录");
-                result = userMapper.findByUsernameAndPassword(username, newPassword);
+                result = userMapper.findByUsernameAndPassword(rolename, username, newPassword);
             }
             System.out.println("欢迎 " + username + " " + result + " 登录");
             if(result != null) {
