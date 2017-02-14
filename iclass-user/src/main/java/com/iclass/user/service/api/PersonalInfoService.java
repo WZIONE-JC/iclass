@@ -2,6 +2,8 @@ package com.iclass.user.service.api;
 
 import com.iclass.user.mybatis.model.User;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * iclass
  * <p>
@@ -11,7 +13,9 @@ import com.iclass.user.mybatis.model.User;
  */
 public interface PersonalInfoService {
 
-    public User getPersonalInfo(String usercode);
+    public User getPersonalInfoByUsercode(String usercode);
+
+    public User getPersonalInfoBySession(HttpServletRequest request);
 
     public User updatePersonalInfo(User user);
 

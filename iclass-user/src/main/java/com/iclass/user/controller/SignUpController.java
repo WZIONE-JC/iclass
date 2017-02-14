@@ -1,6 +1,6 @@
 package com.iclass.user.controller;
 
-import com.iclass.user.UserMsg.UserMsg;
+import com.iclass.user.usermsg.UserMsg;
 import com.iclass.user.mybatis.model.User;
 import com.iclass.user.service.impl.SignUpServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;

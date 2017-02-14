@@ -1,8 +1,8 @@
 package com.iclass.user.controller;
 
-import com.iclass.user.UserMsg.UserCode;
-import com.iclass.user.UserMsg.UserException;
-import com.iclass.user.UserMsg.UserMsg;
+import com.iclass.user.usermsg.UserCode;
+import com.iclass.user.usermsg.UserException;
+import com.iclass.user.usermsg.UserMsg;
 import com.iclass.user.service.impl.ValidateExistServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

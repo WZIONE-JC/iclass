@@ -1,8 +1,8 @@
 package com.iclass.user.service.impl;
 
-import com.iclass.user.UserMsg.UserCode;
-import com.iclass.user.UserMsg.UserException;
-import com.iclass.user.UserMsg.UserMsg;
+import com.iclass.user.usermsg.UserCode;
+import com.iclass.user.usermsg.UserException;
+import com.iclass.user.usermsg.UserMsg;
 import com.iclass.user.md5.MD5;
 import com.iclass.user.mybatis.dao.UserMapper;
 import com.iclass.user.service.api.SignUpService;

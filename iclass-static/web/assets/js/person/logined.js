@@ -3,8 +3,8 @@
  */
 var Logined = function () {
     //request url
-    var ip = "localhost";
-    //var ip = "115.159.63.34";
+    //var ip = "localhost";
+    var ip = "115.159.63.34";
     var port = "8080";
     var rurl = "http://"+ip+":"+port+"/iclass";
     //获取已登录的用户信息
@@ -17,10 +17,15 @@ var Logined = function () {
                 url: rurl + "/getLoginedUserInfo",
                 timeout: 3000,
                 success: function (logineduserdata) {
-                    alert(logineduserdata.username);
+                    if(logineduserdata != null) {
+                        $("#rolename").text(logineduserdata.userrole);
+                        $("#username").text(logineduserdata.username);
+                    } else {
+                        alert("获取用户信息出错，请重试 :" + logineduserdata);
+                    }
                 },
                 error: function (logineduserdata) {
-                    alert("请求用户信息出错,错误信息:"+logineduserdata);
+                    window.location.href="login.html";
                 }
             })
         })

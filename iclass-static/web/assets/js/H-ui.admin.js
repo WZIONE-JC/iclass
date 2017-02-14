@@ -164,12 +164,12 @@ $(function(){
  w		弹出层宽度（缺省调默认值）
  h		弹出层高度（缺省调默认值）
  */
-function layer_show(title,url,w,h){
+function layer_show(title,url,id,w,h){
 	if (title == null || title == '') {
 		title=false;
 	};
 	if (url == null || url == '') {
-		url="/WEB-INF/page/404.html";
+		url="/404.html";
 	};
 	if (w == null || w == '') {
 		w=800;
@@ -177,6 +177,30 @@ function layer_show(title,url,w,h){
 	if (h == null || h == '') {
 		h=($(window).height() - 50);
 	};
+    if(url != "/404.html" && id != null && id != '') {
+        //request url
+        //var ip = "localhost";
+        var ip = "115.159.63.34";
+        var port = "8080";
+        var rurl = "http://"+ip+":"+port+"/iclass/cache";
+        var usercode = id.split("=")[1];
+        //将usercode放入到服务器缓存中
+        $.ajax({
+            type: "post",
+            dataType: "jsonp",
+            jsonp: "callback",
+            url: rurl + "/setCache",
+            data: {
+                usercode: usercode
+            },
+            success: function () {
+
+            },
+            error: function () {
+                // alert("设置缓存信息出错");
+            }
+        })
+    }
 	layer.open({
 		type: 2,
 		area: [w+'px', h +'px'],
@@ -186,6 +210,7 @@ function layer_show(title,url,w,h){
 		title: title,
 		content: url
 	});
+
 }
 /*关闭弹出框口*/
 function layer_close(){

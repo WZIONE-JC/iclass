@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * iclass
  * <p>
@@ -18,10 +20,17 @@ public class PersonalInfoController {
     @Autowired
     private PersonalInfoServiceImpl personalInfoService;
 
-    @RequestMapping("/getUserInfo")
-    public User getUserInfo(String usercode) {
-        System.out.println("PersonalInfoController.getUserInfo:" + usercode);
-        return personalInfoService.getPersonalInfo(usercode);
+    @RequestMapping("/getUserInfoBySession")
+    public User getUserInfoBySession(HttpServletRequest request) {
+        return personalInfoService.getPersonalInfoBySession(request);
     }
 
+    @RequestMapping("/getUserInfoByUsercode")
+    public User getUserInfoByUserCode(String usercode) {
+        if(usercode != null) {
+            User user = personalInfoService.getPersonalInfoByUsercode(usercode);
+            return user;
+        }
+        return null;
+    }
 }

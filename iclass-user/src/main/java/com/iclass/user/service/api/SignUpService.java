@@ -1,6 +1,6 @@
 package com.iclass.user.service.api;
 
-import com.iclass.user.UserMsg.UserMsg;
+import com.iclass.user.usermsg.UserMsg;
 import com.iclass.user.mybatis.model.User;
 
 /**

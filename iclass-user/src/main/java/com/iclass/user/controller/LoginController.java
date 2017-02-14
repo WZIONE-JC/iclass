@@ -1,10 +1,9 @@
 package com.iclass.user.controller;
 
-import com.iclass.user.UserMsg.UserMsg;
+import com.iclass.user.usermsg.UserMsg;
 import com.iclass.user.service.impl.LoginServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,15 +20,19 @@ public class LoginController {
     private LoginServiceImpl loginService;
 
     @RequestMapping("/login")
-    public UserMsg login(HttpServletRequest request, String rolename, String username,
-                         String password, String code, String callback) {
-        return loginService.login(request, rolename, username, password, code, callback);
+    public UserMsg login(HttpServletRequest request, String userrole, String username,
+                         String password, String code) {
+        return loginService.login(request, userrole, username, password, code);
     }
 
+    /**
+     * 获取已登录用户的信息
+     * @param request 获取session
+     * @param callback jsonp的参数
+     * @return 返回jsonp 数据，或者null
+     */
     @RequestMapping(value = "/getLoginedUserInfo")
-    @ResponseBody
-    public String getLoginedUserInfo(HttpServletRequest request) {
-        System.out.println("LoginController.getLoginedUserInfo : " + request);
-        return loginService.getLoginedUserInfo(request);
+    public String getLoginedUserInfo(HttpServletRequest request, String callback) {
+        return loginService.getLoginedUserInfo(request, callback);
     }
 }

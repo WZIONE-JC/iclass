@@ -1,4 +1,10 @@
 var Login = function () {
+    //request url
+    // var ip = "localhost";
+    var ip = "115.159.63.34";
+    var port = "8080";
+    var rurl = "http://"+ip+":"+port+"/iclass";
+
     var b = function () {
         if ($.fn.uniform) {
             $(":radio.uniform, :checkbox.uniform").uniform()
@@ -100,11 +106,7 @@ var Login = function () {
             })
         }
     };
-    //request url
-    var ip = "localhost";
-    //var ip = "115.159.63.34";
-    var port = "8080";
-    var rurl = "http://"+ip+":"+port+"/iclass";
+
     //登录
     var d = function () {
         if ($.validator) {
@@ -304,6 +306,7 @@ var Login = function () {
     var j = function() {
         $(function(){
             $("#imgcode").attr("src", rurl+"/VerificationCode/generate");
+            $("#imgcode").click();
         })
         $("#imgcode").click(function () {
             $("#imgcode").attr("src", rurl+"/VerificationCode/generate?n=" + Math.random());

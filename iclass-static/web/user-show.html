@@ -8,7 +8,7 @@
 <div class="cl pd-20" style=" background-color:#5bacb6">
   <img class="avatar size-XL l" src="assets/images/user.png">
   <dl style="margin-left:80px; color:#fff">
-    <dt><span class="f-18">张三</span> <span class="pl-10 f-12">年龄：23</span></dt>
+    <dt><span class="f-18" id="userfullname">正在加载...</span> <span class="pl-10 f-12" id="userrole">角色：<span>正在加载...</span></span></dt>
     <dd class="pt-10 f-12" style="margin-left:0">这家伙很懒，什么也没有留下</dd>
   </dl>
 </div>
@@ -17,33 +17,35 @@
     <tbody>
       <tr>
         <th class="text-r" width="80">性别：</th>
-        <td>男</td>
+        <td id="usersex">正在加载...</td>
       </tr>
       <tr>
         <th class="text-r">手机：</th>
-        <td>13000000000</td>
+        <td id="userphone">正在加载...</td>
       </tr>
       <tr>
-        <th class="text-r">身份证号：</th>
-        <td>610112199409057518</td>
+        <th class="text-r">邮箱：</th>
+        <td id="useremail">正在加载...</td>
       </tr>
       <tr>
-        <th class="text-r">地址：</th>
-        <td>北京市 海淀区</td>
+        <th class="text-r">出生日期：</th>
+        <td id="userbirth">正在加载...</td>
       </tr>
       <tr>
         <th class="text-r">注册时间：</th>
-        <td>2014.12.20</td>
-      </tr>
-      <tr>
-        <th class="text-r">迟到次数：</th>
-        <td>0</td>
+        <td id="userregisterdate">正在加载...</td>
       </tr>
     </tbody>
   </table>
 </div>
-<script type="text/javascript" src="assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="assets/js/H-ui.js"></script>
 <script type="text/javascript" src="assets/js/H-ui.admin.js"></script>
+<script type="text/javascript" src="assets/js/person/usershow.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        Usershow.init();
+    });
+</script>
 </body>
 </html>

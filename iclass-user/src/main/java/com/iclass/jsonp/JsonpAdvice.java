@@ -1,4 +1,4 @@
-package com.iclass.user.controller;
+package com.iclass.jsonp;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.AbstractJsonpResponseBodyAdvice;
@@ -12,7 +12,8 @@ import org.springframework.web.servlet.mvc.method.annotation.AbstractJsonpRespon
  * 消除下面的错误
  * ${username}?callback=jQuery1910916…_1486832038998&_=1486832039000:1 Uncaught SyntaxError: Unexpected token :
  */
-@ControllerAdvice(basePackages = "com.iclass.user.controller")
+
+@ControllerAdvice(basePackages = {"com.iclass.user.controller","com.iclass.cache.controller"})
 public class JsonpAdvice extends AbstractJsonpResponseBodyAdvice {
 
     public JsonpAdvice() {

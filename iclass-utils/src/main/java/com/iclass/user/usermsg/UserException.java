@@ -1,4 +1,4 @@
-package com.iclass.user.UserMsg;
+package com.iclass.user.usermsg;
 
 /**
  * iclass

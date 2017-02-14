@@ -1,11 +1,12 @@
 package com.iclass.user.service.impl;
 
-import com.iclass.user.UserMsg.UserCode;
-import com.iclass.user.UserMsg.UserException;
-import com.iclass.user.UserMsg.UserMsg;
+import com.iclass.user.usermsg.UserCode;
+import com.iclass.user.usermsg.UserException;
+import com.iclass.user.usermsg.UserMsg;
 import com.iclass.user.md5.MD5;
 import com.iclass.user.mybatis.dao.UserMapper;
 import com.iclass.user.service.api.LoginService;
+import com.iclass.user.userdata.UserUtils;
 import com.iclass.verificationcode.service.imp.VerificationCodeImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,7 @@ public class LoginServiceImpl implements LoginService{
     }
 
     @Override
-    public UserMsg login(HttpServletRequest request, String rolename, String username, String password, String code, String callback) {
+    public UserMsg login(HttpServletRequest request, String userrole, String username, String password, String code) {
 
         UserMsg userMsg;
 
@@ -44,7 +45,7 @@ public class LoginServiceImpl implements LoginService{
          * 这里我考虑是从前端去验证
          */
         boolean codeCorrect = validateVerificationCode(code);
-        System.out.println("LoginServiceImpl.login : " +rolename);
+        System.out.println("LoginServiceImpl.login : " +userrole);
         /**
          * 如果登录方式是工号
          */
@@ -58,28 +59,32 @@ public class LoginServiceImpl implements LoginService{
             HttpSession session = request.getSession();
 
             String sessionId = session.getId();
-            StringBuilder nameAndCodeAndRole = new StringBuilder(callback+"({\"username\":");
+
+            //json数据
+            String nameAndCodeAndRoleJson;
+
             String result;
+
             // 以工号的方式登录
             if(m.matches()) {
                 System.out.println("使用工号登录");
-                //返回的result是username
-                result = userMapper.findByUsercodeAndPassword(rolename, username, newPassword);
-                nameAndCodeAndRole.append("\""+result+"\"").append(",\"usercode\":").append("\""+username+"\"");
+                //返回的result是username, 而参数username是usercode
+                result = userMapper.findByUsercodeAndPassword(userrole, username, newPassword);
+                nameAndCodeAndRoleJson = UserUtils.getUserJsonData(result, username, userrole);
             } else {
                 //使用用户名的方式去登录
                 System.out.println("使用用户名登录");
                 //返回的result是usercode
-                result = userMapper.findByUsernameAndPassword(rolename, username, newPassword);
-                nameAndCodeAndRole.append("\""+username+"\"").append(",\"usercode\":").append("\""+result+"\"");
+                result = userMapper.findByUsernameAndPassword(userrole, username, newPassword);
+                nameAndCodeAndRoleJson = UserUtils.getUserJsonData(username, result, userrole);
             }
-            nameAndCodeAndRole.append(",\"userrole\":").append("\""+rolename+"\"").append("});");
-            System.out.println("LoginServiceImpl.login : " + nameAndCodeAndRole.toString());
+
             System.out.println("欢迎 " + username + " " + result + " 登录");
             if(result != null) {
                 //查找到，就显示登录成功的信息，返回给前端
                 userMsg = new UserMsg(UserCode.LOGINSUCCESS, UserException.LOGINSUCCESS);
-                session.setAttribute(sessionId, nameAndCodeAndRole.toString());
+                //保存json数据(用户登录信息)
+                session.setAttribute(sessionId, nameAndCodeAndRoleJson);
             } else {
                 //result为空，表示没有查找到用户信息
                 userMsg = new UserMsg(UserCode.LOGINFAILED, UserException.LOGINFAILED);
@@ -90,6 +95,11 @@ public class LoginServiceImpl implements LoginService{
         return userMsg;
     }
 
+    /**
+     * 校验验证码，通过注入VerificationCodeImpl 来得到服务器生成的验证码数据
+     * @param code 用户提交过来的验证码
+     * @return true: 正确， false: 失败
+     */
     @Override
     public boolean validateVerificationCode(String code) {
         System.out.println("LoginServiceImpl.validateVerificationCode");
@@ -108,13 +118,27 @@ public class LoginServiceImpl implements LoginService{
         return false;
     }
 
+    /**
+     * 获取已登录用户的信息
+     * 在用户登录时已经将如下json数据存入session中
+     * {"username":"唐洋","usercode":"1308030331","userrole":"管理员"}
+     * 在此方法中，通过sessionId 获取session 中存放的json数据
+     * 然后结合callback 来生成jsonp数据
+     * @param request 获取session
+     * @param callback jsonp参数
+     * @return 如果从session 中获取的jsondata存在，就返回jsonp 数据，否则返回null
+     */
     @Override
-    public String getLoginedUserInfo(HttpServletRequest request) {
+    public String getLoginedUserInfo(HttpServletRequest request, String callback) {
 
         HttpSession session = request.getSession();
-        System.out.println("LoginServiceImpl.getLoginedUserInfo:sessionID" + session.getId());
-        if(session.getId() != null) {
-            return (String)session.getAttribute(session.getId());
+        System.out.println("LoginServiceImpl.getLoginedUserInfo sessionID: " + session.getId());
+        //从session中获取session中的json数据
+        String jsondata = (String)session.getAttribute(session.getId());
+        if(jsondata != null) {
+            //通过json数据生成jsonp数据
+            String jsonp = UserUtils.getUserJsonpData(jsondata, callback);
+            return jsonp.toString();
         }
         return null;
     }

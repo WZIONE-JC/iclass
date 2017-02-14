@@ -29,7 +29,7 @@
   <select id="findByUsername" resultType="java.lang.String" parameterType="java.lang.String" >
     select
     usercode
-    from USER
+    from user
     where username = #{username,jdbcType=VARCHAR}
   </select>
   <select id="findByUsercode" resultType="java.lang.String" parameterType="java.lang.String" >
@@ -46,13 +46,13 @@
   </select>
   <select id="findByUsernameAndPassword" parameterType="java.lang.String" resultType="java.lang.String">
     select
-    userrole
+    usercode
     from user
     where userrole = #{userrole} and username = #{username} and userpassword = #{password}
   </select>
   <select id="findByUsercodeAndPassword" parameterType="String" resultType="String">
     select
-    userrole
+    username
     from user
     where userrole = #{userrole} and usercode = #{usercode} and userpassword = #{password}
   </select>
