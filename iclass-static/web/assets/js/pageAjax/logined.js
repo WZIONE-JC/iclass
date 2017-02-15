@@ -10,7 +10,7 @@ var Logined = function () {
                 type: "post",
                 dataType: "jsonp",
                 jsonp: "callback",
-                url: rurl + "/getLoginedUserInfo",
+                url: rurl + "/user/getLoginedUserInfo",
                 timeout: 3000,
                 success: function (logineduserdata) {
                     if(logineduserdata != null) {

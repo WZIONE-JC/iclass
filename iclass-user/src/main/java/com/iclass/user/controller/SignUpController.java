@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by JasonTang on 2/12/2017 4:32 PM.
  */
 @RestController
+@RequestMapping("/user")
 public class SignUpController {
 
     @Autowired

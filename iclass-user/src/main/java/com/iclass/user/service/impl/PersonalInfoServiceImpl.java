@@ -26,6 +26,7 @@ public class PersonalInfoServiceImpl implements PersonalInfoService {
     public User getPersonalInfoByUsercode(String usercode) {
         User user = userMapper.findUserByUsercode(usercode);
         user = UserInfoHandler.userRegisterDateHandler(user);
+        user = UserInfoHandler.userRegisterDateHandler(user);
         System.out.println("PersonalInfoServiceImpl.getPersonalInfoByUsercode: "+user);
         return user;
     }
@@ -47,6 +48,7 @@ public class PersonalInfoServiceImpl implements PersonalInfoService {
         User user = userMapper.findUserByUsercode(usercode);
         //处理掉userRegisterDate数据中最后的 .0 数据
         user = UserInfoHandler.userRegisterDateHandler(user);
+        user = UserInfoHandler.userpasswordHandler(user);
         System.out.println("PersonalInfoServiceImpl.getPersonalInfo: " + user);
         System.out.println("PersonalInfoServiceImpl.getPersonalInfo: end");
         return user;

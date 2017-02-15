@@ -6,15 +6,24 @@
 	<groupId>com.iclass</groupId>
 	<artifactId>iclass-user</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
     <dependencies>
         <dependency>
             <groupId>com.iclass</groupId>
             <artifactId>iclass-utils</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-
-    </dependencies>
-    <packaging>jar</packaging>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>1.0.28</version>
+		</dependency>
+	</dependencies>
 
 	<name>iclass-user</name>
 	<description>Demo project for Spring Boot</description>
@@ -30,6 +39,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.7</java.version>
 	</properties>
+
 	<build>
 		<plugins>
 			<plugin>

@@ -1,4 +1,4 @@
-package com.iclass.cache.userrequest;
+package com.iclass.cache.dto;
 
 import java.util.HashMap;
 import java.util.Map;

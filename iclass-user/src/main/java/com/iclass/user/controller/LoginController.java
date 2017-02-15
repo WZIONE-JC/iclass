@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
  * Created by yang.tang on 2017/2/10 20:54.
  */
 @RestController
+@RequestMapping("/user")
 public class LoginController {
 
     @Autowired

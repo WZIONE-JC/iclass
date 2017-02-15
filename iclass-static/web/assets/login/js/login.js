@@ -113,7 +113,7 @@ var Login = function () {
                     NProgress.start();
                     $.ajax({
                         type:"post",
-                        url: rurl+"/login",
+                        url: rurl+"/user/login",
                         dataType:"jsonp",
                         timeout: 3000,
                         data:$(".login-form").serialize(),
@@ -155,7 +155,7 @@ var Login = function () {
                         $.ajax({
                             type:"post",
                             dataType:"jsonp",
-                            url: rurl+"/signup",
+                            url: rurl+"/user/signup",
                             timeout: 3000,
                             data:$(".register-form").serialize(),
                             success:function(data){
@@ -251,7 +251,7 @@ var Login = function () {
                 $.ajax({
                     type: "post",
                     dataType:"jsonp",
-                    url: rurl+"/ValidateUser/validateUsercode",
+                    url: rurl+"/user/validateUsercode",
                     jsonp:"callback",
                     data: {
                     	usercode: $("#register_userCode").val()
@@ -277,7 +277,7 @@ var Login = function () {
                 $.ajax({
                     type: "post",
                     dataType:"jsonp",
-                    url: rurl+"/ValidateUser/validateUsername",
+                    url: rurl+"/user/validateUsername",
                     jsonp: "callback",
                     data: {
                     	username: $("#register_username").val()
@@ -312,7 +312,7 @@ var Login = function () {
             $.ajax({
                 type: "post",
                 dataType: "jsonp",
-                url: rurl + "/getRole",
+                url: rurl + "/user/getRole",
                 jsonp: "callback",
                 data: {
                   device: "web"

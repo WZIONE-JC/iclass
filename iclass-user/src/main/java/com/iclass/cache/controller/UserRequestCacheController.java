@@ -1,7 +1,7 @@
 package com.iclass.cache.controller;
 
 import com.iclass.cache.service.impl.UserRequestCacheServiceImpl;
-import com.iclass.cache.userrequest.UserRequestCache;
+import com.iclass.cache.dto.UserRequestCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,6 +14,8 @@ import javax.servlet.http.HttpSession;
  * iclass
  * <p>
  * Created by yang.tang on 2017/2/14 15:07.
+ *
+ * 将User和requesturl 封装到UserRequestCache 中
  */
 @RestController
 @RequestMapping("/cache")

@@ -1,6 +1,6 @@
 package com.iclass.cache.service.api;
 
-import com.iclass.cache.userrequest.UserRequestCache;
+import com.iclass.cache.dto.UserRequestCache;
 
 /**
  * iclass

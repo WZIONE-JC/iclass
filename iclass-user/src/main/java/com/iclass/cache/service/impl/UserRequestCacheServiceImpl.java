@@ -1,10 +1,11 @@
 package com.iclass.cache.service.impl;
 
 import com.iclass.cache.service.api.UserRequestCacheService;
-import com.iclass.cache.userrequest.DataCache;
-import com.iclass.cache.userrequest.UserRequestCache;
+import com.iclass.cache.dto.DataCache;
+import com.iclass.cache.dto.UserRequestCache;
 import com.iclass.user.mybatis.dao.UserMapper;
 import com.iclass.user.mybatis.model.User;
+import com.iclass.user.utils.UserInfoHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +37,7 @@ public class UserRequestCacheServiceImpl implements UserRequestCacheService{
         System.out.print("UserRequestCacheServiceImpl.setCache:");
         System.out.println("sessionid = [" + sessionid + "], usercode = [" + usercode + "], requesturl = [" + requesturl + "]");
         User user = userMapper.findUserByUsercode(usercode);
+        user = UserInfoHandler.userpasswordHandler(user);
         System.out.println("UserRequestCacheServiceImpl.setCache: "+user);
         userRequestCache = new UserRequestCache(user, requesturl);
         String reuslt = dataCache.setCache(sessionid, userRequestCache);

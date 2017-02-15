@@ -1,4 +1,4 @@
-package com.iclass.cache.userrequest;
+package com.iclass.cache.dto;
 
 import com.iclass.user.mybatis.model.User;
 

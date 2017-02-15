@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by yang.tang on 2017/2/10 16:53.
  */
 @RestController
-@RequestMapping("/ValidateUser")
+@RequestMapping("/user")
 public class ValidateUserController{
 
     @Autowired

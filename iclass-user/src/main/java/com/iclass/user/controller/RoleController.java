@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by JasonTang on 2/12/2017 6:54 PM.
  */
 @RestController
+@RequestMapping("/user")
 public class RoleController {
 
     @Autowired
