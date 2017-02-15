@@ -27,16 +27,17 @@ public class DataCache {
      * 设置缓存数据
      * @param userRequestCache 用户cache实例
      */
-    public String setCache(UserRequestCache userRequestCache) {
-        UserRequestCache usercache = userRequestCache;
+    public String setCache(String sessionid, UserRequestCache userRequestCache) {
         try {
-            cache.put(usercache.getSessionid(), usercache);
-            return "200";
+            if(userRequestCache != null) {
+                cache.put(sessionid, userRequestCache);
+                return "200";
+            }
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("DataCache.setCache: 设置缓存出错, 源数据: " + userRequestCache);
-            return "404";
         }
+        return "404";
     }
 
     /**

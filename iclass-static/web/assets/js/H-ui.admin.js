@@ -178,18 +178,14 @@ function layer_show(title,url,id,w,h){
 		h=($(window).height() - 50);
 	};
     if(url != "/404.html" && id != null && id != '') {
-        //request url
-        //var ip = "localhost";
-        var ip = "115.159.63.34";
-        var port = "8080";
-        var rurl = "http://"+ip+":"+port+"/iclass/cache";
+
         var usercode = id.split("=")[1];
         //将usercode放入到服务器缓存中
         $.ajax({
             type: "post",
             dataType: "jsonp",
             jsonp: "callback",
-            url: rurl + "/setCache",
+            url: rurl + "/cache/setCache",
             data: {
                 usercode: usercode
             },

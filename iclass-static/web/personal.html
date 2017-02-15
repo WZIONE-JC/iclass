@@ -3,14 +3,6 @@
 <head>
 	<link rel="import" href="_header.html">
 <title>用户管理</title>
-<script src="lib/jquery/1.9.1/jquery.min.js"></script>
-<script src="lib/layer/1.9.3/layer.js"></script>
-<script src="assets/js/person/personmaintenance.js"></script>
-<script>
-	$(document).ready(function () {
-        PersonMaintenance.init();
-	});
-</script>
 </head>
 <body>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 用户管理 <span class="c-gray en">&gt;</span> 个人信息维护 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
@@ -54,13 +46,19 @@
 	</table>
 	</div>
 </div>
-
+<script src="lib/jquery/1.9.1/jquery.min.js"></script>
+<script src="lib/layer/1.9.3/layer.js"></script>
 <script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script> 
 <script type="text/javascript" src="lib/My97DatePicker/WdatePicker.js"></script> 
 <script type="text/javascript" src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script> 
 <script type="text/javascript" src="assets/js/H-ui.js"></script>
 <script type="text/javascript" src="assets/js/H-ui.admin.js"></script>
+<script type="text/javascript" src="assets/js/pageAjax/ip.js"></script>
+<script src="assets/js/pageAjax/personmaintenance.js"></script>
 <script type="text/javascript">
+    $(function () {
+        PersonMaintenance.init();
+    });
 $(function(){
 	$('.table-sort').dataTable({
 		"aaSorting": [[ 1, "desc" ]],//默认第几个排序

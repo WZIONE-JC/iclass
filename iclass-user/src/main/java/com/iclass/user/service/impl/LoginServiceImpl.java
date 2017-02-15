@@ -44,7 +44,7 @@ public class LoginServiceImpl implements LoginService{
          * 首先验证验证码，通过validateVerificationCode 方法去验证
          * 这里我考虑是从前端去验证
          */
-        boolean codeCorrect = validateVerificationCode(code);
+        boolean codeCorrect = validateVerificationCode(request, code);
         System.out.println("LoginServiceImpl.login : " +userrole);
         /**
          * 如果登录方式是工号
@@ -101,10 +101,10 @@ public class LoginServiceImpl implements LoginService{
      * @return true: 正确， false: 失败
      */
     @Override
-    public boolean validateVerificationCode(String code) {
+    public boolean validateVerificationCode(HttpServletRequest request, String code) {
         System.out.println("LoginServiceImpl.validateVerificationCode");
         if(code != null && !code.equals("")) {
-            String stringCode = verificationCode.getVerificationCode();
+            String stringCode = verificationCode.getVerificationCode(request);
             if(stringCode != null) {
                 System.out.println("获取到的stringCode:" + stringCode + ":" + code.trim());
                 System.out.println("stringCode.equalsIgnoreCase(code.trim()):"+stringCode.equalsIgnoreCase(code.trim()));

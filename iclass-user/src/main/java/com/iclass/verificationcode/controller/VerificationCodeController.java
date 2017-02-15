@@ -26,13 +26,12 @@ public class VerificationCodeController {
      * @return
      */
     @RequestMapping(value = "/generate")
-    public String generate(HttpServletRequest request, HttpServletResponse response) {
+    public void generate(HttpServletRequest request, HttpServletResponse response) {
 
         verificationCode.genVerificationCode(request, response);
 
-        System.out.println(verificationCode.getVerificationCode());
+        System.out.println(verificationCode.getVerificationCode(request));
 
-        return verificationCode.getVerificationCode();
     }
 
     /**
@@ -40,7 +39,7 @@ public class VerificationCodeController {
      * @return
      */
     @RequestMapping("/getCode")
-    public String getStringCode() {
-        return verificationCode.getVerificationCode();
+    public String getStringCode(HttpServletRequest request) {
+        return verificationCode.getVerificationCode(request);
     }
 }

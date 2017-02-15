@@ -15,7 +15,7 @@ public interface LoginService {
 
     public UserMsg login(HttpServletRequest request, String rolename, String username, String pwd, String code);
 
-    public boolean validateVerificationCode(String code);
+    public boolean validateVerificationCode(HttpServletRequest request, String code);
 
     public String getLoginedUserInfo(HttpServletRequest request, String callback);
 }

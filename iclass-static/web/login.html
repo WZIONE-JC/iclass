@@ -35,12 +35,9 @@
     <![endif]-->
     <!--[if lt IE 9]>
     <script src="assets/login/js/libs/html5shiv.js"></script>
+
     <![endif]-->
-    <script>
-        $(document).ready(function () {
-            Login.init()
-        });
-    </script>
+
     <title>iClass 后台管理系统</title>
 </head>
 
@@ -295,7 +292,14 @@
 </script>
 <script type="text/javascript" src="assets/login/plugins/nprogress/nprogress.js">
 </script>
+<script type="text/javascript" src="assets/js/pageAjax/ip.js">
+</script>
 <script type="text/javascript" src="assets/login/js/login.js">
+</script>
+<script>
+    $(function () {
+        Login.init()
+    });
 </script>
 <script type="text/javascript" src="lib/sweet-alert/sweet-alert.min.js">
 </script>

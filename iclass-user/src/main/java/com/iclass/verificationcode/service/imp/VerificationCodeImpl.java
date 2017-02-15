@@ -58,7 +58,7 @@ public class VerificationCodeImpl implements VerificationCode{
             buffer.append(ch[index]);
         }
         verificationCode = buffer.toString();
-        session.getServletContext().setAttribute("verificationCode", verificationCode);
+        session.setAttribute("verificationCode", verificationCode);
 //		System.out.println("服务器:生成验证码成功:" +  session.getServletContext().getAttribute("verificationCode"));
         try {
             ImageIO.write(bi, "JPG", response.getOutputStream());
@@ -68,8 +68,8 @@ public class VerificationCodeImpl implements VerificationCode{
         }
     }
 
-    public String getVerificationCode() {
-        return verificationCode;
+    public String getVerificationCode(HttpServletRequest request) {
+        return (String)request.getSession().getAttribute("verificationCode");
     }
 
 }

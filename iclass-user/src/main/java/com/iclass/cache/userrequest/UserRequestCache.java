@@ -1,5 +1,7 @@
 package com.iclass.cache.userrequest;
 
+import com.iclass.user.mybatis.model.User;
+
 /**
  * iclass
  * <p>
@@ -9,89 +11,38 @@ package com.iclass.cache.userrequest;
  */
 public class UserRequestCache {
 
-    private String usercode;
+    private User user;
 
-    private String username;
-
-    private String userrole;
-
-    private String sessionid;
-
-    private String requesturl;
+    private String requestUrl;
 
     public UserRequestCache(){}
 
-    public UserRequestCache(String usercode, String username, String userrole, String sessionid, String requesturl) {
-        if(usercode == null) {
-            usercode = "";
-        }
-        if(username == null) {
-            username = "";
-        }
-        if(userrole == null) {
-            userrole = "";
-        }
-        if(sessionid == null) {
-            sessionid = "";
-        }
-        if(requesturl == null) {
-            requesturl = "";
-        }
-        this.usercode = usercode;
-        this.username = username;
-        this.userrole = userrole;
-        this.sessionid = sessionid;
-        this.requesturl = requesturl;
+    public UserRequestCache(User user, String requestUrl) {
+        this.user = user;
+        this.requestUrl = requestUrl;
     }
 
-    public String getUsercode() {
-        return usercode;
+    public User getUser() {
+        return user;
     }
 
-    public void setUsercode(String usercode) {
-        this.usercode = usercode;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public String getUsername() {
-        return username;
+    public String getRequestUrl() {
+        return requestUrl;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getUserrole() {
-        return userrole;
-    }
-
-    public void setUserrole(String userrole) {
-        this.userrole = userrole;
-    }
-
-    public String getSessionid() {
-        return sessionid;
-    }
-
-    public void setSessionid(String sessionid) {
-        this.sessionid = sessionid;
-    }
-
-    public String getRequesturl() {
-        return requesturl;
-    }
-
-    public void setRequesturl(String requesturl) {
-        this.requesturl = requesturl;
+    public void setRequestUrl(String requestUrl) {
+        this.requestUrl = requestUrl;
     }
 
     @Override
     public String toString() {
         return "UserRequestCache{" +
-                "usercode='" + usercode + '\'' +
-                ", username='" + username + '\'' +
-                ", userrole='" + userrole + '\'' +
-                ", sessionid='" + sessionid + '\'' +
-                ", requesturl='" + requesturl + '\'' +
+                "user=" + user +
+                ", requestUrl='" + requestUrl + '\'' +
                 '}';
     }
 }

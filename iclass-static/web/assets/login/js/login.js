@@ -1,10 +1,4 @@
 var Login = function () {
-    //request url
-    // var ip = "localhost";
-    var ip = "115.159.63.34";
-    var port = "8080";
-    var rurl = "http://"+ip+":"+port+"/iclass";
-
     var b = function () {
         if ($.fn.uniform) {
             $(":radio.uniform, :checkbox.uniform").uniform()

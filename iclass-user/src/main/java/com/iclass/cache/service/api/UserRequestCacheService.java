@@ -9,7 +9,7 @@ import com.iclass.cache.userrequest.UserRequestCache;
  */
 public interface UserRequestCacheService {
 
-    public void setCache(UserRequestCache cache);
+    public void setCache(String sessionid, String usercode, String requesturl);
 
     public UserRequestCache getCache(String key);
 }

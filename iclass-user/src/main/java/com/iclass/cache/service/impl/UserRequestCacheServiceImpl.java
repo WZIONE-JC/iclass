@@ -3,6 +3,9 @@ package com.iclass.cache.service.impl;
 import com.iclass.cache.service.api.UserRequestCacheService;
 import com.iclass.cache.userrequest.DataCache;
 import com.iclass.cache.userrequest.UserRequestCache;
+import com.iclass.user.mybatis.dao.UserMapper;
+import com.iclass.user.mybatis.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,17 +16,29 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserRequestCacheServiceImpl implements UserRequestCacheService{
 
+    @Autowired
+    private UserMapper userMapper;
+
     //缓存器
     private DataCache dataCache = DataCache.getInstance();
 
     /**
      * 设置缓存
-     * @param userRequestCache usercode 和 sessionId 是必须的参数
+     * @param sessionid sessionid
+     * @param usercode usercode 和 sessionId 是必须的参数
      */
     @Override
-    public void setCache(UserRequestCache userRequestCache) {
-        System.out.println("UserRequestCacheServiceImpl.setCache: "+userRequestCache);
-        String reuslt = dataCache.setCache(userRequestCache);
+    public void setCache(String sessionid, String usercode, String requesturl) {
+        UserRequestCache userRequestCache = null;
+        if(requesturl == null) {
+            requesturl = "";
+        }
+        System.out.print("UserRequestCacheServiceImpl.setCache:");
+        System.out.println("sessionid = [" + sessionid + "], usercode = [" + usercode + "], requesturl = [" + requesturl + "]");
+        User user = userMapper.findUserByUsercode(usercode);
+        System.out.println("UserRequestCacheServiceImpl.setCache: "+user);
+        userRequestCache = new UserRequestCache(user, requesturl);
+        String reuslt = dataCache.setCache(sessionid, userRequestCache);
         if(reuslt.equals("200")) {
            System.out.println("UserRequestCacheServiceImpl.setCache 缓存设置成功: " + userRequestCache);
         } else if(reuslt.equals("404")){

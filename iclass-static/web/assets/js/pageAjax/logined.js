@@ -2,11 +2,7 @@
  * Created by JasonTang on 2/14/2017.
  */
 var Logined = function () {
-    //request url
-    //var ip = "localhost";
-    var ip = "115.159.63.34";
-    var port = "8080";
-    var rurl = "http://"+ip+":"+port+"/iclass";
+
     //获取已登录的用户信息
     var a = function () {
         $(function () {

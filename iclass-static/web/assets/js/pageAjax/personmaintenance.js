@@ -1,9 +1,5 @@
 var PersonMaintenance = function () {
-    //request url
-    // var ip = "localhost";
-    var ip = "115.159.63.34";
-    var port = "8080";
-    var rurl = "http://"+ip+":"+port+"/iclass/user";
+
 
     //获取用户信息
     var a = function () {
@@ -12,7 +8,7 @@ var PersonMaintenance = function () {
                 type: "post",
                 dataType: "jsonp",
                 jsonp: "callback",
-                url: rurl + "/getUserInfoBySession",
+                url: rurl + "/user/getUserInfoBySession",
                 timeout: 3000,
                 success: function (userdata) {
                     // <tr class="text-c" >
