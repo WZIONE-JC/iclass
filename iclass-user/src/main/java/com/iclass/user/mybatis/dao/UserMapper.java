@@ -16,13 +16,13 @@ public interface UserMapper {
 
     int updateByPrimaryKey(User record);
 
-    String findByUsername(String username);
+    User findByUsername(String username);
 
-    String findByUsercode(String usercode);
+    User findByUsercode(String usercode);
 
-    String findByUsernameAndPassword(@Param("userrole") String userrole, @Param("username") String username, @Param("password") String password);
+    User findByUsernameAndPassword(@Param("username") String username, @Param("password") String password, @Param("userrole") String userrole);
 
-    String findByUsercodeAndPassword(@Param("userrole") String userrole, @Param("usercode") String usercode, @Param("password") String password);
+    User findByUsercodeAndPassword(@Param("usercode") String usercode, @Param("password") String password, @Param("userrole") String userrole);
 
     User findUserByUsercode(@Param("usercode") String usercode);
 }

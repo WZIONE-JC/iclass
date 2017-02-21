@@ -4765,7 +4765,7 @@ VMLElement = {
 	 */
 	setSpanRotation: function () {
 		// Adjust for alignment and rotation. Rotation of useHTML content is not yet implemented
-		// but it can probably be implemented for Firefox 3.5+ on user request. FF3.5+
+		// but it can probably be implemented for Firefox 3.5+ on entity request. FF3.5+
 		// has support for CSS3 transform. The getBBox method also needs to be updated
 		// to compensate for the rotation, like it currently does for SVG.
 		// Test case: http://jsfiddle.net/highcharts/Ybt44/
@@ -5435,7 +5435,7 @@ var VMLRendererExtension = { // inherit SVGRenderer
 			}
 
 		// if the color is an rgba color, split it and add a fill node
-		// to hold the opacity component
+		// to hold the opacity entity
 		} else if (regexRgba.test(color) && elem.tagName !== 'IMG') {
 
 			colorObject = Color(color);
@@ -6390,7 +6390,7 @@ AxisPlotLineOrBandExtension = {
 			userOptions = this.userOptions;
 
 		if (obj) { // #2189
-			// Add it to the user options for exporting and Axis.update
+			// Add it to the entity options for exporting and Axis.update
 			if (coll) {
 				userOptions[coll] = userOptions[coll] || [];
 				userOptions[coll].push(options); 
@@ -7648,7 +7648,7 @@ Axis.prototype = {
 	},
 
 	/**
-	 * Set the scale based on data min and max, user set min and max or options
+	 * Set the scale based on data min and max, entity set min and max or options
 	 *
 	 */
 	setScale: function () {
@@ -8183,7 +8183,7 @@ Axis.prototype = {
 			axis.axisTitle[showAxis ? 'show' : 'hide']();
 		}
 
-		// handle automatic or user set offset
+		// handle automatic or entity set offset
 		axis.offset = directionFactor * pick(options.offset, axisOffset[side]);
 
 		axis.tickRotCorr = axis.tickRotCorr || { x: 0, y: 0 }; // polar
@@ -9196,7 +9196,7 @@ Tooltip.prototype = {
 	},
 
 	/**
-	 * In case no user defined formatter is given, this will be used. Note that the context
+	 * In case no entity defined formatter is given, this will be used. Note that the context
 	 * here is an object holding point, series, x, y etc.
 	 */
 	defaultFormatter: function (tooltip) {
@@ -10201,7 +10201,7 @@ extend(Highcharts.Pointer.prototype, {
 		if (outOfBounds) {
 
 			// Modify the touchNow position in order to create an elastic drag movement. This indicates
-			// to the user that the chart is responsive but can't be dragged further.
+			// to the entity that the chart is responsive but can't be dragged further.
 			touch0Now -= 0.8 * (touch0Now - lastValidTouch[xy][0]);
 			if (!singleTouch) {
 				touch1Now -= 0.8 * (touch1Now - lastValidTouch[xy][1]);
@@ -10246,7 +10246,7 @@ extend(Highcharts.Pointer.prototype, {
 				chart.runTrackerClick) || self.runChartClick),
 			clip = {};
 
-		// Don't initiate panning until the user has pinched. This prevents us from 
+		// Don't initiate panning until the entity has pinched. This prevents us from
 		// blocking page scrolling as users scroll down a long page (#4210).
 		if (touchesLength > 1) {
 			self.initiated = true;
@@ -14658,7 +14658,7 @@ Series.prototype = {
 		} 
 
 		// Call the afterAnimate function on animation complete (but don't overwrite the animation.complete option
-		// which should be available to the user).
+		// which should be available to the entity).
 		if (!hasRendered) {
 			if (animDuration) {
 				series.animationTimeout = setTimeout(function () {
@@ -14867,7 +14867,7 @@ function StackItem(axis, options, isNegative, x, stackOption) {
 
 	// The align options and text align varies on whether the stack is negative and
 	// if the chart is inverted or not.
-	// First test the user supplied value, then use the dynamic.
+	// First test the entity supplied value, then use the dynamic.
 	this.alignOptions = {
 		align: options.align || (inverted ? (isNegative ? 'left' : 'right') : 'center'),
 		verticalAlign: options.verticalAlign || (inverted ? 'middle' : (isNegative ? 'bottom' : 'top')),
@@ -15552,7 +15552,7 @@ extend(Series.prototype, {
 	update: function (newOptions, redraw) {
 		var series = this,
 			chart = this.chart,
-			// must use user options when changing type because this.options is merged
+			// must use entity options when changing type because this.options is merged
 			// in with type specific plotOptions
 			oldOptions = this.userOptions,
 			oldType = this.type,
@@ -16728,7 +16728,7 @@ var PieSeries = {
 			endAngleRad = series.endAngleRad = mathPI / 180 * ((pick(options.endAngle, startAngle + 360)) - 90),
 			circ = endAngleRad - startAngleRad, //2 * mathPI,
 			points = series.points,
-			radiusX, // the x component of the radius vector for a given point
+			radiusX, // the x entity of the radius vector for a given point
 			radiusY,
 			labelDistance = options.dataLabels.distance,
 			ignoreHiddenPoint = options.ignoreHiddenPoint,

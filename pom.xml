@@ -8,7 +8,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<modules>
 		<module>iclass-user</module>
-		<module>iclass-utils</module>
+		<module>iclass-common</module>
     </modules>
 	<packaging>pom</packaging>
 

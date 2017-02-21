@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.iclass.user.mybatis.dao.UserMapper" >
-  <resultMap id="BaseResultMap" type="com.iclass.user.mybatis.model.User" >
+<mapper namespace="UserMapper" >
+  <resultMap id="BaseResultMap" type="User" >
     <constructor >
       <idArg column="UserID" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="UserCode" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -54,7 +54,7 @@
     delete from user
     where UserID = #{userid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.iclass.user.mybatis.model.User" >
+  <insert id="insert" parameterType="User" >
     insert into user (UserID, UserCode, UserName, 
       UserFullName, UserSex, UserPassword, 
       UserBirth, UserEmail, UserPhoneNum, 
@@ -64,7 +64,7 @@
       #{userbirth,jdbcType=VARCHAR}, #{useremail,jdbcType=VARCHAR}, #{userphonenum,jdbcType=VARCHAR}, 
       #{userrole,jdbcType=VARCHAR}, #{userregisterdate,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.iclass.user.mybatis.model.User" >
+  <insert id="insertSelective" parameterType="User" >
     insert into user
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="userid != null" >
@@ -137,7 +137,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.iclass.user.mybatis.model.User" >
+  <update id="updateByPrimaryKeySelective" parameterType="User" >
     update user
     <set >
       <if test="usercode != null" >
@@ -173,7 +173,7 @@
     </set>
     where UserID = #{userid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.iclass.user.mybatis.model.User" >
+  <update id="updateByPrimaryKey" parameterType="User" >
     update user
     set UserCode = #{usercode,jdbcType=VARCHAR},
       UserName = #{username,jdbcType=VARCHAR},
