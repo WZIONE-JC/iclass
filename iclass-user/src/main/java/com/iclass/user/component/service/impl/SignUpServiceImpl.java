@@ -41,13 +41,13 @@ public class SignUpServiceImpl implements SignUpService{
          * 在这里做一下拦截，避免用户注册成功后，重复提交注册信息,
          * 主要验证下用户名和工号
          */
-        boolean existUserCode = validateExistService.isExistUserCode(user.getUsercode());
-        if(existUserCode) {
-            responseMsg.setCodeMsg(CodeMsg.USERCODE_EXISTED);
+        responseMsg = validateExistService.isExistUserCode(user.getUsercode());
+        if(responseMsg.getMsg().equals(CodeMsg.USERCODE_EXISTED)) {
+            return responseMsg;
         } else {
-            boolean existUsername = validateExistService.isExistUsername(user.getUsername());
-            if (existUsername) {
-                responseMsg.setCodeMsg(CodeMsg.USERNAME_EXISTED);
+            responseMsg = validateExistService.isExistUsername(user.getUsername());
+            if (responseMsg.getMsg().equals(CodeMsg.USERNAME_EXISTED)) {
+                return responseMsg;
             }else  {
                 //如果用户名 和 工号都不存在的话，就执行插入
                 user.setUserpassword(getMD5Password(user.getUserpassword()));

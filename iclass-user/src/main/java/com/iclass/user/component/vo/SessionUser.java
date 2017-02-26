@@ -1,4 +1,4 @@
-package com.iclass.user.cache.entity;
+package com.iclass.user.component.vo;
 
 import com.iclass.user.mybatis.model.User;
 import com.iclass.utils.UserInfoHandler;
@@ -8,7 +8,7 @@ import com.iclass.utils.UserInfoHandler;
  * <p>
  * Created by JasonTang on 2/20/2017 11:45 PM.
  */
-public class    SessionUser {
+public class SessionUser {
 
     /**
      * 用户信息

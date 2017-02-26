@@ -24,7 +24,8 @@
 
 .login .logo {
     padding: 15px;
-    font-size: 23px
+    font-size: 23px;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .login .box {
@@ -49,7 +50,8 @@
 .login .box .form-title {
     text-align: center;
     font-weight: 300;
-    margin-bottom: 25px
+    margin-bottom: 25px;
+    font-family: Tahoma,Helvetica,Arial,'宋体',sans-serif;;
 }
 
 .login .box .form-group {

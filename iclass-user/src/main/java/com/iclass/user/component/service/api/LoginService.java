@@ -1,6 +1,6 @@
 package com.iclass.user.component.service.api;
 
-import com.iclass.user.cache.entity.SessionUser;
+import com.iclass.user.component.vo.SessionUser;
 import com.iclass.user.component.msg.ResponseMsg;
 
 import javax.servlet.http.HttpServletRequest;

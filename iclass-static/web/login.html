@@ -16,12 +16,12 @@
     <link href="assets/login/css/responsive.css" rel="stylesheet" type="text/css"/>
     <link href="assets/login/css/icons.css" rel="stylesheet" type="text/css"/>
     <link href="assets/login/css/login.css" rel="stylesheet" type="text/css"/>
+    <link href="assets/css/style.css" rel="stylesheet" type="text/css"/>
 
     <link href="lib/sweet-alert/sweet-alert.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="assets/login/css/fontawesome/font-awesome.min.css">
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700'rel='stylesheet' type='text/css'>
-    <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
-    <script type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700'rel='stylesheet' type='text/css'>-->
+
     <!-- 360 IE8内核支持 -->
     <!--[if IE 6]>
     <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
@@ -52,7 +52,7 @@
     <div class="content">
         <form class="form-vertical login-form">
             <h3 class="form-title">
-                	登录
+                	<strong class="login-signin">登录</strong>
             </h3>
             <div class="alert fade in alert-danger" style="display: none;">
                 <i class="icon-remove close" data-dismiss="alert">
@@ -109,8 +109,8 @@
             </div>
         </form>
 			<form class="form-vertical register-form" style="display: none;">
-				<h3 class="form-title">免费注册</h3>
-				<div class="alert fade in alert-msg" style="display: none;">
+				<h3 class="form-title"><strong class="login-signup">免费注册</strong></h3>
+				<div class="reg_alert alert fade in alert-msg" style="display: none;">
 					<!--<i class="icon-remove close" data-dismiss="alert"> </i> -->
 					<span id="reg_msg"></span>
 				</div>
@@ -147,7 +147,7 @@
 							data-rule-equalTo="#register_password" data-msg-required="请输入密码." />
 					</div>
 				</div>
-				<h3 class="form-title">个人信息</h3>
+				<h3 class="form-title"><strong>个人信息</strong></h3>
 				<div class="form-group">
 					<div class="input-icon">
 						<i class="icon-list-alt"> </i> <input type="text"
@@ -197,10 +197,10 @@
 				<div class="form-group spacing-top">
                <label class="checkbox">
               <input type="checkbox" class="uniform" id="remember" name="remember" data-rule-required="true"
-                 data-msg-required="Please accept ToS first.">
-                 I agree to the
+                 data-msg-required="是否同意本网站的规定.">
+                 我同意
                  <a href="javascript:void(0);">
-                   Terms of Service
+                   网站的规定
                  </a>
                </label>
                <label for="remember" class="has-error help-block" generated="true" style="display:none;">
@@ -279,6 +279,9 @@
         <span class="underline">免费注册</span>
     </a>
 </div>
+<script type="text/javascript" src="lib/jquery/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js">
+</script>
 <script type="text/javascript" src="assets/login/plugins/uniform/jquery.uniform.min.js">
 </script>
 <script type="text/javascript" src="assets/login/plugins/validation/jquery.validate.min.js">
@@ -292,7 +295,7 @@
 </script>
 <script type="text/javascript" src="assets/login/plugins/nprogress/nprogress.js">
 </script>
-<script type="text/javascript" src="assets/js/pageAjax/ip.js">
+<script type="text/javascript" src="assets/js/business/ip.js">
 </script>
 <script type="text/javascript" src="assets/login/js/login.js">
 </script>

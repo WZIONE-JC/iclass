@@ -1,6 +1,6 @@
 package com.iclass.user.component.service.impl;
 
-import com.iclass.user.cache.entity.SessionUser;
+import com.iclass.user.component.vo.SessionUser;
 import com.iclass.user.component.service.api.PersonalInfoService;
 import com.iclass.user.mybatis.dao.UserMapper;
 import com.iclass.user.mybatis.model.User;

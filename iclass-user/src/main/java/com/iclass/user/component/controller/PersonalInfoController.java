@@ -1,6 +1,6 @@
 package com.iclass.user.component.controller;
 
-import com.iclass.user.cache.entity.SessionUser;
+import com.iclass.user.component.vo.SessionUser;
 import com.iclass.user.component.service.impl.PersonalInfoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

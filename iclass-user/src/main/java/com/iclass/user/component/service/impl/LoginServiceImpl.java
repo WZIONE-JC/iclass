@@ -1,6 +1,6 @@
 package com.iclass.user.component.service.impl;
 
-import com.iclass.user.cache.entity.SessionUser;
+import com.iclass.user.component.vo.SessionUser;
 import com.iclass.user.component.exception.UserException;
 import com.iclass.user.component.md5.MD5;
 import com.iclass.user.component.msg.CodeMsg;

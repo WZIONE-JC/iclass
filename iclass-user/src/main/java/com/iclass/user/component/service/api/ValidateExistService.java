@@ -1,5 +1,7 @@
 package com.iclass.user.component.service.api;
 
+import com.iclass.user.component.msg.ResponseMsg;
+
 /**
  * iclass
  * <p>
@@ -9,7 +11,7 @@ package com.iclass.user.component.service.api;
  */
 public interface ValidateExistService {
 
-    public Boolean isExistUsername(String username);
+    public ResponseMsg isExistUsername(String username);
 
-    public Boolean isExistUserCode(String usercode);
+    public ResponseMsg isExistUserCode(String usercode);
 }

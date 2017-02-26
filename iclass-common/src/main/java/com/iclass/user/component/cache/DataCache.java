@@ -1,4 +1,4 @@
-package com.iclass.user.cache.entity;
+package com.iclass.user.component.cache;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,13 +11,13 @@ import java.util.Map;
  * 使用单例模式来创建DataCache
  *
  */
-public class DataCache {
+public class DataCache <T>{
 
     private static final DataCache dataCache = new DataCache();
     //单例
     //key 是sessionID
     //value 是Cache实例 RequestSessionCache
-    private static final Map<String, RequestSessionCache> cache = new HashMap<>();
+    private final Map<String, T> cache = new HashMap<>();
 
     public static DataCache getInstance() {
         return dataCache;
@@ -25,17 +25,17 @@ public class DataCache {
 
     /**
      * 设置缓存数据
-     * @param userRequestCache 用户cache实例
+     * @param t 用户cache实例
      */
-    public String setCache(String sessionid, RequestSessionCache userRequestCache) {
+    public String setCache(String sessionid, T t) {
         try {
-            if(userRequestCache != null) {
-                cache.put(sessionid, userRequestCache);
+            if(t != null) {
+                cache.put(sessionid, t);
                 return "200";
             }
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("DataCache.setCache: 设置缓存出错, 源数据: " + userRequestCache);
+            System.out.println("DataCache.setCache: 设置缓存出错, 源数据: " + t);
         }
         return "404";
     }
@@ -45,7 +45,7 @@ public class DataCache {
      * @param sessionid sessionId
      * @return 用户缓存数据
      */
-    public RequestSessionCache getCacheData(String sessionid) {
+    public T getCacheData(String sessionid) {
         return cache.get(sessionid);
     }
 }

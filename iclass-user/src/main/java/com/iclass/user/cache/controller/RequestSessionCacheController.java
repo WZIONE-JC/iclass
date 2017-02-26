@@ -1,6 +1,6 @@
 package com.iclass.user.cache.controller;
 
-import com.iclass.user.cache.entity.RequestSessionCache;
+import com.iclass.user.component.vo.RequestSessionCache;
 import com.iclass.user.cache.service.impl.RequestSessionCacheServiceImpl;
 import com.iclass.user.mybatis.model.User;
 import org.springframework.beans.factory.annotation.Autowired;

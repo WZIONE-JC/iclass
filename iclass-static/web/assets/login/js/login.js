@@ -36,6 +36,7 @@ var Login = function () {
             $(".forgot-password-link").click()
         })
     };
+
     var e = function () {
         if ($.validator) {
             $.extend($.validator.defaults, {
@@ -169,6 +170,7 @@ var Login = function () {
                                 	//设置延时2s之后执行下面函数
                                 	setTimeout(function(){
                                         $(".back").click();
+                                        $(".register-form")[0].reset();
                                     },2000);
                                 } else if(data.code== "2004"){
                                     swal({

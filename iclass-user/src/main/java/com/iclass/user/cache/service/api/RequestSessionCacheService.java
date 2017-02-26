@@ -1,7 +1,7 @@
 package com.iclass.user.cache.service.api;
 
 
-import com.iclass.user.cache.entity.RequestSessionCache;
+import com.iclass.user.component.vo.RequestSessionCache;
 import com.iclass.user.mybatis.model.User;
 
 /**

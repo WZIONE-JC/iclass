@@ -1,10 +1,10 @@
 package com.iclass.user.cache.service.impl;
 
-import com.iclass.user.cache.entity.DataCache;
-import com.iclass.user.cache.entity.RequestSessionCache;
-import com.iclass.user.cache.entity.SessionUser;
 import com.iclass.user.cache.service.api.RequestSessionCacheService;
+import com.iclass.user.component.cache.DataCache;
+import com.iclass.user.component.vo.RequestSessionCache;
 import com.iclass.user.mybatis.dao.UserMapper;
+import com.iclass.user.component.vo.SessionUser;
 import com.iclass.user.mybatis.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ public class RequestSessionCacheServiceImpl implements RequestSessionCacheServic
     private UserMapper userMapper;
 
     //缓存器
-    private DataCache dataCache = DataCache.getInstance();
+    private DataCache<RequestSessionCache> dataCache = DataCache.getInstance();
 
     /**
      * 设置缓存

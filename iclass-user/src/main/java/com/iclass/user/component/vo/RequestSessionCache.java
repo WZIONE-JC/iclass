@@ -1,4 +1,4 @@
-package com.iclass.user.cache.entity;
+package com.iclass.user.component.vo;
 
 /**
  * iclass
