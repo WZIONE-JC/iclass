@@ -18,7 +18,7 @@ import java.util.Date;
  * <p>
  * Created by JasonTang on 2/12/2017 12:26 PM.
  */
-@Service
+@Service("SignUpService")
 public class SignUpServiceImpl implements SignUpService{
 
     @Autowired

@@ -10,7 +10,17 @@ import com.iclass.user.mybatis.model.User;
  */
 public interface SignUpService {
 
+    /**
+     * 对密码加密
+     * @param password 原密码
+     * @return 加密的密码
+     */
     public String getMD5Password(String password);
 
+    /**
+     * 注册
+     * @param user 用户信息
+     * @return 返回消息实体
+     */
     public ResponseMsg signup(User user);
 }

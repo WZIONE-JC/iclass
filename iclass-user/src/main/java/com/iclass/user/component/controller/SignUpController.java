@@ -1,10 +1,11 @@
 package com.iclass.user.component.controller;
 
 import com.iclass.user.component.msg.ResponseMsg;
-import com.iclass.user.component.service.impl.SignUpServiceImpl;
+import com.iclass.user.component.service.api.SignUpService;
 import com.iclass.user.mybatis.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -17,9 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class SignUpController {
 
     @Autowired
-    private SignUpServiceImpl signUpService;
+    private SignUpService signUpService;
 
-    @RequestMapping("/signup")
+    @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public ResponseMsg signup(User user) {
         return signUpService.signup(user);
     }

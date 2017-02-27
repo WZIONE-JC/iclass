@@ -1,9 +1,14 @@
 package com.iclass.user.component.controller;
 
-import com.iclass.user.component.service.impl.RoleServiceImpl;
+import com.iclass.user.component.entity.ServiceResult;
+import com.iclass.user.component.service.api.RoleService;
+import com.iclass.user.mybatis.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * iclass
@@ -15,13 +20,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class RoleController {
 
     @Autowired
-    private RoleServiceImpl roleService;
+    private RoleService roleService;
 
-    @RequestMapping(value = "/getRole", produces = "application/json")
-    public String getRole(String device, String callback) {
+    @RequestMapping(value = "/getRole", produces = "application/json", method = {RequestMethod.POST, RequestMethod.GET})
+    public ServiceResult<List<Role>> getRole(String device) {
 
-        String roles = roleService.getRoleName(device, callback);
+        ServiceResult<List<Role>> serviceResult = roleService.getRoleName(device);
 
-        return roles;
+        return serviceResult;
     }
 }

@@ -320,12 +320,12 @@ var Login = function () {
                   device: "web"
                 },
                 timeout: 10000,
-                success: function (data) {
-                    var size = data.size;
-                    var rolenames = data.rolenames;
+                success: function (responseData) {
+                    var size = responseData.dataMap.length;
+                    var rolenames = responseData.dataMap;
                     var option;
                     for(var i = 0; i < size; i ++) {
-                      option = new Option(rolenames[i].role, rolenames[i].role);
+                      option = new Option(rolenames[i].rolename, rolenames[i].rolename);
                       $("#rolename")[0].add(option);
                     }
                 },

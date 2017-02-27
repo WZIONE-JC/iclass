@@ -1,10 +1,11 @@
 package com.iclass.user.cache.controller;
 
 import com.iclass.user.component.vo.RequestSessionCache;
-import com.iclass.user.cache.service.impl.RequestSessionCacheServiceImpl;
+import com.iclass.user.cache.service.impl.RequestCacheServiceImpl;
 import com.iclass.user.mybatis.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,10 +21,10 @@ import javax.servlet.http.HttpSession;
  */
 @RestController
 @RequestMapping("/cache")
-public class RequestSessionCacheController {
+public class RequestCacheController {
 
     @Autowired
-    private RequestSessionCacheServiceImpl requestSessionCacheService;
+    private RequestCacheServiceImpl requestSessionCacheService;
 
     /**
      * 将下面的参数存入缓存器中
@@ -31,7 +32,7 @@ public class RequestSessionCacheController {
      * @param request 获取session
      * @param requesturl 请求地址
      */
-    @RequestMapping("/setCache")
+    @RequestMapping(value = "/setCache", method = RequestMethod.POST)
     public void setCache(HttpServletRequest request,
                          User user,
                          @RequestParam(required = false) String requesturl) {
@@ -47,7 +48,7 @@ public class RequestSessionCacheController {
      * @param request 获取session
      * @return RequestSessionCache , jsonp的方式
      */
-    @RequestMapping("/getCache")
+    @RequestMapping(value = "/getCache", method = {RequestMethod.GET, RequestMethod.POST})
     public RequestSessionCache getCache(HttpServletRequest request) {
         HttpSession session = request.getSession();
         System.out.println("UserRequestCacheController.getCache: sessionid="+session.getId());

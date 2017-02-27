@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
  * <p>
  * Created by yang.tang on 2017/2/10 20:46.
  */
-@Service
+@Service("LoginService")
 public class LoginServiceImpl implements LoginService {
 
     @Autowired
@@ -40,11 +40,13 @@ public class LoginServiceImpl implements LoginService {
     public ResponseMsg login(HttpServletRequest request, String userrole, String username, String password, String code) {
 
         ResponseMsg responseMsg = new ResponseMsg();
+
         /**
          * 首先验证验证码，通过validateVerificationCode 方法去验证
          * 这里我考虑是从前端去验证
          */
         boolean codeCorrect = validateVerificationCode(request, code);
+
         /**
          * 如果登录方式是工号
          */

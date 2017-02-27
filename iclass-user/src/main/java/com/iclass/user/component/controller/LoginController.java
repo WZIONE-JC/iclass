@@ -1,12 +1,13 @@
 package com.iclass.user.component.controller;
 
 import com.iclass.user.component.msg.ResponseMsg;
-import com.iclass.user.component.service.impl.LoginServiceImpl;
+import com.iclass.user.component.service.api.LoginService;
 import com.iclass.user.component.vo.SessionUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,10 +22,20 @@ import javax.servlet.http.HttpServletRequest;
 public class LoginController {
 
     private Logger logger = LoggerFactory.getLogger(LoginController.class);
-    @Autowired
-    private LoginServiceImpl loginService;
 
-    @RequestMapping("/login")
+    @Autowired
+    private LoginService loginService;
+
+    /**
+     * 登录
+     * @param request 获取session
+     * @param userrole 角色
+     * @param username 用户名
+     * @param password 密码
+     * @param code 验证码
+     * @return 返回消息实体
+     */
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseMsg login(HttpServletRequest request, String userrole, String username,
                              String password, String code) {
         logger.info("request = [" + request + "], userrole = [" + userrole + "], username = [" + username + "], password = [" + password + "], code = [" + code + "]");
@@ -36,7 +47,7 @@ public class LoginController {
      * @param request 获取session
      * @return 返回jsonp 数据，或者null
      */
-    @RequestMapping(value = "/getLoginedUserInfo")
+    @RequestMapping(value = "/getLoginedUserInfo", method = {RequestMethod.GET, RequestMethod.POST})
     public SessionUser getLoginedUserInfo(HttpServletRequest request) {
         SessionUser sessionUser = loginService.getLoginedUserInfo(request);
         System.out.println("LoginController.getLoginedUserInfo");

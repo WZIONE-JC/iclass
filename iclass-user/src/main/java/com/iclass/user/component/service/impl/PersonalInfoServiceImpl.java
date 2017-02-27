@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
  * <p>
  * Created by yang.tang on 2017/2/13 15:16.
  */
-@Service
+@Service("PersonalInfoService")
 public class PersonalInfoServiceImpl implements PersonalInfoService {
 
     @Autowired

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
  * <p>
  * Created by yang.tang on 2017/2/10 14:29.
  */
-@Service
+@Service("ValidateExistService")
 public class ValidateExistServiceImpl implements ValidateExistService {
 
     /**

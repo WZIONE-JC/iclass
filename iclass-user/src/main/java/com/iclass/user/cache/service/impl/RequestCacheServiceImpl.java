@@ -1,10 +1,10 @@
 package com.iclass.user.cache.service.impl;
 
-import com.iclass.user.cache.service.api.RequestSessionCacheService;
+import com.iclass.user.cache.service.api.RequestCacheService;
 import com.iclass.user.component.cache.DataCache;
 import com.iclass.user.component.vo.RequestSessionCache;
-import com.iclass.user.mybatis.dao.UserMapper;
 import com.iclass.user.component.vo.SessionUser;
+import com.iclass.user.mybatis.dao.UserMapper;
 import com.iclass.user.mybatis.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
  * Created by yang.tang on 2017/2/14 15:04.
  */
 @Service
-public class RequestSessionCacheServiceImpl implements RequestSessionCacheService{
+public class RequestCacheServiceImpl implements RequestCacheService{
 
     @Autowired
     private UserMapper userMapper;
@@ -28,7 +28,6 @@ public class RequestSessionCacheServiceImpl implements RequestSessionCacheServic
      * @param sessionid sessionid
      * @param user 用户信息
      */
-    @Override
     public void setCache(String sessionid, User user, String requesturl) {
         RequestSessionCache requestSessionCache = null;
         if(requesturl == null) {
@@ -54,7 +53,6 @@ public class RequestSessionCacheServiceImpl implements RequestSessionCacheServic
      * @param sessionid dataCache中的key:sessionid
      * @return RequestSessionCache
      */
-    @Override
     public RequestSessionCache getCache(String sessionid) {
         return dataCache.getCacheData(sessionid);
     }

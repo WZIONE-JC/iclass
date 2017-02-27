@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
  * <p>
  * Created by JasonTang on 2/20/2017 11:19 PM.
  */
-@Service
+@Service("StudentService")
 public class StudentServiceImpl implements StudentService {
 
     @Autowired
@@ -19,11 +19,8 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void save(Student student) {
-        if(student != null && student.getStudentcode() != null) {
 
-        }
     }
-
     @Override
     public void delete(String studentCdoe) {
 

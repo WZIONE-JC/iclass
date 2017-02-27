@@ -1,5 +1,10 @@
 package com.iclass.user.component.service.api;
 
+import com.iclass.user.component.entity.ServiceResult;
+import com.iclass.user.mybatis.model.Role;
+
+import java.util.List;
+
 /**
  * iclass
  * <p>
@@ -7,5 +12,10 @@ package com.iclass.user.component.service.api;
  */
 public interface RoleService {
 
-    public String getRoleName(String device, String callback);
+    /**
+     * 获取角色信息
+     * @param device 设备表示 app/web
+     * @return 返回角色jsonp
+     */
+    public ServiceResult<List<Role>> getRoleName(String device);
 }

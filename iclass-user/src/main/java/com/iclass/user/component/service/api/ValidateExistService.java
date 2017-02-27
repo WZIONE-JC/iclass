@@ -11,7 +11,17 @@ import com.iclass.user.component.msg.ResponseMsg;
  */
 public interface ValidateExistService {
 
+    /**
+     * 检查用户名是否存在
+     * @param username 用户名
+     * @return 返回消息实体
+     */
     public ResponseMsg isExistUsername(String username);
 
+    /**
+     * 检查工号是否存在
+     * @param usercode 工号
+     * @return 返回消息实体
+     */
     public ResponseMsg isExistUserCode(String usercode);
 }

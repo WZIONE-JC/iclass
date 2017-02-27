@@ -9,7 +9,7 @@ import com.iclass.user.mybatis.model.User;
  * <p>
  * Created by yang.tang on 2017/2/14 14:59.
  */
-public interface RequestSessionCacheService {
+public interface RequestCacheService {
 
     public void setCache(String sessionid, User user, String requesturl);
 
