@@ -26,7 +26,7 @@ var PersonMaintenance = function () {
                         var tr = $("<tr class='text-c'></tr>");
                         var td1 = $("<td><input type='checkbox' value='1'></td>");
                         var td2 = $("<td><span style='cursor:pointer' title='查看个人信息' class='label label-secondary radius' onclick=member_show('"+responseData.data.user.username+"','user-show.html','usercode="+responseData.data.user.usercode+"','360','400')>"+responseData.data.user.username+"</span></td>");
-                        var td3 = $("<td id='usercode'>"+responseData.data.user.usercode+"</td>");
+                        var td3 = $("<td>"+responseData.data.user.usercode+"</td>");
                         var td4 = $("<td>"+responseData.data.user.userfullname+"</td>");
                         var td5 = $("<td>"+responseData.data.user.usersex+"</td>");
                         var td6 = $("<td>"+responseData.data.user.userbirth+"</td>");
