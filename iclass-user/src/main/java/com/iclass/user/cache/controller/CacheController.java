@@ -42,11 +42,11 @@ public class CacheController {
     public ServiceResult<SessionUser> setCache(HttpServletRequest request,
                                                User user) {
         HttpSession session = request.getSession();
-        String sessionid = session.getId();
+    String sessionid = session.getId();
         logger.info("设置缓存时,从客户端获取的参数:user = [" + user + "]");
-        ServiceResult<SessionUser> serviceResult = CacheService.setCache(sessionid, user);
+    ServiceResult<SessionUser> serviceResult = CacheService.setCache(sessionid, user);
         return serviceResult;
-    }
+}
 
     /**
      * 获取用户缓存数据

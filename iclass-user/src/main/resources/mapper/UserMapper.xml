@@ -193,4 +193,9 @@
       UserRegisterDate = #{userregisterdate,jdbcType=TIMESTAMP}
     where UserID = #{userid,jdbcType=INTEGER}
   </update>
+  <update id="updatePasswordByUserIdAndOldPassword">
+    update user
+    set UserPassword = #{newpassword,jdbcType=VARCHAR}
+    where UserID = #{userid,jdbcType=INTEGER} and UserPassword = #{oldpassword,jdbcType=VARCHAR}
+  </update>
 </mapper>

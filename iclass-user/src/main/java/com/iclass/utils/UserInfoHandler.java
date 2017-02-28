@@ -25,7 +25,7 @@ public class UserInfoHandler {
                 String userRegisterDate = oldUserRegisterDate.split("\\.")[0];
                 logger.info("UserInfoHandler.userRegisterDateHandler:" + userRegisterDate);
                 user.setUserregisterdate(userRegisterDate);
-                logger.info("UserInfoHandler.userRegisterDataHandler:" + user);
+                logger.info("UserInfoHandler.userRegisterDataHandler: 已处理registerData信息：" + user);
             }
         } else {
             logger.info("UserInfoHandler.userRegisterDateHandler: user不能为空：" + user);

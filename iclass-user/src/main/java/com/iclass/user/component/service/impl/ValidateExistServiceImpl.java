@@ -44,10 +44,10 @@ public class ValidateExistServiceImpl implements ValidateExistService {
             logger.error("用户名不能为空");
         }
         if(result) {
-            responseMsg.setCodeMsg(Msg.USERNAME_EXISTED);
+            responseMsg.setMsg(Msg.USERNAME_EXISTED);
         } else {
             serviceResult.setSuccess(true);
-            responseMsg.setCodeMsg(Msg.USERNAME_CAN_USE);
+            responseMsg.setMsg(Msg.USERNAME_CAN_USE);
         }
         serviceResult.setData(responseMsg);
         return serviceResult;
@@ -71,9 +71,9 @@ public class ValidateExistServiceImpl implements ValidateExistService {
         } else {
             logger.error("工号不能为空");
         }if(result) {
-            responseMsg.setCodeMsg(Msg.USERCODE_EXISTED);
+            responseMsg.setMsg(Msg.USERCODE_EXISTED);
         } else {
-            responseMsg.setCodeMsg(Msg.USERCODE_CAN_USE);
+            responseMsg.setMsg(Msg.USERCODE_CAN_USE);
             serviceResult.setSuccess(true);
         }
         serviceResult.setData(responseMsg);

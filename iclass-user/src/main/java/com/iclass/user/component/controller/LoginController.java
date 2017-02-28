@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,9 +39,9 @@ public class LoginController {
      */
     @RequestMapping(value = "/login", method = {RequestMethod.POST, RequestMethod.GET})
     public ServiceResult<ResponseMsg> login(HttpServletRequest request, String userrole, String username,
-                             String password, String code) {
-        logger.info("request = [" + request.getSession().getId() + "], userrole = [" + userrole + "], username = [" + username + "], password = [" + password + "], code = [" + code + "]");
-        return loginService.login(request, userrole, username, password, code);
+                                            String password, String code, @RequestParam(required = false) String remember) {
+        logger.info("request = [" + request.getSession().getId() + "], userrole = [" + userrole + "], username = [" + username + "], password = [" + password + "], code = [" + code + "], remember = [" + remember + "]");
+        return loginService.login(request, userrole, username, password, code, remember);
     }
 
     /**
@@ -51,7 +52,12 @@ public class LoginController {
     @RequestMapping(value = "/getLoginedUserInfo", method = {RequestMethod.GET, RequestMethod.POST})
     public ServiceResult<SessionUser> getLoginedUserInfo(HttpServletRequest request) {
         ServiceResult<SessionUser> serviceResult = loginService.getLoginedUserInfo(request);
-        logger.info("LoginController.getLoginedUserInfo:" + serviceResult.getData());
+        logger.info("获取的用户登录信息为:" + serviceResult.getData());
         return serviceResult;
+    }
+
+    @RequestMapping(value = "/logout",method = {RequestMethod.GET, RequestMethod.POST})
+    public ServiceResult<ResponseMsg> logout(HttpServletRequest request) {
+        return loginService.logout(request);
     }
 }

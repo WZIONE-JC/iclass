@@ -29,7 +29,7 @@ public interface LoginService {
      * @param code 验证码
      * @return 返回实体消息
      */
-    public ServiceResult<ResponseMsg> login(HttpServletRequest request, String username, String pwd, String rolename, String code);
+    public ServiceResult<ResponseMsg> login(HttpServletRequest request, String username, String pwd, String rolename, String code, String remember);
 
     /**
      * 验证验证码是否正确
@@ -41,8 +41,16 @@ public interface LoginService {
 
     /**
      * 获取登录信息，从session中获取用户登录信息
+     *
      * @param request 获取session
      * @return 返回sessionUser
      */
     public ServiceResult<SessionUser> getLoginedUserInfo(HttpServletRequest request);
+
+    /**
+     * 用户登出操作
+     * @param request 获取session
+     * @return 返回处理信息
+     */
+    public ServiceResult<ResponseMsg> logout(HttpServletRequest request);
 }

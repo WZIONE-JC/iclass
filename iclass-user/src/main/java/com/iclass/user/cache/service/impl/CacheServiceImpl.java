@@ -36,7 +36,7 @@ public class CacheServiceImpl implements CacheService {
     public ServiceResult<SessionUser> setCache(String sessionid, User user) {
         ServiceResult<SessionUser> serviceResult = new ServiceResult<>();
         SessionUser sessionUser = new SessionUser();
-        if(user.getUsercode() != null || !user.getUsercode().equals("")) {
+        if(user != null && user.getUsercode() != null && !user.getUsercode().equals("")) {
             user = userMapper.findUserByUsercode(user.getUsercode());
             sessionUser.setUser(user);
             logger.info("设置缓存时,从数据库中获取的用户信息:" + sessionUser);
@@ -51,8 +51,8 @@ public class CacheServiceImpl implements CacheService {
                 serviceResult.setMessage("UserRequestCacheServiceImpl.setCache 缓存设置失败: " + sessionUser);
             }
         } else {
-            logger.error("设置缓存时,用户的usercoer不能为空");
-            serviceResult.setMessage("设置缓存时,用户的usercoer不能为空");
+            logger.error("设置缓存失败,用户的usercoer不能为空");
+            serviceResult.setMessage("设置缓存失败,用户的usercoer不能为空");
         }
         return serviceResult;
     }

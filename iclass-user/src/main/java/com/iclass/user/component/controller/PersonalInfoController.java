@@ -1,8 +1,10 @@
 package com.iclass.user.component.controller;
 
 import com.iclass.user.component.entity.ServiceResult;
+import com.iclass.user.component.msg.ResponseMsg;
 import com.iclass.user.component.service.api.PersonalInfoService;
 import com.iclass.user.component.vo.SessionUser;
+import com.iclass.user.mybatis.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,23 +29,27 @@ public class PersonalInfoController {
     @Autowired
     private PersonalInfoService personalInfoService;
 
+    @RequestMapping(value = "/getUserInfoByUsercode", method = {RequestMethod.GET, RequestMethod.POST})
+    public ServiceResult<SessionUser> getUserInfoByUserCode(String usercode) {
+
+        return personalInfoService.getPersonalInfoByUsercode(usercode);
+    }
+
     @RequestMapping(value = "/getUserInfoBySession", method = {RequestMethod.GET, RequestMethod.POST})
     public ServiceResult<SessionUser> getUserInfoBySession(HttpServletRequest request) {
         HttpSession session = request.getSession();
+
         return personalInfoService.getPersonalInfoBySession(session);
     }
 
-    @RequestMapping(value = "/getUserInfoByUsercode", method = {RequestMethod.GET, RequestMethod.POST})
-    public ServiceResult<SessionUser> getUserInfoByUserCode(String usercode) {
-        ServiceResult<SessionUser> serviceResult = new ServiceResult<>();
-        if(usercode != null) {
-            serviceResult = personalInfoService.getPersonalInfoByUsercode(usercode);
-            logger.info("通过usercode:" + usercode + "获取到的用户信息为:" + serviceResult.getData());
-            return serviceResult;
-        } else {
-            logger.error("通过usercode获取用户信息时,usercode参数不能为空");
-            serviceResult.setMessage("通过usercode获取用户信息时,usercode参数不能为空");
-            return serviceResult;
-        }
+    @RequestMapping(value = "/update", method = {RequestMethod.POST, RequestMethod.GET})
+    public ServiceResult<ResponseMsg> updateUser(User user) {
+
+        return personalInfoService.updatePersonalInfo(user);
+    }
+
+    @RequestMapping(value = "/changePwd", method = {RequestMethod.GET, RequestMethod.POST})
+    public ServiceResult<ResponseMsg> changePassword(String userid, String oldPassword, String newPassword) {
+        return personalInfoService.updateUserPassword(userid, oldPassword, newPassword);
     }
 }

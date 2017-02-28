@@ -1,6 +1,7 @@
 package com.iclass.user.component.service.api;
 
 import com.iclass.user.component.entity.ServiceResult;
+import com.iclass.user.component.msg.ResponseMsg;
 import com.iclass.user.component.vo.SessionUser;
 import com.iclass.user.mybatis.model.User;
 
@@ -34,7 +35,7 @@ public interface PersonalInfoService {
      * @param user user参数
      * @return SessionUser
      */
-    public ServiceResult<SessionUser> updatePersonalInfo(User user);
+    public ServiceResult<ResponseMsg> updatePersonalInfo(User user);
 
     /**
      * 修改用户密码
@@ -43,5 +44,5 @@ public interface PersonalInfoService {
      * @param newPassword 新密码
      * @return SessionUser
      */
-    public ServiceResult<SessionUser> updateUserPassword(String usercode, String oldPassword, String newPassword);
+    public ServiceResult<ResponseMsg> updateUserPassword(String usercode, String oldPassword, String newPassword);
 }

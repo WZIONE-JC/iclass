@@ -106,15 +106,15 @@ public class SignUpServiceImpl implements SignUpService {
                         }
                     }
                     if(isSuccess) {
-                        responseMsg.setCodeMsg(Msg.SIGNUP_SUCCESS);
+                        responseMsg.setMsg(Msg.SIGNUP_SUCCESS);
                         serviceResult.setSuccess(true);
                         logger.info("注册成功");
                     } else {
-                        responseMsg.setCodeMsg(Msg.LOGIN_FAILED);
+                        responseMsg.setMsg(Msg.LOGIN_FAILED);
                         logger.info("注册失败,result = " + result);
                     }
                 } else {
-                    responseMsg.setCodeMsg(Msg.LOGIN_FAILED);
+                    responseMsg.setMsg(Msg.LOGIN_FAILED);
                     logger.info("注册失败,result = " + result);
                 }
             }

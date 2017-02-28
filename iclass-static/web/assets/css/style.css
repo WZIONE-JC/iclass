@@ -1,15 +1,15 @@
 
 /* 你自己的样式 */
 .span-input {
-    width: 32.5%;
-    border: 1px #a5a2a2 solid;
+    width: 30.2%;
+    border: 1px #cecdcd solid;
     display: block;
     margin-left: 33.3%;
     line-height: 167%;
     padding-top: 2px;
     padding-bottom: 2px;
     padding-left: 4px;
-    background: #e2dfdf;
+    background: #f8f8f8;
 }
 .reg_alert {
     padding: 0px;

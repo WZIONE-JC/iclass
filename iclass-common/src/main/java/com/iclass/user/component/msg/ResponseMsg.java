@@ -19,7 +19,7 @@ public class ResponseMsg {
         this.msg = msg.getMsg();
     }
 
-    public void setCodeMsg(Msg msg) {
+    public void setMsg(Msg msg) {
         this.msg = msg.getMsg();
     }
 

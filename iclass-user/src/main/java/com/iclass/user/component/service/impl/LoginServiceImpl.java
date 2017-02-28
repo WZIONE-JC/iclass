@@ -41,7 +41,7 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public ServiceResult<ResponseMsg> login(HttpServletRequest request, String userrole, String username, String password, String code) {
+    public ServiceResult<ResponseMsg> login(HttpServletRequest request, String userrole, String username, String password, String code, String remember) {
 
         ServiceResult<ResponseMsg> serviceResult = new ServiceResult<>();
         ResponseMsg responseMsg = new ResponseMsg();
@@ -84,17 +84,21 @@ public class LoginServiceImpl implements LoginService {
                 logger.info("欢迎 " + user.getUsername() + " " + user.getUserrole() + " 登录");
                 sessionUser.setUser(user);
                 //保存json数据(用户登录信息)
+                if(remember != null && !remember.equals("")) {
+                    logger.info("用户选择了记住密码, remember: " + remember);
+                    session.setMaxInactiveInterval(3600 * 12 * 7);
+                }
                 session.setAttribute(sessionId, sessionUser);
                 //查找到，就显示登录成功的信息，返回给前端
-                responseMsg.setCodeMsg(Msg.LOGIN_SUCCESS);
+                responseMsg.setMsg(Msg.LOGIN_SUCCESS);
                 serviceResult.setSuccess(true);
             } else {
                 //user为空，表示没有查找到用户信息
-                responseMsg.setCodeMsg(Msg.LOGIN_FAILED);
+                responseMsg.setMsg(Msg.LOGIN_FAILED);
                 logger.error("登录失败:request = [" + request + "], userrole = [" + userrole + "], username = [" + username + "], password = [" + password + "], code = [" + code + "]");
             }
         } else {
-            responseMsg.setCodeMsg(Msg.CODE_ERROR);
+            responseMsg.setMsg(Msg.CODE_ERROR);
             logger.error("验证码错误");
         }
         serviceResult.setData(responseMsg);
@@ -143,6 +147,20 @@ public class LoginServiceImpl implements LoginService {
             serviceResult.setSuccess(true);
             serviceResult.setData(user);
         }
+        return serviceResult;
+    }
+
+    @Override
+    public ServiceResult<ResponseMsg> logout(HttpServletRequest request) {
+        ServiceResult<ResponseMsg> serviceResult = new ServiceResult<>();
+        ResponseMsg responseMsg = new ResponseMsg();
+        HttpSession session = request.getSession();
+        String sessionId = session.getId();
+        logger.info("logout:用户登出操作,使用的SessionId:" + sessionId);
+        session.removeAttribute(sessionId);
+        responseMsg.setMsg(Msg.LOGOUT_SUCCESS);
+        serviceResult.setSuccess(true);
+        serviceResult.setData(responseMsg);
         return serviceResult;
     }
 }

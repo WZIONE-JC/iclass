@@ -18,7 +18,7 @@
     <link href="assets/login/css/login.css" rel="stylesheet" type="text/css"/>
     <link href="assets/css/style.css" rel="stylesheet" type="text/css"/>
 
-    <link href="lib/sweet-alert/sweet-alert.css" rel="stylesheet" type="text/css"/>
+    <link href="lib/sweetalert-1.1.1/sweetalert.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="assets/login/css/fontawesome/font-awesome.min.css">
     <!--<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700'rel='stylesheet' type='text/css'>-->
 
@@ -98,8 +98,8 @@
             </div>
             <div class="form-actions">
                 <label class="checkbox pull-left">
-                    <input type="checkbox" class="uniform" name="remember">
-                    	记住密码
+                    <input type="checkbox" title="7天自动登陆" class="uniform" name="remember" value="1">
+                    	<span title="7天自动登陆" >记住密码</span>
                 </label>
                 <button type="submit" class="submit btn btn-primary pull-right">
                    	 登录
@@ -194,18 +194,18 @@
 							data-rule-phoneNL="true" data-msg-required="请输入手机号." />
 					</div>
 				</div>
-				<div class="form-group spacing-top">
-               <label class="checkbox">
-              <input type="checkbox" class="uniform" id="remember" name="remember" data-rule-required="true"
-                 data-msg-required="是否同意本网站的规定.">
-                 我同意
-                 <a href="javascript:void(0);">
-                   网站的规定
-                 </a>
-               </label>
-               <label for="remember" class="has-error help-block" generated="true" style="display:none;">
-               </label>
-             </div>
+				<!--<div class="form-group spacing-top">-->
+               <!--<label class="checkbox">-->
+              <!--<input type="checkbox" class="uniform" id="remember" name="remember" data-rule-required="true"-->
+                 <!--data-msg-required="是否同意本网站的规定.">-->
+                 <!--我同意-->
+                 <!--<a href="javascript:void(0);">-->
+                   <!--网站的规定-->
+                 <!--</a>-->
+               <!--</label>-->
+               <!--<label for="remember" class="has-error help-block" generated="true" style="display:none;">-->
+               <!--</label>-->
+             <!--</div>-->
 				<div class="form-actions">
 					<button type="button" class="back btn btn-default pull-left">
 						<i class="icon-angle-left"> </i> 返回
@@ -297,14 +297,13 @@
 </script>
 <script type="text/javascript" src="assets/js/business/ip.js">
 </script>
+<script type="text/javascript" src="lib/sweetalert-1.1.1/sweetalert.min.js"></script>
 <script type="text/javascript" src="assets/login/js/login.js">
 </script>
 <script>
     $(function () {
         Login.init()
     });
-</script>
-<script type="text/javascript" src="lib/sweet-alert/sweet-alert.min.js">
 </script>
 </body>
 </html>

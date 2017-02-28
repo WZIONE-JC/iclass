@@ -25,4 +25,6 @@ public interface UserMapper {
     User findByUsercodeAndPassword(@Param("usercode") String usercode, @Param("password") String password, @Param("userrole") String userrole);
 
     User findUserByUsercode(@Param("usercode") String usercode);
+
+    int updatePasswordByUserIdAndOldPassword(@Param("userid") String userid, @Param("oldpassword") String oldpassword, @Param("newpassword") String newPassword);
 }

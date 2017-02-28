@@ -1,6 +1,9 @@
 package com.iclass.user.component.service.impl;
 
 import com.iclass.user.component.entity.ServiceResult;
+import com.iclass.user.component.md5.MD5;
+import com.iclass.user.component.msg.Msg;
+import com.iclass.user.component.msg.ResponseMsg;
 import com.iclass.user.component.vo.SessionUser;
 import com.iclass.user.component.service.api.PersonalInfoService;
 import com.iclass.user.mybatis.dao.UserMapper;
@@ -64,18 +67,59 @@ public class PersonalInfoServiceImpl implements PersonalInfoService {
             serviceResult.setData(sessionUser);
         } else {
             logger.error("从session中通过sessionId获取用户信息出错,session已过期,或用户未登录");
-            serviceResult.setMessage("从session中通过sessionId获取用户信息出错,session已过期,或用户未登录");
+            serviceResult.setMessage("用户未登录");
         }
         return serviceResult;
     }
 
     @Override
-    public ServiceResult<SessionUser> updatePersonalInfo(User user) {
-        return null;
+    public ServiceResult<ResponseMsg> updatePersonalInfo(User user) {
+        logger.info("修改的用户信息:"+user);
+        ServiceResult<ResponseMsg> serviceResult = new ServiceResult<>();
+
+        if(user != null) {
+            if(user.getUserid() != null && !user.getUserid().equals("")) {
+                userMapper.updateByPrimaryKeySelective(user);
+                logger.info("修改用户信息成功");
+                serviceResult.setSuccess(true);
+                serviceResult.setData(new ResponseMsg(Msg.UPDATE_USER_SUCCESS));
+            } else {
+                logger.error("修改用户信息失败,userid参数不能为空");
+                serviceResult.setMessage("修改用户信息失败,userid参数不能为空");
+            }
+        } else {
+            logger.error("修改用户信息失败,用户信息不能为空");
+            serviceResult.setMessage("修改用户信息失败,用户信息不能为空");
+            serviceResult.setData(new ResponseMsg(Msg.UPDATE_USER_FAILED));
+        }
+        return serviceResult;
     }
 
     @Override
-    public ServiceResult<SessionUser> updateUserPassword(String usercode, String oldPassword, String newPassword) {
-        return null;
+    public ServiceResult<ResponseMsg> updateUserPassword(String userid, String oldPassword, String newPassword) {
+       logger.info("userid = [" + userid + "], oldPassword = [" + oldPassword + "], newPassword = [" + newPassword + "]");
+        ServiceResult<ResponseMsg> serviceResult = new ServiceResult<>();
+        if(userid != null && !userid.equals("")) {
+            if(oldPassword != null && !oldPassword.equals("") && newPassword != null && !newPassword.equals("")) {
+                String oldpwd = MD5.getPwd(oldPassword);
+                String newPwd = MD5.getPwd(newPassword);
+                int result = userMapper.updatePasswordByUserIdAndOldPassword(userid, oldpwd, newPwd);
+                if(result == 1) {
+                    serviceResult.setSuccess(true);
+                    logger.info("修改密码成功");
+                    serviceResult.setData(new ResponseMsg(Msg.UPDATE_PASSWORD_SUCCESS));
+                } else {
+                    logger.warn("原始密码不正确");
+                    serviceResult.setMessage("原始密码不正确");
+                }
+            } else {
+                logger.error("修改密码失败,原始密码和新密码不能为空");
+                serviceResult.setMessage("修改密码失败,原始密码和新密码不能为空");
+            }
+        } else {
+            logger.error("修改密码失败,userid不能为空");
+            serviceResult.setMessage("修改密码失败,userid不能为空");
+        }
+        return serviceResult;
     }
 }
