@@ -131,7 +131,12 @@ var Login = function () {
                             }
                         },
                         error:function(responseData){
-                        	$("#msg").text(responseData.data.msg);
+                            swal({
+                                title: "Sorry!",
+                                text: responseData.responseText,
+                                timer: 2000,
+                                type: "error"
+                            });
                             NProgress.set(1); //停止掉进度条
                         }
                     });

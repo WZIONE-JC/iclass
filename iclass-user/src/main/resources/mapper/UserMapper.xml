@@ -48,7 +48,7 @@
     select
     <include refid="Base_Column_List" />
     from user
-    whereand username = #{username} and userpassword = #{password} and userrole = #{userrole}
+    where username = #{username} and userpassword = #{password} and userrole = #{userrole}
   </select>
   <select id="findByUsercodeAndPassword" resultMap="BaseResultMap" parameterType="String">
     select
