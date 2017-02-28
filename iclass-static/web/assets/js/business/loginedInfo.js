@@ -13,15 +13,25 @@ var Logined = function () {
                 url: rurl + "/user/getLoginedUserInfo",
                 timeout: 3000,
                 success: function (logineduserdata) {
-                    if(logineduserdata != null) {
-                        $("#rolename").text(logineduserdata.user.userrole);
-                        $("#username").text(logineduserdata.user.username);
+                    if(logineduserdata.success) {
+                        $("#rolename").text(logineduserdata.data.user.userrole);
+                        $("#username").text(logineduserdata.data.user.username);
                     } else {
-                        alert("获取用户信息出错，请重试 :" + logineduserdata);
+                        swal({
+                            title: "Sorry!",
+                            text: "获取用户信息出错，请重试 :" + logineduserdata.message,
+                            timer: 2000,
+                            type: "error"
+                        });
                     }
                 },
                 error: function (logineduserdata) {
-                    window.location.href="login.html";
+                    swal({
+                        title: "Sorry!",
+                        text: "请求用户信息出错，请重试 :" + logineduserdata.responseText,
+                        timer: 2000,
+                        type: "error"
+                    });
                 }
             })
         })

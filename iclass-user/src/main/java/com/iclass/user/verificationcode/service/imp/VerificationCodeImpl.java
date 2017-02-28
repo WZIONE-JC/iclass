@@ -1,6 +1,8 @@
 package com.iclass.user.verificationcode.service.imp;
 
 import com.iclass.user.verificationcode.service.api.VerificationCode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
@@ -20,6 +22,7 @@ import java.util.Random;
 @Service
 public class VerificationCodeImpl implements VerificationCode {
 
+    private final Logger logger = LoggerFactory.getLogger(VerificationCodeImpl.class);
     /**
      * 验证码的宽度
      */
@@ -53,22 +56,23 @@ public class VerificationCodeImpl implements VerificationCode {
         for(int i=0; i<CODE_MAX_LENGTH; i++) {
             index = r.nextInt(len);
             g.setColor(new Color(r.nextInt(100), r.nextInt(150), r.nextInt(200)));
-            g.setFont(new Font("宋体", Font.BOLD, 18));
+            g.setFont(new Font("Consolas", Font.BOLD, 18));
             g.drawString(ch[index]+"", (i*15) + 6, (r.nextInt(10) + 20));
             buffer.append(ch[index]);
         }
         verificationCode = buffer.toString();
         session.setAttribute("verificationCode", verificationCode);
-//		System.out.println("服务器:生成验证码成功:" +  session.getServletContext().getAttribute("verificationCode"));
+		logger.info("服务器:生成验证码成功:" + session.getAttribute("verificationCode"));
         try {
             ImageIO.write(bi, "JPG", response.getOutputStream());
         } catch (IOException e) {
-            System.out.println("验证码生成出错");
+            logger.error("验证码生成出错");
             e.printStackTrace();
         }
     }
 
     public String getVerificationCode(HttpServletRequest request) {
+        logger.info("获取字符串验证码时,sessionId为: "+request.getSession().getId());
         return (String)request.getSession().getAttribute("verificationCode");
     }
 

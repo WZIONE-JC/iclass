@@ -1,5 +1,6 @@
 package com.iclass.user.component.controller;
 
+import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.msg.ResponseMsg;
 import com.iclass.user.component.service.api.SignUpService;
 import com.iclass.user.mybatis.model.User;
@@ -20,8 +21,8 @@ public class SignUpController {
     @Autowired
     private SignUpService signUpService;
 
-    @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public ResponseMsg signup(User user) {
+    @RequestMapping(value = "/signup", method = {RequestMethod.POST,RequestMethod.GET})
+    public ServiceResult<ResponseMsg> signup(User user) {
         return signUpService.signup(user);
     }
 }

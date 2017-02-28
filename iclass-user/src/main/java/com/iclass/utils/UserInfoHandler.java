@@ -1,6 +1,8 @@
 package com.iclass.utils;
 
 import com.iclass.user.mybatis.model.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * iclass
@@ -8,6 +10,8 @@ import com.iclass.user.mybatis.model.User;
  * Created by yang.tang on 2017/2/14 12:39.
  */
 public class UserInfoHandler {
+
+    private static final Logger logger = LoggerFactory.getLogger(UserInfoHandler.class);
 
     /**
      * 去掉日期后面的 毫秒数 .0
@@ -19,12 +23,12 @@ public class UserInfoHandler {
             String oldUserRegisterDate = user.getUserregisterdate();
             if(oldUserRegisterDate != null) {
                 String userRegisterDate = oldUserRegisterDate.split("\\.")[0];
-                System.out.println("UserInfoHandler.userRegisterDateHandler:" + userRegisterDate);
+                logger.info("UserInfoHandler.userRegisterDateHandler:" + userRegisterDate);
                 user.setUserregisterdate(userRegisterDate);
-                System.out.println("UserInfoHandler.userRegisterDataHandler:" + user);
+                logger.info("UserInfoHandler.userRegisterDataHandler:" + user);
             }
         } else {
-            System.out.println("UserInfoHandler.userRegisterDateHandler: user不能为空：" + user);
+            logger.info("UserInfoHandler.userRegisterDateHandler: user不能为空：" + user);
         }
         return user;
     }
@@ -37,9 +41,9 @@ public class UserInfoHandler {
     public static User userpasswordHandler(User user) {
         if(user != null) {
             user.setUserpassword(null);
-            System.out.println("UserInfoHandler.userpasswordHandler: 已处理password信息 : "+user);
+            logger.info("UserInfoHandler.userpasswordHandler: 已处理password信息 : "+user);
         } else {
-            System.out.println("UserInfoHandler.userpasswordHandler: user不能为空: "+user);
+            logger.info("UserInfoHandler.userpasswordHandler: user不能为空: "+user);
         }
         return user;
     }
@@ -49,15 +53,15 @@ public class UserInfoHandler {
      * @param jsonp
      * @return
      */
-    public static String getUsercodeByJsonpData(String jsonp) {
-        String usercode = null;
-        if(jsonp != null) {
-            String usercodedata = jsonp.split(",")[1];
-            usercode = usercodedata.split(":")[1].replaceAll("\"", "");
-            System.out.println("UserUtils.getUsercodeByJsonpData : " + usercode);
-        }
-        return usercode;
-    }
+//    public static String getUsercodeByJsonpData(String jsonp) {
+//        String usercode = null;
+//        if(jsonp != null) {
+//            String usercodedata = jsonp.split(",")[1];
+//            usercode = usercodedata.split(":")[1].replaceAll("\"", "");
+//            logger.info("UserUtils.getUsercodeByJsonpData : " + usercode);
+//        }
+//        return usercode;
+//    }
 
     /**
      * 根据username usercode userrole 生成 json数据,当然这里也可以将它封装为一个对象

@@ -189,11 +189,18 @@ function layer_show(title,url,id,w,h){
             data: {
                 usercode: usercode
             },
-            success: function () {
-
+            success: function (responseData) {
+				if(responseData.success) {
+					console.log("设置缓存成功");
+					console.log(responseData.data);
+				} else {
+					console.log("设置缓存失败");
+					console.log(responseData.message);
+				}
             },
-            error: function () {
-                // alert("设置缓存信息出错");
+            error: function (data) {
+                console.log("请求设置缓存失败");
+                console.log(data.responseText)
             }
         })
     }

@@ -1,28 +1,49 @@
 package com.iclass.user.component.service.impl;
 
+import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.service.api.StudentService;
 import com.iclass.user.mybatis.dao.StudentMapper;
 import com.iclass.user.mybatis.model.Student;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
  * iclass
  * <p>
- * Created by JasonTang on 2/20/2017 11:19 PM.
+ * Created by yang.tang on 2017/2/28 14:56.
  */
 @Service("StudentService")
 public class StudentServiceImpl implements StudentService {
+
+    private final Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
 
     @Autowired
     private StudentMapper studentMapper;
 
     @Override
-    public void save(Student student) {
+    public ServiceResult<Student> save(Student student) {
 
+        ServiceResult<Student> serviceResult = new ServiceResult<>();
+        if (student != null) {
+            int result = studentMapper.insert(student);
+            if (result == 1) {
+                serviceResult.setSuccess(true);
+                serviceResult.setData(student);
+            } else {
+                logger.error("sava:学生信息保存失败");
+                serviceResult.setMessage("sava:学生信息保存失败");
+            }
+        } else {
+            logger.error("save:保存学生信息出错,信息不能为空");
+            serviceResult.setMessage("save:保存学生信息出错,信息不能为空");
+        }
+        return serviceResult;
     }
-    @Override
-    public void delete(String studentCdoe) {
 
+    @Override
+    public ServiceResult<Student> delete(String studentCdoe) {
+        return null;
     }
 }

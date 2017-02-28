@@ -1,5 +1,7 @@
 package com.iclass.user.component.service.api;
 
+import com.iclass.user.component.entity.ServiceResult;
+import com.iclass.user.component.vo.SessionUser;
 import com.iclass.user.mybatis.model.Student;
 
 /**
@@ -13,11 +15,11 @@ public interface StudentService {
      * 保存学生信息
      * @param student 学生实体
      */
-    public void save(Student student);
+    public ServiceResult<Student> save(Student student);
 
     /**
      * 删除学生信息
      * @param studentCdoe 学生的学号
      */
-    public void delete(String studentCdoe);
+    public ServiceResult<Student> delete(String studentCdoe);
 }

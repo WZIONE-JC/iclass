@@ -1,14 +1,16 @@
 package com.iclass.user.component.service.impl;
 
-import com.iclass.user.component.vo.SessionUser;
-import com.iclass.user.component.exception.UserException;
+import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.md5.MD5;
-import com.iclass.user.component.msg.CodeMsg;
+import com.iclass.user.component.msg.Msg;
 import com.iclass.user.component.msg.ResponseMsg;
 import com.iclass.user.component.service.api.LoginService;
+import com.iclass.user.component.vo.SessionUser;
 import com.iclass.user.mybatis.dao.UserMapper;
 import com.iclass.user.mybatis.model.User;
 import com.iclass.user.verificationcode.service.imp.VerificationCodeImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,8 @@ import java.util.regex.Pattern;
 @Service("LoginService")
 public class LoginServiceImpl implements LoginService {
 
+    private final Logger logger = LoggerFactory.getLogger(LoginServiceImpl.class);
+
     @Autowired
     private UserMapper userMapper;
 
@@ -37,10 +41,10 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public ResponseMsg login(HttpServletRequest request, String userrole, String username, String password, String code) {
+    public ServiceResult<ResponseMsg> login(HttpServletRequest request, String userrole, String username, String password, String code) {
 
+        ServiceResult<ResponseMsg> serviceResult = new ServiceResult<>();
         ResponseMsg responseMsg = new ResponseMsg();
-
         /**
          * 首先验证验证码，通过validateVerificationCode 方法去验证
          * 这里我考虑是从前端去验证
@@ -67,33 +71,34 @@ public class LoginServiceImpl implements LoginService {
 
             // 以工号的方式登录
             if(m.matches()) {
-                System.out.println("使用工号登录");
                 //参数username是usercode
                 String usercode = username;
+                logger.info("使用工号登录:" + usercode);
                 user = userMapper.findByUsercodeAndPassword(usercode, newPassword, userrole);
             } else {
                 //使用用户名的方式去登录
-                System.out.println("使用用户名登录");
+                logger.info("使用用户名登录" + username);
                 user = userMapper.findByUsernameAndPassword(username, newPassword, userrole);
             }
             if(user != null) {
-                System.out.println("欢迎 " + user.getUsername() + " " + user.getUserrole() + " 登录");
+                logger.info("欢迎 " + user.getUsername() + " " + user.getUserrole() + " 登录");
                 sessionUser.setUser(user);
                 //保存json数据(用户登录信息)
                 session.setAttribute(sessionId, sessionUser);
                 //查找到，就显示登录成功的信息，返回给前端
-                responseMsg.setCodeMsg(CodeMsg.LOGIN_SUCCESS);
+                responseMsg.setCodeMsg(Msg.LOGIN_SUCCESS);
+                serviceResult.setSuccess(true);
             } else {
                 //user为空，表示没有查找到用户信息
-                responseMsg.setCodeMsg(CodeMsg.LOGIN_FAILED);
-                System.out.println("LoginServiceImpl.login");
-                System.out.println("登录信息错误:");
-                System.out.println("request = [" + request + "], userrole = [" + userrole + "], username = [" + username + "], password = [" + password + "], code = [" + code + "]");
+                responseMsg.setCodeMsg(Msg.LOGIN_FAILED);
+                logger.error("登录失败:request = [" + request + "], userrole = [" + userrole + "], username = [" + username + "], password = [" + password + "], code = [" + code + "]");
             }
         } else {
-            responseMsg.setCodeMsg(CodeMsg.CODE_ERROR);
+            responseMsg.setCodeMsg(Msg.CODE_ERROR);
+            logger.error("验证码错误");
         }
-        return responseMsg;
+        serviceResult.setData(responseMsg);
+        return serviceResult;
     }
 
     /**
@@ -103,18 +108,16 @@ public class LoginServiceImpl implements LoginService {
      */
     @Override
     public boolean validateVerificationCode(HttpServletRequest request, String code) {
-        System.out.println("LoginServiceImpl.validateVerificationCode");
         if(code != null && !code.equals("")) {
             String stringCode = verificationCode.getVerificationCode(request);
             if(stringCode != null) {
-                System.out.println("获取到的stringCode:" + stringCode + ":" + code.trim());
-                System.out.println("stringCode.equalsIgnoreCase(code.trim()):"+stringCode.equalsIgnoreCase(code.trim()));
+                logger.info("生成的验证码:" + stringCode + ",用户输入的验证码:" + code.trim());
                 return stringCode.equalsIgnoreCase(code.trim());
             } else {
-                System.out.println("获取到的stringCode:"+stringCode);
+                logger.info("从session中没有获取到验证码,session已过期");
             }
         } else {
-            throw new UserException("验证码不能为空", "用户输入的验证码:" + code);
+            logger.info("验证码不能为空,用户输入的验证码:" + code);
         }
         return false;
     }
@@ -128,15 +131,18 @@ public class LoginServiceImpl implements LoginService {
      * @return 如果从session 中获取的jsondata存在，就返回jsonp 数据，否则返回null
      */
     @Override
-    public SessionUser getLoginedUserInfo(HttpServletRequest request) {
-        SessionUser user;
+    public ServiceResult<SessionUser> getLoginedUserInfo(HttpServletRequest request) {
+        ServiceResult<SessionUser> serviceResult = new ServiceResult<>();
         HttpSession session = request.getSession();
-        System.out.println("LoginServiceImpl.getLoginedUserInfo sessionID: " + session.getId());
         //从session中获取session中的user数据
-        user = (SessionUser)session.getAttribute(session.getId());
+        SessionUser user = (SessionUser)session.getAttribute(session.getId());
         if(user == null) {
-            throw new UserException("用户未登录", session.getId()+"此ID对应的用户没有登录");
+            serviceResult.setMessage("用户未登录");
+            logger.error("用户未登录");
+        } else {
+            serviceResult.setSuccess(true);
+            serviceResult.setData(user);
         }
-        return user;
+        return serviceResult;
     }
 }

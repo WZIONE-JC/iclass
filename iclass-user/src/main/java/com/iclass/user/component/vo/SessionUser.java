@@ -19,6 +19,12 @@ public class SessionUser {
 
     }
 
+    public SessionUser(User user) {
+        this.user = user;
+        this.user = UserInfoHandler.userpasswordHandler(user);
+        this.user = UserInfoHandler.userRegisterDateHandler(user);
+    }
+
     public User getUser() {
         return user;
     }

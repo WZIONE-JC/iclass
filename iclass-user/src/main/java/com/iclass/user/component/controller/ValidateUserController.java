@@ -1,7 +1,10 @@
 package com.iclass.user.component.controller;
 
+import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.msg.ResponseMsg;
 import com.iclass.user.component.service.api.ValidateExistService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,21 +17,22 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/user")
-public class ValidateUserController{
+public class ValidateUserController {
 
+    private final Logger logger = LoggerFactory.getLogger(ValidateUserController.class);
     @Autowired
     private ValidateExistService validateIsExistImpl;
 
     @RequestMapping(value = "/validateUsername", method = {RequestMethod.GET, RequestMethod.POST})
-    public ResponseMsg validateUsername(String username) {
-        System.out.println("ValidateUserController.validateUsername: " + username);
-       return validateIsExistImpl.isExistUsername(username);
+    public ServiceResult<ResponseMsg> validateUsername(String username) {
+        logger.info("ValidateUserController.validateUsername: " + username);
+        return validateIsExistImpl.isExistUsername(username);
     }
 
     @RequestMapping(value = "/validateUsercode", method = {RequestMethod.GET, RequestMethod.POST})
-    public ResponseMsg validateUsercode(String usercode) {
-        System.out.println("ValidateUserController.validateUsercode: " + usercode);
-        return  validateIsExistImpl.isExistUserCode(usercode);
+    public ServiceResult<ResponseMsg> validateUsercode(String usercode) {
+        logger.info("ValidateUserController.validateUsercode: " + usercode);
+        return validateIsExistImpl.isExistUserCode(usercode);
 //        String jsonData = "{\"code\":\"1001\", \"msg\":\"zhangsan\", \"telephone\":\"13612345678\"}";
 //        String retStr = mycallback + "(" + jsonData + ")";
     }

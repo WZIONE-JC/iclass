@@ -1,5 +1,6 @@
 package com.iclass.user.component.service.api;
 
+import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.msg.ResponseMsg;
 
 /**
@@ -16,12 +17,12 @@ public interface ValidateExistService {
      * @param username 用户名
      * @return 返回消息实体
      */
-    public ResponseMsg isExistUsername(String username);
+    public ServiceResult<ResponseMsg> isExistUsername(String username);
 
     /**
      * 检查工号是否存在
      * @param usercode 工号
      * @return 返回消息实体
      */
-    public ResponseMsg isExistUserCode(String usercode);
+    public ServiceResult<ResponseMsg> isExistUserCode(String usercode);
 }

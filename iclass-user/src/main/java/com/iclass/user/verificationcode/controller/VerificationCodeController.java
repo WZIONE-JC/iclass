@@ -1,6 +1,8 @@
 package com.iclass.user.verificationcode.controller;
 
 import com.iclass.user.verificationcode.service.imp.VerificationCodeImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/VerificationCode")
 public class VerificationCodeController {
 
+    private final Logger logger = LoggerFactory.getLogger(VerificationCodeController.class);
     @Autowired
     private VerificationCodeImpl verificationCode;
 
@@ -28,10 +31,9 @@ public class VerificationCodeController {
     @RequestMapping(value = "/generate")
     public void generate(HttpServletRequest request, HttpServletResponse response) {
 
+        logger.info("生成验证码时,sessionId为："+request.getSession().getId());
+
         verificationCode.genVerificationCode(request, response);
-
-        System.out.println(verificationCode.getVerificationCode(request));
-
     }
 
     /**

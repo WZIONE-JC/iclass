@@ -118,20 +118,20 @@ var Login = function () {
                         dataType:"jsonp",
                         timeout: 3000,
                         data:$(".login-form").serialize(),
-                        success:function(data){
+                        success:function(responseData){
                             //登录成功
-                            if(data.code == "2001"){
+                            if(responseData.success){
                             	$(".login-form .alert-danger").hide();
                             	NProgress.done();
                                 location.href="index.html";
                             } else {
                                 $(".login-form .alert-danger").show();
-                                $("#msg").text(data.msg);
+                                $("#msg").text(responseData.data.msg);
                                 NProgress.set(1); //停止掉进度条
                             }
                         },
-                        error:function(data){
-                        	$("#msg").text(data.msg);
+                        error:function(responseData){
+                        	$("#msg").text(responseData.data.msg);
                             NProgress.set(1); //停止掉进度条
                         }
                     });
@@ -159,11 +159,11 @@ var Login = function () {
                             url: rurl+"/user/signup",
                             timeout: 3000,
                             data:$(".register-form").serialize(),
-                            success:function(data){
-                                if(data.code == "2003"){
+                            success:function(responseData){
+                                if(responseData.success){
                                 	swal({
                                 		title: "Good Job!",
-                                		text: data.msg,
+                                		text: responseData.data.msg,
                                 		timer: 2000,
                                 		type: "success"
                                 	});
@@ -172,10 +172,10 @@ var Login = function () {
                                         $(".back").click();
                                         $(".register-form")[0].reset();
                                     },2000);
-                                } else if(data.code== "2004"){
+                                } else {
                                     swal({
                                 		title: "Sorry!",
-                                		text: data.msg,
+                                		text: responseData.data.msg,
                                 		timer: 2000,
                                 		type: "error"
                                 	});
@@ -259,12 +259,12 @@ var Login = function () {
                     	usercode: $("#register_userCode").val()
                     },
                     timeout: 3000,
-                    success: function (data) {
-                    	if (data.code == "1002") {
+                    success: function (responseData) {
+                    	if (!responseData.success) {
                             $(".register-form .alert-msg").addClass("error1").css("color","red").show();
-                            $("#reg_msg").text(data.msg);
+                            $("#reg_msg").text(responseData.data.msg);
                             return false;
-                        } else if (data.code == "1004") {
+                        } else {
                             $(".register-form .error1").removeClass("error1").hide();
                         }
                     }
@@ -285,12 +285,12 @@ var Login = function () {
                     	username: $("#register_username").val()
                     },
                     timeout: 3000,
-                    success: function (data) {
-                        if (data.code == "1001") {
+                    success: function (responseData) {
+                        if (!responseData.success) {
                             $(".register-form .alert-msg").addClass("error2").css("color","red").show();
-                            $("#reg_msg").text(data.msg);
+                            $("#reg_msg").text(responseData.data.msg);
                             return false;
-                        } else if (data.code == "1003") {
+                        } else {
                             $(".register-form .error2").removeClass("error2").hide();
                         }
                     }
@@ -321,22 +321,33 @@ var Login = function () {
                 },
                 timeout: 10000,
                 success: function (responseData) {
-                    var size = responseData.dataMap.length;
-                    var rolenames = responseData.dataMap;
-                    var option;
-                    for(var i = 0; i < size; i ++) {
-                      option = new Option(rolenames[i].rolename, rolenames[i].rolename);
-                      $("#rolename")[0].add(option);
+                    if(responseData.success) {
+                        var size = responseData.data.length;
+                        var rolenames = responseData.data;
+                        var option;
+                        for(var i = 0; i < size; i ++) {
+                            option = new Option(rolenames[i].rolename, rolenames[i].rolename);
+                            $("#rolename")[0].add(option);
+                        }
+                    } else {
+                        swal({
+                            title: "Sorry!",
+                            text: responseData.message,
+                            timer: 2000,
+                            type: "error"
+                        });
                     }
                 },
-                error: function(response,data) {
-                    alert("获取角色信息出错,错误信息:"+data+",请刷新重试");
-
+                error: function(responseData) {
+                    swal({
+                        title: "Sorry!",
+                        text: "获取角色信息出错,错误信息:"+responseData.responseText+",请刷新重试",
+                        timer: 2000,
+                        type: "error"
+                    });
                 }
             })
         })
-
-
     }
     return {
         init: function () {

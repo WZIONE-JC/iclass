@@ -1,6 +1,6 @@
 package com.iclass.user.component.entity;
 
-import com.iclass.user.component.msg.CodeMsg;
+import com.iclass.user.component.msg.ResponseMsg;
 
 import java.io.Serializable;
 
@@ -9,22 +9,22 @@ import java.io.Serializable;
  * <p>
  * Created by JasonTang on 2/20/2017 11:38 PM.
  */
-public class ServiceResult<T> implements Serializable{
+public class ServiceResult<T> implements Serializable {
 
     /**
      * 是否执行成功
      */
-    private Boolean isSuccess;
+    private Boolean success = false;
 
     /**
      * 数据
      */
-    private T dataMap;
+    private T data;
 
     /**
      * 错误码和错误信息
      */
-    private CodeMsg codeMsg;
+    private ResponseMsg responseMsg;
 
     /**
      * 详细信息，可以是详细原因
@@ -35,43 +35,38 @@ public class ServiceResult<T> implements Serializable{
 
     }
 
-    public ServiceResult(Boolean isSuccess) {
-        this.isSuccess = isSuccess;
+    public ServiceResult(Boolean success, ResponseMsg responseMsg) {
+        this.success = success;
+        this.responseMsg = responseMsg;
     }
 
-    public ServiceResult(T dataMap, CodeMsg codeMsg) {
-        this.dataMap = dataMap;
-        this.codeMsg = codeMsg;
-    }
-
-    public ServiceResult(T dataMap, CodeMsg codeMsg, String message) {
-        this.dataMap = dataMap;
-        this.codeMsg = codeMsg;
+    public ServiceResult(Boolean success, String message) {
+        this.success = success;
         this.message = message;
     }
 
-    public Boolean getIsSuccess() {
-        return isSuccess;
+    public Boolean getSuccess() {
+        return success;
     }
 
-    public void setIsSuccess(Boolean isSuccess) {
-        this.isSuccess = isSuccess;
+    public void setSuccess(Boolean success) {
+        this.success = success;
     }
 
-    public T getDataMap() {
-        return dataMap;
+    public T getData() {
+        return data;
     }
 
-    public void setDataMap(T dataMap) {
-        this.dataMap = dataMap;
+    public void setData(T data) {
+        this.data = data;
     }
 
-    public CodeMsg getCodeMsg() {
-        return codeMsg;
+    public ResponseMsg getResponseMsg() {
+        return responseMsg;
     }
 
-    public void setCodeMsg(CodeMsg codeMsg) {
-        this.codeMsg = codeMsg;
+    public void setResponseMsg(ResponseMsg responseMsg) {
+        this.responseMsg = responseMsg;
     }
 
     public String getMessage() {

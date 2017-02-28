@@ -1,9 +1,10 @@
 package com.iclass.user.component.service.api;
 
+import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.vo.SessionUser;
 import com.iclass.user.mybatis.model.User;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * iclass
@@ -19,21 +20,21 @@ public interface PersonalInfoService {
      * @param usercode 工号
      * @return SessionUser
      */
-    public SessionUser getPersonalInfoByUsercode(String usercode);
+    public ServiceResult<SessionUser> getPersonalInfoByUsercode(String usercode);
 
     /**
      * 根据sessionId 获取用户信息
-     * @param request 获取session
+     * @param session 获取sessionId
      * @return SessionUser
      */
-    public SessionUser getPersonalInfoBySession(HttpServletRequest request);
+    public ServiceResult<SessionUser> getPersonalInfoBySession(HttpSession session);
 
     /**
      * 修改用户信息
      * @param user user参数
      * @return SessionUser
      */
-    public SessionUser updatePersonalInfo(User user);
+    public ServiceResult<SessionUser> updatePersonalInfo(User user);
 
     /**
      * 修改用户密码
@@ -42,5 +43,5 @@ public interface PersonalInfoService {
      * @param newPassword 新密码
      * @return SessionUser
      */
-    public SessionUser updateUserPassword(String usercode, String oldPassword, String newPassword);
+    public ServiceResult<SessionUser> updateUserPassword(String usercode, String oldPassword, String newPassword);
 }

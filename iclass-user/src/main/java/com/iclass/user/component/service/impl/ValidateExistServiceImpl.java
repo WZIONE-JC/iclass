@@ -1,10 +1,12 @@
 package com.iclass.user.component.service.impl;
 
-import com.iclass.user.component.exception.UserException;
-import com.iclass.user.component.msg.CodeMsg;
+import com.iclass.user.component.entity.ServiceResult;
+import com.iclass.user.component.msg.Msg;
 import com.iclass.user.component.msg.ResponseMsg;
 import com.iclass.user.component.service.api.ValidateExistService;
 import com.iclass.user.mybatis.dao.UserMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 @Service("ValidateExistService")
 public class ValidateExistServiceImpl implements ValidateExistService {
 
+    private final Logger logger = LoggerFactory.getLogger(ValidateExistServiceImpl.class);
     /**
      * 用户mapper
      */
@@ -27,24 +30,27 @@ public class ValidateExistServiceImpl implements ValidateExistService {
      * 结果：
      *      存在：ture
      *      不存在：false
-     * @param username
-     * @return
+     * @param username 注册时,用户名
+     * @return 返回处理消息
      */
     @Override
-    public ResponseMsg isExistUsername(String username) {
+    public ServiceResult<ResponseMsg> isExistUsername(String username) {
+        ServiceResult<ResponseMsg> serviceResult = new ServiceResult<>();
         ResponseMsg responseMsg = new ResponseMsg();
         Boolean result = false;
         if(username != null) {
             result = userMapper.findByUsername(username) != null;
         } else {
-            throw new UserException("4001", "用户名不能为空");
+            logger.error("用户名不能为空");
         }
         if(result) {
-            responseMsg.setCodeMsg(CodeMsg.USERNAME_EXISTED);
+            responseMsg.setCodeMsg(Msg.USERNAME_EXISTED);
         } else {
-            responseMsg.setCodeMsg(CodeMsg.USERNAME_CAN_USE);
+            serviceResult.setSuccess(true);
+            responseMsg.setCodeMsg(Msg.USERNAME_CAN_USE);
         }
-        return responseMsg;
+        serviceResult.setData(responseMsg);
+        return serviceResult;
     }
 
     /**
@@ -52,22 +58,25 @@ public class ValidateExistServiceImpl implements ValidateExistService {
      * 结果：
      *      存在：true
      *      不存在：false
-     * @param usercode
-     * @return
+     * @param usercode 注册时提供的工号
+     * @return 返回处理消息
      */
     @Override
-    public ResponseMsg isExistUserCode(String usercode) {
+    public ServiceResult<ResponseMsg> isExistUserCode(String usercode) {
+        ServiceResult<ResponseMsg> serviceResult = new ServiceResult<>();
         ResponseMsg responseMsg = new ResponseMsg();
         Boolean result = false;
         if(usercode != null) {
             result = userMapper.findByUsercode(usercode) != null;
         } else {
-            throw new UserException("4002", "工号不能为空");
+            logger.error("工号不能为空");
         }if(result) {
-            responseMsg.setCodeMsg(CodeMsg.USERCODE_EXISTED);
+            responseMsg.setCodeMsg(Msg.USERCODE_EXISTED);
         } else {
-            responseMsg.setCodeMsg(CodeMsg.USERCODE_CAN_USE);
+            responseMsg.setCodeMsg(Msg.USERCODE_CAN_USE);
+            serviceResult.setSuccess(true);
         }
-        return responseMsg;
+        serviceResult.setData(responseMsg);
+        return serviceResult;
     }
 }

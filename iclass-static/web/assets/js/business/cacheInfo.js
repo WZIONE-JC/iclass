@@ -12,17 +12,31 @@ var Usershow = function () {
                 jsonp: "callback",
                 url: rurl + "/cache/getCache",
                 timeout: 3000,
-                success: function (usercache) {
-                    $("#userfullname").text(usercache.sessionUser.user.userfullname);
-                    $("#userbirth").text(usercache.sessionUser.user.userbirth);
-                    $("#usersex").text(usercache.sessionUser.user.usersex);
-                    $("#userphone").text(usercache.sessionUser.user.userphonenum);
-                    $("#useremail").text(usercache.sessionUser.user.useremail);
-                    $("#userregisterdate").text(usercache.sessionUser.user.userregisterdate);
-                    $("#userrole").text(usercache.sessionUser.user.userrole);
+                success: function (responseData) {
+                    if(responseData.success) {
+                        $("#userfullname").text(responseData.data.user.userfullname);
+                        $("#userbirth").text(responseData.data.user.userbirth);
+                        $("#usersex").text(responseData.data.user.usersex);
+                        $("#userphone").text(responseData.data.user.userphonenum);
+                        $("#useremail").text(responseData.data.user.useremail);
+                        $("#userregisterdate").text(responseData.data.user.userregisterdate);
+                        $("#userrole").text(responseData.data.user.userrole);
+                    } else {
+                        swal({
+                            title: "Sorry!",
+                            text: responseData.message,
+                            timer: 2000,
+                            type: "error"
+                        });
+                    }
                 },
                 error: function (data) {
-                    alert("请求缓存信息出错,错误信息:"+data);
+                    swal({
+                        title: "Sorry!",
+                        text: "请求获取缓存信息出错,错误信息:"+data.responseText,
+                        timer: 2000,
+                        type: "error"
+                    });
                 }
             })
         })

@@ -51,4 +51,14 @@ public class Role {
     public void setRolepermission(String rolepermission) {
         this.rolepermission = rolepermission == null ? null : rolepermission.trim();
     }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "roleid=" + roleid +
+                ", rolename='" + rolename + '\'' +
+                ", rolebydevice='" + rolebydevice + '\'' +
+                ", rolepermission='" + rolepermission + '\'' +
+                '}';
+    }
 }

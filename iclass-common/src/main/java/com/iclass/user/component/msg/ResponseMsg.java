@@ -9,30 +9,18 @@ package com.iclass.user.component.msg;
  */
 public class ResponseMsg {
 
-    private String code;
-
     private String msg;
 
     public ResponseMsg() {
 
     }
 
-    public ResponseMsg(CodeMsg codeMsg) {
-        code = codeMsg.getCode();
-        msg = codeMsg.getMsg();
+    public ResponseMsg(Msg msg) {
+        this.msg = msg.getMsg();
     }
 
-    public void setCodeMsg(CodeMsg codeMsg) {
-        code = codeMsg.getCode();
-        msg = codeMsg.getMsg();
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
+    public void setCodeMsg(Msg msg) {
+        this.msg = msg.getMsg();
     }
 
     public String getMsg() {

@@ -1,5 +1,6 @@
 package com.iclass.user.component.service.api;
 
+import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.msg.ResponseMsg;
 import com.iclass.user.mybatis.model.User;
 
@@ -22,5 +23,5 @@ public interface SignUpService {
      * @param user 用户信息
      * @return 返回消息实体
      */
-    public ResponseMsg signup(User user);
+    public ServiceResult<ResponseMsg> signup(User user);
 }

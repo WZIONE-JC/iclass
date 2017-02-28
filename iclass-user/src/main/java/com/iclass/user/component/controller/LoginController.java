@@ -1,5 +1,6 @@
 package com.iclass.user.component.controller;
 
+import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.msg.ResponseMsg;
 import com.iclass.user.component.service.api.LoginService;
 import com.iclass.user.component.vo.SessionUser;
@@ -35,10 +36,10 @@ public class LoginController {
      * @param code 验证码
      * @return 返回消息实体
      */
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseMsg login(HttpServletRequest request, String userrole, String username,
+    @RequestMapping(value = "/login", method = {RequestMethod.POST, RequestMethod.GET})
+    public ServiceResult<ResponseMsg> login(HttpServletRequest request, String userrole, String username,
                              String password, String code) {
-        logger.info("request = [" + request + "], userrole = [" + userrole + "], username = [" + username + "], password = [" + password + "], code = [" + code + "]");
+        logger.info("request = [" + request.getSession().getId() + "], userrole = [" + userrole + "], username = [" + username + "], password = [" + password + "], code = [" + code + "]");
         return loginService.login(request, userrole, username, password, code);
     }
 
@@ -48,10 +49,9 @@ public class LoginController {
      * @return 返回jsonp 数据，或者null
      */
     @RequestMapping(value = "/getLoginedUserInfo", method = {RequestMethod.GET, RequestMethod.POST})
-    public SessionUser getLoginedUserInfo(HttpServletRequest request) {
-        SessionUser sessionUser = loginService.getLoginedUserInfo(request);
-        System.out.println("LoginController.getLoginedUserInfo");
-        System.out.println(sessionUser);
-        return sessionUser;
+    public ServiceResult<SessionUser> getLoginedUserInfo(HttpServletRequest request) {
+        ServiceResult<SessionUser> serviceResult = loginService.getLoginedUserInfo(request);
+        logger.info("LoginController.getLoginedUserInfo:" + serviceResult.getData());
+        return serviceResult;
     }
 }

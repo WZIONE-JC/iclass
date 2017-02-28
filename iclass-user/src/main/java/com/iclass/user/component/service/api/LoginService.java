@@ -1,7 +1,8 @@
 package com.iclass.user.component.service.api;
 
-import com.iclass.user.component.vo.SessionUser;
+import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.msg.ResponseMsg;
+import com.iclass.user.component.vo.SessionUser;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,7 +29,7 @@ public interface LoginService {
      * @param code 验证码
      * @return 返回实体消息
      */
-    public ResponseMsg login(HttpServletRequest request, String username, String pwd, String rolename, String code);
+    public ServiceResult<ResponseMsg> login(HttpServletRequest request, String username, String pwd, String rolename, String code);
 
     /**
      * 验证验证码是否正确
@@ -43,5 +44,5 @@ public interface LoginService {
      * @param request 获取session
      * @return 返回sessionUser
      */
-    public SessionUser getLoginedUserInfo(HttpServletRequest request);
+    public ServiceResult<SessionUser> getLoginedUserInfo(HttpServletRequest request);
 }

@@ -1,5 +1,6 @@
 package com.iclass.user.component.service.api;
 
+import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.mybatis.model.Teacher;
 
 /**
@@ -13,11 +14,11 @@ public interface TeacherService {
      * 保存教师信息
      * @param teacher 教师实体
      */
-    public void save(Teacher teacher);
+    public ServiceResult<Teacher> save(Teacher teacher);
 
     /**
      * 删除教师信息
      * @param teacherCode 教师的工号
      */
-    public void delete(String teacherCode);
+    public ServiceResult<Teacher> delete(String teacherCode);
 }
