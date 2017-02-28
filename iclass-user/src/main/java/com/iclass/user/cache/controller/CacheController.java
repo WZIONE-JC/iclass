@@ -9,12 +9,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
 /**
  * iclass
@@ -42,11 +40,11 @@ public class CacheController {
     public ServiceResult<SessionUser> setCache(HttpServletRequest request,
                                                User user) {
         HttpSession session = request.getSession();
-    String sessionid = session.getId();
+        String sessionid = session.getId();
         logger.info("设置缓存时,从客户端获取的参数:user = [" + user + "]");
-    ServiceResult<SessionUser> serviceResult = CacheService.setCache(sessionid, user);
+        ServiceResult<SessionUser> serviceResult = CacheService.setCache(sessionid, user);
         return serviceResult;
-}
+    }
 
     /**
      * 获取用户缓存数据

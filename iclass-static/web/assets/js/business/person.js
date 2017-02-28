@@ -26,7 +26,7 @@ var PersonMaintenance = function () {
                         var tr = $("<tr class='text-c'></tr>");
                         var td1 = $("<td><input type='checkbox' value='1'></td>");
                         var td2 = $("<td><span style='cursor:pointer' title='查看个人信息' class='label label-secondary radius' onclick=member_show('"+responseData.data.user.username+"','user-show.html','usercode="+responseData.data.user.usercode+"','360','400')>"+responseData.data.user.username+"</span></td>");
-                        var td3 = $("<td>"+responseData.data.user.usercode+"</td>");
+                        var td3 = $("<td id='usercode'>"+responseData.data.user.usercode+"</td>");
                         var td4 = $("<td>"+responseData.data.user.userfullname+"</td>");
                         var td5 = $("<td>"+responseData.data.user.usersex+"</td>");
                         var td6 = $("<td>"+responseData.data.user.userbirth+"</td>");
@@ -78,80 +78,79 @@ var PersonMaintenance = function () {
     }
 }();
 
-$(function () {
-    //修改用户信息
-    $("#updateButton").click(function() {
-        $.ajax({
-            type: "put",
-            url: rurl + "/user/update",
-            dataType: "jsonp",
-            timeout: 3000,
-            data: $("#form-user-update").serialize(),
-            success: function (responseData) {
-               if(responseData.success) {
-                   swal({
-                       title: "Good Jop!",
-                       text: "用户信息修改成功",
-                       timer: 2000,
-                       type: "success"
-                   }, function () {
-                       $("#updateCloseButton").click();
-                   });
-               } else {
-                   swal({
-                       title: "Sorry!",
-                       text: "修改用户信息出错,错误信息:"+responseData.message,
-                       timer: 2000,
-                       type: "error"
-                   });
-               }
-            },
-            error: function (responseData) {
+//修改用户信息
+function updateUser () {
+    $.ajax({
+        type: "put",
+        url: rurl + "/user/update",
+        dataType: "jsonp",
+        timeout: 3000,
+        data: $("#form-user-update").serialize(),
+        success: function (responseData) {
+            if(responseData.success) {
+                swal({
+                    title: "Good Jop!",
+                    text: "用户信息修改成功",
+                    timer: 2000,
+                    type: "success"
+                }, function () {
+                    $("#updateCloseButton").click();
+                });
+            } else {
                 swal({
                     title: "Sorry!",
-                    text: "请求用户信息出错,错误信息:"+responseData.responseText,
+                    text: "修改用户信息出错,错误信息:"+responseData.message,
                     timer: 2000,
                     type: "error"
                 });
             }
-        });
+        },
+        error: function (responseData) {
+            swal({
+                title: "Sorry!",
+                text: "请求用户信息出错,错误信息:"+responseData.responseText,
+                timer: 2000,
+                type: "error"
+            });
+        }
     });
-    //修改密码
-    $("#changePwdButton").click(function() {
-        $.ajax({
-            type: "put",
-            url: rurl + "/user/changePwd",
-            dataType: "jsonp",
-            timeout: 3000,
-            data: $("form-change-password").serialize(),
-            success: function (responseData) {
-                if(responseData.success) {
-                    swal({
-                        title: "Good Jop!",
-                        text: "密码修改成功",
-                        timer: 2000,
-                        type: "success"
-                    }, function () {
-                        $("#cancelChangePwdButton").click();
-                    });
-                } else {
-                    swal({
-                        title: "Sorry!",
-                        text: "修改密码出错,错误信息:"+responseData.message,
-                        timer: 2000,
-                        type: "error"
-                    });
-                }
-            },
-            error: function (responseData) {
+};
+//修改密码
+function changePassword () {
+    $.ajax({
+        type: "post",
+        url: rurl + "/user/changePwd",
+        dataType: "jsonp",
+        timeout: 3000,
+        data: $("#form-changepassword").serialize(),
+        success: function (responseData) {
+            if(responseData.success) {
+                swal({
+                    title: "Good Jop!",
+                    text: "密码修改成功",
+                    timer: 2000,
+                    type: "success"
+                }, function () {
+                    $("#cancelChangePwdButton").click();
+                });
+            } else {
                 swal({
                     title: "Sorry!",
-                    text: "请求修改密码出错,错误信息:"+responseData.responseText,
+                    text: "修改密码出错,错误信息:"+responseData.message,
                     timer: 2000,
                     type: "error"
                 });
             }
-        });
+        },
+        error: function (responseData) {
+            swal({
+                title: "Sorry!",
+                text: "请求修改密码出错,错误信息:"+responseData.responseText,
+                timer: 2000,
+                type: "error"
+            });
+        }
     });
-});
+};
+
 

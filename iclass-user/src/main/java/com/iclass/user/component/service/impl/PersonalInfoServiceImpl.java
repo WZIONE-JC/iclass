@@ -4,17 +4,15 @@ import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.md5.MD5;
 import com.iclass.user.component.msg.Msg;
 import com.iclass.user.component.msg.ResponseMsg;
-import com.iclass.user.component.vo.SessionUser;
 import com.iclass.user.component.service.api.PersonalInfoService;
+import com.iclass.user.component.vo.SessionUser;
 import com.iclass.user.mybatis.dao.UserMapper;
 import com.iclass.user.mybatis.model.User;
-import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -62,9 +60,11 @@ public class PersonalInfoServiceImpl implements PersonalInfoService {
         ServiceResult<SessionUser> serviceResult = new ServiceResult<>();
         SessionUser sessionUser = (SessionUser) session.getAttribute(session.getId());
         if (sessionUser != null) {
-            logger.info("PersonalInfoServiceImpl.getPersonalInfo: " + sessionUser);
+            //为了保证数据都是最新的,所以需要从数据库中去获取（通过usercode）
+            String usercode = sessionUser.getUser().getUsercode();
+            User user = userMapper.findByUsercode(usercode);
             serviceResult.setSuccess(true);
-            serviceResult.setData(sessionUser);
+            serviceResult.setData(new SessionUser(user));
         } else {
             logger.error("从session中通过sessionId获取用户信息出错,session已过期,或用户未登录");
             serviceResult.setMessage("用户未登录");

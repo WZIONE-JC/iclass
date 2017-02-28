@@ -50,6 +50,7 @@ public class PersonalInfoController {
 
     @RequestMapping(value = "/changePwd", method = {RequestMethod.GET, RequestMethod.POST})
     public ServiceResult<ResponseMsg> changePassword(String userid, String oldPassword, String newPassword) {
+        logger.info("userid = [" + userid + "], oldPassword = [" + oldPassword + "], newPassword = [" + newPassword + "]");
         return personalInfoService.updateUserPassword(userid, oldPassword, newPassword);
     }
 }

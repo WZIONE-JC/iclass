@@ -7,7 +7,7 @@
     </head>
     <body>
     <div class="pd-20">
-        <form action="" method="post" class="form form-horizontal" id="form-user-update">
+        <form class="form form-horizontal" id="form-user-update">
         	<div class="row cl">
             <label class="form-label col-4">角&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;色：</label>
                 <input type="hidden" id="userid" name="userid">
@@ -31,17 +31,17 @@
                 <label class="form-label col-4">真&nbsp;实&nbsp;姓&nbsp;名：</label>
                 <div class="">
                     <input type="text" style="width:33.33333%;" class="input-text" value="" placeholder="真实姓名"
-                           id="userfullname" name="userfullname"></div>
+                           id="userfullname" name="userfullname" datatype="s2-10" ignore="ignore"></div>
             </div>
                 <div class="row cl">
                 <label class="form-label col-4">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</label>
                 <div class="formControls col-5 skin-minimal">
                     <div class="radio-box">
-                        <input type="radio" id="sex-1" name="usersex">
+                        <input type="radio" id="sex-1" name="usersex" value="男">
                         <label for="sex-1">男</label>
                     </div>
                     <div class="radio-box">
-                        <input type="radio" id="sex-2" name="usersex">
+                        <input type="radio" id="sex-2" name="usersex" value="女">
                         <label for="sex-2">女</label>
                     </div>
                 </div>
@@ -57,7 +57,7 @@
             <div class="row cl">
                 <label class="form-label col-4">邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱：</label>
                 <div class="">
-                 <input type="text"  style="width:33.33333%;" class="input-text" value="" placeholder="输入邮箱" id="useremail" name="useremail" datatype="e" nullmsg="请输入正确的邮箱">
+                 <input type="text"  style="width:33.33333%;" class="input-text" value="" placeholder="输入邮箱" id="useremail" name="useremail" datatype="e" errmsg="请输入正确的邮箱" ignore="ignore">
                 </div>
   
             </div>
@@ -65,13 +65,13 @@
             <div class="row cl">
                 <label class="form-label col-4">出生日期：</label>
                 <div class="">
-                    <input type="text"  style="width:33.33333%;" datatype="*" nullmsg="请选择出生日期" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',skin:'twoer',maxDate: '%y-%M-%d'})" id="userbirth" class="input-text Wdate" name="userbirth">
+                    <input type="text"  style="width:33.33333%;" datatype="*" nullmsg="请选择出生日期" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',skin:'twoer',maxDate: '%y-%M-%d'})" id="userbirth" class="input-text Wdate" name="userbirth" ignore="ignore">
                 </div>
             </div>
             <div class="row cl">
                 <label class="form-label col-4">手&nbsp;&nbsp;机&nbsp;&nbsp;号：</label>
                 <div class="">
-                    <input type="text"  style="width:33.33333%;" class="input-text" value="" placeholder="输入手机号" id="userphonenum" name="userphonenum" datatype="m" nullmsg="请输入正确的手机号">
+                    <input type="text" style="width:33.33333%;" class="input-text" value="" placeholder="输入手机号" id="userphonenum" name="userphonenum" minlength="11" maxlength="11" datatype="m" errmsg="请输入正确的手机号" ignore="ignore">
                 </div>
             </div>
             <!--<div class="row cl">
@@ -115,7 +115,7 @@
             </div>-->
             <div class="row cl">
                 <div class="col-8 col-offset-4">
-                    <button id="updateButton" class="btn btn-primary radius" type="button"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
+                    <button id="updateButton" class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
                     <!--
                     <button onClick="article_save();" class="btn btn-secondary radius" type="button"><i class="Hui-iconfont">&#xe632;</i> 保存草稿</button>
                     -->
@@ -140,6 +140,7 @@
     <script type="text/javascript">
         $((function () {
             GetCache.init();
+            alert($(window.parent.document).find('#usercode').text());
         }));
         $(function() {
             $('.skin-minimal input').iCheck({
@@ -148,15 +149,14 @@
                 increaseArea: '20%'
             });
         });
-//        $("#form-user-add").Validform({
-//            tiptype:3,
-//            callback:function(form){
-//                form[0].submit();
-//                var index = parent.layer.getFrameIndex(window.name);
-//                parent.$('.btn-refresh').click();
-//                parent.layer.close(index);
-//            }
-//        });
+        $("#form-user-update").Validform({
+            tiptype:3,
+            beforeSubmit:function(form){
+                updateUser();
+                $(window.parent.document).find('#btn-refresh')[0].click();
+                return false;
+            }
+        });
      </script>
     </body>
     </html>

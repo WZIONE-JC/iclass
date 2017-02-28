@@ -117,22 +117,22 @@
       <if test="username != null" >
         #{username,jdbcType=VARCHAR},
       </if>
-      <if test="userfullname != null" >
+      <if test="userfullname != null and userfullname != '' " >
         #{userfullname,jdbcType=VARCHAR},
       </if>
-      <if test="usersex != null" >
+      <if test="usersex != null and usersex != '' " >
         #{usersex,jdbcType=VARCHAR},
       </if>
       <if test="userpassword != null" >
         #{userpassword,jdbcType=VARCHAR},
       </if>
-      <if test="userbirth != null" >
+      <if test="userbirth != null and userbirth != '' " >
         #{userbirth,jdbcType=VARCHAR},
       </if>
-      <if test="useremail != null" >
+      <if test="useremail != null and useremail != '' " >
         #{useremail,jdbcType=VARCHAR},
       </if>
-      <if test="userphonenum != null" >
+      <if test="userphonenum != null and userphonenum != '' " >
         #{userphonenum,jdbcType=VARCHAR},
       </if>
       <if test="userrole != null" >
@@ -152,22 +152,22 @@
       <if test="username != null" >
         UserName = #{username,jdbcType=VARCHAR},
       </if>
-      <if test="userfullname != null" >
+      <if test="userfullname != null and userfullname != '' " >
         UserFullName = #{userfullname,jdbcType=VARCHAR},
       </if>
-      <if test="usersex != null" >
+      <if test="usersex != null and usersex != '' " >
         UserSex = #{usersex,jdbcType=VARCHAR},
       </if>
       <if test="userpassword != null" >
         UserPassword = #{userpassword,jdbcType=VARCHAR},
       </if>
-      <if test="userbirth != null" >
+      <if test="userbirth != null and userbirth != '' " >
         UserBirth = #{userbirth,jdbcType=VARCHAR},
       </if>
-      <if test="useremail != null" >
+      <if test="useremail != null and useremail != '' " >
         UserEmail = #{useremail,jdbcType=VARCHAR},
       </if>
-      <if test="userphonenum != null" >
+      <if test="userphonenum != null and userphonenum != '' " >
         UserPhoneNum = #{userphonenum,jdbcType=VARCHAR},
       </if>
       <if test="userrole != null" >
