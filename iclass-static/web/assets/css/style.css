@@ -15,5 +15,11 @@
     padding: 0px;
     border: 1px solid transparent;
 }
+.change-password-div {
+    padding-top: 100px;
+}
+.user-add-div {
+    padding-top: 50px;
+}
 
 

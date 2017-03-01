@@ -175,7 +175,7 @@ function layer_show(title,url,id,w,h){
 		w=800;
 	};
 	if (h == null || h == '') {
-		h=($(window).height() - 50);
+		h=($(window).height() - 100);
 	};
     if(url != "/404.html" && id != null && id != '') {
 
