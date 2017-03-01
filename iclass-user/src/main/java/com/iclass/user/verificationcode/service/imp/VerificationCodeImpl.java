@@ -39,7 +39,9 @@ public class VerificationCodeImpl implements VerificationCode {
     public void genVerificationCode(HttpServletRequest request, HttpServletResponse response) {
         //不缓存
         response.setCharacterEncoding("utf-8");
-        response.setHeader("Cache-Control", "no-cache");
+        response.setHeader("Pragma","No-cache");
+        response.setHeader("Cache-Control","no-cache");
+        response.setDateHeader("Expires", 0);
         HttpSession session = request.getSession();
         //创建一个72*40的RGB图片
         BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);

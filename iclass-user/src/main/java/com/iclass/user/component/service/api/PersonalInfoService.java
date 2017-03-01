@@ -39,10 +39,18 @@ public interface PersonalInfoService {
 
     /**
      * 修改用户密码
-     * @param usercode 工号
+     *
+     * @param usercode    工号
      * @param oldPassword 旧密码
      * @param newPassword 新密码
      * @return SessionUser
      */
     public ServiceResult<ResponseMsg> updateUserPassword(String usercode, String oldPassword, String newPassword);
+
+    /**
+     * 发送邮件
+     * @param usercode 用户工号
+     * @return 返回消息实体
+     */
+    public ServiceResult<ResponseMsg> sendMail(String usercode, String useremail);
 }

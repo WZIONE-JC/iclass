@@ -8,6 +8,7 @@ import com.iclass.user.component.service.api.PersonalInfoService;
 import com.iclass.user.component.vo.SessionUser;
 import com.iclass.user.mybatis.dao.UserMapper;
 import com.iclass.user.mybatis.model.User;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class PersonalInfoServiceImpl implements PersonalInfoService {
     public ServiceResult<SessionUser> getPersonalInfoByUsercode(String usercode) {
         ServiceResult<SessionUser> serviceResult = new ServiceResult<>();
         SessionUser sessionUser = new SessionUser();
-        if (usercode != null && !usercode.equals("")) {
+        if (StringUtils.isNotBlank(usercode)) {
             User user = userMapper.findUserByUsercode(usercode);
             if(user != null) {
                 sessionUser.setUser(user);
@@ -78,7 +79,7 @@ public class PersonalInfoServiceImpl implements PersonalInfoService {
         ServiceResult<ResponseMsg> serviceResult = new ServiceResult<>();
 
         if(user != null) {
-            if(user.getUserid() != null && !user.getUserid().equals("")) {
+            if(StringUtils.isNotBlank(user.getUserid()+"")) {
                 userMapper.updateByPrimaryKeySelective(user);
                 logger.info("修改用户信息成功");
                 serviceResult.setSuccess(true);
@@ -99,18 +100,23 @@ public class PersonalInfoServiceImpl implements PersonalInfoService {
     public ServiceResult<ResponseMsg> updateUserPassword(String userid, String oldPassword, String newPassword) {
        logger.info("userid = [" + userid + "], oldPassword = [" + oldPassword + "], newPassword = [" + newPassword + "]");
         ServiceResult<ResponseMsg> serviceResult = new ServiceResult<>();
-        if(userid != null && !userid.equals("")) {
-            if(oldPassword != null && !oldPassword.equals("") && newPassword != null && !newPassword.equals("")) {
-                String oldpwd = MD5.getPwd(oldPassword);
-                String newPwd = MD5.getPwd(newPassword);
-                int result = userMapper.updatePasswordByUserIdAndOldPassword(userid, oldpwd, newPwd);
-                if(result == 1) {
-                    serviceResult.setSuccess(true);
-                    logger.info("修改密码成功");
-                    serviceResult.setData(new ResponseMsg(Msg.UPDATE_PASSWORD_SUCCESS));
+        if(StringUtils.isNotBlank(userid)) {
+            if(StringUtils.isNotBlank(oldPassword) && StringUtils.isNotBlank(newPassword)) {
+                if(oldPassword.equals(newPassword)) {
+                    logger.warn("不能和原始密码相同");
+                    serviceResult.setMessage("不能和原始密码相同");
                 } else {
-                    logger.warn("原始密码不正确");
-                    serviceResult.setMessage("原始密码不正确");
+                    String oldpwd = MD5.getPwd(oldPassword);
+                    String newPwd = MD5.getPwd(newPassword);
+                    int result = userMapper.updatePasswordByUserIdAndOldPassword(userid, oldpwd, newPwd);
+                    if(result == 1) {
+                        serviceResult.setSuccess(true);
+                        logger.info("修改密码成功");
+                        serviceResult.setData(new ResponseMsg(Msg.UPDATE_PASSWORD_SUCCESS));
+                    } else {
+                        logger.warn("原始密码不正确");
+                        serviceResult.setMessage("原始密码不正确");
+                    }
                 }
             } else {
                 logger.error("修改密码失败,原始密码和新密码不能为空");
@@ -121,5 +127,16 @@ public class PersonalInfoServiceImpl implements PersonalInfoService {
             serviceResult.setMessage("修改密码失败,userid不能为空");
         }
         return serviceResult;
+    }
+
+    @Override
+    public ServiceResult<ResponseMsg> sendMail(String usercode, String useremail) {
+        ServiceResult<ResponseMsg> serviceResult = new ServiceResult<>();
+        if(StringUtils.isNotBlank(usercode)) {
+
+        } else {
+            serviceResult.setMessage("工号不能为空");
+        }
+        return null;
     }
 }

@@ -9,6 +9,7 @@ import com.iclass.user.component.vo.SessionUser;
 import com.iclass.user.mybatis.dao.UserMapper;
 import com.iclass.user.mybatis.model.User;
 import com.iclass.user.verificationcode.service.imp.VerificationCodeImpl;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,7 +85,7 @@ public class LoginServiceImpl implements LoginService {
                 logger.info("欢迎 " + user.getUsername() + " " + user.getUserrole() + " 登录");
                 sessionUser.setUser(user);
                 //保存json数据(用户登录信息)
-                if(remember != null && !remember.equals("")) {
+                if(StringUtils.isNotBlank(remember)) {
                     logger.info("用户选择了记住密码, remember: " + remember);
                     session.setMaxInactiveInterval(3600 * 12 * 7);
                 }
@@ -112,7 +113,7 @@ public class LoginServiceImpl implements LoginService {
      */
     @Override
     public boolean validateVerificationCode(HttpServletRequest request, String code) {
-        if(code != null && !code.equals("")) {
+        if(StringUtils.isNotBlank(code)) {
             String stringCode = verificationCode.getVerificationCode(request);
             if(stringCode != null) {
                 logger.info("生成的验证码:" + stringCode + ",用户输入的验证码:" + code.trim());

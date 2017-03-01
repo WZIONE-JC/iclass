@@ -6,6 +6,7 @@ import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.vo.SessionUser;
 import com.iclass.user.mybatis.dao.UserMapper;
 import com.iclass.user.mybatis.model.User;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class CacheServiceImpl implements CacheService {
     public ServiceResult<SessionUser> setCache(String sessionid, User user) {
         ServiceResult<SessionUser> serviceResult = new ServiceResult<>();
         SessionUser sessionUser = new SessionUser();
-        if(user != null && user.getUsercode() != null && !user.getUsercode().equals("")) {
+        if(user != null && StringUtils.isNotBlank(user.getUsercode())) {
             user = userMapper.findUserByUsercode(user.getUsercode());
             sessionUser.setUser(user);
             logger.info("设置缓存时,从数据库中获取的用户信息:" + sessionUser);

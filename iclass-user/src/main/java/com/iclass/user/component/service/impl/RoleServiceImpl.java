@@ -4,6 +4,7 @@ import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.service.api.RoleService;
 import com.iclass.user.mybatis.dao.RoleMapper;
 import com.iclass.user.mybatis.model.Role;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class RoleServiceImpl implements RoleService {
         @Override
         public ServiceResult<List<Role>> getRoleName(String device) {
             ServiceResult<List<Role>> serviceResult = new ServiceResult<>();
-            if(device!= null && !device.equals("")) {
+            if(StringUtils.isNotBlank(device)) {
                 List<Role> roles = roleMapper.findRoleNameByDevice(device);
                 logger.info("通过设备标识来获取角色信息成功:"+roles);
                 serviceResult.setSuccess(true);
