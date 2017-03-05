@@ -50,7 +50,7 @@ var Logined = function () {
                             confirmButtonText: "注销",
                             cancelButtonText: "取消",
                             closeOnConfirm: false,
-                            closeOnCancel: false,
+                            closeOnCancel: true,
                             showLoaderOnConfirm: true
                         },
                         function (isConfirm) {
@@ -91,13 +91,6 @@ var Logined = function () {
                                             });
                                         }
                                     })}, 1200);
-                            } else {
-                                swal({
-                                        title: "已取消",
-                                        text: "已取消注销操作",
-                                        type: "info",
-                                        timer: 1000,
-                                    });
                             }
                         })
                 }

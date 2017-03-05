@@ -14,7 +14,7 @@ public class ServiceResult<T> implements Serializable {
     /**
      * 是否执行成功
      */
-    private Boolean success = false;
+    private Boolean success = Boolean.FALSE;
 
     /**
      * 数据
@@ -30,6 +30,25 @@ public class ServiceResult<T> implements Serializable {
      * 详细信息，可以是详细原因
      */
     private String message;
+
+
+    // Datatables 支持
+
+    /**
+     * Datatables发送的draw是多少那么服务器就返回多少
+     */
+    private Integer draw;
+
+    /**
+     * 数据库里总共记录数
+     */
+    private Integer recordsTotal;
+
+    /**
+     * 过滤后的记录数（如果有接收到前台的过滤条件，则返回的是过滤后的记录数）
+     */
+    private Integer recordsFiltered;
+
 
     public ServiceResult() {
 
@@ -75,5 +94,29 @@ public class ServiceResult<T> implements Serializable {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public Integer getDraw() {
+        return draw;
+    }
+
+    public void setDraw(Integer draw) {
+        this.draw = draw;
+    }
+
+    public Integer getRecordsTotal() {
+        return recordsTotal;
+    }
+
+    public void setRecordsTotal(Integer recordsTotal) {
+        this.recordsTotal = recordsTotal;
+    }
+
+    public Integer getRecordsFiltered() {
+        return recordsFiltered;
+    }
+
+    public void setRecordsFiltered(Integer recordsFiltered) {
+        this.recordsFiltered = recordsFiltered;
     }
 }

@@ -10,7 +10,6 @@
         <form class="form form-horizontal" id="form-user-update">
         	<div class="row cl">
             <label class="form-label col-4">角&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;色：</label>
-                <input type="hidden" id="userid" name="userid">
                 <div class="">
                     <input class="input-text" style="width:33.33333%;" id="userrole" name="userrole" disabled="disabled" value="正在加载..."></input>
                 </div>
@@ -18,7 +17,7 @@
             <div class="row cl">
             <label class="form-label col-4">用户编号：</label>
             <div class="">
-                <input class="input-text" style="width:33.33333%;" id="usercode" name="usercode" disabled="disabled" value="正在加载..."></input>
+                <input class="input-text" style="width:33.33333%;" id="usercode" name="usercode" readonly="readonly" value="正在加载..."></input>
             </div>
             </div>
             <div class="row cl">
@@ -152,7 +151,6 @@
             tiptype:3,
             beforeSubmit:function(form){
                 updateUser();
-                $(window.parent.document).find('#btn-refresh')[0].click();
                 return false;
             }
         });

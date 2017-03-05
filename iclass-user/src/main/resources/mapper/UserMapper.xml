@@ -56,6 +56,12 @@
     from user
     where usercode = #{usercode} and userpassword = #{password} and userrole = #{userrole}
   </select>
+  <select id="findAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    limit #{start}, #{length}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from user
     where UserID = #{userid,jdbcType=INTEGER}
@@ -143,7 +149,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="User" >
+  <update id="updateByUsercodeSelective" parameterType="User" >
     update user
     <set >
       <if test="usercode != null" >
@@ -177,7 +183,7 @@
         UserRegisterDate = #{userregisterdate,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where UserID = #{userid,jdbcType=INTEGER}
+    where UserCode = #{usercode,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="User" >
     update user
@@ -193,9 +199,10 @@
       UserRegisterDate = #{userregisterdate,jdbcType=TIMESTAMP}
     where UserID = #{userid,jdbcType=INTEGER}
   </update>
-  <update id="updatePasswordByUserIdAndOldPassword">
+  <update id="updatePasswordByUserCodeAndOldPassword">
     update user
     set UserPassword = #{newpassword,jdbcType=VARCHAR}
-    where UserID = #{userid,jdbcType=INTEGER} and UserPassword = #{oldpassword,jdbcType=VARCHAR}
+    where UserCode = #{usercode,jdbcType=VARCHAR} and UserPassword = #{oldpassword,jdbcType=VARCHAR}
   </update>
+
 </mapper>

@@ -3,6 +3,8 @@ package com.iclass.user.mybatis.dao;
 import com.iclass.user.mybatis.model.User;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface UserMapper {
     int deleteByPrimaryKey(Integer userid);
 
@@ -12,7 +14,7 @@ public interface UserMapper {
 
     User selectByPrimaryKey(Integer userid);
 
-    int updateByPrimaryKeySelective(User record);
+    int updateByUsercodeSelective(User record);
 
     int updateByPrimaryKey(User record);
 
@@ -26,5 +28,13 @@ public interface UserMapper {
 
     User findUserByUsercode(@Param("usercode") String usercode);
 
-    int updatePasswordByUserIdAndOldPassword(@Param("userid") String userid, @Param("oldpassword") String oldpassword, @Param("newpassword") String newPassword);
+    int updatePasswordByUserCodeAndOldPassword(@Param("usercode") String usercode, @Param("oldpassword") String oldpassword, @Param("newpassword") String newPassword);
+
+    /**
+     * 从数据库获取所有用户信息
+     * @param start 从多少条开始
+     * @param length 长度是多少
+     * @return 返回User集合
+     */
+    List<User> findAll(@Param("start") Integer start, @Param("length") Integer length);
 }

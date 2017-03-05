@@ -3,6 +3,7 @@ package com.iclass.user.component.controller;
 import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.msg.ResponseMsg;
 import com.iclass.user.component.service.api.PersonalInfoService;
+import com.iclass.user.component.service.api.UserInfoService;
 import com.iclass.user.component.vo.SessionUser;
 import com.iclass.user.mybatis.model.User;
 import org.slf4j.Logger;
@@ -29,6 +30,9 @@ public class PersonalInfoController {
     @Autowired
     private PersonalInfoService personalInfoService;
 
+    @Autowired
+    private UserInfoService userInfoService;
+
     @RequestMapping(value = "/getUserInfoByUsercode", method = {RequestMethod.GET, RequestMethod.POST})
     public ServiceResult<SessionUser> getUserInfoByUserCode(String usercode) {
 
@@ -45,12 +49,12 @@ public class PersonalInfoController {
     @RequestMapping(value = "/update", method = {RequestMethod.POST, RequestMethod.GET})
     public ServiceResult<ResponseMsg> updateUser(User user) {
 
-        return personalInfoService.updatePersonalInfo(user);
+        return userInfoService.updatePersonalInfo(user);
     }
 
     @RequestMapping(value = "/changePwd", method = {RequestMethod.GET, RequestMethod.POST})
-    public ServiceResult<ResponseMsg> changePassword(String userid, String oldPassword, String newPassword) {
-        logger.info("userid = [" + userid + "], oldPassword = [" + oldPassword + "], newPassword = [" + newPassword + "]");
-        return personalInfoService.updateUserPassword(userid, oldPassword, newPassword);
+    public ServiceResult<ResponseMsg> changePassword(String usercode, String oldPassword, String newPassword) {
+
+        return userInfoService.updateUserPassword(usercode, oldPassword, newPassword);
     }
 }
