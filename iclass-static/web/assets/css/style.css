@@ -21,5 +21,10 @@
 .user-add-div {
     padding-top: 50px;
 }
+.dataTables_processing {
+    margin-left: 48%;
+    padding-top: 3px;
+}
+
 
 
