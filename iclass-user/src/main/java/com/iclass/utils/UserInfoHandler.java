@@ -23,12 +23,16 @@ public class UserInfoHandler {
             String oldUserRegisterDate = user.getUserregisterdate();
             if(oldUserRegisterDate != null) {
                 String userRegisterDate = oldUserRegisterDate.split("\\.")[0];
-                logger.info("UserInfoHandler.userRegisterDateHandler:" + userRegisterDate);
+                if(logger.isDebugEnabled()) {
+                    logger.debug("UserInfoHandler.userRegisterDateHandler:" + userRegisterDate);
+                }
                 user.setUserregisterdate(userRegisterDate);
-                logger.info("UserInfoHandler.userRegisterDataHandler: 已处理registerData信息：" + user);
+                if(logger.isDebugEnabled()) {
+                    logger.info("UserInfoHandler.userRegisterDataHandler: 已处理registerData信息：" + user);
+                }
             }
         } else {
-            logger.info("UserInfoHandler.userRegisterDateHandler: user不能为空：" + user);
+            logger.warn("UserInfoHandler.userRegisterDateHandler: user不能为空：" + user);
         }
         return user;
     }
@@ -41,9 +45,11 @@ public class UserInfoHandler {
     public static User userpasswordHandler(User user) {
         if(user != null) {
             user.setUserpassword(null);
-            logger.info("UserInfoHandler.userpasswordHandler: 已处理password信息 : "+user);
+            if(logger.isDebugEnabled()) {
+                logger.debug("UserInfoHandler.userpasswordHandler: 已处理password信息 : " + user);
+            }
         } else {
-            logger.info("UserInfoHandler.userpasswordHandler: user不能为空: "+user);
+            logger.warn("UserInfoHandler.userpasswordHandler: user不能为空: "+user);
         }
         return user;
     }
