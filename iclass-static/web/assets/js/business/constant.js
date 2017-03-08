@@ -39,7 +39,7 @@ var CONSTANT = {
                 orderable: false,
                 data: null,
                 render: function (data, type, row, meta) {
-                    return '<input type="checkbox" value=data name="">';
+                    return '<input type="checkbox" value="" name="">';
                 }
             }
         },

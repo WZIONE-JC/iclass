@@ -9,9 +9,9 @@
     padding-top: 2px;
     padding-bottom: 2px;
     padding-left: 4px;
-    background: #f8f8f8;
+    background: #ebebe4;
 }
-.reg_alert {
+.reg-alert {
     padding: 0px;
     border: 1px solid transparent;
 }
@@ -21,9 +21,12 @@
 .user-add-div {
     padding-top: 50px;
 }
-.dataTables_processing {
+.dataTables-processing {
     margin-left: 48%;
     padding-top: 3px;
+}
+.readonly-input {
+    background: #ebebe4;
 }
 
 

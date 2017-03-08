@@ -177,32 +177,38 @@ function layer_show(title,url,id,w,h){
 	if (h == null || h == '') {
 		h=($(window).height() - 100);
 	};
-    if(url != "/404.html" && id != null && id != '') {
-
+    if(url != "/404.html" && id != null && id != "") {
+		// console.log("id="+id);
         var usercode = id.split("=")[1];
-        //将usercode放入到服务器缓存中
-        $.ajax({
-            type: "post",
-            dataType: "jsonp",
-            jsonp: "callback",
-            url: rurl + "/cache/setCache",
-            data: {
-                usercode: usercode
-            },
-            success: function (responseData) {
-				if(responseData.success) {
-					console.log("设置缓存成功");
-					console.log(responseData.data);
-				} else {
-					console.log("设置缓存失败");
-					console.log(responseData.message);
-				}
-            },
-            error: function (data) {
-                console.log("请求设置缓存失败");
-                console.log(data.responseText)
-            }
-        })
+        if (usercode != null && usercode != "") {
+        	console.log("即将放入缓存的usercode:"+usercode);
+            //将usercode放入到服务器缓存中
+            $.ajax({
+                type: "post",
+                dataType: "jsonp",
+                jsonp: "callback",
+                url: rurl + "/cache/setCache",
+                data: {
+                    usercode: usercode
+                },
+                success: function (responseData) {
+                    if(responseData.success) {
+                        console.log("设置缓存成功");
+                        console.log(responseData.data);
+                    } else {
+                        console.log("设置缓存失败");
+                        console.log(responseData.message);
+                    }
+                },
+                error: function (data) {
+                    console.log("请求设置缓存失败");
+                    console.log(data.responseText)
+                }
+            })
+		} else {
+        	console.log("usercode不能为空");
+		}
+
     }
 	layer.open({
 		type: 2,

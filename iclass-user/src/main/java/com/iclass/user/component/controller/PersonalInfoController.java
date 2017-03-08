@@ -1,5 +1,6 @@
 package com.iclass.user.component.controller;
 
+import com.iclass.user.component.entity.DataTablesRequestEntity;
 import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.msg.ResponseMsg;
 import com.iclass.user.component.service.api.PersonalInfoService;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * iclass
@@ -40,10 +42,10 @@ public class PersonalInfoController {
     }
 
     @RequestMapping(value = "/getUserInfoBySession", method = {RequestMethod.GET, RequestMethod.POST})
-    public ServiceResult<SessionUser> getUserInfoBySession(HttpServletRequest request) {
+    public ServiceResult<List<SessionUser>> getUserInfoBySession(DataTablesRequestEntity requestEntity, HttpServletRequest request) {
         HttpSession session = request.getSession();
 
-        return personalInfoService.getPersonalInfoBySession(session);
+        return personalInfoService.getPersonalInfoBySession(requestEntity, session);
     }
 
     @RequestMapping(value = "/update", method = {RequestMethod.POST, RequestMethod.GET})

@@ -1,9 +1,11 @@
 package com.iclass.user.component.service.api;
 
+import com.iclass.user.component.entity.DataTablesRequestEntity;
 import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.vo.SessionUser;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * iclass
@@ -23,9 +25,10 @@ public interface PersonalInfoService {
 
     /**
      * 根据sessionId 获取用户信息
+     * @param requestEntity 表格请求数据
      * @param session 获取sessionId
      * @return SessionUser
      */
-    public ServiceResult<SessionUser> getPersonalInfoBySession(HttpSession session);
+    public ServiceResult<List<SessionUser>> getPersonalInfoBySession(DataTablesRequestEntity requestEntity, HttpSession session);
 
 }

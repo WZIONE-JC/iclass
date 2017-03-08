@@ -45,18 +45,19 @@ public class UserInfoServiceImpl implements UserInfoService{
             start = 0;
         }
         Integer length = requestEntity.getLength();
-        if(length < start) {
-            length = start;
+        if(length < 1) {
+            length = 1;
         }
         Integer draw = requestEntity.getDraw();
         List<User> users = userMapper.findAll(start, length);
         for(User user : users) {
             sessionUsers.add(new SessionUser(user));
         }
-        logger.info("获取到全部用户信息");
+        Integer total = userMapper.findCount();
+        logger.info("获取到全部用户信息,总数:"+total);
         serviceResult.setDraw(draw);
         serviceResult.setData(sessionUsers);
-        serviceResult.setRecordsTotal(users.size());
+        serviceResult.setRecordsTotal(total);
         serviceResult.setRecordsFiltered(users.size());
         serviceResult.setSuccess(true);
         return serviceResult;

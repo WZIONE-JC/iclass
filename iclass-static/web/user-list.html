@@ -7,7 +7,7 @@
 
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 用户管理 <span class="c-gray en">&gt;</span> 用户信息维护 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 用户管理 <span class="c-gray en">&gt;</span> 用户信息维护 <a class="btn btn-success radius r mr-20" id="btn-refresh" style="line-height:1.6em;margin-top:3px" href="#" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="pd-20">
 	<div class="text-c"> 日期范围：
 		<input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}'})" id="datemin" class="input-text Wdate" style="width:120px;">
@@ -16,9 +16,9 @@
 		<input type="text" class="input-text" style="width:250px" placeholder="输入用户名" id="username" name="username">
 		<button type="submit" class="btn btn-success radius" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 查询</button>
 	</div>
-	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" class="btn btn-secondary radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a href="javascript:;" onclick="member_add('添加用户','user-add.html','600','570')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加用户</a></span> <span class="r">共有数据：<strong>88</strong> 条</span> </div>
+	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" class="btn btn-secondary radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a href="javascript:;" onclick="member_add('添加用户','user-add.html','620','580')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加用户</a></span> <span class="r">共有数据：<strong>88</strong> 条</span> </div>
 	<div class="mt-10" id="div-table-container">
-		<table class="table table-border table-bordered table-hover table-bg table-sort">
+		<table id="user-info-form" class="table table-border table-bordered table-hover table-bg table-sort">
 			<thead>
 			<tr class="text-c">
 				<th width="%5"><input type="checkbox" name="" value=""></th>
@@ -76,137 +76,28 @@
 <script type="text/javascript" src="assets/js/business/constant.js"></script>
 <script type="text/javascript" src="assets/js/business/ip.js"></script>
 <script type="text/javascript" src="assets/js/business/person.js"></script>
+<script type="text/javascript" src="assets/js/business/cacheInfo.js"></script>
 <script type="text/javascript">
-//http://datatables.club/upgrade/1.10-convert.html
-//http://datatables.club/reference/option/
-//https://datatables.net/reference/option/columns.createdCell
-	var usercode = 123;
-    var table = $('.table-sort').dataTable({
-        aaSorting: [],//默认第几个排序
-        bStateSave: true,//状态保存
-        columnDefs: [
-            {
-                //指定不排序的列
-				targets:[0,10],
-                orderable:false,
-				targets: 1,
-				"createdCell":function (td, cellData, rowData, row, col) {
-					console.log(cellData);
-                }
-            }
-        ],
-//        "processing": true,
-        serverSide: true,
-        autoWidth: true,
-        searching: true,
-		paging: true,
-        ajax: {
-            url:  rurl + "/user/all",
-            dataType: "jsonp",
-		},
-        columns: [
-            CONSTANT.DATA_TABLES.COLUMN.CHECKBOX,
-            {
-                data: "user.username",
-			},
-            {
-                data: "user.usercode"
-            },
-            {
-                data: "user.userfullname"
-            },
-            {
-                data: "user.usersex"
-            },
-            {
-                data: "user.userbirth"
-            },
-            {
-                data: "user.userphonenum"
-            },
-            {
-                data: "user.useremail"
-            },
-            {
-                data: "user.userregisterdate"
-            },
-            {
-                data: "user.userrole"
-            },
-            {
-                data: null,
-				defaultContent:"<a title='编辑' onclick=member_edit('修改信息','user-update.html','usercode="+usercode+"','570','540') class='ml-5' style='text-decoration:none'><i class='Hui-iconfont'>&#xe6df;</i></a> <a style='text-decoration:none' class='ml-5' onClick=change_password('修改密码','change-password.html','usercode="+usercode+"','600','500')  title='修改密码'><i class='Hui-iconfont'>&#xe63f;</i></a> <a title='删除' href='javascript:;' onclick='member_del(this,usercode)' class='ml-5' style='text-decoration:none'><i class='Hui-iconfont'>&#xe6e2;</i></a>",
-                orderable : false
-			}
-        ],
-        "createdRow": function ( row, data, index ) {
-            //http://datatables.club/reference/option/createdRow.html
-            //row 是某一行 ， data是 ajax返回数据 ， index是行标(0)
-            //行渲染回调,在这里可以对该行dom元素进行任何操作
-            //给当前行加样式
-			$(row).addClass("text-c");
 
-        },
-        "drawCallback": function( row, data, index ) {
-            //http://datatables.club/manual/daily/2016/09/04/option-rowCallback.html
-            //渲染完毕后的回调
-            //清空全选状态
-            $(":checkbox[name='cb-check-all']").prop('checked', false);
-        }
-    });
     $(function(){
-
+        var table = userTableHandler("#user-info-form", false, "/user/all");
         $('.table-sort tbody').on( 'click', 'tr', function () {
             if ( $(this).hasClass('selected') ) {
                 $(this).removeClass('selected');
+                $(this).find('input[type=checkbox]').prop("checked",false);
             }
             else {
-                table.$('tr.selected').removeClass('selected');
+                $('tr .selected').removeClass('selected');
                 $(this).addClass('selected');
+                $(this).find('input[type=checkbox]').prop("checked",true);
             }
         });
+
+        $("#btn-refresh").on("click",function () {
+            table.api().ajax.reload();
+        });
     });
-	/*用户-添加*/
-    function member_add(title,url,w,h){
-        layer_show(title,url,w,h);
-    }
-	/*用户-查看*/
-    function member_show(title,url,id,w,h){
-        layer_show(title,url,w,h);
-    }
-	/*用户-停用*/
-    function member_stop(obj,id){
-        layer.confirm('确认要停用吗？',function(index){
-            $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="member_start(this,id)" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe6e1;</i></a>');
-            $(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已停用</span>');
-            $(obj).remove();
-            layer.msg('已停用!',{icon: 5,time:1000});
-        });
-    }
-	/*用户-启用*/
-    function member_start(obj,id){
-        layer.confirm('确认要启用吗？',function(index){
-            $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="member_stop(this,id)" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a>');
-            $(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已启用</span>');
-            $(obj).remove();
-            layer.msg('已启用!',{icon: 6,time:1000});
-        });
-    }
-	/*用户-编辑*/
-    function member_edit(title,url,id,w,h){
-        layer_show(title,url,w,h);
-    }
-	/*密码-修改*/
-    function change_password(title,url,id,w,h){
-        layer_show(title,url,w,h);
-    }
-	/*用户-删除*/
-    function member_del(obj,id){
-        layer.confirm('确认要删除吗？',function(index){
-            $(obj).parents("tr").remove();
-            layer.msg('已删除!',{icon:1,time:1000});
-        });
-    }
+
 </script>
 </body>
 </html>

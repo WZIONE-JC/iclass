@@ -271,7 +271,14 @@ $(function(){
 
 	/*全选*/
 	$("table thead th input:checkbox").on("click" , function(){
-		$(this).closest("table").find("tr > td:first-child input:checkbox").prop("checked",$("table thead th input:checkbox").prop("checked"));
+		$(this).closest("table").find("tr > td:first-child input:checkbox")
+			.prop("checked", $("table thead th input:checkbox").prop("checked"));
+		if($("table thead th input:checkbox").prop("checked")) {
+            $(this).closest("table").find('tr').addClass("selected");
+		} else {
+            $(this).closest("table").find('tr').removeClass("selected");
+		}
+
     });
 	
     /*上传*/

@@ -53,7 +53,7 @@ public class CacheServiceImpl implements CacheService {
             }
         } else {
             logger.error("设置缓存失败,用户的usercoer不能为空");
-            serviceResult.setMessage("设置缓存失败,用户的usercoer不能为空");
+            serviceResult.setMessage("设置缓存失败,用户的usercode不能为空");
         }
         return serviceResult;
     }
