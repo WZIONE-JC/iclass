@@ -33,7 +33,7 @@
 				<ul class="dropDown-menu radius box-shadow">
 					<!--<li><a href="javascript:;" onClick="article_add('添加资讯','article-add.html')"><i class="Hui-iconfont">&#xe616;</i> 资讯</a></li>-->
 					<li><a href="javascript:;" onClick="picture_add('添加课件','ppt-add.html')"><i class="Hui-iconfont">&#xe613;</i> 添加课件</a></li>
-					<li><a href="javascript:;" onClick="member_add('添加用户','user-add.html','600','507')"><i class="Hui-iconfont">&#xe60d;</i> 添加用户</a></li>
+					<li><a href="javascript:;" onClick="member_add('添加用户','user-add.html','600','570')"><i class="Hui-iconfont">&#xe60d;</i> 添加用户</a></li>
 				</ul>
 			</li>
 		</ul>
@@ -160,45 +160,12 @@
 <script type="text/javascript" src="assets/js/business/ip.js"></script>
 <script type="text/javascript" src="lib/sweetalert-1.1.1/sweetalert.min.js"></script>
 <script type="text/javascript" src="assets/js/business/loginedInfo.js"></script>
+<script type="text/javascript" src="assets/js/business/person.js"></script>
 <script type="text/javascript">
     $(function () {
         Logined.init()
     });
-/*资讯-添加*/
-function article_add(title,url){
-	var index = layer.open({
-		type: 2,
-		title: title,
-		content: url
-	});
-	layer.full(index);
-}
-/*图片-添加*/
-function picture_add(title,url){
-	var index = layer.open({
-		type: 2,
-		title: title,
-		content: url
-	});
-	layer.full(index);
-}
-/*产品-添加*/
-function product_add(title,url){
-	var index = layer.open({
-		type: 2,
-		title: title,
-		content: url
-	});
-	layer.full(index);
-}
-/*用户-添加*/
-function member_add(title,url,w,h){
-	layer_show(title,url,w,h);
-}
-/*密码-修改*/
-function change_password(title,url,id,w,h){
-	layer_show(title,url,w,h);
-}
+
 </script> 
 </body>
 </html>

@@ -344,7 +344,7 @@ function userTableHandler (formId, isPersonal, url) {
 }
 /*用户-添加*/
 function member_add(title,url,w,h){
-    layer_show(title,url,w,h);
+    layer_show(title,url,'',w,h);
 }
 /*用户-查看*/
 function member_show(title,url,id,w,h){
@@ -383,4 +383,31 @@ function member_del(obj,id){
         $(obj).parents("tr").remove();
         layer.msg('已删除!',{icon:1,time:1000});
     });
+}
+/*资讯-添加*/
+function article_add(title,url){
+    var index = layer.open({
+        type: 2,
+        title: title,
+        content: url
+    });
+    layer.full(index);
+}
+/*图片-添加*/
+function picture_add(title,url){
+    var index = layer.open({
+        type: 2,
+        title: title,
+        content: url
+    });
+    layer.full(index);
+}
+/*产品-添加*/
+function product_add(title,url){
+    var index = layer.open({
+        type: 2,
+        title: title,
+        content: url
+    });
+    layer.full(index);
 }
