@@ -15,7 +15,12 @@ var Logined = function () {
                 success: function (logineduserdata) {
                     if (logineduserdata.success) {
                         $("#rolename").text(logineduserdata.data.user.userrole);
-                        $("#username").text(logineduserdata.data.user.username);
+                        var username = logineduserdata.data.user.username;
+                        $("#username").text(username);
+                        var usercode = logineduserdata.data.user.usercode;
+                        $("#personalInfo").on("click", function () {
+                            member_show(username,'user-show.html','usercode='+usercode,'360','400');
+                        });
                     } else {
                         swal({
                             title: "Sorry!",

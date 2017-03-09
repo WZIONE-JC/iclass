@@ -6576,7 +6576,13 @@ a.btn:hover, a.btn:focus, a.btn:active, a.btn.active, a.btn.disabled, a.btn[disa
 
 .dropDown_A i {
     transition-duration: .3s;
-    transition-property: all
+    -moz-transition-duration: .3s; /* Firefox 4 */
+    -webkit-transition-duration: .3s; /* Safari 和 Chrome */
+    -o-transition-duration: .3s; /* Opera */
+    transition-property: all;
+    -moz-transition-property: all; /* Firefox 4 */
+    -webkit-transition-property:all; /* Safari 和 Chrome */
+    -o-transition-property:all; /* Opera */
 }
 
 .dropDown-menu {
@@ -6605,9 +6611,20 @@ a.btn:hover, a.btn:focus, a.btn:active, a.btn.active, a.btn.disabled, a.btn[disa
 }
 
 .dropDown.hover .dropDown_A i, .dropDown.open .dropDown_A i {
-    transform: rotate(180deg);
+    transform:rotate(180deg);
+    -ms-transform:rotate(180deg); 	/* IE 9 */
+    -moz-transform:rotate(180deg); 	/* Firefox */
+    -webkit-transform:rotate(180deg); /* Safari 和 Chrome */
+    -o-transform:rotate(180deg); 	/* Opera */
     transition-duration: .3s;
+    -moz-transition-duration: .3s; /* Firefox 4 */
+    -webkit-transition-duration: .3s; /* Safari 和 Chrome */
+    -o-transition-duration: .3s; /* Opera */
+
     transition-property: all;
+    -moz-transition-property: all; /* Firefox 4 */
+    -webkit-transition-property:all; /* Safari 和 Chrome */
+    -o-transition-property:all; /* Opera */
     _background-position: 0 0
 }
 

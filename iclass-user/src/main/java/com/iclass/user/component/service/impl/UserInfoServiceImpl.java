@@ -58,7 +58,7 @@ public class UserInfoServiceImpl implements UserInfoService{
         serviceResult.setDraw(draw);
         serviceResult.setData(sessionUsers);
         serviceResult.setRecordsTotal(total);
-        serviceResult.setRecordsFiltered(users.size());
+        serviceResult.setRecordsFiltered(total);
         serviceResult.setSuccess(true);
         return serviceResult;
     }

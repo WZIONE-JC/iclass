@@ -48,7 +48,12 @@ h4{line-height:30px}
 	.Hui-aside .menu_dropdown dt{display:block;line-height:35px;padding-left:15px;cursor:pointer;position:relative;border-bottom: 1px solid #e5e5e5;font-weight:normal}
 	.Hui-aside .menu_dropdown dt .menu_dropdown-arrow{ position:absolute;overflow: hidden; top:0; right:15px;transition-duration:0.3s ;transition-property:all}
 	.Hui-aside .menu_dropdown dd{ display:none}
-	.Hui-aside .menu_dropdown dt.selected .menu_dropdown-arrow{transform: rotate(180deg)}
+	.Hui-aside .menu_dropdown dt.selected .menu_dropdown-arrow{
+		transform:rotate(180deg);
+		-ms-transform:rotate(180deg); 	/* IE 9 */
+		-moz-transform:rotate(180deg); 	/* Firefox */
+		-webkit-transform:rotate(180deg); /* Safari 和 Chrome */
+		-o-transform:rotate(180deg); 	/* Opera */}
 	.Hui-aside .menu_dropdown dd.selected{display:block; margin-left:0px}
 	.Hui-aside .menu_dropdown ul{padding:0px}
 	.Hui-aside .menu_dropdown li{line-height:35px;overflow:hidden;zoom:1}
