@@ -7458,10 +7458,10 @@ H-ui采用Font Awesome 3.2.1的整套图标，因为是图标字体，所以可�
     -moz-transform:rotate(180deg); 	/* Firefox */
     -webkit-transform:rotate(180deg); /* Safari 和 Chrome */
     -o-transform:rotate(180deg); 	/* Opera */
-    transition-duration: .3s;
-    -moz-transition-duration: .3s; /* Firefox 4 */
-    -webkit-transition-duration: .3s; /* Safari 和 Chrome */
-    -o-transition-duration: .3s; /* Opera */
+    transition-duration: 0.3s;
+    -moz-transition-duration: 0.3s; /* Firefox 4 */
+    -webkit-transition-duration: 0.3s; /* Safari 和 Chrome */
+    -o-transition-duration: 0.3s; /* Opera */
 
     transition-property: all;
     -moz-transition-property: all; /* Firefox 4 */
