@@ -19,10 +19,17 @@
 	</parent>
 
 	<dependencies>
+
 		<dependency>
 			<groupId>com.iclass</groupId>
 			<artifactId>iclass-common</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${iclass.common}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.iclass</groupId>
+			<artifactId>iclass-jdbc</artifactId>
+			<version>${iclass.jdbc}</version>
 		</dependency>
 
 		<dependency>
@@ -95,6 +102,27 @@
 			<artifactId>mail</artifactId>
 			<version>${mail.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.iclass</groupId>
+			<artifactId>iclass-common</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.iclass</groupId>
+			<artifactId>iclass-common</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.iclass</groupId>
+			<artifactId>iclass-common</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.iclass</groupId>
+			<artifactId>iclass-common</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.iclass</groupId>
+			<artifactId>iclass-common</artifactId>
+		</dependency>
+
 	</dependencies>
 	<build>
 		<plugins>

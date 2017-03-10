@@ -1,18 +1,17 @@
 package com.iclass.user.component.service.impl;
 
+import com.iclass.mybatis.dao.UserMapper;
+import com.iclass.mybatis.model.Student;
+import com.iclass.mybatis.model.Teacher;
+import com.iclass.mybatis.model.User;
 import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.md5.MD5;
 import com.iclass.user.component.msg.Msg;
 import com.iclass.user.component.msg.ResponseMsg;
+import com.iclass.user.component.service.api.SignUpService;
 import com.iclass.user.component.service.api.StudentService;
 import com.iclass.user.component.service.api.TeacherService;
 import com.iclass.user.component.service.api.ValidateExistService;
-import com.iclass.user.mybatis.dao.UserMapper;
-import com.iclass.user.component.service.api.SignUpService;
-import com.iclass.user.mybatis.model.Student;
-import com.iclass.user.mybatis.model.Teacher;
-import com.iclass.user.mybatis.model.User;
-import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

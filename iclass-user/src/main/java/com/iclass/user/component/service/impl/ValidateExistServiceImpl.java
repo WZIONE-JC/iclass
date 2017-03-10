@@ -4,7 +4,7 @@ import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.msg.Msg;
 import com.iclass.user.component.msg.ResponseMsg;
 import com.iclass.user.component.service.api.ValidateExistService;
-import com.iclass.user.mybatis.dao.UserMapper;
+import com.iclass.mybatis.dao.UserMapper;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

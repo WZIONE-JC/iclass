@@ -1,6 +1,6 @@
 package com.iclass.utils;
 
-import com.iclass.user.mybatis.model.User;
+import com.iclass.mybatis.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

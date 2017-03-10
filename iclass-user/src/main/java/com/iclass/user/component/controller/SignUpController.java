@@ -1,9 +1,9 @@
 package com.iclass.user.component.controller;
 
+import com.iclass.mybatis.model.User;
 import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.msg.ResponseMsg;
 import com.iclass.user.component.service.api.SignUpService;
-import com.iclass.user.mybatis.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE com.iclass.mybatis.mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-com.iclass.mybatis.mapper.dtd" >
+<com.iclass.mybatis.mapper namespace="com.iclass.mybatis.dao.AdminMapper" >
+  <resultMap id="BaseResultMap" type="admin" >
+    <constructor >
+      <idArg column="adminID" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="adminCode" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    adminID, adminCode
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from admin
+    where adminID = #{adminid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from admin
+    where adminID = #{adminid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="" >
+    insert into admin (adminID, adminCadminode)
+    values (#{adminid,jdbcType=INTEGER}, #{admincode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="admin" >
+    insert into admin
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="adminid != null" >
+        adminID,
+      </if>
+      <if test="admincode != null" >
+        adminCode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="adminid != null" >
+        #{adminid,jdbcType=INTEGER},
+      </if>
+      <if test="admincode != null" >
+        #{admincode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="admin" >
+    update admin
+    <set >
+      <if test="admincode != null" >
+        adminCode = #{admincode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where adminID = #{adminid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="admin" >
+    update admin
+    set adminCode = #{admincode,jdbcType=VARCHAR}
+    where adminID = #{adminid,jdbcType=INTEGER}
+  </update>
+</com.iclass.mybatis.mapper>

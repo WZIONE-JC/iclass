@@ -2,8 +2,8 @@ package com.iclass.user.component.service.impl;
 
 import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.service.api.TeacherService;
-import com.iclass.user.mybatis.dao.TeacherMapper;
-import com.iclass.user.mybatis.model.Teacher;
+import com.iclass.mybatis.dao.TeacherMapper;
+import com.iclass.mybatis.model.Teacher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,11 +1,11 @@
 package com.iclass.user.component.service.impl;
 
+import com.iclass.mybatis.dao.UserMapper;
 import com.iclass.user.component.entity.DataTablesRequestEntity;
 import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.service.api.PersonalInfoService;
 import com.iclass.user.component.vo.SessionUser;
-import com.iclass.user.mybatis.dao.UserMapper;
-import com.iclass.user.mybatis.model.User;
+import com.iclass.mybatis.model.User;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

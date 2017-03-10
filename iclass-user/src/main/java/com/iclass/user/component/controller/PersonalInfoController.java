@@ -1,12 +1,12 @@
 package com.iclass.user.component.controller;
 
+import com.iclass.mybatis.model.User;
 import com.iclass.user.component.entity.DataTablesRequestEntity;
 import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.msg.ResponseMsg;
 import com.iclass.user.component.service.api.PersonalInfoService;
 import com.iclass.user.component.service.api.UserInfoService;
 import com.iclass.user.component.vo.SessionUser;
-import com.iclass.user.mybatis.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

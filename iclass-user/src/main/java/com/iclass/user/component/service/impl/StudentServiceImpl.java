@@ -2,8 +2,8 @@ package com.iclass.user.component.service.impl;
 
 import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.service.api.StudentService;
-import com.iclass.user.mybatis.dao.StudentMapper;
-import com.iclass.user.mybatis.model.Student;
+import com.iclass.mybatis.dao.StudentMapper;
+import com.iclass.mybatis.model.Student;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

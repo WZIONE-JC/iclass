@@ -7,10 +7,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>iclass-generate-mapper</artifactId>
+    <artifactId>iclass-generate-com.iclass.mybatis.com.iclass.mybatis.mapper</artifactId>
     <packaging>jar</packaging>
 
-    <name>iclass-generate-mapper</name>
+    <name>iclass-generate-com.iclass.mybatis.com.iclass.mybatis.mapper</name>
     <url>http://maven.apache.org</url>
     <dependencies>
         <dependency>

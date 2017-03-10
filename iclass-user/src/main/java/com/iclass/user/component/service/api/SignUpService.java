@@ -1,8 +1,8 @@
 package com.iclass.user.component.service.api;
 
+import com.iclass.mybatis.model.User;
 import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.msg.ResponseMsg;
-import com.iclass.user.mybatis.model.User;
 
 /**
  * iclass

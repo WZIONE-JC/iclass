@@ -1,6 +1,6 @@
 package com.iclass.user.component.vo;
 
-import com.iclass.user.mybatis.model.User;
+import com.iclass.mybatis.model.User;
 import com.iclass.utils.UserInfoHandler;
 
 /**

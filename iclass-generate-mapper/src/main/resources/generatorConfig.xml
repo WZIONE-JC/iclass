@@ -43,7 +43,7 @@
         </javaModelGenerator>
 
         <!-- targetPorject:mapper映射文件生成的位置 -->
-        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/java">
+        <sqlMapGenerator targetPackage="com.iclass.mybatis.com.iclass.mybatis.mapper" targetProject="src/main/java">
             <!-- enableSubPackages:是否让schema作为包的后缀 -->
             <property name="enableSubpackages" value="false"></property>
         </sqlMapGenerator>
