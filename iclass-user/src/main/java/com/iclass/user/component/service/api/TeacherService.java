@@ -1,6 +1,6 @@
 package com.iclass.user.component.service.api;
 
-import com.iclass.mybatis.model.Teacher;
+import com.iclass.mybatis.po.Teacher;
 import com.iclass.user.component.entity.ServiceResult;
 
 /**

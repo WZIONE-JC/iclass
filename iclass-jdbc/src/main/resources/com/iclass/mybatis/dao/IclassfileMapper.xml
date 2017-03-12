@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.iclass.mybatis.dao.IclassfileMapper" >
+  <resultMap id="BaseResultMap" type="iclassfile" >
+
+    <constructor >
+      <idArg column="FileID" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="FileCode" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="FilePath" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="FileDesc" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="FileCreator" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="FileCreateTime" jdbcType="TIMESTAMP" javaType="java.lang.String" />
+      <arg column="Filetype" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="FileDownloadTime" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="FileStatus" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    FileID, FileCode, FilePath, FileDesc, FileCreator, FileCreateTime, Filetype, FileDownloadTime, 
+    FileStatus
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from iclassfile
+    where FileID = #{fileid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from iclassfile
+    where FileID = #{fileid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="iclassfile" >
+    insert into iclassfile (FileID, FileCode, FilePath,
+      FileDesc, FileCreator, FileCreateTime, 
+      Filetype, FileDownloadTime, FileStatus
+      )
+    values (#{fileid,jdbcType=INTEGER}, #{filecode,jdbcType=VARCHAR}, #{filepath,jdbcType=VARCHAR}, 
+      #{filedesc,jdbcType=VARCHAR}, #{filecreator,jdbcType=VARCHAR}, #{filecreatetime,jdbcType=TIMESTAMP},
+      #{filetype,jdbcType=INTEGER}, #{filedownloadtime,jdbcType=INTEGER}, #{filestatus,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="iclassfile" >
+    insert into iclassfile
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fileid != null" >
+        FileID,
+      </if>
+      <if test="filecode != null" >
+        FileCode,
+      </if>
+      <if test="filepath != null" >
+        FilePath,
+      </if>
+      <if test="filedesc != null" >
+        FileDesc,
+      </if>
+      <if test="filecreator != null" >
+        FileCreator,
+      </if>
+      <if test="filecreatetime != null" >
+        FileCreateTime,
+      </if>
+      <if test="filetype != null" >
+        Filetype,
+      </if>
+      <if test="filedownloadtime != null" >
+        FileDownloadTime,
+      </if>
+      <if test="filestatus != null" >
+        FileStatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fileid != null" >
+        #{fileid,jdbcType=INTEGER},
+      </if>
+      <if test="filecode != null" >
+        #{filecode,jdbcType=VARCHAR},
+      </if>
+      <if test="filepath != null" >
+        #{filepath,jdbcType=VARCHAR},
+      </if>
+      <if test="filedesc != null" >
+        #{filedesc,jdbcType=VARCHAR},
+      </if>
+      <if test="filecreator != null" >
+        #{filecreator,jdbcType=VARCHAR},
+      </if>
+      <if test="filecreatetime != null" >
+        #{filecreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="filetype != null" >
+        #{filetype,jdbcType=INTEGER},
+      </if>
+      <if test="filedownloadtime != null" >
+        #{filedownloadtime,jdbcType=INTEGER},
+      </if>
+      <if test="filestatus != null" >
+        #{filestatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="iclassfile" >
+    update iclassfile
+    <set >
+      <if test="filecode != null" >
+        FileCode = #{filecode,jdbcType=VARCHAR},
+      </if>
+      <if test="filepath != null" >
+        FilePath = #{filepath,jdbcType=VARCHAR},
+      </if>
+      <if test="filedesc != null" >
+        FileDesc = #{filedesc,jdbcType=VARCHAR},
+      </if>
+      <if test="filecreator != null" >
+        FileCreator = #{filecreator,jdbcType=VARCHAR},
+      </if>
+      <if test="filecreatetime != null" >
+        FileCreateTime = #{filecreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="filetype != null" >
+        Filetype = #{filetype,jdbcType=INTEGER},
+      </if>
+      <if test="filedownloadtime != null" >
+        FileDownloadTime = #{filedownloadtime,jdbcType=INTEGER},
+      </if>
+      <if test="filestatus != null" >
+        FileStatus = #{filestatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where FileID = #{fileid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="iclassfile" >
+    update iclassfile
+    set FileCode = #{filecode,jdbcType=VARCHAR},
+      FilePath = #{filepath,jdbcType=VARCHAR},
+      FileDesc = #{filedesc,jdbcType=VARCHAR},
+      FileCreator = #{filecreator,jdbcType=VARCHAR},
+      FileCreateTime = #{filecreatetime,jdbcType=TIMESTAMP},
+      Filetype = #{filetype,jdbcType=INTEGER},
+      FileDownloadTime = #{filedownloadtime,jdbcType=INTEGER},
+      FileStatus = #{filestatus,jdbcType=INTEGER}
+    where FileID = #{fileid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByFileCode" resultType="iclassfile">
+    select
+    <include refid="Base_Column_List" />
+    from iclassfile
+    where FileCode = #{filecode,jdbcType=VARCHAR} and Filetype = #{filetype,jdbcType=INTEGER} and FileStatus = 1
+  </select>
+</mapper>

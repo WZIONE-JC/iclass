@@ -891,7 +891,7 @@ pathAnim = {
 				if (fn === 'cur') {
 					obj = Fx.prototype; // 'cur', the getter, relates to Fx.prototype
 				
-				} else if (fn === '_default' && $.Tween) { // jQuery 1.8 model
+				} else if (fn === '_default' && $.Tween) { // jQuery 1.8 po
 					obj = $.Tween.propHooks[fn];
 					fn = 'set';
 				}
@@ -2291,7 +2291,7 @@ SVGElement.prototype = {
 				}
 			};			
 		} else {
-			// simplest possible event model for internal use
+			// simplest possible event po for internal use
 			element['on' + eventType] = handler;
 		}
 		return this;
@@ -4928,7 +4928,7 @@ VMLElement = {
 	 * @param {Function} handler
 	 */
 	on: function (eventType, handler) {
-		// simplest possible event model for internal use
+		// simplest possible event po for internal use
 		this.element['on' + eventType] = function () {
 			var evt = win.event;
 			evt.target = evt.srcElement;

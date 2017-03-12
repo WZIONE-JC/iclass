@@ -1,6 +1,6 @@
 package com.iclass.user.component.controller;
 
-import com.iclass.mybatis.model.Role;
+import com.iclass.mybatis.po.Role;
 import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.service.api.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;

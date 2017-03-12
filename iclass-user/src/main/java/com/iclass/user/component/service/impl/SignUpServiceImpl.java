@@ -1,9 +1,9 @@
 package com.iclass.user.component.service.impl;
 
 import com.iclass.mybatis.dao.UserMapper;
-import com.iclass.mybatis.model.Student;
-import com.iclass.mybatis.model.Teacher;
-import com.iclass.mybatis.model.User;
+import com.iclass.mybatis.po.Student;
+import com.iclass.mybatis.po.Teacher;
+import com.iclass.mybatis.po.User;
 import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.md5.MD5;
 import com.iclass.user.component.msg.Msg;
@@ -12,14 +12,12 @@ import com.iclass.user.component.service.api.SignUpService;
 import com.iclass.user.component.service.api.StudentService;
 import com.iclass.user.component.service.api.TeacherService;
 import com.iclass.user.component.service.api.ValidateExistService;
+import com.iclass.user.component.utils.Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * iclass
@@ -75,7 +73,7 @@ public class SignUpServiceImpl implements SignUpService {
                 //加密密码
                 user.setUserpassword(getMD5Password(user.getUserpassword()));
                 //处理注册日期
-                user.setUserregisterdate(new String(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())));
+                user.setUserregisterdate(Util.getDateTimeNow());
 
                 int result = userMapper.insert(user);
 

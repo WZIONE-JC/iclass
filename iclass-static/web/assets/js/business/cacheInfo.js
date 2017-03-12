@@ -56,7 +56,7 @@ var GetCache = function () {
                 error: function (data) {
                     swal({
                         title: "Sorry!",
-                        text: "请求获取缓存信息出错,错误信息:"+data.responseText,
+                        text: "网络繁忙，请稍后再试",
                         timer: 2000,
                         type: "error"
                     });

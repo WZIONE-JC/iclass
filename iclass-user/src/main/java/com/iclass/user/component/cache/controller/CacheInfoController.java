@@ -1,9 +1,9 @@
 package com.iclass.user.component.cache.controller;
 
-import com.iclass.mybatis.model.User;
+import com.iclass.mybatis.dto.SessionUser;
+import com.iclass.mybatis.po.User;
 import com.iclass.user.component.cache.service.api.CacheInfoService;
 import com.iclass.user.component.entity.ServiceResult;
-import com.iclass.user.component.vo.SessionUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

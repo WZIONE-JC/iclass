@@ -23,6 +23,14 @@ public class DataTablesRequestEntity implements Serializable{
 
     private Integer length;
 
+    public DataTablesRequestEntity(){}
+
+    public DataTablesRequestEntity(Integer draw, Integer start, Integer length) {
+        this.draw = draw;
+        this.start = start;
+        this.length = length;
+    }
+
     public Integer getDraw() {
         return draw;
     }

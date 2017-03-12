@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.iclass.mybatis.dao.TeacherMapper" >
+  <resultMap id="BaseResultMap" type="teacher" >
+    <constructor >
+      <idArg column="TeacherID" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="TeacherCode" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    TeacherID, TeacherCode
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from teacher
+    where TeacherID = #{teacherid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from teacher
+    where TeacherID = #{teacherid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="teacher" >
+    insert into teacher (TeacherID, TeacherCode)
+    values (#{teacherid,jdbcType=INTEGER}, #{teachercode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="teacher" >
+    insert into teacher
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="teacherid != null" >
+        TeacherID,
+      </if>
+      <if test="teachercode != null" >
+        TeacherCode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="teacherid != null" >
+        #{teacherid,jdbcType=INTEGER},
+      </if>
+      <if test="teachercode != null" >
+        #{teachercode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="teacher" >
+    update teacher
+    <set >
+      <if test="teachercode != null" >
+        TeacherCode = #{teachercode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where TeacherID = #{teacherid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="teacher" >
+    update teacher
+    set TeacherCode = #{teachercode,jdbcType=VARCHAR}
+    where TeacherID = #{teacherid,jdbcType=INTEGER}
+  </update>
+</mapper>

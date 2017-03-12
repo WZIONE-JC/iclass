@@ -21,6 +21,7 @@
 .user-add-div {
     padding-top: 50px;
 }
+/*将datatables处理中的提示放到表格中间了*/
 .dataTables-processing {
     margin-left: 48%;
     padding-top: 3px;
@@ -36,5 +37,9 @@
     color: #666;
     border:0;
 }
+.Validform_wrong, .Validform_warning {
+    margin-left: 41%;
+}
+
 
 

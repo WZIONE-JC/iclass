@@ -1,11 +1,11 @@
 package com.iclass.user.component.cache.service.impl;
 
 import com.iclass.mybatis.dao.UserMapper;
-import com.iclass.mybatis.model.User;
+import com.iclass.mybatis.po.User;
 import com.iclass.user.component.cache.service.api.CacheInfoService;
 import com.iclass.user.component.cache.DataCache;
 import com.iclass.user.component.entity.ServiceResult;
-import com.iclass.user.component.vo.SessionUser;
+import com.iclass.mybatis.dto.SessionUser;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
  * <p>
  * Created by yang.tang on 2017/2/14 15:04.
  */
-@Service("CacheInfoService")
+@Service("cacheInfoService")
 public class CacheInfoServiceImpl implements CacheInfoService {
 
     private final Logger logger = LoggerFactory.getLogger(CacheInfoServiceImpl.class);

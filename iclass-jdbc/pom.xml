@@ -20,6 +20,12 @@
 	<dependencies>
 
 		<dependency>
+			<groupId>com.iclass</groupId>
+			<artifactId>iclass-common</artifactId>
+			<version>${iclass.common.version}</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
 			<artifactId>mybatis-spring-boot-starter</artifactId>
 			<version>${mybatis.spring.boot.starter.version}</version>

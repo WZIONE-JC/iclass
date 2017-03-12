@@ -6,9 +6,10 @@ import com.iclass.user.component.md5.MD5;
 import com.iclass.user.component.msg.Msg;
 import com.iclass.user.component.msg.ResponseMsg;
 import com.iclass.user.component.service.api.UserInfoService;
-import com.iclass.user.component.vo.SessionUser;
+import com.iclass.mybatis.dto.SessionUser;
 import com.iclass.mybatis.dao.UserMapper;
-import com.iclass.mybatis.model.User;
+import com.iclass.mybatis.po.User;
+import com.iclass.user.component.utils.CheckDataTables;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,14 +41,11 @@ public class UserInfoServiceImpl implements UserInfoService{
         logger.info(requestEntity.toString());
         ServiceResult<List<SessionUser>> serviceResult = new ServiceResult<>();
         List<SessionUser> sessionUsers = new ArrayList<>();
+        requestEntity = CheckDataTables.check(requestEntity);
         Integer start = requestEntity.getStart();
-        if(start < 0) {
-            start = 0;
-        }
+
         Integer length = requestEntity.getLength();
-        if(length < 1) {
-            length = 1;
-        }
+
         Integer draw = requestEntity.getDraw();
         List<User> users = userMapper.findAll(start, length);
         for(User user : users) {

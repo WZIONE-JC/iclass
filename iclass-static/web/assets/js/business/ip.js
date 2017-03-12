@@ -6,3 +6,4 @@
     //var ip = "115.159.63.34";
     var port = "8080";
     var rurl = "http://"+ip+":"+port+"/iclass";
+    var ppt_hw_rurl = "http://" + ip+":"+"8021"+"/iclass";
