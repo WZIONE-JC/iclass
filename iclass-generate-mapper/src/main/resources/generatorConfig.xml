@@ -131,20 +131,20 @@
                <!--enableSelectByExample="false"-->
                <!--selectByExampleQueryId="false">-->
         <!--</table>-->
-        <table tableName="iclassfiles"
+        <table tableName="iclassfile"
                         enableCountByExample="false"
                         enableUpdateByExample="false"
                         enableDeleteByExample="false"
                         enableSelectByExample="false"
                         selectByExampleQueryId="false">
         </table>
-        <table tableName="iclassfile_class"
-               enableCountByExample="false"
-               enableUpdateByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               selectByExampleQueryId="false">
-        </table>
+        <!--<table tableName="iclassfile_class"-->
+               <!--enableCountByExample="false"-->
+               <!--enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false">-->
+        <!--</table>-->
         <!--<table tableName="rollcall"-->
                <!--enableCountByExample="false"-->
                <!--enableUpdateByExample="false"-->

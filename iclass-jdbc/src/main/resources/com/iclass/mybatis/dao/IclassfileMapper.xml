@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.iclass.mybatis.dao.IclassfileMapper" >
   <resultMap id="BaseResultMap" type="iclassfile" >
-
     <constructor >
       <idArg column="FileID" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="FileCode" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="FileName" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="FilePath" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="FileDesc" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="FileCreator" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -16,37 +16,40 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    FileID, FileCode, FilePath, FileDesc, FileCreator, FileCreateTime, Filetype, FileDownloadTime, 
+    FileID, FileCode, FileName, FilePath, FileDesc, FileCreator, FileCreateTime, Filetype, FileDownloadTime,
     FileStatus
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
-    from iclassfile
+    from iclassfiles
     where FileID = #{fileid,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from iclassfile
+    delete from iclassfiles
     where FileID = #{fileid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="iclassfile" >
-    insert into iclassfile (FileID, FileCode, FilePath,
-      FileDesc, FileCreator, FileCreateTime, 
-      Filetype, FileDownloadTime, FileStatus
-      )
-    values (#{fileid,jdbcType=INTEGER}, #{filecode,jdbcType=VARCHAR}, #{filepath,jdbcType=VARCHAR}, 
-      #{filedesc,jdbcType=VARCHAR}, #{filecreator,jdbcType=VARCHAR}, #{filecreatetime,jdbcType=TIMESTAMP},
-      #{filetype,jdbcType=INTEGER}, #{filedownloadtime,jdbcType=INTEGER}, #{filestatus,jdbcType=INTEGER}
-      )
+    insert into iclassfiles (FileID, FileCode, FileName, FilePath,
+    FileDesc, FileCreator, FileCreateTime,
+    Filetype, FileDownloadTime, FileStatus
+    )
+    values (#{fileid,jdbcType=INTEGER}, #{filecode,jdbcType=VARCHAR}, #{filename,jdbcType=VARCHAR}, #{filepath,jdbcType=VARCHAR},
+    #{filedesc,jdbcType=VARCHAR}, #{filecreator,jdbcType=VARCHAR}, #{filecreatetime,jdbcType=TIMESTAMP},
+    #{filetype,jdbcType=INTEGER}, #{filedownloadtime,jdbcType=INTEGER}, #{filestatus,jdbcType=INTEGER}
+    )
   </insert>
   <insert id="insertSelective" parameterType="iclassfile" >
-    insert into iclassfile
+    insert into iclassfiles
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="fileid != null" >
         FileID,
       </if>
       <if test="filecode != null" >
         FileCode,
+      </if>
+      <if test="filename != null" >
+        FileName,
       </if>
       <if test="filepath != null" >
         FilePath,
@@ -77,6 +80,9 @@
       <if test="filecode != null" >
         #{filecode,jdbcType=VARCHAR},
       </if>
+      <if test="filename != null" >
+        #{filename,jdbcType=VARCHAR},
+      </if>
       <if test="filepath != null" >
         #{filepath,jdbcType=VARCHAR},
       </if>
@@ -101,10 +107,13 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="iclassfile" >
-    update iclassfile
+    update iclassfiles
     <set >
       <if test="filecode != null" >
         FileCode = #{filecode,jdbcType=VARCHAR},
+      </if>
+      <if test="filename != null" >
+        FileName = #{filename,jdbcType=VARCHAR},
       </if>
       <if test="filepath != null" >
         FilePath = #{filepath,jdbcType=VARCHAR},
@@ -131,15 +140,16 @@
     where FileID = #{fileid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="iclassfile" >
-    update iclassfile
+    update iclassfiles
     set FileCode = #{filecode,jdbcType=VARCHAR},
-      FilePath = #{filepath,jdbcType=VARCHAR},
-      FileDesc = #{filedesc,jdbcType=VARCHAR},
-      FileCreator = #{filecreator,jdbcType=VARCHAR},
-      FileCreateTime = #{filecreatetime,jdbcType=TIMESTAMP},
-      Filetype = #{filetype,jdbcType=INTEGER},
-      FileDownloadTime = #{filedownloadtime,jdbcType=INTEGER},
-      FileStatus = #{filestatus,jdbcType=INTEGER}
+    FileName = #{filename,jdbcType=VARCHAR},
+    FilePath = #{filepath,jdbcType=VARCHAR},
+    FileDesc = #{filedesc,jdbcType=VARCHAR},
+    FileCreator = #{filecreator,jdbcType=VARCHAR},
+    FileCreateTime = #{filecreatetime,jdbcType=TIMESTAMP},
+    Filetype = #{filetype,jdbcType=INTEGER},
+    FileDownloadTime = #{filedownloadtime,jdbcType=INTEGER},
+    FileStatus = #{filestatus,jdbcType=INTEGER}
     where FileID = #{fileid,jdbcType=INTEGER}
   </update>
   <select id="selectByFileCode" resultType="iclassfile">

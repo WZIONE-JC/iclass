@@ -43,6 +43,11 @@ public class FileUploadServiceImpl implements FileUploadService {
      * 上传文件时生成的UUID
      */
     private String fileCode;
+
+    /**
+     * 上传文件的文件名
+     */
+    private String fileName;
     /**
      *
      * @param request 获取服务器路径，来存储文件
@@ -68,6 +73,9 @@ public class FileUploadServiceImpl implements FileUploadService {
             IclassfileClass fileClass = new IclassfileClass();
             if(StringUtils.isNotBlank(filePath)) {
                 iclassFile.setFilepath(filePath);
+            }
+            if(StringUtils.isNotBlank(fileName)) {
+                iclassFile.setFilename(fileName);
             }
             if(StringUtils.isNotBlank(fileCode)) {
                 iclassFile.setFilecode(fileCode);
@@ -126,7 +134,7 @@ public class FileUploadServiceImpl implements FileUploadService {
             return serviceResult;
         }
         // 获取文件名
-        String fileName = file.getOriginalFilename();
+        fileName = file.getOriginalFilename();
         if(logger.isDebugEnabled()) {
             logger.debug("上传的文件名为：" + fileName);
         }

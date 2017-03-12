@@ -1,13 +1,13 @@
 package com.iclass.mybatis.po;
 
-import com.iclass.user.component.utils.Util;
-
 import java.io.Serializable;
 
 public class Iclassfile implements Serializable{
     private Integer fileid;
 
     private String filecode;
+
+    private String filename;
 
     private String filepath;
 
@@ -23,13 +23,14 @@ public class Iclassfile implements Serializable{
 
     private Integer filestatus;
 
-    public Iclassfile(Integer fileid, String filecode, String filepath, String filedesc, String filecreator, String filecreatetime, Integer filetype, Integer filedownloadtime, Integer filestatus) {
+    public Iclassfile(Integer fileid, String filecode, String filename, String filepath, String filedesc, String filecreator, String filecreatetime, Integer filetype, Integer filedownloadtime, Integer filestatus) {
         this.fileid = fileid;
         this.filecode = filecode;
+        this.filename = filename;
         this.filepath = filepath;
         this.filedesc = filedesc;
         this.filecreator = filecreator;
-        this.filecreatetime = Util.formatTime(filecreatetime);
+        this.filecreatetime = filecreatetime;
         this.filetype = filetype;
         this.filedownloadtime = filedownloadtime;
         this.filestatus = filestatus;
@@ -52,7 +53,15 @@ public class Iclassfile implements Serializable{
     }
 
     public void setFilecode(String filecode) {
-        this.filecode = filecode == null ? null : filecode.trim();
+        this.filecode = filecode;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 
     public String getFilepath() {
@@ -60,7 +69,7 @@ public class Iclassfile implements Serializable{
     }
 
     public void setFilepath(String filepath) {
-        this.filepath = filepath == null ? null : filepath.trim();
+        this.filepath = filepath;
     }
 
     public String getFiledesc() {
@@ -68,7 +77,7 @@ public class Iclassfile implements Serializable{
     }
 
     public void setFiledesc(String filedesc) {
-        this.filedesc = filedesc == null ? null : filedesc.trim();
+        this.filedesc = filedesc;
     }
 
     public String getFilecreator() {
@@ -76,7 +85,7 @@ public class Iclassfile implements Serializable{
     }
 
     public void setFilecreator(String filecreator) {
-        this.filecreator = filecreator == null ? null : filecreator.trim();
+        this.filecreator = filecreator;
     }
 
     public String getFilecreatetime() {
@@ -84,7 +93,7 @@ public class Iclassfile implements Serializable{
     }
 
     public void setFilecreatetime(String filecreatetime) {
-        this.filecreatetime = Util.formatTime(filecreatetime);
+        this.filecreatetime = filecreatetime;
     }
 
     public Integer getFiletype() {
@@ -116,10 +125,11 @@ public class Iclassfile implements Serializable{
         return "Iclassfile{" +
                 "fileid=" + fileid +
                 ", filecode='" + filecode + '\'' +
+                ", filename='" + filename + '\'' +
                 ", filepath='" + filepath + '\'' +
                 ", filedesc='" + filedesc + '\'' +
                 ", filecreator='" + filecreator + '\'' +
-                ", filecreatetime=" + filecreatetime +
+                ", filecreatetime='" + filecreatetime + '\'' +
                 ", filetype=" + filetype +
                 ", filedownloadtime=" + filedownloadtime +
                 ", filestatus=" + filestatus +

@@ -181,7 +181,7 @@ function classTableHandler(formId, url, fileType) {
                             return "未上传课件";
                         }
                     } else {
-                        return "<a onclick='download();' title='点击下载课件'>"+ data +"</a>";
+                        return "<a href='' download='' title='点击下载课件'>"+ data +"</a>";
                     }
                 }
             },
@@ -235,17 +235,27 @@ function classTableHandler(formId, url, fileType) {
 
     var columnDefs =
         [{
-            targets: [1, 2, -3, -2, -1],
+            targets: [1, 2, 3, -3, -2, -1],
             "createdCell": function (td, cellData, rowData, row, col) {
                 var classcode = rowData.aClass.classcode;
                 var classname = rowData.aClass.classname;
                 var coursename = rowData.course.coursename;
                 var coursecode = rowData.course.coursecode;
+                var iclassfiles = rowData.iclassfiles[0];
                 if (col == 1) {
                     $(td).wrapInner("<span style='cursor:pointer' title='查看课堂信息' class='label label-secondary radius' onclick=class_show('" + classname + "','class-show.html','classcode=" + classcode + "','360','400')></span>");
                 }
                 if (col == 2) {
                     $(td).wrapInner("<span style='cursor:pointer' title='查看课程信息' class='label label-primary radius' onclick=course_show('" + coursename + "','course-show.html','coursecode=" + coursecode + "','360','400')></span>");
+                }
+                if (col == 3) {
+                    if(iclassfiles != null) {
+                        var downloadurl = iclassfiles.iclassfile.filepath;
+                        var filename = iclassfiles.iclassfile.filename;
+                        $(td).find("a").attr("href", downloadurl);
+                        $(td).find("a").attr("download", filename);
+                    }
+
                 }
                 if (col == 6) {
                     $(td).wrapInner("<span class='label label-warning radius'></span>");
@@ -343,11 +353,14 @@ function file_add(title,url){
     layer.full(index);
 }
 
-/*课堂-查看*/
+/*课程-查看*/
 function course_show(title,url,id,w,h){
     layer_show(title,url,id,w,h);
 }
-
+/*课堂-查看*/
+function class_show(title,url,id,w,h){
+    layer_show(title,url,id,w,h);
+}
 /*课堂-编辑*/
 function class_update(title,url,id,w,h){
     layer_show(title,url,id,w,h);
