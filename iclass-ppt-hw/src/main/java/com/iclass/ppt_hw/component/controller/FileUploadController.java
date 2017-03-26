@@ -47,7 +47,7 @@ public class FileUploadController {
         return fileUploadService.doData(request, file, fileQo);
     }
 
-    @RequestMapping(value = "/download", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/download", method = {RequestMethod.GET, RequestMethod.POST}, produces = "multipart/form-data")
     public ResponseEntity<byte[]> download(HttpServletResponse response, String fileCode, Integer fileType) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods", "GET,POST");

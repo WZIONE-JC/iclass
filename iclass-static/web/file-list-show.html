@@ -31,6 +31,9 @@
 	<div class="mt-10">
 		<input type="hidden" id="usercode" name="classCreator">
 		<table id='file-info-table' class="table table-border table-bordered table-bg table-hover table-sort">
+			<input type="hidden" name="classCode" id="classCode"/>
+			<input type="hidden" name="courseCode" id="courseCode" />
+			<input type="hidden" name="fileType" id="fileType" />
 			<thead>
 				<tr class="text-c">
 					<th width="3%"><input name="" type="checkbox" value=""></th>
@@ -44,14 +47,10 @@
 				</tr>
 			</thead>
 			<tbody>
-
 			</tbody>
+			<a style="display: none" onclick="loadData()" id="loadData"></a>
 		</table>
 	</div>
-	<form style="display: none" id="download-form" method="post">
-		<input type="hidden" name="fileCode" id="fileCode" />
-		<input type="hidden" name="fileType" id="fileType" />
-	</form>
 </div>
 <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> 
 <script type="text/javascript" src="lib/layer/1.9.3/layer.js"></script> 
@@ -63,39 +62,15 @@
 <script type="text/javascript" src="assets/js/H-ui.js"></script>
 <script type="text/javascript" src="assets/js/H-ui.admin.js"></script>
 <script type="text/javascript">
-	$(function () {
-	    var classCode,courseCode;
-	    $.ajax({
-	        type: "post",
-	        url: ppt_hw_rurl + "/ppthw/getCache",
-			dataType: "json",
-			success: function (responseData) {
-				if (responseData.success) {
-				    classCode = responseData.data[0];
-				    courseCode = responseData.data[1];
-				} else {
-                    swal({
-                        title: "Sorry!",
-                        text: responseData.message,
-                        timer: 2000,
-                        type: "error"
-                    });
-				}
-            },
-			complete: function () {
-                var table = fileTableHandler("#file-info-table", "/ppthw/getPPTFileInfo", classCode, courseCode, 1);
-            },
-			error: function () {
-                swal({
-                    title: "Sorry!",
-                    text: "网络错误,请稍后再试",
-                    timer: 2000,
-                    type: "error"
-                });
-            }
-	    });
-
-	})
+	function loadData () {
+	    var classCode = $("#classCode").val();
+		var courseCode = $("#courseCode").val();
+		var fileType = $("#fileType").val();
+        var table = fileTableHandler(classCode, courseCode, fileType);
+        $("#btn-refresh").on("click",function () {
+            table.api().ajax.reload();
+        });
+	}
 </script>
 </body>
 </html>

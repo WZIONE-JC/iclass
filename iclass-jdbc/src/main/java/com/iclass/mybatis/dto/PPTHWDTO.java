@@ -27,12 +27,15 @@ public class PPTHWDTO {
      */
     private String teacherName;
 
+    private Integer studentsNum;
+
     public PPTHWDTO() {}
 
-    public PPTHWDTO(Class aClass, Course course, String teacherName) {
+    public PPTHWDTO(Class aClass, Course course, String teacherName, Integer studentsNum) {
         this.aClass = aClass;
         this.course = course;
         this.teacherName = teacherName;
+        this.studentsNum = studentsNum;
     }
 
     public Class getaClass() {
@@ -59,12 +62,21 @@ public class PPTHWDTO {
         this.teacherName = teacherName;
     }
 
+    public Integer getStudentsNum() {
+        return studentsNum;
+    }
+
+    public void setStudentsNum(Integer studentsNum) {
+        this.studentsNum = studentsNum;
+    }
+
     @Override
     public String toString() {
         return "PPTHWDTO{" +
                 "aClass=" + aClass +
                 ", course=" + course +
                 ", teacherName='" + teacherName + '\'' +
+                ", studentsNum=" + studentsNum +
                 '}';
     }
 }

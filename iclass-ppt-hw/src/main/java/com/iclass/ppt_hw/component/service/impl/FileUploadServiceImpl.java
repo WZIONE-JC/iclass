@@ -127,41 +127,45 @@ public class FileUploadServiceImpl implements FileUploadService {
 
     @Override
     public ResponseEntity<byte[]> download(HttpServletResponse response, String fileCode, Integer fileType) {
-        ServiceResult<ResponseMsg> serviceResult = new ServiceResult<>();
+        HttpHeaders headers = new HttpHeaders();
         if (StringUtils.isBlank(fileCode)) {
             logger.warn("fileCode为空");
-            serviceResult.setMessage("文件编号为空");
-            return null;
+            return new ResponseEntity<>(null,
+                    null, HttpStatus.NOT_FOUND);
         }
         if (fileType == null) {
             logger.warn("fileType为空");
-            serviceResult.setMessage("文件类型为空");
-            return null;
+            return new ResponseEntity<>(null,
+                    null, HttpStatus.NOT_FOUND);
         }
         try {
-            HttpHeaders headers = new HttpHeaders();
             response.setCharacterEncoding("utf-8");
             Iclassfile iclassFile = iclassfileMapper.selectByFileCode(fileCode, fileType);
             if (iclassFile == null) {
                 logger.info("没有找到文件,fileCoe:" + fileCode + ",fileType:" + fileType);
-                serviceResult.setMessage("没有找到文件");
-                return null;
+                return new ResponseEntity<>(null,
+                        null, HttpStatus.NOT_FOUND);
             }
             String path = iclassFile.getFilepath();
             String fileName = iclassFile.getFilename();
             fileName = java.net.URLEncoder.encode(fileName, "UTF-8");
             File file = new File(path);
             headers.setContentDispositionFormData("attachment", fileName);
-            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-            return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),
-                    headers, HttpStatus.CREATED);
+            headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+            ResponseEntity<byte[]> responseEntity = new ResponseEntity<>(FileUtils.readFileToByteArray(file),
+                    headers, HttpStatus.OK);
+            iclassfileMapper.updateFileDownloadTimeByFileCode(fileCode);
+            return responseEntity;
         } catch (FileNotFoundException e) {
-            serviceResult.setMessage("文件不存在");
+            logger.info("文件不存在");
+            return new ResponseEntity<>(null,
+                    null, HttpStatus.NOT_FOUND);
         } catch (IOException e) {
+            logger.info("未知错误");
             e.printStackTrace();
-            serviceResult.setMessage("文件下载出错,请稍后再试");
+            return new ResponseEntity<>(null,
+                    null, HttpStatus.NOT_FOUND);
         }
-        return null;
     }
 
     /**

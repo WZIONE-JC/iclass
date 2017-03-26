@@ -178,7 +178,7 @@ public class PPTHWServiceImpl implements PPTHWService {
                 User teacher = userMapper.findByUsercode(iclassfile.getFilecreator());
                 String teacherName = teacher.getUserfullname();
                 iclassfileList.add(new IclassfileDTO(iclassfile, teacherName));
-            }
+        }
         }
         serviceResult.setData(iclassfileList);
         logger.info("文件信息查询成功" + iclassfileList.toString());
