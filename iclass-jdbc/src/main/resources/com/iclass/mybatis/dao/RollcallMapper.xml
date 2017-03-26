@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.iclass.mybatis.dao.RollcallMapper" >
-  <resultMap id="BaseResultMap" type="rollcall" >
+  <resultMap id="BaseResultMap" type="com.iclass.mybatis.po.Rollcall" >
     <constructor >
       <idArg column="RollCallID" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="RollCallCode" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -25,7 +25,7 @@
     delete from rollcall
     where RollCallID = #{rollcallid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="rollcall" >
+  <insert id="insert" parameterType="com.iclass.mybatis.po.Rollcall" >
     insert into rollcall (RollCallID, RollCallCode, RollCallTime, 
       RollCallStatus, ClassCode, TeacherCode, 
       CourseCode)
@@ -33,7 +33,7 @@
       #{rollcallstatus,jdbcType=VARCHAR}, #{classcode,jdbcType=VARCHAR}, #{teachercode,jdbcType=VARCHAR}, 
       #{coursecode,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="rollcall" >
+  <insert id="insertSelective" parameterType="com.iclass.mybatis.po.Rollcall" >
     insert into rollcall
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="rollcallid != null" >
@@ -82,7 +82,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="rollcall" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.iclass.mybatis.po.Rollcall" >
     update rollcall
     <set >
       <if test="rollcallcode != null" >
@@ -106,7 +106,7 @@
     </set>
     where RollCallID = #{rollcallid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="rollcall" >
+  <update id="updateByPrimaryKey" parameterType="com.iclass.mybatis.po.Rollcall" >
     update rollcall
     set RollCallCode = #{rollcallcode,jdbcType=VARCHAR},
       RollCallTime = #{rollcalltime,jdbcType=TIMESTAMP},

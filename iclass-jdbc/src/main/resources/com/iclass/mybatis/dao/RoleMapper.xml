@@ -3,7 +3,7 @@
 <mapper namespace="com.iclass.mybatis.dao.RoleMapper" >
   <!--开启缓存-->
   <cache/>
-  <resultMap id="BaseResultMap" type="role" >
+  <resultMap id="BaseResultMap" type="com.iclass.mybatis.po.Role" >
     <constructor >
       <idArg column="roleID" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="roleName" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -20,7 +20,7 @@
     from role
     where roleID = #{roleid,jdbcType=INTEGER}
   </select>
-  <select id="findRoleNameByDevice" parameterType="java.lang.String" resultType="role">
+  <select id="findRoleNameByDevice" parameterType="java.lang.String" resultType="com.iclass.mybatis.po.Role">
     select
     <include refid="Base_Column_List" />
     from role
@@ -30,13 +30,13 @@
     delete from role
     where roleID = #{roleid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="role" >
+  <insert id="insert" parameterType="com.iclass.mybatis.po.Role" >
     insert into role (roleID, roleName, roleByDevice,
     rolePermission)
     values (#{roleid,jdbcType=INTEGER}, #{rolename,jdbcType=VARCHAR}, #{rolebydevice,jdbcType=VARCHAR},
     #{rolepermission,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="role" >
+  <insert id="insertSelective" parameterType="com.iclass.mybatis.po.Role" >
     insert into role
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="roleid != null" >
@@ -67,7 +67,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="role" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.iclass.mybatis.po.Role" >
     update role
     <set >
       <if test="rolename != null" >
@@ -82,7 +82,7 @@
     </set>
     where roleID = #{roleid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="role" >
+  <update id="updateByPrimaryKey" parameterType="com.iclass.mybatis.po.Role" >
     update role
     set roleName = #{rolename,jdbcType=VARCHAR},
       roleByDevice = #{rolebydevice,jdbcType=VARCHAR},

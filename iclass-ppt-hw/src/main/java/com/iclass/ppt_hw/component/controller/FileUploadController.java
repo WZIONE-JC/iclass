@@ -2,6 +2,7 @@ package com.iclass.ppt_hw.component.controller;
 
 import com.iclass.mybatis.qo.FileQo;
 import com.iclass.ppt_hw.component.service.api.FileUploadService;
+import com.iclass.ppt_hw.config.file.FileConfig;
 import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.msg.ResponseMsg;
 import org.slf4j.Logger;
@@ -30,6 +31,9 @@ public class FileUploadController {
 
     @Autowired
     private FileUploadService fileUploadService;
+
+    @Autowired
+    private FileConfig fileConfig;
 
     /**
      *

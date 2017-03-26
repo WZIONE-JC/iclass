@@ -150,10 +150,9 @@ function classTableHandler(formId, url, fileType) {
                 data: "aClass.classdeadline"
             },
             {
-                data: null,
-                render: function () {
-                    var zero = 0;
-                    return "<span class='label label-warning radius'>" + zero + "</span>";
+                data: "students.length",
+                render: function (data, type, row, meta) {
+                    return "<span class='label label-warning radius'>" + data + "</span>";
                 }
             },
             {

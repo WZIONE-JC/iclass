@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.iclass.mybatis.dao.StudentMapper" >
-  <resultMap id="BaseResultMap" type="student" >
+  <resultMap id="BaseResultMap" type="com.iclass.mybatis.po.Student" >
     <constructor >
       <idArg column="StudentID" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="StudentCode" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -20,11 +20,11 @@
     delete from student
     where StudentID = #{studentid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="student" >
+  <insert id="insert" parameterType="com.iclass.mybatis.po.Student" >
     insert into student (StudentID, StudentCode)
     values (#{studentid,jdbcType=INTEGER}, #{studentcode,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="student" >
+  <insert id="insertSelective" parameterType="com.iclass.mybatis.po.Student" >
     insert into student
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="studentid != null" >
@@ -43,7 +43,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="student" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.iclass.mybatis.po.Student" >
     update student
     <set >
       <if test="studentcode != null" >
@@ -52,7 +52,7 @@
     </set>
     where StudentID = #{studentid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="student" >
+  <update id="updateByPrimaryKey" parameterType="com.iclass.mybatis.po.Student" >
     update student
     set StudentCode = #{studentcode,jdbcType=VARCHAR}
     where StudentID = #{studentid,jdbcType=INTEGER}

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.iclass.mybatis.dao.IclassfileMapper" >
-  <resultMap id="BaseResultMap" type="iclassfile" >
+  <resultMap id="BaseResultMap" type="com.iclass.mybatis.po.Iclassfile" >
     <constructor >
       <idArg column="FileID" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="FileCode" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -29,7 +29,7 @@
     delete from iclassfiles
     where FileID = #{fileid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="iclassfile" >
+  <insert id="insert" parameterType="com.iclass.mybatis.po.Iclassfile" >
     insert into iclassfiles (FileID, FileCode, FileName, FilePath,
     FileDesc, FileCreator, FileCreateTime,
     Filetype, FileDownloadTime, FileStatus
@@ -39,7 +39,7 @@
     #{filetype,jdbcType=INTEGER}, #{filedownloadtime,jdbcType=INTEGER}, #{filestatus,jdbcType=INTEGER}
     )
   </insert>
-  <insert id="insertSelective" parameterType="iclassfile" >
+  <insert id="insertSelective" parameterType="com.iclass.mybatis.po.Iclassfile" >
     insert into iclassfiles
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="fileid != null" >
@@ -106,7 +106,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="iclassfile" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.iclass.mybatis.po.Iclassfile" >
     update iclassfiles
     <set >
       <if test="filecode != null" >
@@ -139,7 +139,7 @@
     </set>
     where FileID = #{fileid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="iclassfile" >
+  <update id="updateByPrimaryKey" parameterType="com.iclass.mybatis.po.Iclassfile" >
     update iclassfiles
     set FileCode = #{filecode,jdbcType=VARCHAR},
     FileName = #{filename,jdbcType=VARCHAR},
@@ -152,7 +152,7 @@
     FileStatus = #{filestatus,jdbcType=INTEGER}
     where FileID = #{fileid,jdbcType=INTEGER}
   </update>
-  <select id="selectByFileCode" resultType="iclassfile">
+  <select id="selectByFileCode" resultType="com.iclass.mybatis.po.Iclassfile">
     select
     <include refid="Base_Column_List" />
     from iclassfiles

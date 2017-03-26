@@ -3,6 +3,8 @@ package com.iclass.mybatis.dto;
 import com.iclass.mybatis.po.Class;
 import com.iclass.mybatis.po.Course;
 
+import java.util.List;
+
 /**
  * iclass
  * <p>
@@ -27,15 +29,15 @@ public class PPTHWDTO {
      */
     private String teacherName;
 
-    private Integer studentsNum;
+    private List<SessionUser> students;
 
     public PPTHWDTO() {}
 
-    public PPTHWDTO(Class aClass, Course course, String teacherName, Integer studentsNum) {
+    public PPTHWDTO(Class aClass, Course course, String teacherName, List<SessionUser> students) {
         this.aClass = aClass;
         this.course = course;
         this.teacherName = teacherName;
-        this.studentsNum = studentsNum;
+        this.students = students;
     }
 
     public Class getaClass() {
@@ -62,12 +64,12 @@ public class PPTHWDTO {
         this.teacherName = teacherName;
     }
 
-    public Integer getStudentsNum() {
-        return studentsNum;
+    public List<SessionUser> getStudents() {
+        return students;
     }
 
-    public void setStudentsNum(Integer studentsNum) {
-        this.studentsNum = studentsNum;
+    public void setStudents(List<SessionUser> students) {
+        this.students = students;
     }
 
     @Override
@@ -76,7 +78,7 @@ public class PPTHWDTO {
                 "aClass=" + aClass +
                 ", course=" + course +
                 ", teacherName='" + teacherName + '\'' +
-                ", studentsNum=" + studentsNum +
+                ", students=" + students +
                 '}';
     }
 }

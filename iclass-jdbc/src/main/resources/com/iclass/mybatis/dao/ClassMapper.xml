@@ -3,7 +3,7 @@
 <mapper namespace="com.iclass.mybatis.dao.ClassMapper" >
   <!--开启缓存-->
   <cache/>
-  <resultMap id="BaseResultMap" type="class" >
+  <resultMap id="BaseResultMap" type="com.iclass.mybatis.po.Class" >
     <constructor >
       <idArg column="ClassID" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="ClassCode" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -30,7 +30,7 @@
     delete from class
     where ClassID = #{classid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="class" >
+  <insert id="insert" parameterType="com.iclass.mybatis.po.Class" >
     insert into class (ClassID, ClassCode, ClassName, 
       ClassDescription, ClassCreator, ClassCreateTime, 
       ClassDeadline, ClassCourseCode, ClassStatus
@@ -40,7 +40,7 @@
       #{classdeadline,jdbcType=TIMESTAMP}, #{classcoursecode,jdbcType=VARCHAR}, #{classstatus,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="class" >
+  <insert id="insertSelective" parameterType="com.iclass.mybatis.po.Class" >
     insert into class
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="classid != null" >
@@ -101,7 +101,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="class" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.iclass.mybatis.po.Class" >
     update class
     <set >
       <if test="classcode != null" >
@@ -131,7 +131,7 @@
     </set>
     where ClassID = #{classid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="class" >
+  <update id="updateByPrimaryKey" parameterType="com.iclass.mybatis.po.Class" >
     update class
     set ClassCode = #{classcode,jdbcType=VARCHAR},
       ClassName = #{classname,jdbcType=VARCHAR},
@@ -144,21 +144,21 @@
     where ClassID = #{classid,jdbcType=INTEGER}
   </update>
 
-  <select id="selectByClassCreator" resultType="class">
+  <select id="selectByClassCreator" resultType="com.iclass.mybatis.po.Class">
     select
     <include refid="Base_Column_List" />
     from class
     where ClassCreator = #{classCreator} limit #{start}, #{length}
   </select>
 
-  <select id="selectByClassCreatorNoLimit" resultType="class">
+  <select id="selectByClassCreatorNoLimit" resultType="com.iclass.mybatis.po.Class">
     select
     <include refid="Base_Column_List" />
     from class
     where ClassCreator = #{classCreator}
   </select>
 
-  <select id="selectByClassCourseCode" resultType="class">
+  <select id="selectByClassCourseCode" resultType="com.iclass.mybatis.po.Class">
     select
     <include refid="Base_Column_List" />
     from class

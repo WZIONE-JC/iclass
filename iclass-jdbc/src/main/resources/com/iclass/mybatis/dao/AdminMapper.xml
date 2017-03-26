@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.iclass.mybatis.dao.AdminMapper" >
-    <resultMap id="BaseResultMap" type="admin" >
+    <resultMap id="BaseResultMap" type="com.iclass.mybatis.po.Admin" >
         <constructor >
             <idArg column="adminID" jdbcType="INTEGER" javaType="java.lang.Integer" />
             <arg column="adminCode" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -20,11 +20,11 @@
         delete from admin
         where adminID = #{adminid,jdbcType=INTEGER}
     </delete>
-    <insert id="insert" parameterType="admin" >
+    <insert id="insert" parameterType="com.iclass.mybatis.po.Admin" >
         insert into admin (adminID, adminCode)
         values (#{adminid,jdbcType=INTEGER}, #{admincode,jdbcType=VARCHAR})
     </insert>
-    <insert id="insertSelective" parameterType="admin" >
+    <insert id="insertSelective" parameterType="com.iclass.mybatis.po.Admin" >
         insert into admin
         <trim prefix="(" suffix=")" suffixOverrides="," >
             <if test="adminid != null" >
@@ -43,7 +43,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="admin" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.iclass.mybatis.po.Admin" >
         update admin
         <set >
             <if test="admincode != null" >
@@ -52,7 +52,7 @@
         </set>
         where adminID = #{adminid,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey" parameterType="admin" >
+    <update id="updateByPrimaryKey" parameterType="com.iclass.mybatis.po.Admin" >
     update admin
     set adminCode = #{admincode,jdbcType=VARCHAR}
     where adminID = #{adminid,jdbcType=INTEGER}

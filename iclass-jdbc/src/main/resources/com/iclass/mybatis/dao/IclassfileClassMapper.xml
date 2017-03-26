@@ -3,7 +3,7 @@
 <mapper namespace="com.iclass.mybatis.dao.IclassfileClassMapper" >
   <!--开启缓存-->
   <cache/>
-  <resultMap id="BaseResultMap" type="iclassfileClass" >
+  <resultMap id="BaseResultMap" type="com.iclass.mybatis.po.IclassfileClass" >
     <constructor >
       <idArg column="FileClassID" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="FileCode" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -24,13 +24,13 @@
     delete from iclassfile_class
     where FileClassID = #{fileclassid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="iclassfileClass" >
+  <insert id="insert" parameterType="com.iclass.mybatis.po.IclassfileClass" >
     insert into iclassfile_class (FileClassID, FileCode, ClassCode, 
       CourseCode)
     values (#{fileclassid,jdbcType=INTEGER}, #{filecode,jdbcType=VARCHAR}, #{classcode,jdbcType=VARCHAR}, 
       #{coursecode,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="iclassfileClass" >
+  <insert id="insertSelective" parameterType="com.iclass.mybatis.po.IclassfileClass" >
     insert into iclassfile_class
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="fileclassid != null" >
@@ -61,7 +61,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="iclassfileClass" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.iclass.mybatis.po.IclassfileClass" >
     update iclassfile_class
     <set >
       <if test="filecode != null" >
@@ -76,14 +76,14 @@
     </set>
     where FileClassID = #{fileclassid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="iclassfileClass" >
+  <update id="updateByPrimaryKey" parameterType="com.iclass.mybatis.po.IclassfileClass" >
     update iclassfile_class
     set FileCode = #{filecode,jdbcType=VARCHAR},
       ClassCode = #{classcode,jdbcType=VARCHAR},
       CourseCode = #{coursecode,jdbcType=VARCHAR}
     where FileClassID = #{fileclassid,jdbcType=INTEGER}
   </update>
-  <select id="selectByClassCodeAndCourseCode" resultType="iclassfileClass">
+  <select id="selectByClassCodeAndCourseCode" resultType="com.iclass.mybatis.po.IclassfileClass">
     SELECT
     <include refid="Base_Column_List" />
     from iclassfile_class

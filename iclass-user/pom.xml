@@ -88,6 +88,17 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>com.iclass.IclassUserApplication</mainClass>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<!-- 可以把依赖的jar包都打包到生成的jar文件中 -->
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

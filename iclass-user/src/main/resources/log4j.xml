@@ -3,7 +3,7 @@
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
 
 	<appender name="infoLog" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="File" value="c:/logs/iclass-user/info.log"/>
+		<param name="File" value="/data/app/logs/iclass-user/info.log"/>
 		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'"/>
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern"
@@ -17,7 +17,7 @@
 		</filter>
 	</appender>
 	<appender name="warnLog" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="File" value="c:/logs/iclass-user/warn.log"/>
+		<param name="File" value="/data/app/logs/iclass-user/warn.log"/>
 		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'"/>
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern"
@@ -31,7 +31,7 @@
 		</filter>
 	</appender>
 	<appender name="errorLog" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="File" value="c:/logs/iclass-user/error.log"/>
+		<param name="File" value="/data/app/logs/iclass-user/error.log"/>
 		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'"/>
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern"

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.iclass.mybatis.dao.ClasshdMapper" >
-  <resultMap id="BaseResultMap" type="classhd" >
+  <resultMap id="BaseResultMap" type="com.iclass.mybatis.po.Classhd" >
     <constructor >
       <idArg column="ClasshdID" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="ClasshdContent" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -23,13 +23,13 @@
     delete from classhd
     where ClasshdID = #{classhdid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="classhd" >
+  <insert id="insert" parameterType="com.iclass.mybatis.po.Classhd" >
     insert into classhd (ClasshdID, ClasshdContent, ClasshdOptions, 
       ClasshdAnswer, ClassCode)
     values (#{classhdid,jdbcType=INTEGER}, #{classhdcontent,jdbcType=VARCHAR}, #{classhdoptions,jdbcType=VARCHAR}, 
       #{classhdanswer,jdbcType=VARCHAR}, #{classcode,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="classhd" >
+  <insert id="insertSelective" parameterType="com.iclass.mybatis.po.Classhd" >
     insert into classhd
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="classhdid != null" >
@@ -66,7 +66,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="classhd" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.iclass.mybatis.po.Classhd" >
     update classhd
     <set >
       <if test="classhdcontent != null" >
@@ -84,7 +84,7 @@
     </set>
     where ClasshdID = #{classhdid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="classhd" >
+  <update id="updateByPrimaryKey" parameterType="com.iclass.mybatis.po.Classhd" >
     update classhd
     set ClasshdContent = #{classhdcontent,jdbcType=VARCHAR},
       ClasshdOptions = #{classhdoptions,jdbcType=VARCHAR},

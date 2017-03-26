@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.iclass.mybatis.dao.TeacherCourseMapper" >
-  <resultMap id="BaseResultMap" type="teacherCourse" >
+  <resultMap id="BaseResultMap" type="com.iclass.mybatis.po.TeacherCourse" >
     <constructor >
       <idArg column="TeacherCourseID" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="TeacherCode" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -21,13 +21,13 @@
     delete from teacher_course
     where TeacherCourseID = #{teachercourseid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="teacherCourse" >
+  <insert id="insert" parameterType="com.iclass.mybatis.po.TeacherCourse" >
     insert into teacher_course (TeacherCourseID, TeacherCode, CourseCode
       )
     values (#{teachercourseid,jdbcType=INTEGER}, #{teachercode,jdbcType=VARCHAR}, #{coursecode,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="teacherCourse" >
+  <insert id="insertSelective" parameterType="com.iclass.mybatis.po.TeacherCourse" >
     insert into teacher_course
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="teachercourseid != null" >
@@ -52,7 +52,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="teacherCourse" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.iclass.mybatis.po.TeacherCourse" >
     update teacher_course
     <set >
       <if test="teachercode != null" >
@@ -64,13 +64,13 @@
     </set>
     where TeacherCourseID = #{teachercourseid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="teacherCourse" >
+  <update id="updateByPrimaryKey" parameterType="com.iclass.mybatis.po.TeacherCourse" >
     update teacher_course
     set TeacherCode = #{teachercode,jdbcType=VARCHAR},
       CourseCode = #{coursecode,jdbcType=VARCHAR}
     where TeacherCourseID = #{teachercourseid,jdbcType=INTEGER}
   </update>
-  <select id="selectByTeacherCode" resultType="teacherCourse">
+  <select id="selectByTeacherCode" resultType="com.iclass.mybatis.po.TeacherCourse">
     select
     <include refid="Base_Column_List" />
     from teacher_course

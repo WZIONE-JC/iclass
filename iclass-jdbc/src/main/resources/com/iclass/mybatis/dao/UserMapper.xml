@@ -3,7 +3,7 @@
 <mapper namespace="com.iclass.mybatis.dao.UserMapper" >
   <!--开启缓存-->
   <cache/>
-  <resultMap id="BaseResultMap" type="user" >
+  <resultMap id="BaseResultMap" type="com.iclass.mybatis.po.User" >
     <constructor >
       <idArg column="UserID" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="UserCode" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -73,7 +73,7 @@
     delete from user
     where UserID = #{userid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="user" >
+  <insert id="insert" parameterType="com.iclass.mybatis.po.User" >
     insert into user (UserID, UserCode, UserName,
     UserFullName, UserSex, UserPassword,
     UserBirth, UserEmail, UserPhoneNum,
@@ -83,7 +83,7 @@
     #{userbirth,jdbcType=VARCHAR}, #{useremail,jdbcType=VARCHAR}, #{userphonenum,jdbcType=VARCHAR},
     #{userrole,jdbcType=VARCHAR}, #{userregisterdate,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="user" >
+  <insert id="insertSelective" parameterType="com.iclass.mybatis.po.User" >
     insert into user
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="userid != null" >
@@ -156,7 +156,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByUsercodeSelective" parameterType="user" >
+  <update id="updateByUsercodeSelective" parameterType="com.iclass.mybatis.po.User" >
     update user
     <set >
       <if test="usercode != null" >
@@ -192,7 +192,7 @@
     </set>
     where UserCode = #{usercode,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="user" >
+  <update id="updateByPrimaryKey" parameterType="com.iclass.mybatis.po.User" >
     update user
     set UserCode = #{usercode,jdbcType=VARCHAR},
       UserName = #{username,jdbcType=VARCHAR},

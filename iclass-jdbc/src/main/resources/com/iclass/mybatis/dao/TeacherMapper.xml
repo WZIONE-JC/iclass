@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.iclass.mybatis.dao.TeacherMapper" >
-  <resultMap id="BaseResultMap" type="teacher" >
+  <resultMap id="BaseResultMap" type="com.iclass.mybatis.po.Teacher" >
     <constructor >
       <idArg column="TeacherID" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="TeacherCode" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -20,11 +20,11 @@
     delete from teacher
     where TeacherID = #{teacherid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="teacher" >
+  <insert id="insert" parameterType="com.iclass.mybatis.po.Teacher" >
     insert into teacher (TeacherID, TeacherCode)
     values (#{teacherid,jdbcType=INTEGER}, #{teachercode,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="teacher" >
+  <insert id="insertSelective" parameterType="com.iclass.mybatis.po.Teacher" >
     insert into teacher
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="teacherid != null" >
@@ -43,7 +43,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="teacher" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.iclass.mybatis.po.Teacher" >
     update teacher
     <set >
       <if test="teachercode != null" >
@@ -52,7 +52,7 @@
     </set>
     where TeacherID = #{teacherid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="teacher" >
+  <update id="updateByPrimaryKey" parameterType="com.iclass.mybatis.po.Teacher" >
     update teacher
     set TeacherCode = #{teachercode,jdbcType=VARCHAR}
     where TeacherID = #{teacherid,jdbcType=INTEGER}

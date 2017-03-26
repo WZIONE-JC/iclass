@@ -6,6 +6,7 @@ import com.iclass.mybatis.po.Iclassfile;
 import com.iclass.mybatis.po.IclassfileClass;
 import com.iclass.mybatis.qo.FileQo;
 import com.iclass.ppt_hw.component.service.api.FileUploadService;
+import com.iclass.ppt_hw.config.file.FileConfig;
 import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.msg.Msg;
 import com.iclass.user.component.msg.ResponseMsg;
@@ -45,6 +46,9 @@ public class FileUploadServiceImpl implements FileUploadService {
 
     @Autowired
     private IclassfileClassMapper iclassfileClassMapper;
+
+    @Autowired
+    private FileConfig fileConfig;
 
     /**
      * 上传文件时生成的UUID
@@ -122,6 +126,7 @@ public class FileUploadServiceImpl implements FileUploadService {
                 delete(filePath);
             }
         }
+        serviceResult.setMessage(uplpadResult.getMessage());
         return serviceResult;
     }
 
@@ -178,7 +183,7 @@ public class FileUploadServiceImpl implements FileUploadService {
 
         ServiceResult<String> serviceResult = new ServiceResult<>();
 
-        if (file.isEmpty()) {
+        if (file == null || file.isEmpty()) {
             logger.warn("文件为空");
             serviceResult.setMessage("文件为空");
             return serviceResult;
@@ -195,13 +200,20 @@ public class FileUploadServiceImpl implements FileUploadService {
         }
 
         // 文件存放目录
-        String fileFloder = IclassUtil.getDateNow() + "/";
+        String fileFloder = IclassUtil.getDateNow() + File.separator;
 
         if (logger.isDebugEnabled()) {
             logger.debug("文件存放目录为：" + fileFloder);
         }
 
-        String filePath = request.getSession().getServletContext().getRealPath("/files/"+fileFloder);
+        String filePath = fileConfig.getFilePath();
+
+        if (StringUtils.isBlank(filePath)) {
+            logger.info("文件路径读取失败");
+            serviceResult.setMessage("文件路径读取失败");
+            return serviceResult;
+        }
+        filePath = filePath + (File.separator + fileFloder);
 
         if(StringUtils.isBlank(filePath)) {
             logger.warn("获取文件存储路径失败");

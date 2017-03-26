@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.iclass.mybatis.dao.ClassStudentMapper" >
-  <resultMap id="BaseResultMap" type="classStudent" >
+  <resultMap id="BaseResultMap" type="com.iclass.mybatis.po.ClassStudent" >
     <constructor >
       <idArg column="ClassStudentID" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="ClassCode" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -21,13 +21,13 @@
     delete from class_student
     where ClassStudentID = #{classstudentid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="classStudent" >
+  <insert id="insert" parameterType="com.iclass.mybatis.po.ClassStudent" >
     insert into class_student (ClassStudentID, ClassCode, StudentCode
       )
     values (#{classstudentid,jdbcType=INTEGER}, #{classcode,jdbcType=VARCHAR}, #{studentcode,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="classStudent" >
+  <insert id="insertSelective" parameterType="com.iclass.mybatis.po.ClassStudent" >
     insert into class_student
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="classstudentid != null" >
@@ -52,7 +52,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="classStudent" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.iclass.mybatis.po.ClassStudent" >
     update class_student
     <set >
       <if test="classcode != null" >
@@ -64,10 +64,16 @@
     </set>
     where ClassStudentID = #{classstudentid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="classStudent" >
+  <update id="updateByPrimaryKey" parameterType="com.iclass.mybatis.po.ClassStudent" >
     update class_student
     set ClassCode = #{classcode,jdbcType=VARCHAR},
       StudentCode = #{studentcode,jdbcType=VARCHAR}
     where ClassStudentID = #{classstudentid,jdbcType=INTEGER}
   </update>
+  <select id="selectByClassCode" resultType="com.iclass.mybatis.po.ClassStudent">
+    select
+    <include refid="Base_Column_List" />
+    from class_student
+    where ClassCode = #{classCode}
+  </select>
 </mapper>

@@ -3,6 +3,7 @@ package com.iclass.ppt_hw.component.service.impl;
 import com.iclass.mybatis.dao.*;
 import com.iclass.mybatis.dto.IclassfileDTO;
 import com.iclass.mybatis.dto.PPTHWDTO;
+import com.iclass.mybatis.dto.SessionUser;
 import com.iclass.mybatis.po.Class;
 import com.iclass.mybatis.po.*;
 import com.iclass.mybatis.qo.FileQo;
@@ -63,6 +64,12 @@ public class PPTHWServiceImpl implements PPTHWService {
     private IclassfileMapper iclassfileMapper;
 
     /**
+     * 根据classCode获取学生信息
+     */
+    @Autowired
+    private ClassStudentMapper classStudentMapper;
+
+    /**
      * 获取已上传课件页面所需展示的信息
      *
      * @param requestEntity datatables请求数据
@@ -115,15 +122,25 @@ public class PPTHWServiceImpl implements PPTHWService {
             serviceResult.setMessage(teacherName + " 教师还没有创建课堂");
             return serviceResult;
         }
-        String courseCode;
-        Course course;
         List<PPTHWDTO> ppthwdtoList = new ArrayList<>();
         // 获取课堂的课程信息
         for (Class c : classes) {
             PPTHWDTO ppthwdto = new PPTHWDTO();
-            courseCode = c.getClasscoursecode();
+            String courseCode = c.getClasscoursecode();
             //根据courseCode 获取Course 信息
-            course = courseMapper.selectByCourseCode(courseCode);
+            Course course = courseMapper.selectByCourseCode(courseCode);
+            String classCode = c.getClasscode();
+            List<ClassStudent> classStudents = classStudentMapper.selectByClassCode(classCode);
+            List<SessionUser> sessionUsers = new ArrayList<>();
+            // 如果有学生的话
+            if (classStudents != null && classStudents.size() > 0) {
+                for (ClassStudent cs : classStudents) {
+                    String studentCode = cs.getStudentcode();
+                    User user = userMapper.findUserByUsercode(studentCode);
+                    sessionUsers.add(new SessionUser(user));
+                }
+            }
+            ppthwdto.setStudents(sessionUsers);
             ppthwdto.setaClass(c);
             ppthwdto.setCourse(course);
             ppthwdto.setTeacherName(teacherName);

@@ -107,7 +107,7 @@
     CourseStatus = #{coursestatus,jdbcType=INTEGER}
     where CourseID = #{courseid,jdbcType=INTEGER}
   </update>
-  <select id="selectByCourseCode" resultType="course">
+  <select id="selectByCourseCode" resultType="com.iclass.mybatis.po.Course">
     select
     <include refid="Base_Column_List" />
     from course
