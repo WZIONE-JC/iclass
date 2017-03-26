@@ -101,42 +101,7 @@ function getClassByCourseCode(courseCode) {
         }
     });
 }
-// //获取已登录的用户信息
-// function getUserCodeFromLoginedInfo(formId, url, fileType) {
-//     $.ajax({
-//         type: "post",
-//         dataType: "jsonp",
-//         jsonp: "callback",
-//         url: rurl + "/user/getLoginedUserInfo",
-//         timeout: 3000,
-//         success: function (logineduserdata) {
-//             if (logineduserdata.success) {
-//                 var usercode = logineduserdata.data.user.usercode;
-//                 $("#usercode").val(usercode);
-//             } else {
-//                 swal({
-//                     title: "Sorry!",
-//                     text: logineduserdata.message,
-//                     timer: 2000,
-//                     type: "error"
-//                 });
-//             }
-//
-//         },
-//         error: function (logineduserdata) {
-//             swal({
-//                 title: "Sorry!",
-//                 text: "请求用户信息出错，请重试 :" + logineduserdata.responseText,
-//                 timer: 2000,
-//                 type: "error"
-//             });
-//         },
-//         complete: function () {
-//           return classTableHandler(formId, url, fileType);
-//         }
-//     });
-// }
-
+// 表格数据
 function classTableHandler(formId, url, fileType) {
 //http://datatables.club/upgrade/1.10-convert.html
 //http://datatables.club/reference/option/
@@ -170,50 +135,25 @@ function classTableHandler(formId, url, fileType) {
                 data: "course.coursename",
             },
             {
-                data: "iclassfiles[0].iclassfile.filedesc",
-                width: "15%",
-                render: function (data, type, row, meta) {
-                    if (data == null || data =="") {
-                        if(fileType == 0) {
-                            return "未上传作业";
-                        }
-                        if(fileType == 1) {
-                            return "未上传课件";
-                        }
-                    } else {
-                        return "<a href='' download='' title='点击下载课件'>"+ data +"</a>";
-                    }
-                }
-            },
-            {
                 data: "teacherName",
                 render: function (data, type, row, meta) {
                     return "<span class='label label-success radius'>" + data + "</span>";
                 }
             },
             {
-                data: "iclassfiles[0].iclassfile.filecreatetime",
-                render: function (data, type, row, meta) {
-                    if (data == null || data =="") {
-                        if(fileType == 0) {
-                            return "未上传作业";
-                        }
-                        if(fileType == 1) {
-                            return "未上传课件";
-                        }
-                    } else {
-                        return data;
-                    }
-                }
+                data: null,
             },
             {
-                data: "iclassfiles[0].iclassfile.filedownloadtime",
-                render: function (data, type, row, meta) {
-                    if (data == null || data =="") {
-                        return "0";
-                    } else {
-                        return data;
-                    }
+                data: "aClass.classcreatetime",
+            },
+            {
+                data: "aClass.classdeadline"
+            },
+            {
+                data: null,
+                render: function () {
+                    var zero = 0;
+                    return "<span class='label label-warning radius'>" + zero + "</span>";
                 }
             },
             {
@@ -235,35 +175,41 @@ function classTableHandler(formId, url, fileType) {
 
     var columnDefs =
         [{
-            targets: [1, 2, 3, -3, -2, -1],
-            "createdCell": function (td, cellData, rowData, row, col) {
+            targets: [1, 2, 4, -2, -1],
+            createdCell: function (td, cellData, rowData, row, col) {
                 var classcode = rowData.aClass.classcode;
                 var classname = rowData.aClass.classname;
                 var coursename = rowData.course.coursename;
                 var coursecode = rowData.course.coursecode;
-                var iclassfiles = rowData.iclassfiles[0];
                 if (col == 1) {
-                    $(td).wrapInner("<span style='cursor:pointer' title='查看课堂信息' class='label label-secondary radius' onclick=class_show('" + classname + "','class-show.html','classcode=" + classcode + "','360','400')></span>");
-                }
-                if (col == 2) {
-                    $(td).wrapInner("<span style='cursor:pointer' title='查看课程信息' class='label label-primary radius' onclick=course_show('" + coursename + "','course-show.html','coursecode=" + coursecode + "','360','400')></span>");
-                }
-                if (col == 3) {
-                    if(iclassfiles != null) {
-                        var downloadurl = iclassfiles.iclassfile.filepath;
-                        var filename = iclassfiles.iclassfile.filename;
-                        $(td).find("a").attr("href", downloadurl);
-                        $(td).find("a").attr("download", filename);
+                    if (fileType == 0) {
+                        $(td).wrapInner("<span style='cursor:pointer' title='查看课堂信息' class='label label-secondary radius' onclick=class_show('" + classname + "','class-show.html','classcode=" + classcode + "','360','400')></span>");
+                    } else {
+                        $(td).wrapInner("<span style='cursor:pointer' title='查看课堂信息' class='label label-success radius' onclick=class_show('" + classname + "','class-show.html','classcode=" + classcode + "','360','400')></span>");
                     }
 
                 }
-                if (col == 6) {
-                    $(td).wrapInner("<span class='label label-warning radius'></span>");
+                if (col == 2) {
+                    if (fileType == 0) {
+                        $(td).wrapInner("<span style='cursor:pointer' title='查看课程信息' class='label label-warning radius' onclick=course_show('" + coursename + "','course-show.html','coursecode=" + coursecode + "','360','400')></span>");
+                    } else {
+                        $(td).wrapInner("<span style='cursor:pointer' title='查看课程信息' class='label label-secondary radius' onclick=course_show('" + coursename + "','course-show.html','coursecode=" + coursecode + "','360','400')></span>");
+                    }
                 }
-                if (col == 7) {
-                    $(td).addClass("td-status");
+                if (col == 4) {
+                    var title;
+                    if(fileType == 0) {
+                        title = "查看作业";
+                    }
+                    if(fileType == 1) {
+                        title = "查看课件";
+                    }
+                    $(td).html("<span style='cursor:pointer' onclick=file_list_show('800','400','"+classcode+"','"+coursecode+"','"+fileType+"') title='"+title+"'><span class='label radius label-warning'>"+ title +"</span></span>");
                 }
                 if (col == 8) {
+                    $(td).addClass("td-status");
+                }
+                if (col == 9) {
                     $(td).addClass("td-manage");
                     $(td).html("<a style='text-decoration:none' class='ml-5' title='编辑课堂' onclick=class_update('编辑课堂','class-update.html','classcode="+classcode+"','570','540')><i class='Hui-iconfont'>&#xe6df;</i></a> <a style='text-decoration:none' class='ml-5' onClick='class_stop(this,"+classcode+")'  title='下架课堂'><i class='Hui-iconfont'>&#xe6de;</i></a>");
                 }
@@ -275,6 +221,7 @@ function classTableHandler(formId, url, fileType) {
         // processing: true,
         order: [], //默认没有排序的,在后面指定具体排序的类
         stateSave: true, //允许浏览器缓存Datatables，以便下次恢复之前的状态
+        processing: true, //是否显示处理状态
         serverSide: true, //开启服务器模式
         searching: true, //开启搜索功能
         paging: true, //允许表格分页
@@ -307,10 +254,10 @@ function classTableHandler(formId, url, fileType) {
         },
         columns: colmuns,
         "preDrawCallback": function () {
-
+            // alert("2");
         },
         "initComplete": function (settings, json) {
-
+            // alert("1");
         },
         "createdRow": function (row, data, index) {
             //http://datatables.club/reference/option/createdRow.html
@@ -343,6 +290,7 @@ function classTableHandler(formId, url, fileType) {
     return table;
 }
 
+
 /*课件-添加*/
 function file_add(title,url){
     var index = layer.open({
@@ -352,7 +300,13 @@ function file_add(title,url){
     });
     layer.full(index);
 }
-
+function download(fileCode,fileType) {
+    console.log(fileCode);
+    var $form = $("#download-form").attr("action", ppt_hw_rurl+"/file/download");
+    $("#fileCode").val(fileCode);
+    $("#fileType").val(fileType);
+    $form.submit();
+}
 /*课程-查看*/
 function course_show(title,url,id,w,h){
     layer_show(title,url,id,w,h);
@@ -360,6 +314,10 @@ function course_show(title,url,id,w,h){
 /*课堂-查看*/
 function class_show(title,url,id,w,h){
     layer_show(title,url,id,w,h);
+}
+/*文件列表查看*/
+function file_list_show(w,h,courseCode,classCode,fileType){
+    layer_show_2("文件列表(点击文件名下载)","file-list-show.html",w,h,courseCode,classCode,fileType);
 }
 /*课堂-编辑*/
 function class_update(title,url,id,w,h){

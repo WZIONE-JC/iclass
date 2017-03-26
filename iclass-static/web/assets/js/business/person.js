@@ -319,6 +319,7 @@ function userTableHandler (formId, isPersonal, url) {
         stateSave: true, //允许浏览器缓存Datatables，以便下次恢复之前的状态
         serverSide: true, //开启服务器模式
         searching: true, //开启搜索功能
+        processing: true,
         paging: true, //允许表格分页
         lengthChange: true, //允许改变每页显示的数据条数
         bStateSave: true,//状态保存

@@ -1,5 +1,7 @@
 package com.iclass.mybatis.po;
 
+import com.iclass.user.component.utils.IclassUtil;
+
 import java.io.Serializable;
 
 public class Iclassfile implements Serializable{
@@ -31,6 +33,7 @@ public class Iclassfile implements Serializable{
         this.filedesc = filedesc;
         this.filecreator = filecreator;
         this.filecreatetime = filecreatetime;
+        this.filecreatetime = IclassUtil.formatTime(this.filecreatetime);
         this.filetype = filetype;
         this.filedownloadtime = filedownloadtime;
         this.filestatus = filestatus;
@@ -93,7 +96,7 @@ public class Iclassfile implements Serializable{
     }
 
     public void setFilecreatetime(String filecreatetime) {
-        this.filecreatetime = filecreatetime;
+        this.filecreatetime = IclassUtil.formatTime(filecreatetime);
     }
 
     public Integer getFiletype() {

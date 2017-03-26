@@ -87,6 +87,6 @@
     SELECT
     <include refid="Base_Column_List" />
     from iclassfile_class
-    where ClassCode = #{classcode,jdbcType=VARCHAR} and CourseCode = #{coursecode,jdbcType=VARCHAR}
+    where ClassCode = #{classcode,jdbcType=VARCHAR} and CourseCode = #{coursecode,jdbcType=VARCHAR} limit #{start}, #{length}
   </select>
 </mapper>

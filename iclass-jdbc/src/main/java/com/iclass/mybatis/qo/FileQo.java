@@ -14,7 +14,7 @@ public class FileQo implements Serializable{
     /**
      * 文件类型：0：作业，1：ppt
      */
-    private String fileType;
+    private Integer fileType;
 
     /**
      * 文件上传者
@@ -36,11 +36,11 @@ public class FileQo implements Serializable{
      */
     private String fileDesc;
 
-    public String getFileType() {
+    public Integer getFileType() {
         return fileType;
     }
 
-    public void setFileType(String fileType) {
+    public void setFileType(Integer fileType) {
         this.fileType = fileType;
     }
 

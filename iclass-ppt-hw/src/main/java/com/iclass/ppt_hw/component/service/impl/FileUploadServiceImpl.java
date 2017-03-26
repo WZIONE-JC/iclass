@@ -9,17 +9,24 @@ import com.iclass.ppt_hw.component.service.api.FileUploadService;
 import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.msg.Msg;
 import com.iclass.user.component.msg.ResponseMsg;
-import com.iclass.user.component.utils.Util;
+import com.iclass.user.component.utils.IclassUtil;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -81,8 +88,8 @@ public class FileUploadServiceImpl implements FileUploadService {
                 iclassFile.setFilecode(fileCode);
                 fileClass.setFilecode(fileCode);
             }
-            if (StringUtils.isNotBlank(fileQo.getFileType())) {
-                iclassFile.setFiletype(Integer.parseInt(fileQo.getFileType()));
+            if (fileQo.getFileType() != null) {
+                iclassFile.setFiletype(fileQo.getFileType());
             }
             if (StringUtils.isNotBlank(fileQo.getFileCreator())) {
                 iclassFile.setFilecreator(fileQo.getFileCreator());
@@ -96,7 +103,7 @@ public class FileUploadServiceImpl implements FileUploadService {
             if (StringUtils.isNotBlank(fileQo.getCourseCode())) {
                 fileClass.setCoursecode(fileQo.getCourseCode());
             }
-            iclassFile.setFilecreatetime(Util.getDateTimeNow());
+            iclassFile.setFilecreatetime(IclassUtil.getDateTimeNow());
 
             int fileResult = iclassfileMapper.insertSelective(iclassFile);
             if (fileResult == 1) {
@@ -116,6 +123,45 @@ public class FileUploadServiceImpl implements FileUploadService {
             }
         }
         return serviceResult;
+    }
+
+    @Override
+    public ResponseEntity<byte[]> download(HttpServletResponse response, String fileCode, Integer fileType) {
+        ServiceResult<ResponseMsg> serviceResult = new ServiceResult<>();
+        if (StringUtils.isBlank(fileCode)) {
+            logger.warn("fileCode为空");
+            serviceResult.setMessage("文件编号为空");
+            return null;
+        }
+        if (fileType == null) {
+            logger.warn("fileType为空");
+            serviceResult.setMessage("文件类型为空");
+            return null;
+        }
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            response.setCharacterEncoding("utf-8");
+            Iclassfile iclassFile = iclassfileMapper.selectByFileCode(fileCode, fileType);
+            if (iclassFile == null) {
+                logger.info("没有找到文件,fileCoe:" + fileCode + ",fileType:" + fileType);
+                serviceResult.setMessage("没有找到文件");
+                return null;
+            }
+            String path = iclassFile.getFilepath();
+            String fileName = iclassFile.getFilename();
+            fileName = java.net.URLEncoder.encode(fileName, "UTF-8");
+            File file = new File(path);
+            headers.setContentDispositionFormData("attachment", fileName);
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),
+                    headers, HttpStatus.CREATED);
+        } catch (FileNotFoundException e) {
+            serviceResult.setMessage("文件不存在");
+        } catch (IOException e) {
+            e.printStackTrace();
+            serviceResult.setMessage("文件下载出错,请稍后再试");
+        }
+        return null;
     }
 
     /**
@@ -145,7 +191,7 @@ public class FileUploadServiceImpl implements FileUploadService {
         }
 
         // 文件存放目录
-        String fileFloder = Util.getDateNow() + "/";
+        String fileFloder = IclassUtil.getDateNow() + "/";
 
         if (logger.isDebugEnabled()) {
             logger.debug("文件存放目录为：" + fileFloder);
@@ -162,11 +208,8 @@ public class FileUploadServiceImpl implements FileUploadService {
         //fileCode
         fileCode = UUID.randomUUID()+"";
 
-        //文件名唯一处理
-        fileName = fileCode + "-" + fileName;
-
         //文件存放目录
-        File dest = new File(filePath+fileName);
+        File dest = new File(filePath + fileCode + "-" + fileName);
 
         // 文件存放绝对路径
         String absolutePath = dest.getAbsolutePath();

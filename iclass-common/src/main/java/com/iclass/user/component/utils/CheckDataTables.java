@@ -13,17 +13,17 @@ public class CheckDataTables {
 
     public static DataTablesRequestEntity check(DataTablesRequestEntity requestEntity) {
         if (requestEntity != null) {
-            if (StringUtils.isBlank(requestEntity.getDraw() + "")) {
+            if (requestEntity.getDraw() == null || StringUtils.isBlank(requestEntity.getDraw() + "")) {
                 requestEntity.setDraw(1);
             }
-            if (StringUtils.isBlank(requestEntity.getStart() + "") || requestEntity.getStart() < 0) {
+            if (requestEntity.getStart() == null || StringUtils.isBlank(requestEntity.getStart() + "") || requestEntity.getStart() < 0) {
                 requestEntity.setStart(0);
             }
-            if (StringUtils.isBlank(requestEntity.getLength() + "") || requestEntity.getLength() < 1) {
-                requestEntity.setLength(1);
+            if (requestEntity.getLength() == null || StringUtils.isBlank(requestEntity.getLength() + "") || requestEntity.getLength() < 1) {
+                requestEntity.setLength(10);
             }
         } else {
-            return new DataTablesRequestEntity(1, 0, 1);
+            return new DataTablesRequestEntity(1, 0, 10);
         }
         return requestEntity;
     }

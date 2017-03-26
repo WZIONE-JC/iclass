@@ -1,6 +1,8 @@
 package com.iclass.ppt_hw.component.service.api;
 
+import com.iclass.mybatis.dto.IclassfileDTO;
 import com.iclass.mybatis.dto.PPTHWDTO;
+import com.iclass.mybatis.qo.FileQo;
 import com.iclass.user.component.entity.DataTablesRequestEntity;
 import com.iclass.user.component.entity.ServiceResult;
 
@@ -30,4 +32,11 @@ public interface PPTHWService {
      */
     ServiceResult<List<PPTHWDTO>> getHWInfo(DataTablesRequestEntity requestEntity, String classCreator);
 
+    /**
+     * 获取与课堂和课程相关联的文件信息
+     * @param requestEntity datatables请求数据
+     * @param fileQo fileQo
+     * @return
+     */
+    ServiceResult<List<IclassfileDTO>> getPPTHWFileInfo(DataTablesRequestEntity requestEntity, FileQo fileQo);
 }

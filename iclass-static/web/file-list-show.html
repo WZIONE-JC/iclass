@@ -23,34 +23,23 @@
 	<![endif]-->
 	<link type="text/css" href="assets/css/style.css" rel="stylesheet">
 	<link href="lib/sweetalert-1.1.1/sweetalert.css" rel="stylesheet" type="text/css" />
-<title>已上传课件浏览</title>
+<title>文件列表(点击文件名下载)</title>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> PPT共享 <span class="c-gray en">&gt;</span> 已上传课件浏览 <a id="btn-refresh" class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="#" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="pd-20">
-	<div class="text-c"> 日期范围：
-		<input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}'})" id="logmin" class="input-text Wdate" style="width:120px;">
-		-
-		<input type="text" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d'})" id="logmax" class="input-text Wdate" style="width:120px;">
-		<input type="text" name="" id="" placeholder=" 输入课堂名称" style="width:250px" class="input-text">
-		<button name="" id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
-	</div>
-	<div class="cl pd-5 bg-1 bk-gray mt-10"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a class="btn btn-primary radius" onclick="file_add('添加课件','ppt-add.html')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加课件</a></span> <span class="r">共有数据：<strong id="totalRecord">0</strong> 条</span> </div>
-
+	<div class="cl pd-5 bg-1 bk-gray mt-10"> <span class="l"><a href="javascript:;" onclick="downAll()" class="btn btn-success radius"><i class="Hui-iconfont">&#xe640;</i> 全部下载</a></span> <a id="btn-refresh" class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="#" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a> <span class="r file-list-total-record">共有数据：<strong id="totalRecord">0</strong> 条</span> </div>
 	<div class="mt-10">
 		<input type="hidden" id="usercode" name="classCreator">
-		<table id='ppt-info-table' class="table table-border table-bordered table-bg table-hover table-sort">
+		<table id='file-info-table' class="table table-border table-bordered table-bg table-hover table-sort">
 			<thead>
 				<tr class="text-c">
 					<th width="3%"><input name="" type="checkbox" value=""></th>
-					<th width="10%">班级名称</th>
-					<th width="10%">课程名称</th>
-					<th width="5%">教师</th>
-					<th width="10%">课件查看</th>
+					<th width="10%">文件名</th>
+					<th width="15%">文件描述</th>
+					<th width="5%">创建者</th>
 					<th width="10%">创建时间</th>
-					<th width="10%">结束时间</th>
-					<th width="5%">班级人数</th>
-					<th width="5%">课程状态</th>
+					<th width="10%">下载次数</th>
+					<th width="5%">文件状态</th>
 					<th width="10%">操作</th>
 				</tr>
 			</thead>
@@ -59,22 +48,53 @@
 			</tbody>
 		</table>
 	</div>
+	<form style="display: none" id="download-form" method="post">
+		<input type="hidden" name="fileCode" id="fileCode" />
+		<input type="hidden" name="fileType" id="fileType" />
+	</form>
 </div>
 <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> 
 <script type="text/javascript" src="lib/layer/1.9.3/layer.js"></script> 
 <script type="text/javascript" src="lib/My97DatePicker/WdatePicker.js"></script> 
 <script type="text/javascript" src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="assets/js/H-ui.js"></script>
-<script type="text/javascript" src="assets/js/H-ui.admin.js"></script>
 <script type="text/javascript" src="lib/sweetalert-1.1.1/sweetalert.min.js"></script>
 <script type="text/javascript" src="assets/js/business/ip.js"></script>
 <script type="text/javascript" src="assets/js/business/ppt-hw.js"></script>
+<script type="text/javascript" src="assets/js/H-ui.js"></script>
+<script type="text/javascript" src="assets/js/H-ui.admin.js"></script>
 <script type="text/javascript">
 	$(function () {
-		var table = classTableHandler("#ppt-info-table", "/ppthw/getPPTInfo", 1);
-		$("#btn-refresh").on("click",function () {
-			table.api().ajax.reload();
-		});
+	    var classCode,courseCode;
+	    $.ajax({
+	        type: "post",
+	        url: ppt_hw_rurl + "/ppthw/getCache",
+			dataType: "json",
+			success: function (responseData) {
+				if (responseData.success) {
+				    classCode = responseData.data[0];
+				    courseCode = responseData.data[1];
+				} else {
+                    swal({
+                        title: "Sorry!",
+                        text: responseData.message,
+                        timer: 2000,
+                        type: "error"
+                    });
+				}
+            },
+			complete: function () {
+                var table = fileTableHandler("#file-info-table", "/ppthw/getPPTFileInfo", classCode, courseCode, 1);
+            },
+			error: function () {
+                swal({
+                    title: "Sorry!",
+                    text: "网络错误,请稍后再试",
+                    timer: 2000,
+                    type: "error"
+                });
+            }
+	    });
+
 	})
 </script>
 </body>

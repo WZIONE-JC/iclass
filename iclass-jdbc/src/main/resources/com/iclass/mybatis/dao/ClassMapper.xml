@@ -10,8 +10,8 @@
       <arg column="ClassName" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="ClassDescription" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="ClassCreator" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="ClassCreateTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="ClassDeadline" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="ClassCreateTime" jdbcType="TIMESTAMP" javaType="java.lang.String" />
+      <arg column="ClassDeadline" jdbcType="TIMESTAMP" javaType="java.lang.String" />
       <arg column="ClassCourseCode" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="ClassStatus" jdbcType="INTEGER" javaType="java.lang.Integer" />
     </constructor>

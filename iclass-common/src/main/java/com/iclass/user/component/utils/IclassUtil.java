@@ -8,7 +8,7 @@ import java.util.Date;
  * <p>
  * Created by JasonTang on 3/11/2017 3:14 PM.
  */
-public class Util {
+public class IclassUtil {
 
     public static String getDateNow() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

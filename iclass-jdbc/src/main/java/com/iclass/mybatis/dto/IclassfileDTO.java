@@ -11,11 +11,22 @@ public class IclassfileDTO {
 
     private Iclassfile iclassfile;
 
-    public IclassfileDTO(Iclassfile iclassfile) {
+    private String teacherName;
+
+    public IclassfileDTO(Iclassfile iclassfile, String teacherName) {
         this.iclassfile = iclassfile;
+        this.teacherName = teacherName;
     }
 
     public IclassfileDTO(){}
+
+    public String getTeacherName() {
+        return teacherName;
+    }
+
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
+    }
 
     public Iclassfile getIclassfile() {
         return iclassfile;
@@ -29,6 +40,7 @@ public class IclassfileDTO {
     public String toString() {
         return "IclassfileDTO{" +
                 "iclassfile=" + iclassfile +
+                ", teacherName='" + teacherName + '\'' +
                 '}';
     }
 }

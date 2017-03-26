@@ -155,7 +155,12 @@
   <select id="selectByFileCode" resultType="iclassfile">
     select
     <include refid="Base_Column_List" />
-    from iclassfile
+    from iclassfiles
     where FileCode = #{filecode,jdbcType=VARCHAR} and Filetype = #{filetype,jdbcType=INTEGER} and FileStatus = 1
   </select>
+  <update id="updateFileDownloadTimeByFileCode">
+    update iclassfiles
+    set  FileDownloadTime = FileDownloadTime + 1
+    where FileCode = #{filecode}
+  </update>
 </mapper>

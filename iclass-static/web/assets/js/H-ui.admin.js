@@ -96,11 +96,15 @@ $(function(){
 		tabNavallwidth();
 		var iframeBox=iframe_box.find('.show_iframe');
 		iframeBox.hide();
-		iframe_box.append('<div class="show_iframe"><div class="loading"></div><iframe frameborder="0" src='+href+'></iframe></div>');
+
+		iframe_box.append('<div class="show_iframe"><div class="loading"><div class="bounce1"></div> <div class="bounce2"></div> <div class="bounce3"></div></div><iframe frameborder="0" src='+href+'></iframe></div>');
 		var showBox=iframe_box.find('.show_iframe:visible');
 		showBox.find('iframe').attr("src",href).load(function(){
-			showBox.find('.loading').hide();
+            // setTimeout(code,millisec)
+            // alert(1);
+            showBox.find('.loading').hide();
 		});
+
 	}
 
 	var num=0;
@@ -221,8 +225,193 @@ function layer_show(title,url,id,w,h){
 	});
 
 }
+/*弹出层*/
+/*
+ 参数解释：
+ title	标题
+ url		请求的url
+ w		弹出层宽度（缺省调默认值）
+ h		弹出层高度（缺省调默认值）
+ courseCode
+ classCode
+ formId
+ fileType
+ */
+function layer_show_2(title, url , w, h, classCode, courseCode, fileType){
+    if (title == null || title == '') {
+        title=false;
+    };
+    if (url == null || url == '') {
+        url="/404.html";
+    };
+    if (w == null || w == '') {
+        w=800;
+    };
+    if (h == null || h == '') {
+        h=($(window).height() - 100);
+    };
+    if(url != "/404.html" && courseCode != null && courseCode != "" && classCode != null && classCode != '') {
+        console.log("courseCode:" + courseCode + ",classCode:" + classCode);
+    } else {
+        console.log("classCode和courseCode不能为空");
+    }
+    layer.open({
+        type: 2,
+        area: [w+'px', h +'px'],
+        fix: false, //不固定
+        maxmin: true,
+        shade:0.4,
+        title: title,
+        content: url
+    });
+    fileTableHandler(classCode, courseCode, fileType);
+}
 /*关闭弹出框口*/
 function layer_close(){
 	var index = parent.layer.getFrameIndex(window.name);
 	parent.layer.close(index);
+}
+
+// 文件表格数据
+function fileTableHandler(classCode, courseCode, fileType) {
+	var formId = "#file-info-table";
+    $(formId).prop("width", "100%");
+    var colmuns =
+        [
+            {
+                orderable: false,
+                data: "iclassfile.fileid",
+                render: function (data, type, row, meta) {
+                    return "<input type='checkbox' value=" + data + " name='classid'>";
+                }
+            },
+            {
+                data: "iclassfile.filename"
+            },
+            {
+                data: "iclassfile.filedesc",
+            },
+            {
+                data: "teacherName",
+                render: function (data, type, row, meta) {
+                    return "<span class='label label-success radius'>" + data + "</span>";
+                }
+            },
+            {
+                data: "iclassfile.filecreatetime",
+            },
+            {
+                data: "iclassfile.filedownloadtime",
+                render: function (data, type, row, meta) {
+                    return "<span class='label label-warning radius'>" + data + "</span>";
+                }
+            },
+            {
+                data: "iclassfile.filestatus",
+                render: function (data, type, row, meta) {
+                    if (data == 0) {
+                        return "<span class='label label-default radius' title='下架'>已下架</span>";
+                    } else if (data == 1) {
+                        return "<span class='label label-success radius' title='已发布'>已发布</span>";
+                    }
+                    return "<input type='checkbox' value=" + data + " name='classid'>";
+                }
+            },
+            {
+                data: null,
+                orderable: false,
+                width: "5%"
+            }];
+
+    var columnDefs =
+        [{
+            targets: [1, -2, -1],
+            "createdCell": function (td, cellData, rowData, row, col) {
+                var fileCode = rowData.iclassfile.filecode;
+                if (col == 1) {
+                    $(td).wrapInner("<span style='cursor:pointer' title='点击下载' onclick=download('"+fileCode+"','"+fileType+"')></span>");
+                }
+                if (col == 6) {
+                    $(td).addClass("td-status");
+                }
+                if (col == 7) {
+                    $(td).addClass("td-manage");
+                    $(td).html("<a style='text-decoration:none' class='ml-5' title='编辑' onclick=class_update('编辑','file-update.html','"+fileCode+"','570','540')><i class='Hui-iconfont'>&#xe6df;</i></a> <a style='text-decoration:none' class='ml-5' onClick='class_stop(this,"+fileCode+")'  title='下架'><i class='Hui-iconfont'>&#xe6de;</i></a>");
+                }
+            }
+        }
+        ];
+
+    var table = $(formId).dataTable({
+        // processing: true,
+        order: [], //默认没有排序的,在后面指定具体排序的类
+        stateSave: true, //允许浏览器缓存Datatables，以便下次恢复之前的状态
+        processing: true, //是否显示处理状态
+        serverSide: true, //开启服务器模式
+        searching: true, //开启搜索功能
+        paging: true, //允许表格分页
+        lengthChange: true, //允许改变每页显示的数据条数
+        bStateSave: true,//状态保存
+        autoWidth: true,
+        columnDefs: columnDefs,
+        ajax: {
+            url: ppt_hw_rurl + "/ppthw/getPPTFileInfo",
+            dataType: "jsonp",
+            data: {
+                "classCode": classCode,
+                "courseCode": courseCode,
+                "fileType": fileType
+            },
+            dataSrc: function (result) {
+                if (result.success) {
+                    //显示总数
+                    $("#totalRecord").text(result.recordsFiltered);
+                    return result.data;
+                } else {
+                    swal({
+                        title: "Sorry!",
+                        text: result.message,
+                        timer: 2000,
+                        type: "error"
+                    });
+                    return false;
+                }
+            },
+        },
+        columns: colmuns,
+        "preDrawCallback": function () {
+            alert("2");
+        },
+        "initComplete": function (settings, json) {
+            // alert("1");
+        },
+        "createdRow": function (row, data, index) {
+            //http://datatables.club/reference/option/createdRow.html
+            //row 是某一行 ， data是 ajax返回数据 ， index是行标(0)
+            //行渲染回调,在这里可以对该行dom元素进行任何操作
+            //给当前行加样式
+            $(row).addClass("text-c");
+        },
+
+        "drawCallback": function (data, settings) {
+            //http://datatables.club/manual/daily/2016/09/04/option-rowCallback.html
+            //渲染完毕后的回调
+            //清空全选状态
+            // $(":checkbox[name='cb-check-all']").prop('checked', false);
+            $('table tbody input:checkbox').on( 'click', function () {
+                var tr = $(this).parent().parent("tr");
+                if ( tr.hasClass('selected') ) {
+                    tr.removeClass('selected');
+                    tr.find('input[type=checkbox]').prop("checked",false);
+                }
+                else {
+                    tr.removeClass('selected');
+                    tr.addClass('selected');
+                    tr.find('input[type=checkbox]').prop("checked",true);
+                }
+            });
+
+        }
+    });
+    return table;
 }

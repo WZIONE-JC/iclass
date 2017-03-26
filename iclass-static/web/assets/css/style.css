@@ -23,8 +23,22 @@
 }
 /*将datatables处理中的提示放到表格中间了*/
 .dataTables-processing {
-    margin-left: 48%;
-    padding-top: 3px;
+    width:160px;
+    height:56px;
+    position: absolute;
+    top:35%;
+    left:40%;
+    line-height:56px;
+    color:#fff;
+    padding-left:60px;
+    font-size:15px;
+    background: #000 url(../images/loading.gif) no-repeat 10px 50%;
+    opacity: 0.7;
+    z-index:9999;
+    -moz-border-radius:20px;
+    -webkit-border-radius:20px;
+    border-radius:20px;
+    filter:progid:DXImageTransform.Microsoft.Alpha(opacity=70);
 }
 .readonly-input {
     background: #ebebe4;
@@ -40,6 +54,28 @@
 .Validform_wrong, .Validform_warning {
     margin-left: 41%;
 }
-
+.no-file-info {
+    color: #666666;
+}
+/*遮罩*/
+.maskLayer {
+    width: 100%;
+    height: 900px;
+    background-color: #000000;
+    opacity: 0.5;
+    -moz-opacity: 0.5;
+    filter: alpha(opacity=50);
+}
+.no-highlight{
+    color: #333333;
+    background: #666666;
+}
+.r {
+    padding-top: 5px;
+}
+.file-list-total-record {
+    padding-top: 8px;
+    padding-right: 10px;
+}
 
 

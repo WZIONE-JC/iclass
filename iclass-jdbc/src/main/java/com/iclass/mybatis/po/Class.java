@@ -1,7 +1,8 @@
 package com.iclass.mybatis.po;
 
+import com.iclass.user.component.utils.IclassUtil;
+
 import java.io.Serializable;
-import java.sql.Date;
 
 public class Class implements Serializable{
     private Integer classid;
@@ -14,22 +15,22 @@ public class Class implements Serializable{
 
     private String classcreator;
 
-    private Date classcreatetime;
+    private String classcreatetime;
 
-    private Date classdeadline;
+    private String classdeadline;
 
     private String classcoursecode;
 
     private Integer classstatus;
 
-    public Class(Integer classid, String classcode, String classname, String classdescription, String classcreator, Date classcreatetime, Date classdeadline, String classcoursecode, Integer classstatus) {
+    public Class(Integer classid, String classcode, String classname, String classdescription, String classcreator, String classcreatetime, String classdeadline, String classcoursecode, Integer classstatus) {
         this.classid = classid;
         this.classcode = classcode;
         this.classname = classname;
         this.classdescription = classdescription;
         this.classcreator = classcreator;
-        this.classcreatetime = classcreatetime;
-        this.classdeadline = classdeadline;
+        this.classcreatetime = IclassUtil.formatTime(classcreatetime);
+        this.classdeadline = IclassUtil.formatTime(classdeadline);
         this.classcoursecode = classcoursecode;
         this.classstatus = classstatus;
     }
@@ -78,20 +79,20 @@ public class Class implements Serializable{
         this.classcreator = classcreator == null ? null : classcreator.trim();
     }
 
-    public Date getClasscreatetime() {
+    public String getClasscreatetime() {
         return classcreatetime;
     }
 
-    public void setClasscreatetime(Date classcreatetime) {
-        this.classcreatetime = classcreatetime;
+    public void setClasscreatetime(String classcreatetime) {
+        this.classcreatetime = IclassUtil.formatTime(classcreatetime);
     }
 
-    public Date getClassdeadline() {
+    public String getClassdeadline() {
         return classdeadline;
     }
 
-    public void setClassdeadline(Date classdeadline) {
-        this.classdeadline = classdeadline;
+    public void setClassdeadline(String classdeadline) {
+        this.classdeadline = IclassUtil.formatTime(classdeadline);
     }
 
     public String getClasscoursecode() {

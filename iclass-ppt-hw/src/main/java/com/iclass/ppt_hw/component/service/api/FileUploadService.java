@@ -3,9 +3,11 @@ package com.iclass.ppt_hw.component.service.api;
 import com.iclass.mybatis.qo.FileQo;
 import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.msg.ResponseMsg;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 文件上传
@@ -21,4 +23,6 @@ public interface FileUploadService {
      * @return 服务器相应信息
      */
     ServiceResult<ResponseMsg> doData(HttpServletRequest request, MultipartFile file, FileQo fileQo);
+
+    ResponseEntity<byte[]> download(HttpServletResponse response, String fileCode, Integer fileType);
 }

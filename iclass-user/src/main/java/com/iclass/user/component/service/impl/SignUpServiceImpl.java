@@ -12,7 +12,7 @@ import com.iclass.user.component.service.api.SignUpService;
 import com.iclass.user.component.service.api.StudentService;
 import com.iclass.user.component.service.api.TeacherService;
 import com.iclass.user.component.service.api.ValidateExistService;
-import com.iclass.user.component.utils.Util;
+import com.iclass.user.component.utils.IclassUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,7 +73,7 @@ public class SignUpServiceImpl implements SignUpService {
                 //加密密码
                 user.setUserpassword(getMD5Password(user.getUserpassword()));
                 //处理注册日期
-                user.setUserregisterdate(Util.getDateTimeNow());
+                user.setUserregisterdate(IclassUtil.getDateTimeNow());
 
                 int result = userMapper.insert(user);
 

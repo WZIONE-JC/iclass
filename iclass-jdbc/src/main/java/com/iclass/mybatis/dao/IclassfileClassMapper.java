@@ -18,5 +18,6 @@ public interface IclassfileClassMapper {
 
     int updateByPrimaryKey(IclassfileClass record);
 
-    List<IclassfileClass> selectByClassCodeAndCourseCode(@Param("classcode") String classcode, @Param("coursecode") String coursecode);
+    List<IclassfileClass> selectByClassCodeAndCourseCode(@Param("classcode") String classcode, @Param("coursecode") String coursecode,
+                                                         @Param("start") Integer strat, @Param("length") Integer length);
 }

@@ -3,8 +3,6 @@ package com.iclass.mybatis.dto;
 import com.iclass.mybatis.po.Class;
 import com.iclass.mybatis.po.Course;
 
-import java.util.List;
-
 /**
  * iclass
  * <p>
@@ -24,13 +22,6 @@ public class PPTHWDTO {
     private Course course;
 
     /**
-     * 课件信息
-     * FileType
-     * 0:作业，1:PPT
-     */
-    private List<IclassfileDTO> iclassfiles;
-
-    /**
      * 教师姓名
      * teacherFullName
      */
@@ -38,10 +29,9 @@ public class PPTHWDTO {
 
     public PPTHWDTO() {}
 
-    public PPTHWDTO(Class aClass, Course course, List<IclassfileDTO> iclassfiles, String teacherName) {
+    public PPTHWDTO(Class aClass, Course course, String teacherName) {
         this.aClass = aClass;
         this.course = course;
-        this.iclassfiles = iclassfiles;
         this.teacherName = teacherName;
     }
 
@@ -61,14 +51,6 @@ public class PPTHWDTO {
         this.course = course;
     }
 
-    public List<IclassfileDTO> getIclassfiles() {
-        return iclassfiles;
-    }
-
-    public void setIclassfiles(List<IclassfileDTO> iclassfiles) {
-        this.iclassfiles = iclassfiles;
-    }
-
     public String getTeacherName() {
         return teacherName;
     }
@@ -82,7 +64,6 @@ public class PPTHWDTO {
         return "PPTHWDTO{" +
                 "aClass=" + aClass +
                 ", course=" + course +
-                ", iclassfiles=" + iclassfiles +
                 ", teacherName='" + teacherName + '\'' +
                 '}';
     }

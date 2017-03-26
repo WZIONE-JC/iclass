@@ -17,4 +17,6 @@ public interface IclassfileMapper {
     int updateByPrimaryKey(Iclassfile record);
 
     Iclassfile selectByFileCode(@Param("filecode") String filecode, @Param("filetype") Integer fileType);
+
+    int updateFileDownloadTimeByFileCode(@Param("filecode") String filecode);
 }
