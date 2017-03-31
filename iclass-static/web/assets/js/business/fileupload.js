@@ -73,7 +73,7 @@ function uploadfile(form, fileType){
     if(!$(".fileerrorTip").hasClass("error")) {
         var formData = new FormData($( form )[0]);
         $.ajax({
-            url: ppt_hw_rurl + '/file/upload' ,
+            url: ppt_hw_url + '/file/upload' ,
             type: 'POST',
             data: formData,
             cache: false,

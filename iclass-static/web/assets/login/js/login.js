@@ -114,7 +114,7 @@ var Login = function () {
                     NProgress.start();
                     $.ajax({
                         type:"post",
-                        url: rurl+"/user/login",
+                        url: user_url+"/user/login",
                         dataType:"jsonp",
                         timeout: 3000,
                         data:$(".login-form").serialize(),
@@ -161,7 +161,7 @@ var Login = function () {
                         $.ajax({
                             type:"post",
                             dataType:"jsonp",
-                            url: rurl+"/user/signup",
+                            url: user_url+"/user/signup",
                             timeout: 3000,
                             data:$(".register-form").serialize(),
                             success:function(responseData){
@@ -258,7 +258,7 @@ var Login = function () {
                 $.ajax({
                     type: "post",
                     dataType:"jsonp",
-                    url: rurl+"/user/validateUsercode",
+                    url: user_url+"/user/validateUsercode",
                     jsonp:"callback",
                     data: {
                     	usercode: $("#register_userCode").val()
@@ -284,7 +284,7 @@ var Login = function () {
                 $.ajax({
                     type: "post",
                     dataType:"jsonp",
-                    url: rurl+"/user/validateUsername",
+                    url: user_url+"/user/validateUsername",
                     jsonp: "callback",
                     data: {
                     	username: $("#register_username").val()
@@ -306,11 +306,11 @@ var Login = function () {
     //生成验证码
     var j = function() {
         $(function(){
-            $("#imgcode").attr("src", rurl+"/VerificationCode/generate");
+            $("#imgcode").attr("src", user_url+"/VerificationCode/generate");
             $("#imgcode").click();
         })
         $("#imgcode").click(function () {
-            $("#imgcode").attr("src", rurl+"/VerificationCode/generate?n=" + Math.random());
+            $("#imgcode").attr("src", user_url+"/VerificationCode/generate?n=" + Math.random());
         });
     }
     //获取角色信息
@@ -319,7 +319,7 @@ var Login = function () {
             $.ajax({
                 type: "post",
                 dataType: "jsonp",
-                url: rurl + "/user/getRole",
+                url: user_url + "/user/getRole",
                 jsonp: "callback",
                 data: {
                   device: "web"

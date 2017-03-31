@@ -191,7 +191,7 @@ function layer_show(title,url,id,w,h){
                 type: "post",
                 dataType: "jsonp",
                 jsonp: "callback",
-                url: rurl + "/cache/setCache",
+                url: user_url + "/cache/setCache",
                 data: {
                     usercode: usercode
                 },

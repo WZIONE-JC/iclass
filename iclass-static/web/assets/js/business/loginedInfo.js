@@ -10,7 +10,7 @@ var Logined = function () {
                 type: "post",
                 dataType: "jsonp",
                 jsonp: "callback",
-                url: rurl + "/user/getLoginedUserInfo",
+                url: user_url + "/user/getLoginedUserInfo",
                 timeout: 3000,
                 success: function (logineduserdata) {
                     if (logineduserdata.success) {
@@ -66,7 +66,7 @@ var Logined = function () {
                                         type: "post",
                                         dataType: "jsonp",
                                         jsonp: "callback",
-                                        url: rurl + "/user/logout",
+                                        url: user_url + "/user/logout",
                                         timeout: 3000,
                                         success: function (responseData) {
                                             if (responseData.success) {

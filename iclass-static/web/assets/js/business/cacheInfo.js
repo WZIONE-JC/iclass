@@ -10,7 +10,7 @@ var GetCache = function () {
                 type: "post",
                 dataType: "jsonp",
                 jsonp: "callback",
-                url: rurl + "/cache/getCache",
+                url: user_url + "/cache/getCache",
                 timeout: 3000,
                 success: function (responseData) {
                     if(responseData.success) {

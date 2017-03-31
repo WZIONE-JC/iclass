@@ -6,7 +6,7 @@
 //                 type: "post",
 //                 dataType: "jsonp",
 //                 jsonp: "callback",
-//                 url: rurl + "/user/getUserInfoBySession",
+//                 url: user_url + "/user/getUserInfoBySession",
 //                 timeout: 3000,
 //                 success: function (responseData) {
 //                     // <tr class="text-c" >
@@ -83,7 +83,7 @@
 function updateUser () {
     $.ajax({
         type: "put",
-        url: rurl + "/user/update",
+        url: user_url + "/user/update",
         dataType: "jsonp",
         timeout: 3000,
         data: $("#form-user-update").serialize(),
@@ -121,7 +121,7 @@ function updateUser () {
 function changePassword () {
     $.ajax({
         type: "post",
-        url: rurl + "/user/changePwd",
+        url: user_url + "/user/changePwd",
         dataType: "jsonp",
         timeout: 3000,
         data: $("#form-changepassword").serialize(),
@@ -161,7 +161,7 @@ function changePassword () {
 //         type: "post",
 //         dataType: "jsonp",
 //         jsonp: "callback",
-//         url: rurl + "/user/all",
+//         url: user_url + "/user/all",
 //         timeout: 3000,
 //         success: function (responseData) {
 //             if(responseData.success) {
@@ -326,7 +326,7 @@ function userTableHandler (formId, isPersonal, url) {
         autoWidth: true,
         columnDefs: columnDefs,
         ajax: {
-            url:  rurl + url,
+            url:  user_url + url,
             dataType: "jsonp",
             dataSrc: function (result) {
                 if(result.success) {

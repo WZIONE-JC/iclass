@@ -9,7 +9,7 @@ function getCourseByTeacherCode() {
         type: "post",
         dataType: "jsonp",
         jsonp: "callback",
-        url: ppt_hw_rurl + "/course/get",
+        url: ppt_hw_url + "/course/get",
         data: {
           "teacherCode" : teacherCode
         },
@@ -67,7 +67,7 @@ function getClassByCourseCode(courseCode) {
         type: "post",
         dataType: "jsonp",
         jsonp: "callback",
-        url: ppt_hw_rurl + "/class/getClassByClassCourseCode",
+        url: ppt_hw_url + "/class/getClassByClassCourseCode",
         data: {
             "classCourseCode" : courseCode
         },
@@ -175,7 +175,7 @@ function classTableHandler(formId, url, fileType) {
     var columnDefs =
         [{
             targets: [1, 2, 4, -2, -1],
-            createdCell: function (td, cellData, rowData, row, col) {
+            "createdCell": function (td, cellData, rowData, row, col) {
                 var classcode = rowData.aClass.classcode;
                 var classname = rowData.aClass.classname;
                 var coursename = rowData.course.coursename;
@@ -229,7 +229,7 @@ function classTableHandler(formId, url, fileType) {
         autoWidth: true,
         columnDefs: columnDefs,
         ajax: {
-            url: ppt_hw_rurl + url,
+            url: ppt_hw_url + url,
             dataType: "jsonp",
             data: {
                 "classCreator": usercode,
@@ -348,7 +348,7 @@ function fileTableHandler(classCode, courseCode, fileType) {
             "createdCell": function (td, cellData, rowData, row, col) {
                 var fileCode = rowData.iclassfile.filecode;
                 if (col == 1) {
-                    $(td).wrapInner("<a style='cursor:pointer' target='_blank' href='"+ppt_hw_rurl+"/file/download?fileCode="+fileCode+"&fileType="+fileType+"' onclick='updateDownloadTime(this); return false;' title='点击下载'></a>");
+                    $(td).wrapInner("<a style='cursor:pointer' target='_blank' href='"+ppt_hw_url+"/file/download?fileCode="+fileCode+"&fileType="+fileType+"' onclick='updateDownloadTime(this); return false;' title='点击下载'></a>");
                 }
                 if (col == 6) {
                     $(td).addClass("td-status");
@@ -374,7 +374,7 @@ function fileTableHandler(classCode, courseCode, fileType) {
         autoWidth: true,
         columnDefs: columnDefs,
         ajax: {
-            url: ppt_hw_rurl + "/ppthw/getPPTFileInfo",
+            url: ppt_hw_url + "/ppthw/getPPTFileInfo",
             dataType: "jsonp",
             data: {
                 "classCode": classCode,
@@ -452,7 +452,7 @@ function file_add(title,url){
 }
 function download(fileCode,fileType) {
     console.log(fileCode);
-    var $form = $("#download-form").attr("action", ppt_hw_rurl+"/file/download");
+    var $form = $("#download-form").attr("action", ppt_hw_url+"/file/download");
     $("#fileCode").val(fileCode);
     $("#fileType").val(fileType);
     $form.submit();
