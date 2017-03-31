@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title>layer-更懂你的web弹窗解决方案</title>
 <script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
-<script src="layer/layer.js"></script>
+<script src="layer.js"></script>
 
 <style>
 html{background-color:#E3E3E3; font-size:14px; color:#000; font-family:'微软雅黑'}
@@ -83,10 +83,13 @@ layer.ready(function(){
         content: 'http://layer.layui.com/?form=local',
         end: function(){
             layer.tips('试试相册模块？', '#photosDemo', {tips: 1})
+        },
+        success: function () {
+            layer.msg('欢迎使用layer');
         }
     });
     
-    //layer.msg('欢迎使用layer');
+
     
     //使用相册
     layer.photos({

@@ -33,8 +33,7 @@
                     class="c-red">*</span>角&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;色：</label>
             <div class=""> <span style="width:33.33333%;" class="select-box">
                 <select name="UserAttributes" class="select">
-                    <option value="1">学生</option>
-                    <option value="2">教师</option>
+                    <option value="教师">教师</option>
                 </select>
                 </span>
             </div>
@@ -43,7 +42,7 @@
             <label class="form-label col-5"><span class="c-red">*</span>用户编号：</label>
             <div class=>
                 <input type="text" style="width:33.33333%;" class="input-text" value="" placeholder="输入学号/教工号"
-                       id="userId" name="userId" datatype="n6-16" nullmsg="请输入学号/教工号">
+                       id="userId" name="userId" datatype="n10-10" maxlength="10" minlength="10" nullmsg="请输入学号/教工号">
             </div>
         </div>
         <div class="row cl">

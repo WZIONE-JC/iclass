@@ -4,8 +4,9 @@ import com.iclass.mybatis.dao.UserMapper;
 import com.iclass.user.component.entity.DataTablesRequestEntity;
 import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.service.api.PersonalInfoService;
-import com.iclass.user.component.vo.SessionUser;
-import com.iclass.mybatis.model.User;
+import com.iclass.mybatis.dto.SessionUser;
+import com.iclass.mybatis.po.User;
+import com.iclass.user.component.utils.CheckDataTables;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,6 +64,7 @@ public class PersonalInfoServiceImpl implements PersonalInfoService {
         if (sessionUser != null) {
             //为了保证数据都是最新的,所以需要从数据库中去获取（通过usercode）
             String usercode = sessionUser.getUser().getUsercode();
+            requestEntity = CheckDataTables.check(requestEntity);
             Integer draw = requestEntity.getDraw();
             User user;
             if(StringUtils.isNotBlank(usercode)) {

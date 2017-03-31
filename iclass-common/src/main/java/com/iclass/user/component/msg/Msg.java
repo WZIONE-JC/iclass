@@ -14,7 +14,10 @@ public enum Msg {
     SIGNUP_SUCCESS("注册成功"),SIGNUP_FAILED("注册失败,请重试"),
     CODE_CORRECT("验证码正确"),CODE_NOTNULL("验证码不能为空"),CODE_ERROR("验证码错误"),
     UPDATE_USER_SUCCESS("用户信息更新成功"),UPDATE_USER_FAILED("用户信息更新失败"),
-    UPDATE_PASSWORD_SUCCESS("修改密码成功"), UPDATE_PASSWORD_FAILED("修改密码失败");
+    UPDATE_PASSWORD_SUCCESS("修改密码成功"), UPDATE_PASSWORD_FAILED("修改密码失败"),
+    FILE_UPLOAD_SUCCESS("文件上传成功"),FILE_UPLOAD_FAILED("文件上传失败"),
+    FILE_DOWNLOAD_SUCCESS("文件下载成功"),FILE_DOWNLOAD_FAILED("文件下载失败"),
+    CACHE_SUCCESS("缓存设置成功"), CACHE_FAILED("缓存设置失败");
 
     private String msg;
 

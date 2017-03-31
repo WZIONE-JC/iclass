@@ -1,0 +1,76 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8">
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<meta http-equiv="Cache-Control" content="no-store" />
+	<LINK rel="Bookmark" href="favicon.ico" >
+	<LINK rel="Shortcut Icon" href="favicon.ico" />
+	<!--[if lt IE 9]>
+	<script type="text/javascript" src="lib/html5.js"></script>
+	<script type="text/javascript" src="lib/respond.min.js"></script>
+	<script type="text/javascript" src="lib/PIE_IE678.js"></script>
+	<![endif]-->
+	<link href="assets/css/H-ui.min.css" rel="stylesheet" type="text/css" />
+	<link href="assets/css/H-ui.admin.css" rel="stylesheet" type="text/css" />
+	<link href="skin/default/skin.css" rel="stylesheet" type="text/css" id="skin" />
+	<link href="lib/Hui-iconfont/1.0.1/iconfont.css" rel="stylesheet" type="text/css" />
+	<!--[if IE 6]>
+	<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+	<script>DD_belatedPNG.fix('*');</script>
+	<![endif]-->
+	<link type="text/css" href="assets/css/style.css" rel="stylesheet">
+	<link href="lib/sweetalert-1.1.1/sweetalert.css" rel="stylesheet" type="text/css" />
+<title>文件列表(点击文件名下载)</title>
+</head>
+<body>
+<div class="pd-20">
+	<div class="cl pd-5 bg-1 bk-gray mt-10"> <span class="l"><a href="javascript:;" onclick="downAll()" class="btn btn-success radius"><i class="Hui-iconfont">&#xe640;</i> 全部下载</a></span> <a id="btn-refresh" class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="#" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a> <span class="r file-list-total-record">共有数据：<strong id="totalRecord">0</strong> 条</span> </div>
+	<div class="mt-10">
+		<input type="hidden" id="usercode" name="classCreator">
+		<table id='file-info-table' class="table table-border table-bordered table-bg table-hover table-sort">
+			<input type="hidden" name="classCode" id="classCode"/>
+			<input type="hidden" name="courseCode" id="courseCode" />
+			<input type="hidden" name="fileType" id="fileType" />
+			<thead>
+				<tr class="text-c">
+					<th width="3%"><input name="" type="checkbox" value=""></th>
+					<th width="10%">文件名</th>
+					<th width="15%">文件描述</th>
+					<th width="5%">创建者</th>
+					<th width="10%">创建时间</th>
+					<th width="10%">下载次数</th>
+					<th width="5%">文件状态</th>
+					<th width="10%">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+			<a style="display: none" onclick="loadData()" id="loadData"></a>
+		</table>
+	</div>
+</div>
+<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript" src="lib/layer/1.9.3/layer.js"></script> 
+<script type="text/javascript" src="lib/My97DatePicker/WdatePicker.js"></script> 
+<script type="text/javascript" src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="lib/sweetalert-1.1.1/sweetalert.min.js"></script>
+<script type="text/javascript" src="assets/js/business/ip.js"></script>
+<script type="text/javascript" src="assets/js/business/ppt-hw.js"></script>
+<script type="text/javascript" src="assets/js/H-ui.js"></script>
+<script type="text/javascript" src="assets/js/H-ui.admin.js"></script>
+<script type="text/javascript">
+	function loadData () {
+	    var classCode = $("#classCode").val();
+		var courseCode = $("#courseCode").val();
+		var fileType = $("#fileType").val();
+        var table = fileTableHandler(classCode, courseCode, fileType);
+        $("#btn-refresh").on("click",function () {
+            table.api().ajax.reload();
+        });
+	}
+</script>
+</body>
+</html>

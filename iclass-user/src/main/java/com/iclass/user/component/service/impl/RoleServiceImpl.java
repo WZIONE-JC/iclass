@@ -3,7 +3,7 @@ package com.iclass.user.component.service.impl;
 import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.service.api.RoleService;
 import com.iclass.mybatis.dao.RoleMapper;
-import com.iclass.mybatis.model.Role;
+import com.iclass.mybatis.po.Role;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

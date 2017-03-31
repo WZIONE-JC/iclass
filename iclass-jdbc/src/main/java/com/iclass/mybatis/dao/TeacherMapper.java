@@ -1,7 +1,7 @@
 package com.iclass.mybatis.dao;
 
 
-import com.iclass.mybatis.model.Teacher;
+import com.iclass.mybatis.po.Teacher;
 
 public interface TeacherMapper {
     int deleteByPrimaryKey(Integer teacherid);

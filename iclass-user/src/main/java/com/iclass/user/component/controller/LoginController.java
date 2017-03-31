@@ -3,7 +3,7 @@ package com.iclass.user.component.controller;
 import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.msg.ResponseMsg;
 import com.iclass.user.component.service.api.LoginService;
-import com.iclass.user.component.vo.SessionUser;
+import com.iclass.mybatis.dto.SessionUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

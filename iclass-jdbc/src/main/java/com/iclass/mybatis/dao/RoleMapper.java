@@ -1,7 +1,7 @@
 package com.iclass.mybatis.dao;
 
 
-import com.iclass.mybatis.model.Role;
+import com.iclass.mybatis.po.Role;
 
 import java.util.List;
 

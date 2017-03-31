@@ -8,8 +8,8 @@
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="Cache" content="no-cache">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-    <LINK rel="Bookmark" href="/favicon.ico" >
-    <LINK rel="Shortcut Icon" href="/favicon.ico" />
+    <LINK rel="Bookmark" href="favicon.ico" >
+    <LINK rel="Shortcut Icon" href="favicon.ico" />
     <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="assets/login/css/main.css" rel="stylesheet" type="text/css"/>
     <link href="assets/login/css/plugins.css" rel="stylesheet" type="text/css"/>
@@ -97,9 +97,9 @@
                 </div>
             </div>
             <div class="form-actions">
-                <label class="checkbox pull-left">
+                <label class="checkbox pull-left" id="remember">
                     <input type="checkbox" title="7天自动登陆" class="uniform" name="remember" value="1">
-                    	<span title="7天自动登陆" >记住密码</span>
+                    	<span title="7天自动登陆" >7天自动登陆</span>
                 </label>
                 <button type="submit" class="submit btn btn-primary pull-right">
                    	 登录
@@ -302,7 +302,7 @@
 </script>
 <script>
     $(function () {
-        Login.init()
+        Login.init();
     });
 </script>
 </body>

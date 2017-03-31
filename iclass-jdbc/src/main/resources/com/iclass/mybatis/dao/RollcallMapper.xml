@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.iclass.mybatis.dao.RollcallMapper" >
+  <resultMap id="BaseResultMap" type="com.iclass.mybatis.po.Rollcall" >
+    <constructor >
+      <idArg column="RollCallID" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="RollCallCode" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="RollCallTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="RollCallStatus" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="ClassCode" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="TeacherCode" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="CourseCode" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    RollCallID, RollCallCode, RollCallTime, RollCallStatus, ClassCode, TeacherCode, CourseCode
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from rollcall
+    where RollCallID = #{rollcallid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from rollcall
+    where RollCallID = #{rollcallid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.iclass.mybatis.po.Rollcall" >
+    insert into rollcall (RollCallID, RollCallCode, RollCallTime, 
+      RollCallStatus, ClassCode, TeacherCode, 
+      CourseCode)
+    values (#{rollcallid,jdbcType=INTEGER}, #{rollcallcode,jdbcType=VARCHAR}, #{rollcalltime,jdbcType=TIMESTAMP}, 
+      #{rollcallstatus,jdbcType=VARCHAR}, #{classcode,jdbcType=VARCHAR}, #{teachercode,jdbcType=VARCHAR}, 
+      #{coursecode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.iclass.mybatis.po.Rollcall" >
+    insert into rollcall
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rollcallid != null" >
+        RollCallID,
+      </if>
+      <if test="rollcallcode != null" >
+        RollCallCode,
+      </if>
+      <if test="rollcalltime != null" >
+        RollCallTime,
+      </if>
+      <if test="rollcallstatus != null" >
+        RollCallStatus,
+      </if>
+      <if test="classcode != null" >
+        ClassCode,
+      </if>
+      <if test="teachercode != null" >
+        TeacherCode,
+      </if>
+      <if test="coursecode != null" >
+        CourseCode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rollcallid != null" >
+        #{rollcallid,jdbcType=INTEGER},
+      </if>
+      <if test="rollcallcode != null" >
+        #{rollcallcode,jdbcType=VARCHAR},
+      </if>
+      <if test="rollcalltime != null" >
+        #{rollcalltime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rollcallstatus != null" >
+        #{rollcallstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="classcode != null" >
+        #{classcode,jdbcType=VARCHAR},
+      </if>
+      <if test="teachercode != null" >
+        #{teachercode,jdbcType=VARCHAR},
+      </if>
+      <if test="coursecode != null" >
+        #{coursecode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.iclass.mybatis.po.Rollcall" >
+    update rollcall
+    <set >
+      <if test="rollcallcode != null" >
+        RollCallCode = #{rollcallcode,jdbcType=VARCHAR},
+      </if>
+      <if test="rollcalltime != null" >
+        RollCallTime = #{rollcalltime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rollcallstatus != null" >
+        RollCallStatus = #{rollcallstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="classcode != null" >
+        ClassCode = #{classcode,jdbcType=VARCHAR},
+      </if>
+      <if test="teachercode != null" >
+        TeacherCode = #{teachercode,jdbcType=VARCHAR},
+      </if>
+      <if test="coursecode != null" >
+        CourseCode = #{coursecode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RollCallID = #{rollcallid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.iclass.mybatis.po.Rollcall" >
+    update rollcall
+    set RollCallCode = #{rollcallcode,jdbcType=VARCHAR},
+      RollCallTime = #{rollcalltime,jdbcType=TIMESTAMP},
+      RollCallStatus = #{rollcallstatus,jdbcType=VARCHAR},
+      ClassCode = #{classcode,jdbcType=VARCHAR},
+      TeacherCode = #{teachercode,jdbcType=VARCHAR},
+      CourseCode = #{coursecode,jdbcType=VARCHAR}
+    where RollCallID = #{rollcallid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,6 +1,6 @@
 package com.iclass.user.component.service.api;
 
-import com.iclass.mybatis.model.Role;
+import com.iclass.mybatis.po.Role;
 import com.iclass.user.component.entity.ServiceResult;
 
 import java.util.List;

@@ -10,7 +10,7 @@
         <module>iclass-user</module>
         <module>iclass-common</module>
         <module>iclass-jdbc</module>
-        <module>iclass-ppt</module>
+        <module>iclass-ppt-hw</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -23,12 +23,14 @@
         <spring.boot.starter.log4j.version>1.3.3.RELEASE</spring.boot.starter.log4j.version>
         <mybatis.spring.boot.starter.version>1.2.0</mybatis.spring.boot.starter.version>
         <spring.boot.starter.data.jpa>1.5.1.RELEASE</spring.boot.starter.data.jpa>
+        <iclass.common.version>0.0.1-SNAPSHOT</iclass.common.version>
+        <iclass.jdbc.version>0.0.1-SNAPSHOT</iclass.jdbc.version>
         <spring.boot.version>1.5.1.RELEASE</spring.boot.version>
         <org.springframework>4.3.5.RELEASE</org.springframework>
         <commons.lang.version>2.6</commons.lang.version>
+        <commons.fileupload>1.3.2</commons.fileupload>
         <servlet.api.version>2.5</servlet.api.version>
-        <iclass.common>0.0.1-SNAPSHOT</iclass.common>
-        <iclass.jdbc>0.0.1-SNAPSHOT</iclass.jdbc>
+        <slf4j.version>1.7.22</slf4j.version>
         <mysql.version>5.1.39</mysql.version>
         <druid.version>1.0.1</druid.version>
         <junit.version>4.12</junit.version>
@@ -42,13 +44,13 @@
             <dependency>
                 <groupId>com.iclass</groupId>
                 <artifactId>iclass-jdbc</artifactId>
-                <version>${iclass.jdbc}</version>
+                <version>${iclass.jdbc.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.iclass</groupId>
                 <artifactId>iclass-common</artifactId>
-                <version>${iclass.common}</version>
+                <version>${iclass.common.version}</version>
             </dependency>
 
             <dependency>
@@ -60,66 +62,30 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-jdbc</artifactId>
                 <version>${spring.boot.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-starter</artifactId>
-                    </exclusion>
-                </exclusions>
             </dependency>
 
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-data-rest</artifactId>
                 <version>${spring.boot.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-starter</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-starter-web</artifactId>
-                    </exclusion>
-                </exclusions>
             </dependency>
 
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
                 <version>${mybatis.spring.boot.starter.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-starter</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-starter-web</artifactId>
-                    </exclusion>
-                </exclusions>
             </dependency>
 
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
                 <version>${spring.boot.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-starter</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-starter-logging</artifactId>
-                    </exclusion>
-                </exclusions>
             </dependency>
-            <!-- Log4j -->
+
             <dependency>
                 <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-log4j</artifactId>
-                <version>${spring.boot.starter.log4j.version}</version>
+                <artifactId>spring-boot-starter-data-jpa</artifactId>
+                <version>${spring.boot.starter.data.jpa}</version>
             </dependency>
 
             <dependency>
@@ -155,6 +121,17 @@
                 <version>${mail.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>commons-fileupload</groupId>
+                <artifactId>commons-fileupload</artifactId>
+                <version>${commons.fileupload}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-logging</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

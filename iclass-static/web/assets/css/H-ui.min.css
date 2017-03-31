@@ -7034,7 +7034,7 @@ a.label:hover, a.label:focus, a.badge:hover, a.badge:focus {
 
 .loading {
     height: 50px;
-    background: url(../images/loading_072.gif) no-repeat center
+    /*background: url(../images/loading.gif) no-repeat center*/
 }
 
 .mask {

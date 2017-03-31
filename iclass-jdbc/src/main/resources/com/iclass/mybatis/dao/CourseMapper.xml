@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.iclass.mybatis.dao.CourseMapper" >
+  <!--开启缓存-->
+  <cache/>
+  <resultMap id="BaseResultMap" type="com.iclass.mybatis.po.Course" >
+    <constructor >
+      <idArg column="CourseID" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="CourseCode" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="CourseName" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="CourseDescription" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="CourseGrade" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="CourseStatus" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CourseID, CourseCode, CourseName, CourseDescription, CourseGrade, CourseStatus
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from course
+    where CourseID = #{courseid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from course
+    where CourseID = #{courseid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.iclass.mybatis.po.Course" >
+    insert into course (CourseID, CourseCode, CourseName,
+    CourseDescription, CourseGrade, CourseStatus
+    )
+    values (#{courseid,jdbcType=INTEGER}, #{coursecode,jdbcType=VARCHAR}, #{coursename,jdbcType=VARCHAR},
+    #{coursedescription,jdbcType=VARCHAR}, #{coursegrade,jdbcType=VARCHAR}, #{coursestatus,jdbcType=INTEGER}
+    )
+  </insert>
+  <insert id="insertSelective" parameterType="com.iclass.mybatis.po.Course" >
+    insert into course
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="courseid != null" >
+        CourseID,
+      </if>
+      <if test="coursecode != null" >
+        CourseCode,
+      </if>
+      <if test="coursename != null" >
+        CourseName,
+      </if>
+      <if test="coursedescription != null" >
+        CourseDescription,
+      </if>
+      <if test="coursegrade != null" >
+        CourseGrade,
+      </if>
+      <if test="coursestatus != null" >
+        CourseStatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="courseid != null" >
+        #{courseid,jdbcType=INTEGER},
+      </if>
+      <if test="coursecode != null" >
+        #{coursecode,jdbcType=VARCHAR},
+      </if>
+      <if test="coursename != null" >
+        #{coursename,jdbcType=VARCHAR},
+      </if>
+      <if test="coursedescription != null" >
+        #{coursedescription,jdbcType=VARCHAR},
+      </if>
+      <if test="coursegrade != null" >
+        #{coursegrade,jdbcType=VARCHAR},
+      </if>
+      <if test="coursestatus != null" >
+        #{coursestatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.iclass.mybatis.po.Course" >
+    update course
+    <set >
+      <if test="coursecode != null" >
+        CourseCode = #{coursecode,jdbcType=VARCHAR},
+      </if>
+      <if test="coursename != null" >
+        CourseName = #{coursename,jdbcType=VARCHAR},
+      </if>
+      <if test="coursedescription != null" >
+        CourseDescription = #{coursedescription,jdbcType=VARCHAR},
+      </if>
+      <if test="coursegrade != null" >
+        CourseGrade = #{coursegrade,jdbcType=VARCHAR},
+      </if>
+      <if test="coursestatus != null" >
+        CourseStatus = #{coursestatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where CourseID = #{courseid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.iclass.mybatis.po.Course" >
+    update course
+    set CourseCode = #{coursecode,jdbcType=VARCHAR},
+    CourseName = #{coursename,jdbcType=VARCHAR},
+    CourseDescription = #{coursedescription,jdbcType=VARCHAR},
+    CourseGrade = #{coursegrade,jdbcType=VARCHAR},
+    CourseStatus = #{coursestatus,jdbcType=INTEGER}
+    where CourseID = #{courseid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByCourseCode" resultType="com.iclass.mybatis.po.Course">
+    select
+    <include refid="Base_Column_List" />
+    from course
+    where CourseCode = #{courseCode} and CourseStatus = 1
+  </select>
+</mapper>

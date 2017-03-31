@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.iclass.mybatis.dao.TeacherCourseMapper" >
+  <resultMap id="BaseResultMap" type="com.iclass.mybatis.po.TeacherCourse" >
+    <constructor >
+      <idArg column="TeacherCourseID" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="TeacherCode" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="CourseCode" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    TeacherCourseID, TeacherCode, CourseCode
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from teacher_course
+    where TeacherCourseID = #{teachercourseid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from teacher_course
+    where TeacherCourseID = #{teachercourseid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.iclass.mybatis.po.TeacherCourse" >
+    insert into teacher_course (TeacherCourseID, TeacherCode, CourseCode
+      )
+    values (#{teachercourseid,jdbcType=INTEGER}, #{teachercode,jdbcType=VARCHAR}, #{coursecode,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.iclass.mybatis.po.TeacherCourse" >
+    insert into teacher_course
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="teachercourseid != null" >
+        TeacherCourseID,
+      </if>
+      <if test="teachercode != null" >
+        TeacherCode,
+      </if>
+      <if test="coursecode != null" >
+        CourseCode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="teachercourseid != null" >
+        #{teachercourseid,jdbcType=INTEGER},
+      </if>
+      <if test="teachercode != null" >
+        #{teachercode,jdbcType=VARCHAR},
+      </if>
+      <if test="coursecode != null" >
+        #{coursecode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.iclass.mybatis.po.TeacherCourse" >
+    update teacher_course
+    <set >
+      <if test="teachercode != null" >
+        TeacherCode = #{teachercode,jdbcType=VARCHAR},
+      </if>
+      <if test="coursecode != null" >
+        CourseCode = #{coursecode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where TeacherCourseID = #{teachercourseid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.iclass.mybatis.po.TeacherCourse" >
+    update teacher_course
+    set TeacherCode = #{teachercode,jdbcType=VARCHAR},
+      CourseCode = #{coursecode,jdbcType=VARCHAR}
+    where TeacherCourseID = #{teachercourseid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByTeacherCode" resultType="com.iclass.mybatis.po.TeacherCourse">
+    select
+    <include refid="Base_Column_List" />
+    from teacher_course
+    where TeacherCode = #{teachercode,jdbcType=VARCHAR}
+  </select>
+</mapper>

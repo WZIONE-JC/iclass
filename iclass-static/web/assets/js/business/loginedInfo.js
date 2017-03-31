@@ -18,13 +18,14 @@ var Logined = function () {
                         var username = logineduserdata.data.user.username;
                         $("#username").text(username);
                         var usercode = logineduserdata.data.user.usercode;
+                        $("#usercode").val(usercode);
                         $("#personalInfo").on("click", function () {
                             member_show(username,'user-show.html','usercode='+usercode,'360','400');
                         });
                     } else {
                         swal({
                             title: "Sorry!",
-                            text: "获取用户信息出错，请重试 :" + logineduserdata.message,
+                            text: logineduserdata.message,
                             timer: 2000,
                             type: "error"
                         });
@@ -33,7 +34,7 @@ var Logined = function () {
                 error: function (logineduserdata) {
                     swal({
                         title: "Sorry!",
-                        text: "请求用户信息出错，请重试 :" + logineduserdata.responseText,
+                        text: "网络繁忙，请稍后再试",
                         timer: 2000,
                         type: "error"
                     });
@@ -90,7 +91,7 @@ var Logined = function () {
                                         error: function (logineduserdata) {
                                             swal({
                                                 title: "Sorry!",
-                                                text: "请求用户信息出错，请重试 :" + logineduserdata.responseText,
+                                                text: "网络繁忙，请稍后再试",
                                                 timer: 2000,
                                                 type: "error"
                                             });

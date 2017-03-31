@@ -3,7 +3,7 @@ package com.iclass.user.component.controller;
 import com.iclass.user.component.entity.DataTablesRequestEntity;
 import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.service.api.UserInfoService;
-import com.iclass.user.component.vo.SessionUser;
+import com.iclass.mybatis.dto.SessionUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

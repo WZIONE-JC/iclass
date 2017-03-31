@@ -6,8 +6,8 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 	<meta http-equiv="Cache-Control" content="no-siteapp" />
-	<LINK rel="Bookmark" href="/favicon.ico" >q
-	<LINK rel="Shortcut Icon" href="/favicon.ico" />
+	<LINK rel="Bookmark" href="favicon.ico" >q
+	<LINK rel="Shortcut Icon" href="favicon.ico" />
 	<!--[if lt IE 9]>
 	<script type="text/javascript" src="lib/html5.js"></script>
 	<script type="text/javascript" src="lib/respond.min.js"></script>
@@ -31,7 +31,7 @@
 		<ul>
 			<li class="dropDown dropDown_click"><a href="javascript:;" class="dropDown_A"><i class="Hui-iconfont">&#xe600;</i> 新增 <i class="Hui-iconfont">&#xe6d5;</i></a>
 				<ul class="dropDown-menu radius box-shadow">
-					<!--<li><a href="javascript:;" onClick="article_add('添加资讯','article-add.html')"><i class="Hui-iconfont">&#xe616;</i> 资讯</a></li>-->
+					<li><a href="javascript:;" onClick="file_upload('课件上传','ppt-add.html','600','570')"><i class="Hui-iconfont">&#xe613;</i> 添加课件</a></li>
 					<li><a href="javascript:;" onClick="member_add('添加用户','user-add.html','600','570')"><i class="Hui-iconfont">&#xe60d;</i> 添加用户</a></li>
 				</ul>
 			</li>
@@ -46,6 +46,7 @@
 				<li><a id="logout" href="#">退出</a></li>
 			</ul>
 		</li>
+		<input type="hidden" id="usercode" name="classCreator">
 		<li id="Hui-msg"> <a href="#" title="消息"><span class="badge badge-danger">1</span><i class="Hui-iconfont" style="font-size:18px">&#xe68a;</i></a> </li>
 		<li id="Hui-skin" class="dropDown right dropDown_hover"><a href="javascript:;" title="换肤"><i class="Hui-iconfont" style="font-size:18px">&#xe62a;</i></a>
 			<ul class="dropDown-menu radius box-shadow">
@@ -64,6 +65,7 @@
 	<input runat="server" id="divScrollValue" type="hidden" value="" />
 	<div class="menu_dropdown bk_2">
 		<dl id="menu-article">
+
 			<dt><i class="Hui-iconfont">&#xe60d;</i> 用户管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
@@ -77,6 +79,7 @@
 			<dt><i class="Hui-iconfont">&#xe642;</i> PPT共享<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
+					<li><a onclick="file_upload('课件上传','ppt-add.html','600','570')" ><i class="Hui-iconfont">&#xe642;</i> 课件上传</a></li>
 					<li><a _href="ppt-list.html" href="javascript:void(0)"><i class="Hui-iconfont">&#xe695;</i> 已上传课件浏览</a></li>
                     <li><a _href="coding.html" href="javascript:void(0)"><i class="Hui-iconfont">&#xe692;</i> 问题与反馈</a></li>
 				</ul>
@@ -87,6 +90,7 @@
 			<dt><i class="Hui-iconfont">&#xe60c;</i> 作业管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
+					<li><a onclick="file_upload('作业上传','homework-add.html','600','570')" ><i class="Hui-iconfont">&#xe642;</i> 发布作业</a></li>
 					<li><a _href="homework-list.html" href="javascript:void(0)"><i class="Hui-iconfont">&#xe695;</i> 已上传作业浏览</a></li>
 					<li><a _href="homework-show.html" href="javascript:void(0)"><i class="Hui-iconfont">&#xe618;</i> 作业统计</a></li>
                     <li><a _href="coding.html" href="javascript:void(0)"><i class="Hui-iconfont">&#xe692;</i> 问题与反馈</a></li>
@@ -126,7 +130,7 @@
 			<dd>
 				<ul>
 					<li><a _href="admin-list.html" href="javascript:void(0)"><i class="Hui-iconfont">&#xe61d;</i> 系统维护</a></li>
-					<li><a _href="system-log.html" href="javascript:void(0)"><i class="Hui-iconfont">&#xe616;</i> 系统日志</a></li>
+					<li><a _href="system-log-list.html" href="javascript:void(0)"><i class="Hui-iconfont">&#xe616;</i> 系统日志</a></li>
 				</ul>
 			</dd>
 		</dl>
@@ -144,7 +148,7 @@
 	</div>
 	<div id="iframe_box" class="Hui-article">
 		<div class="show_iframe">
-			<div style="display:none" class="loading"></div>
+			<div style="display:none" class="loading">Loading...</div>
 			<iframe scrolling="yes" frameborder="0" src="welcome.html"></iframe>
 		</div>
 	</div>
@@ -161,7 +165,10 @@
     $(function () {
         Logined.init()
     });
-
+	/*文件上传*/
+    function file_upload(title,url,w,h){
+        layer_show(title,url,'',w,h);
+    }
 </script> 
 </body>
 </html>

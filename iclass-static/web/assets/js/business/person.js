@@ -101,7 +101,7 @@ function updateUser () {
             } else {
                 swal({
                     title: "Sorry!",
-                    text: "修改用户信息出错,错误信息:"+responseData.message,
+                    text:  responseData.message,
                     timer: 2000,
                     type: "error"
                 });
@@ -147,7 +147,7 @@ function changePassword () {
         error: function (responseData) {
             swal({
                 title: "Sorry!",
-                text: "请求修改密码出错,错误信息:"+responseData.responseText,
+                text: "网络繁忙，请稍后再试",
                 timer: 2000,
                 type: "error"
             });
@@ -300,11 +300,12 @@ function userTableHandler (formId, isPersonal, url) {
                     }
                 }
                 if(col == 10) {
+                    $(td).addClass("td-manage");
                     //个人页面不需要显示删除按钮
                     if(isPersonal == true) {
                         $(td).html("<a title='编辑' onclick=member_edit('修改信息','user-update.html','usercode="+usercode+"','570','540') class='ml-5' style='text-decoration:none'><i class='Hui-iconfont'>&#xe6df;</i></a> <a style='text-decoration:none' class='ml-5' onClick=change_password('修改密码','change-password.html','usercode="+usercode+"','600','500')  title='修改密码'><i class='Hui-iconfont'>&#xe63f;</i></a>");
                     } else {
-                        $(td).html("<a title='编辑' onclick=member_edit('修改信息','user-update.html','usercode="+usercode+"','570','540') class='ml-5' style='text-decoration:none'><i class='Hui-iconfont'>&#xe6df;</i></a> <a style='text-decoration:none' class='ml-5' onClick=change_password('修改密码','change-password.html','usercode="+usercode+"','600','500')  title='修改密码'><i class='Hui-iconfont'>&#xe63f;</i></a> <a title='删除' href='javascript:;' onclick='member_del(this,usercode)' class='ml-5' style='text-decoration:none'><i class='Hui-iconfont'>&#xe6e2;</i></a>");
+                        $(td).html("<a title='编辑' onclick=member_edit('修改信息','user-update.html','usercode="+usercode+"','570','540') class='ml-5' style='text-decoration:none'><i class='Hui-iconfont'>&#xe6df;</i></a> <a style='text-decoration:none' class='ml-5' onClick=change_password('修改密码','change-password.html','usercode="+usercode+"','600','500')  title='修改密码'><i class='Hui-iconfont'>&#xe63f;</i></a> <a title='删除' href='javascript:;' onclick='member_del(this,"+usercode+")' class='ml-5' style='text-decoration:none'><i class='Hui-iconfont'>&#xe6e2;</i></a>");
                     }
 
                 }
@@ -318,6 +319,7 @@ function userTableHandler (formId, isPersonal, url) {
         stateSave: true, //允许浏览器缓存Datatables，以便下次恢复之前的状态
         serverSide: true, //开启服务器模式
         searching: true, //开启搜索功能
+        processing: true,
         paging: true, //允许表格分页
         lengthChange: true, //允许改变每页显示的数据条数
         bStateSave: true,//状态保存
@@ -328,6 +330,8 @@ function userTableHandler (formId, isPersonal, url) {
             dataType: "jsonp",
             dataSrc: function (result) {
                 if(result.success) {
+                    //显示总数
+                    $("#totalRecord").text(result.recordsTotal);
                     return result.data;
                 } else {
                     swal({
@@ -354,10 +358,21 @@ function userTableHandler (formId, isPersonal, url) {
             //清空全选状态
             $(":checkbox[name='cb-check-all']").prop('checked', false);
 
+            $('table tbody input:checkbox').on( 'click', function () {
+                var tr = $(this).parent().parent("tr");
+                if ( tr.hasClass('selected') ) {
+                    tr.removeClass('selected');
+                    tr.find('input[type=checkbox]').prop("checked",false);
+                }
+                else {
+                    tr.removeClass('selected');
+                    tr.addClass('selected');
+                    tr.find('input[type=checkbox]').prop("checked",true);
+                }
+            });
         },
         "initComplete": function ( settings, json ) {
-            //显示总数
-            $("#totalRecord").text(json.recordsTotal);
+
         }
     });
     return table;

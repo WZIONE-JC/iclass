@@ -1,6 +1,6 @@
 package com.iclass.mybatis.dao;
 
-import com.iclass.mybatis.model.User;
+import com.iclass.mybatis.po.User;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

@@ -1,13 +1,13 @@
 package com.iclass.user.component.service.impl;
 
 import com.iclass.mybatis.dao.UserMapper;
-import com.iclass.mybatis.model.User;
+import com.iclass.mybatis.po.User;
 import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.md5.MD5;
 import com.iclass.user.component.msg.Msg;
 import com.iclass.user.component.msg.ResponseMsg;
 import com.iclass.user.component.service.api.LoginService;
-import com.iclass.user.component.vo.SessionUser;
+import com.iclass.mybatis.dto.SessionUser;
 import com.iclass.user.verificationcode.service.imp.VerificationCodeImpl;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;

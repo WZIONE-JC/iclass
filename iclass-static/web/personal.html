@@ -87,17 +87,6 @@
 			  {"orderable":false,"aTargets":[0,8,9]}// 制定列不参与排序
 			]
 		});
-		$('.table-hover tbody').on( 'click', 'tr', function () {
-            if ( $(this).hasClass('selected') ) {
-                $(this).removeClass('selected');
-                $(this).find('input[type=checkbox]').prop("checked", false);
-            }
-            else {
-                $('tr .selected').removeClass('selected');
-                $(this).addClass('selected');
-                $(this).find('input[type=checkbox]').prop("checked",true);
-            }
-		});
 
 		$("#btn-refresh").on("click",function () {
 			table.api().ajax.reload();
