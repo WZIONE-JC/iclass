@@ -10,11 +10,12 @@
       <arg column="CourseName" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="CourseDescription" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="CourseGrade" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="CourseCreateTime" jdbcType="TIMESTAMP" javaType="java.lang.String" />
       <arg column="CourseStatus" jdbcType="INTEGER" javaType="java.lang.Integer" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    CourseID, CourseCode, CourseName, CourseDescription, CourseGrade, CourseStatus
+    CourseID, CourseCode, CourseName, CourseDescription, CourseGrade, CourseCreateTime, CourseStatus
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select
@@ -28,10 +29,10 @@
   </delete>
   <insert id="insert" parameterType="com.iclass.mybatis.po.Course" >
     insert into course (CourseID, CourseCode, CourseName,
-    CourseDescription, CourseGrade, CourseStatus
+    CourseDescription, CourseGrade, CourseCreateTime, CourseStatus
     )
     values (#{courseid,jdbcType=INTEGER}, #{coursecode,jdbcType=VARCHAR}, #{coursename,jdbcType=VARCHAR},
-    #{coursedescription,jdbcType=VARCHAR}, #{coursegrade,jdbcType=VARCHAR}, #{coursestatus,jdbcType=INTEGER}
+    #{coursedescription,jdbcType=VARCHAR}, #{coursegrade,jdbcType=VARCHAR}, #{coursecreatetime, jdbcType=TIMESTAMP}, #{coursestatus,jdbcType=INTEGER}
     )
   </insert>
   <insert id="insertSelective" parameterType="com.iclass.mybatis.po.Course" >
@@ -51,6 +52,9 @@
       </if>
       <if test="coursegrade != null" >
         CourseGrade,
+      </if>
+      <if test="coursecreatetime != null">
+        CourseCreateTime,
       </if>
       <if test="coursestatus != null" >
         CourseStatus,
@@ -72,6 +76,9 @@
       <if test="coursegrade != null" >
         #{coursegrade,jdbcType=VARCHAR},
       </if>
+      <if test="coursecreatetime != null">
+        #{coursecreatetime,jdbcType=TIMESTAMP},
+      </if>
       <if test="coursestatus != null" >
         #{coursestatus,jdbcType=INTEGER},
       </if>
@@ -92,6 +99,9 @@
       <if test="coursegrade != null" >
         CourseGrade = #{coursegrade,jdbcType=VARCHAR},
       </if>
+      <if test="coursecreatetime != null">
+        CourseCreateTime = #{coursecreatetime, jdbcType=TIMESTAMP},
+      </if>
       <if test="coursestatus != null" >
         CourseStatus = #{coursestatus,jdbcType=INTEGER},
       </if>
@@ -104,6 +114,7 @@
     CourseName = #{coursename,jdbcType=VARCHAR},
     CourseDescription = #{coursedescription,jdbcType=VARCHAR},
     CourseGrade = #{coursegrade,jdbcType=VARCHAR},
+    CourseCreateTime = #{coursegrade,jdbcType=TIMESTAMP},
     CourseStatus = #{coursestatus,jdbcType=INTEGER}
     where CourseID = #{courseid,jdbcType=INTEGER}
   </update>

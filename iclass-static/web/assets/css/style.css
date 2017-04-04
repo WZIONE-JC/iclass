@@ -80,5 +80,7 @@
 .total-record {
     padding-top: 5px;
 }
-
+select {
+    background: none;
+}
 

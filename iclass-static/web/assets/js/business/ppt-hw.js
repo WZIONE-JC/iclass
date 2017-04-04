@@ -250,6 +250,15 @@ function classTableHandler(formId, url, fileType) {
                     return false;
                 }
             },
+            timeout: 3000,
+            error: function () {
+                swal({
+                    title: "Sorry!",
+                    text: "网络忙,请稍后再试",
+                    timer: 2000,
+                    type: "error"
+                });
+            }
         },
         columns: colmuns,
         "preDrawCallback": function () {

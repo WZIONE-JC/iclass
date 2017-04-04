@@ -13,14 +13,17 @@ public class Course implements Serializable{
 
     private String coursegrade;
 
+    private String coursecreatetime;
+
     private Integer coursestatus;
 
-    public Course(Integer courseid, String coursecode, String coursename, String coursedescription, String coursegrade, Integer coursestatus) {
+    public Course(Integer courseid, String coursecode, String coursename, String coursedescription, String coursegrade, String coursecreatetime, Integer coursestatus) {
         this.courseid = courseid;
         this.coursecode = coursecode;
         this.coursename = coursename;
         this.coursedescription = coursedescription;
         this.coursegrade = coursegrade;
+        this.coursecreatetime = coursecreatetime;
         this.coursestatus = coursestatus;
     }
 
@@ -68,6 +71,14 @@ public class Course implements Serializable{
         this.coursegrade = coursegrade == null ? null : coursegrade.trim();
     }
 
+    public String getCoursecreatetime() {
+        return coursecreatetime;
+    }
+
+    public void setCoursecreatetime(String coursecreatetime) {
+        this.coursecreatetime = coursecreatetime;
+    }
+
     public Integer getCoursestatus() {
         return coursestatus;
     }
@@ -84,6 +95,7 @@ public class Course implements Serializable{
                 ", coursename='" + coursename + '\'' +
                 ", coursedescription='" + coursedescription + '\'' +
                 ", coursegrade='" + coursegrade + '\'' +
+                ", coursecreatetime='" + coursecreatetime + '\'' +
                 ", coursestatus=" + coursestatus +
                 '}';
     }
