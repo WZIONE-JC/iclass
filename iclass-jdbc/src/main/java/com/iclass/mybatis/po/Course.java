@@ -1,5 +1,7 @@
 package com.iclass.mybatis.po;
 
+import com.iclass.user.component.utils.IclassUtil;
+
 import java.io.Serializable;
 
 public class Course implements Serializable{
@@ -23,7 +25,7 @@ public class Course implements Serializable{
         this.coursename = coursename;
         this.coursedescription = coursedescription;
         this.coursegrade = coursegrade;
-        this.coursecreatetime = coursecreatetime;
+        this.coursecreatetime = IclassUtil.formatTime(coursecreatetime);
         this.coursestatus = coursestatus;
     }
 
@@ -76,7 +78,7 @@ public class Course implements Serializable{
     }
 
     public void setCoursecreatetime(String coursecreatetime) {
-        this.coursecreatetime = coursecreatetime;
+        this.coursecreatetime = IclassUtil.formatTime(coursecreatetime);
     }
 
     public Integer getCoursestatus() {

@@ -11,11 +11,14 @@ public class CourseDTO {
 
     private Course course;
 
-    public CourseDTO(Course course) {
-        this.course = course;
-    }
+    private String teacherName;
 
     public CourseDTO() {}
+
+    public CourseDTO(Course course, String teacherName) {
+        this.course = course;
+        this.teacherName = teacherName;
+    }
 
     public Course getCourse() {
         return course;
@@ -25,10 +28,19 @@ public class CourseDTO {
         this.course = course;
     }
 
+    public String getTeacherName() {
+        return teacherName;
+    }
+
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
+    }
+
     @Override
     public String toString() {
         return "CourseDTO{" +
                 "course=" + course +
+                ", teacherName='" + teacherName + '\'' +
                 '}';
     }
 }

@@ -40,6 +40,7 @@ function getCourseByTeacherCode() {
                 timer: 2000,
                 type: "error"
             });
+
         }
     });
 }
@@ -163,7 +164,6 @@ function classTableHandler(formId, url, fileType) {
                     } else if (data == 1) {
                         return "<span class='label label-success radius' title='课程已发布'>已发布</span>";
                     }
-                    return "<input type='checkbox' value=" + data + " name='classid'>";
                 }
             },
             {
@@ -258,6 +258,7 @@ function classTableHandler(formId, url, fileType) {
                     timer: 2000,
                     type: "error"
                 });
+                $("#hw-info-table_processing").hide();
             }
         },
         columns: colmuns,
@@ -342,7 +343,6 @@ function fileTableHandler(classCode, courseCode, fileType) {
                     } else if (data == 1) {
                         return "<span class='label label-success radius' title='已发布'>已发布</span>";
                     }
-                    return "<input type='checkbox' value=" + data + " name='classid'>";
                 }
             },
             {
@@ -405,6 +405,16 @@ function fileTableHandler(classCode, courseCode, fileType) {
                     return false;
                 }
             },
+            timeout: 3000,
+            error: function () {
+                swal({
+                    title: "Sorry!",
+                    text: "网络忙,请稍后再试",
+                    timer: 2000,
+                    type: "error"
+                });
+                $("#hw-info-table_processing").hide();
+            }
         },
         columns: colmuns,
         "preDrawCallback": function () {

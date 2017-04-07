@@ -23,47 +23,69 @@
     <![endif]-->
     <link href="assets/css/style.css" rel="stylesheet" type="text/css"/>
     <link href="lib/sweetalert-1.1.1/sweetalert.css" rel="stylesheet" type="text/css" />
-    <title>增加课程</title>
+    <title>修改课程</title>
 </head>
 <body>
 <div class="pd-20">
-    <form action="" method="post" class="form form-horizontal" id="form-course-add">
-        <span class="" id="msg"></span>
+    <form action="" method="post" class="form form-horizontal" id="form-class-update">
+        <input type="hidden" name="classid" id="id" value=""/>
         <div class="row cl">
-            <label class="form-label col-4"><span class="c-red">*</span>课程编号：</label>
+            <label class="form-label col-4"><span class="c-red">*</span>课堂编号：</label>
             <div class="formControls col-7">
-                <input type="text" class="input-text" value="" placeholder="输入课程编号" onblur="check()"
-                       id="coursecode" name="coursecode" datatype="n4-4" maxlength="4" minlength="4" nullmsg="输入课程编号">
+                <input type="text" class="input-text" value="加载中..." readonly="readonly"
+                       id="classcode" name="classcode" >
             </div>
         </div>
         <div class="row cl">
-            <label class="form-label col-4"><span class="c-red">*</span>课程名称：</label>
+            <label class="form-label col-4"><span class="c-red">*</span>课堂名称：</label>
             <div class="formControls col-7">
-                <input type="text" class="input-text" value="" placeholder="输入课程名称"
-                       id="coursename" name="coursename" datatype="*" nullmsg="请输入课程名称"></div>
+                <input type="text" class="input-text" value="加载中..." placeholder="输入课堂名称"
+                       id="classname" name="classname" datatype="*" nullmsg="请输入课堂名称"></div>
         </div>
         <div class="row cl">
 
             <label class="form-label col-4"><span
-                    class="c-red">*</span>课程描述：</label>
+                    class="c-red">*</span>课堂描述：</label>
             <div class="formControls col-7">
-                <input type="text" class="input-text" value="" placeholder="输入课程描述"
-                       id="coursedescription" name="coursedescription" datatype="*" nullmsg="输入课程描述"></div>
-        </div>
-        <div class="row cl">
-
-            <label class="form-label col-4"><span
-                    class="c-red">*</span>课程学分：</label>
-            <div class="formControls col-7">
-                <input type="number" style="width: 100%" class="input-text" value="1" placeholder="学分"
-                       id="coursegrade" name="coursegrade" max="10" min="1" nullmsg="输入课程学分"></div>
+                <input type="text" class="input-text" value="加载中..." placeholder="输入课堂描述"
+                       id="classdescription" name="classdescription" datatype="*" nullmsg="输入课堂描述"></div>
         </div>
         <div class="row cl">
 
             <label class="form-label col-4"><span
                     class="c-red">*</span>创建者：</label>
             <div class="formControls col-7">
-                <input type="text" class="input-text" value="" readonly="readonly" id="coursecreator" name="coursecreator" ></div>
+                <input type="text" class="input-text" value="加载中..." readonly="readonly" id="classcreator" name="classcreator" ></div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-4"><span class="c-red">*</span>选择课程：</label>
+            <div class="formControls col-7">
+                    <span class="select-box">
+                        <select name="classcoursecode" id="courseCode" class="select"  datatype="*" nullmsg="请选择课程">
+                            <option value="">选择课程</option>
+
+                        </select>
+                    </span>
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-4"><span class="c-red">*</span>开始时间：</label>
+            <div class="formControls col-7">
+                <input type="text" datatype="*" nullmsg="请选择开始时间"
+                       onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',skin:'twoer',maxDate: '%y-%M-%d'})"
+                       class="input-text Wdate" id="datemin" name="classcreatetime">
+            </div>
+        </div>
+
+        <div class="row cl">
+                <label class="form-label col-4"><span class="c-red">*</span>结束日期：</label>
+            <div class="formControls col-7">
+                <input type="text" datatype="*" nullmsg="请选择结束时间"
+                       onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',skin:'twoer',minDate:'#F{$dp.$D(\'datemin\')}'})"
+                       id="classdeadline" class="input-text Wdate" name="classdeadline">
+            </div>
         </div>
 
         <div class="row cl">
@@ -79,6 +101,7 @@
         </div>
 
     </form>
+    <a style="display: none" onclick="loadData()" id="loadData"></a>
 </div>
 </div>
 <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
@@ -94,17 +117,19 @@
 <script type="text/javascript" src="assets/js/business/course.js"></script>
 <script type="text/javascript">
     $(function () {
-        var teacherCode = $(window.parent.document).find('#coursecreator')[0].value;
-        $("#coursecreator").val(teacherCode);
+        getCourseByTeacherCode();
     });
-    $("#form-course-add").Validform({
+    $("#form-class-update").Validform({
         tiptype:2,
         beforeSubmit:function(form){
-            addCourse();
+            updateClass();
             return false;
         }
     });
-
+    function loadData () {
+        var $id = $("#id").val();
+        showClass($id);
+    }
 </script>
 </body>
 </html>

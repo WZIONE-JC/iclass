@@ -83,4 +83,8 @@
 select {
     background: none;
 }
+.class-add-msg {
+    padding-left: 16%;
+    margin: 0;
+}
 

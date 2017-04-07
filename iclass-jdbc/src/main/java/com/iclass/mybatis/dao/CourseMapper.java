@@ -17,4 +17,6 @@ public interface CourseMapper {
     int updateByPrimaryKey(Course record);
 
     Course selectByCourseCode(@Param("courseCode") String courseCode);
+
+    int updateStatusById(@Param("courseid") Integer courseid, int status);
 }

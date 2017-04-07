@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface ClassMapper {
+
     int deleteByPrimaryKey(Integer classid);
 
     int insert(Class record);
@@ -18,11 +19,27 @@ public interface ClassMapper {
 
     int updateByPrimaryKey(Class record);
 
-    List<Class> selectByClassCreator(@Param("classCreator") String classCreator, @Param("start") Integer start, @Param("length") Integer length);
 
-    List<Class> selectByClassCreatorNoLimit(@Param("classCreator") String classCreator);
+    /**
+     * 根据创建者编码查询课堂信息
+     * @param classcreator
+     * @param start
+     * @param length
+     * @return
+     */
+    List<Class> selectByClassCreator(@Param("classCreator") String classcreator, @Param("start") Integer start, @Param("length") Integer length);
 
-    List<Class> selectByClassCourseCode(@Param("classcoursecode") String classCousreCode);
+    List<Class> selectByClassCreatorNoLimit(@Param("classCreator") String classcreator);
 
-    int countByClassCreator(@Param("classCreator") String classCreator);
+    List<Class> selectByClassCourseCode(@Param("classcoursecode") String classCourseCode);
+
+    int countByClassCreator(@Param("classCreator") String classcreator);
+
+    /**
+     * 根据classCode查询Class信息
+     * @param classCode
+     * @return
+     */
+    List<Class> selectByClassCode(@Param("classcode") String classCode);
+
 }

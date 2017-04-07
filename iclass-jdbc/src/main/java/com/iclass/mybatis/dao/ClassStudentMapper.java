@@ -18,5 +18,5 @@ public interface ClassStudentMapper {
 
     int updateByPrimaryKey(ClassStudent record);
 
-    List<ClassStudent> selectByClassCode(@Param("classCode") String classCode);
+    List<ClassStudent> selectByClassID(@Param("classID") Integer classid);
 }

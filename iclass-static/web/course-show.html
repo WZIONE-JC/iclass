@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta name="renderer" content="webkit|ie-comp|ie-stand">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+  <meta http-equiv="Cache-Control" content="no-store" />
+  <LINK rel="Bookmark" href="/favicon.ico" >
+  <LINK rel="Shortcut Icon" href="/favicon.ico" />
+  <!--[if lt IE 9]>
+  <script type="text/javascript" src="lib/html5.js"></script>
+  <script type="text/javascript" src="lib/respond.min.js"></script>
+  <script type="text/javascript" src="lib/PIE_IE678.js"></script>
+  <![endif]-->
+  <link href="assets/css/H-ui.min.css" rel="stylesheet" type="text/css" />
+  <link href="assets/css/H-ui.admin.css" rel="stylesheet" type="text/css" />
+  <link href="skin/default/skin.css" rel="stylesheet" type="text/css" id="skin" />
+  <link href="lib/Hui-iconfont/1.0.1/iconfont.css" rel="stylesheet" type="text/css" />
+  <!--[if IE 6]>
+  <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+  <script>DD_belatedPNG.fix('*');</script>
+  <![endif]-->
+  <link href="assets/css/style.css" rel="stylesheet" type="text/css">
+  <title>课程详情</title>
+</head>
+<body>
+<input type="hidden" name="code" id="code" value="">
+<div class="cl pd-20" style=" background-color:#767897">
+  <dl style="margin-left:22px; color:#eee">
+    <span><span class="f-18" id="coursename">正在加载...</span> <span class="ml-10">学分：<span class="f-12" id="coursegrade">正在加载...</span></span></span>
+  </dl>
+</div>
+<div class="pd-20">
+  <table class="table">
+    <tbody>
+      <tr>
+        <th class="text-r" width="80">课程描述：</th>
+        <td id="coursedescription">正在加载...</td>
+      </tr>
+      <tr>
+        <th class="text-r">创建时间：</th>
+        <td id="coursecreatetime">正在加载...</td>
+      </tr>
+      <tr>
+        <th style="vertical-align:top;" class="text-r">课程状态：</th>
+        <td id="coursestatus">正在加载...</td>
+      </tr>
+    </tbody>
+    <a style="display: none" onclick="loadData()" id="loadData"></a>
+  </table>
+</div>
+<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="assets/js/H-ui.js"></script>
+<script type="text/javascript" src="assets/js/H-ui.admin.js"></script>
+<script type="text/javascript" src="assets/js/business/ip.js"></script>
+<script type="text/javascript" src="assets/js/business/course.js"></script>
+<script type="text/javascript">
+
+    function loadData () {
+        var $code = $("#code").val();
+        showCourse("/course/getByCode/",$code);
+    }
+</script>
+</body>
+</html>

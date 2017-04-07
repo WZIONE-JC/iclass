@@ -13,10 +13,18 @@ public class ClassDTO implements Serializable{
 
     private Class aClass;
 
+    private String teacherName;
+
+    public ClassDTO() {}
+
     public ClassDTO(Class aClass) {
         this.aClass = aClass;
     }
-    public ClassDTO() {}
+
+    public ClassDTO(Class aClass, String teacherName) {
+        this.aClass = aClass;
+        this.teacherName = teacherName;
+    }
 
     public Class getaClass() {
         return aClass;
@@ -26,10 +34,19 @@ public class ClassDTO implements Serializable{
         this.aClass = aClass;
     }
 
+    public String getTeacherName() {
+        return teacherName;
+    }
+
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
+    }
+
     @Override
     public String toString() {
         return "ClassDTO{" +
                 "aClass=" + aClass +
+                ", teacherName='" + teacherName + '\'' +
                 '}';
     }
 }

@@ -74,6 +74,12 @@
     select
     <include refid="Base_Column_List" />
     from teacher_course
+    where TeacherCode = #{teachercode,jdbcType=VARCHAR} limit #{start}, #{length}
+  </select>
+  
+  <select id="countByTeacherCode" parameterType="java.lang.String" resultType="Integer">
+    SELECT count(*)
+    FROM teacher_course
     where TeacherCode = #{teachercode,jdbcType=VARCHAR}
   </select>
 </mapper>

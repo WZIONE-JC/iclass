@@ -129,8 +129,8 @@ public class PPTHWServiceImpl implements PPTHWService {
             String courseCode = c.getClasscoursecode();
             //根据courseCode 获取Course 信息
             Course course = courseMapper.selectByCourseCode(courseCode);
-            String classCode = c.getClasscode();
-            List<ClassStudent> classStudents = classStudentMapper.selectByClassCode(classCode);
+            Integer classid = c.getClassid();
+            List<ClassStudent> classStudents = classStudentMapper.selectByClassID(classid);
             List<SessionUser> sessionUsers = new ArrayList<>();
             // 如果有学生的话
             if (classStudents != null && classStudents.size() > 0) {

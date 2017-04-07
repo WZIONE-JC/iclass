@@ -23,23 +23,23 @@
     <![endif]-->
     <link href="assets/css/style.css" rel="stylesheet" type="text/css"/>
     <link href="lib/sweetalert-1.1.1/sweetalert.css" rel="stylesheet" type="text/css" />
-    <title>增加课程</title>
+    <title>修改课程</title>
 </head>
 <body>
 <div class="pd-20">
-    <form action="" method="post" class="form form-horizontal" id="form-course-add">
-        <span class="" id="msg"></span>
+    <form action="" method="post" class="form form-horizontal" id="form-course-update">
+        <input type="hidden" name="courseid" id="id" value=""/>
         <div class="row cl">
             <label class="form-label col-4"><span class="c-red">*</span>课程编号：</label>
             <div class="formControls col-7">
-                <input type="text" class="input-text" value="" placeholder="输入课程编号" onblur="check()"
+                <input type="text" class="input-text" value="加载中..." placeholder="输入课程编号" onblur="check()"
                        id="coursecode" name="coursecode" datatype="n4-4" maxlength="4" minlength="4" nullmsg="输入课程编号">
             </div>
         </div>
         <div class="row cl">
             <label class="form-label col-4"><span class="c-red">*</span>课程名称：</label>
             <div class="formControls col-7">
-                <input type="text" class="input-text" value="" placeholder="输入课程名称"
+                <input type="text" class="input-text" value="加载中..." placeholder="输入课程名称"
                        id="coursename" name="coursename" datatype="*" nullmsg="请输入课程名称"></div>
         </div>
         <div class="row cl">
@@ -47,7 +47,7 @@
             <label class="form-label col-4"><span
                     class="c-red">*</span>课程描述：</label>
             <div class="formControls col-7">
-                <input type="text" class="input-text" value="" placeholder="输入课程描述"
+                <input type="text" class="input-text" value="加载中..." placeholder="输入课程描述"
                        id="coursedescription" name="coursedescription" datatype="*" nullmsg="输入课程描述"></div>
         </div>
         <div class="row cl">
@@ -55,15 +55,15 @@
             <label class="form-label col-4"><span
                     class="c-red">*</span>课程学分：</label>
             <div class="formControls col-7">
-                <input type="number" style="width: 100%" class="input-text" value="1" placeholder="学分"
-                       id="coursegrade" name="coursegrade" max="10" min="1" nullmsg="输入课程学分"></div>
+                <input type="number" style="width: 100%" class="input-text" value="加载中..." placeholder="学分"
+                       id="coursegrade" name="coursegrade" minlength="1" maxlength="2" datatype="n1-2" nullmsg="输入课程学分"></div>
         </div>
         <div class="row cl">
 
             <label class="form-label col-4"><span
                     class="c-red">*</span>创建者：</label>
             <div class="formControls col-7">
-                <input type="text" class="input-text" value="" readonly="readonly" id="coursecreator" name="coursecreator" ></div>
+                <input type="text" class="input-text" value="加载中..." readonly="readonly" id="coursecreator" name="coursecreator" ></div>
         </div>
 
         <div class="row cl">
@@ -79,6 +79,7 @@
         </div>
 
     </form>
+    <a style="display: none" onclick="loadData()" id="loadData"></a>
 </div>
 </div>
 <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
@@ -97,14 +98,17 @@
         var teacherCode = $(window.parent.document).find('#coursecreator')[0].value;
         $("#coursecreator").val(teacherCode);
     });
-    $("#form-course-add").Validform({
+    $("#form-course-update").Validform({
         tiptype:2,
         beforeSubmit:function(form){
-            addCourse();
+            updateCourse();
             return false;
         }
     });
-
+    function loadData () {
+        var $id = $("#id").val();
+        showCourse("/course/get/",$id);
+    }
 </script>
 </body>
 </html>

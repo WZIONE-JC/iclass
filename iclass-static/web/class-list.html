@@ -22,49 +22,40 @@
 	<script>DD_belatedPNG.fix('*');</script>
 	<![endif]-->
 	<link href="assets/css/style.css" rel="stylesheet" type="text/css">
+	<link href="lib/sweetalert-1.1.1/sweetalert.css" rel="stylesheet" type="text/css" />
 <title>课堂管理</title>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 课程课堂 <span class="c-gray en">&gt;</span> 添加课堂 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 课程课堂 <span class="c-gray en">&gt;</span> 添加课堂 <a class="btn btn-success radius r mr-20" id="btn-refresh" style="line-height:1.6em;margin-top:3px" href="#" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="pd-20">
 	<div class="text-c">
          日期范围：
 		<input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}'})" id="datemin" class="input-text Wdate" style="width:120px;">
 		-
-		<input type="text" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d'})" id="datemax" class="input-text Wdate" style="width:120px;">
+		<input type="text" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'datemin\')}'})" id="datemax" class="input-text Wdate" style="width:120px;">
 		<input type="text" class="input-text" style="width:250px" placeholder="输入课堂名" id="className" name="className">
 		<button type="submit" class="btn btn-success radius" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 查询</button>
 	</div>
-	<div class="cl pd-5 bg-1 bk-gray mt-10"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-secondary radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a href="javascript:;" onclick="add('添加课程','class-add.html','600','570')" class="btn btn-success radius"><i class="Hui-iconfont">&#xe600;</i> 添加课堂</a></span> <span class="r total-record">共有数据：<strong>0</strong> 条</span> </div>
+	<div class="cl pd-5 bg-1 bk-gray mt-10"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-secondary radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a href="javascript:;" onclick="addDialog('开设课程','class-add.html','570','500')" class="btn btn-success radius"><i class="Hui-iconfont">&#xe600;</i> 添加课堂</a></span> <span class="r total-record">共有数据：<strong id="totalRecord">0</strong> 条</span> </div>
 	<div class="mt-10">
-	<table class="table table-border table-bordered table-hover table-bg table-sort">
+	<table id="class-table" class="table table-border table-bordered table-hover table-bg table-sort">
+		<input type="hidden" name="classcreator" id="classcreator" value="">
 		<thead>
 			<tr class="text-c">
-				<th width="25"><input type="checkbox" name="" value=""></th>
-				<th width="80">ID</th>
-				<th width="100">姓名</th>
-				<th width="40">性别</th>
-				<th width="90">所属部门</th>
-				<th >出差原因</th>
-				<th width="130">出差开始时间</th>
-				<th width="130">出差结束时间</th>
-				<th width="70">状态</th>
-				<th width="100">操作</th>
+				<th width="%3"><input type="checkbox" name="" value=""></th>
+				<th width="%5">课堂编码</th>
+				<th width="%5">课程编码</th>
+				<th width="%10">课堂名称</th>
+				<th width="%20">课堂描述</th>
+				<th width="%5">创建者</th>
+				<th width="%15">创建时间</th>
+				<th width="%10">结束时间</th>
+				<th width="10%">课堂状态</th>
+				<th width="10%">操作</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr class="text-c">
-				<td><input type="checkbox" value="1" name=""></td>
-				<td>1</td>
-				<td><u style="cursor:pointer" class="text-primary" onclick="show('张三','member-show.html','10001','360','400')">张三</u></td>
-				<td>男</td>
-				<td>技术部</td>
-				<td class="text-l">外出学习</td>
-				<td>2017-6-11 18:30:00</td>
-				<td>2016-6-11 23:30:00</td>
-				<td class="td-status"><span class="label label-success radius">出差完成</span></td>
-				<td class="td-manage"><a title="删除" href="javascript:;" onclick="del(this,'1')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
-			</tr>
+
 		</tbody>
 	</table>
 	</div>
@@ -76,27 +67,17 @@
 <script type="text/javascript" src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="assets/js/H-ui.js"></script>
 <script type="text/javascript" src="assets/js/H-ui.admin.js"></script>
+<script type="text/javascript" src="lib/sweetalert-1.1.1/sweetalert.min.js"></script>
 <script type="text/javascript" src="assets/js/business/action.js"></script>
+<script type="text/javascript" src="assets/js/business/ip.js"></script>
+<script type="text/javascript" src="assets/js/business/class.js"></script>
 <script type="text/javascript">
-$(function(){
-	$('.table-sort').dataTable({
-		"aaSorting": [[ 1, "desc" ]],//默认第几个排序
-		"bStateSave": true,//状态保存
-		"aoColumnDefs": [
-		  //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-		  {"orderable":false,"aTargets":[0,8,9]}// 制定列不参与排序
-		]
+	$(function(){
+		var table = classTableHandler("#class-table", "/class/getClass");
+        $("#btn-refresh").on("click",function () {
+            table.api().ajax.reload();
+        });
 	});
-	$('.table-sort tbody').on( 'click', 'tr', function () {
-		if ( $(this).hasClass('selected') ) {
-			$(this).removeClass('selected');
-		}
-		else {
-			$('tr .selected').removeClass('selected');
-			$(this).addClass('selected');
-		}
-	});
-});
 
 </script> 
 </body>

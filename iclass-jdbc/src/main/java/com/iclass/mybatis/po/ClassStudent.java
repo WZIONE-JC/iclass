@@ -5,13 +5,13 @@ import java.io.Serializable;
 public class ClassStudent implements Serializable{
     private Integer classstudentid;
 
-    private String classcode;
+    private Integer classID;
 
     private String studentcode;
 
-    public ClassStudent(Integer classstudentid, String classcode, String studentcode) {
+    public ClassStudent(Integer classstudentid, Integer classID, String studentcode) {
         this.classstudentid = classstudentid;
-        this.classcode = classcode;
+        this.classID = classID;
         this.studentcode = studentcode;
     }
 
@@ -27,12 +27,12 @@ public class ClassStudent implements Serializable{
         this.classstudentid = classstudentid;
     }
 
-    public String getClasscode() {
-        return classcode;
+    public Integer getClassID() {
+        return classID;
     }
 
-    public void setClasscode(String classcode) {
-        this.classcode = classcode == null ? null : classcode.trim();
+    public void setClassID(Integer classID) {
+        this.classID = classID;
     }
 
     public String getStudentcode() {
@@ -47,7 +47,7 @@ public class ClassStudent implements Serializable{
     public String toString() {
         return "ClassStudent{" +
                 "classstudentid=" + classstudentid +
-                ", classcode='" + classcode + '\'' +
+                ", classID=" + classID +
                 ", studentcode='" + studentcode + '\'' +
                 '}';
     }

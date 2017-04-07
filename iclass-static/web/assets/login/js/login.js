@@ -343,10 +343,10 @@ var Login = function () {
                         });
                     }
                 },
-                error: function(responseData) {
+                error: function() {
                     swal({
                         title: "Sorry!",
-                        text: "获取角色信息出错,错误信息:"+responseData.responseText+",请刷新重试",
+                        text: "获取角色信息失败,请稍后再试",
                         timer: 2000,
                         type: "error"
                     });

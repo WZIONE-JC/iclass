@@ -124,4 +124,10 @@
     from course
     where CourseCode = #{courseCode} and CourseStatus = 1
   </select>
+
+  <update id="updateStatusById" parameterType="java.lang.Integer">
+    UPDATE course
+    SET CourseStatus = #{status}
+    where CourseID = #{courseid,jdbcType=INTEGER}
+  </update>
 </mapper>

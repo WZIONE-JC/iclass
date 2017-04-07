@@ -55,4 +55,25 @@ public interface ClassService {
      * @return class 实体
      */
     ServiceResult<List<ClassDTO>> getClassesByClassCourseCode(String classCourseCode);
+
+    /**
+     * 检查classCode是否存在
+     * @param classCode
+     * @return
+     */
+    ServiceResult<ResponseMsg> checkClassCode(String classCode);
+
+    /**
+     * 根据id获取class信息
+     * @param id
+     * @return
+     */
+    ServiceResult<Class> getClassById(String id);
+
+    /**
+     * 更新class信息
+     * @param c
+     * @return
+     */
+    ServiceResult<ResponseMsg> updateClass(Class c);
 }

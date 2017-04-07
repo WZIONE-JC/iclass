@@ -1,13 +1,17 @@
 package com.iclass.ppt_hw.component.controller;
 
 import com.iclass.mybatis.dto.ClassDTO;
+import com.iclass.mybatis.po.Class;
 import com.iclass.ppt_hw.component.service.api.ClassService;
 import com.iclass.user.component.entity.DataTablesRequestEntity;
 import com.iclass.user.component.entity.ServiceResult;
+import com.iclass.user.component.msg.ResponseMsg;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 /**
@@ -43,5 +47,39 @@ public class ClassController {
     public ServiceResult<List<ClassDTO>> getClassesByClassCourseCode(String classCourseCode) {
 
         return classService.getClassesByClassCourseCode(classCourseCode);
+    }
+
+    /**
+     * 检查classCode是否存在
+     * @param classCode
+     * @return
+     */
+    @RequestMapping("/check/{code}")
+    public ServiceResult<ResponseMsg> checkClassCode(@PathVariable("code") String classCode) {
+
+        return classService.checkClassCode(classCode);
+    }
+
+    @RequestMapping("/save")
+    public ServiceResult<ResponseMsg> save(Class c) {
+
+        return classService.createClass(c);
+    }
+
+    /**
+     * 根据id获取class信息
+     * @param id
+     * @return
+     */
+    @RequestMapping("/get/{classid}")
+    public ServiceResult<Class> getClassById(@PathVariable("classid") String id) {
+
+        return classService.getClassById(id);
+    }
+
+    @RequestMapping("/update")
+    public ServiceResult<ResponseMsg> updateClass(Class c) {
+
+        return classService.updateClass(c);
     }
 }

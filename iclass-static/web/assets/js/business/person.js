@@ -107,10 +107,10 @@ function updateUser () {
                 });
             }
         },
-        error: function (responseData) {
+        error: function () {
             swal({
                 title: "Sorry!",
-                text: "请求用户信息出错,错误信息:"+responseData.responseText,
+                text: "网络忙,请稍后再试",
                 timer: 2000,
                 type: "error"
             });

@@ -1,13 +1,19 @@
 package com.iclass.ppt_hw.component.service.impl;
 
 import com.iclass.mybatis.dao.ClassMapper;
+import com.iclass.mybatis.dao.UserMapper;
 import com.iclass.mybatis.dto.ClassDTO;
 import com.iclass.mybatis.po.Class;
+import com.iclass.mybatis.po.Course;
+import com.iclass.mybatis.po.User;
 import com.iclass.ppt_hw.component.service.api.ClassService;
 import com.iclass.user.component.entity.DataTablesRequestEntity;
 import com.iclass.user.component.entity.ServiceResult;
+import com.iclass.user.component.msg.Msg;
 import com.iclass.user.component.msg.ResponseMsg;
+import com.iclass.user.component.utils.CheckDataTables;
 import org.apache.commons.lang.StringUtils;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +35,9 @@ public class ClassServiceImpl implements ClassService {
     @Autowired
     private ClassMapper classMapper;
 
+    @Autowired
+    private UserMapper userMapper;
+
     /**
      *
      * @param c 课堂信息
@@ -36,8 +45,16 @@ public class ClassServiceImpl implements ClassService {
      */
     @Override
     public ServiceResult<ResponseMsg> createClass(Class c) {
-
-        return null;
+        ServiceResult<ResponseMsg> serviceResult = new ServiceResult<>();
+        if (c == null) {
+            serviceResult.setMessage("创建课堂失败,课堂信息不完整");
+            return serviceResult;
+        }
+        c.setClassstatus(1);
+        classMapper.insert(c);
+        serviceResult.setSuccess(true);
+        serviceResult.setData(new ResponseMsg(Msg.OK));
+        return serviceResult;
     }
 
     /**
@@ -69,37 +86,31 @@ public class ClassServiceImpl implements ClassService {
     public ServiceResult<List<ClassDTO>> getClassesByClassCreator(DataTablesRequestEntity requestEntity, String classCreator) {
         ServiceResult<List<ClassDTO>> serviceResult = new ServiceResult<>();
         if (StringUtils.isNotBlank(classCreator)) {
-            if(requestEntity != null) {
-                if(requestEntity.getStart() == null) {
-                    requestEntity.setStart(0);
-                }
-                if(requestEntity.getLength() == null) {
-                    requestEntity.setLength(1);
-                }
-                if(requestEntity.getDraw() == null) {
-                    requestEntity.setDraw(1);
-                }
-            } else {
-                requestEntity = new DataTablesRequestEntity(1, 0, 1);
-            }
-            int start = requestEntity.getStart();
-            if(start < 0) {
-                start = 0;
-            }
-            int length = requestEntity.getLength();
-            if(length < 1) {
-                length = 1;
-            }
+            requestEntity = CheckDataTables.check(requestEntity);
+
+            Integer start = requestEntity.getStart();
+
+            Integer length = requestEntity.getLength();
+
+            Integer draw = requestEntity.getDraw();
+
             List<Class> classes = classMapper.selectByClassCreator(classCreator, start, length);
+
+            User user = userMapper.findUserByUsercode(classCreator);
+
+            String teacherName = user.getUserfullname();
+
             List<ClassDTO> classDTOS = new ArrayList<>();
 
             for(Class c : classes) {
-                classDTOS.add(new ClassDTO(c));
+                classDTOS.add(new ClassDTO(c, teacherName));
             }
+
             Integer recordsTotal = classMapper.countByClassCreator(classCreator);
+
             if(classes != null && classes.size() > 0) {
                 serviceResult.setData(classDTOS);
-                serviceResult.setDraw(requestEntity.getDraw());
+                serviceResult.setDraw(draw);
                 serviceResult.setRecordsTotal(recordsTotal);
                 serviceResult.setRecordsFiltered(classes.size());
                 serviceResult.setSuccess(true);
@@ -136,6 +147,49 @@ public class ClassServiceImpl implements ClassService {
             logger.warn("classCourseCode为空");
             serviceResult.setMessage("classCourseCode为空");
         }
+        return serviceResult;
+    }
+
+    @Override
+    public ServiceResult<ResponseMsg> checkClassCode(String classCode) {
+        ServiceResult<ResponseMsg> serviceResult = new ServiceResult<>();
+        if (StringUtils.isBlank(classCode)) {
+            serviceResult.setMessage("课程编号不能为空");
+            return serviceResult;
+        }
+        List<Class> classes = classMapper.selectByClassCode(classCode);
+        if (classes != null && classes.size() > 0) {
+            serviceResult.setData(new ResponseMsg(Msg.CLASS_CODE_EXISTED));
+            return serviceResult;
+        }
+        serviceResult.setData(new ResponseMsg(Msg.OK));
+        serviceResult.setSuccess(true);
+        return serviceResult;
+    }
+
+    @Override
+    public ServiceResult<Class> getClassById(String id) {
+        ServiceResult<Class> serviceResult = new ServiceResult<>();
+        if (StringUtils.isBlank(id)) {
+            serviceResult.setMessage("id不能为空");
+            return serviceResult;
+        }
+        Class c = classMapper.selectByPrimaryKey(Integer.valueOf(id));
+        serviceResult.setSuccess(true);
+        serviceResult.setData(c);
+        return serviceResult;
+    }
+
+    @Override
+    public ServiceResult<ResponseMsg> updateClass(Class c) {
+        ServiceResult<ResponseMsg> serviceResult = new ServiceResult<>();
+        if (c == null) {
+            serviceResult.setMessage("更新课堂信息失败,课堂信息不完整");
+            return serviceResult;
+        }
+        classMapper.updateByPrimaryKeySelective(c);
+        serviceResult.setSuccess(true);
+        serviceResult.setData(new ResponseMsg(Msg.OK));
         return serviceResult;
     }
 }

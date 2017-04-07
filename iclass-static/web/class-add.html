@@ -21,151 +21,85 @@
     <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
     <script>DD_belatedPNG.fix('*');</script>
     <![endif]-->
-    <link href="lib/icheck/icheck.css" rel="stylesheet" type="text/css"/>
     <link href="assets/css/style.css" rel="stylesheet" type="text/css"/>
-    <title>增加课程</title>
+    <link href="lib/sweetalert-1.1.1/sweetalert.css" rel="stylesheet" type="text/css" />
+    <title>开设课堂</title>
 </head>
 <body>
 <div class="pd-20">
-    <form action="" method="post" class="form form-horizontal" id="form-user-add">
+    <form action="" method="post" class="form form-horizontal" id="form-class-add">
+        <span class="" id="msg"></span>
         <div class="row cl">
-            <label class="form-label col-5"><span
-                    class="c-red">*</span>角&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;色：</label>
-            <div class=""> <span style="width:33.33333%;" class="select-box">
-                <select name="UserAttributes" class="select">
-                    <option value="教师">教师</option>
-                </select>
-                </span>
+            <label class="form-label col-4"><span class="c-red">*</span>课堂编号：</label>
+            <div class="formControls col-7">
+                <input type="text" class="input-text" value="" placeholder="输入课堂编号" onblur="check()"
+                       id="classcode" name="classcode" datatype="n4-4" maxlength="4" minlength="4" nullmsg="输入课堂编号">
             </div>
         </div>
         <div class="row cl">
-            <label class="form-label col-5"><span class="c-red">*</span>用户编号：</label>
-            <div class=>
-                <input type="text" style="width:33.33333%;" class="input-text" value="" placeholder="输入学号/教工号"
-                       id="userId" name="userId" datatype="n10-10" maxlength="10" minlength="10" nullmsg="请输入学号/教工号">
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-5"><span class="c-red">*</span>用&nbsp;&nbsp;户&nbsp;&nbsp;名：</label>
-            <div class="">
-                <input type="text" style="width:33.33333%;" class="input-text" value="" placeholder="输入用户名"
-                       id="userName" name="userName" datatype="*" nullmsg="请输入用户名"></div>
+            <label class="form-label col-4"><span class="c-red">*</span>课堂名称：</label>
+            <div class="formControls col-7">
+                <input type="text" class="input-text" value="" placeholder="输入课堂名称"
+                       id="classname" name="classname" datatype="*" nullmsg="请输入课堂名称"></div>
         </div>
         <div class="row cl">
 
-            <label class="form-label col-5"><span
-                    class="c-red">*</span>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</label>
-            <div class="">
-                <input type="text" style="width:33.33333%;" class="input-text" value="" placeholder="输入姓名"
-                       id="userFullName" name="userFullName" datatype="*" nullmsg="请输入姓名"></div>
+            <label class="form-label col-4"><span
+                    class="c-red">*</span>课堂描述：</label>
+            <div class="formControls col-7">
+                <input type="text" class="input-text" value="" placeholder="输入课堂描述"
+                       id="classdescription" name="classdescription" datatype="*" nullmsg="输入课堂描述"></div>
         </div>
         <div class="row cl">
-            <label class="form-label col-5"><span
-                    class="c-red">*</span>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</label>
-            <div class="formControls col-5 skin-minimal">
-                <div class="radio-box">
-                    <input type="radio" id="sex-1" name="userSex" datatype="*" nullmsg="请选择性别！">
-                    <label for="sex-1">男</label>
-                </div>
-                <div class="radio-box">
-                    <input type="radio" id="sex-2" name="userSex" datatype="*" nullmsg="请选择性别！">
-                    <label for="sex-2">女</label>
-                </div>
-            </div>
-        </div>
-        <!--
-        <div class="row cl">
-            <label class="form-label col-2">简略标题：</label>
-            <div class="formControls col-10">
-                <input type="text" class="input-text" value="" placeholder="" id="" name="">
-            </div>
-        </div>
-        -->
 
-        <div class="row cl">
-            <label class="form-label col-5"><span
-                    class="c-red">*</span>年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;龄：</label>
-            <div class="">
-                <input type="text" style="width:33.33333%;" class="input-text" value="" placeholder="输入年龄" id="userAge"
-                       name="userAge" datatype="n" nullmsg="请输入年龄">
-            </div>
-        </div>
-        <div class="row cl">
-            <label class="form-label col-5"><span
-                    class="c-red">*</span>邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱：</label>
-            <div class="">
-                <input type="text" style="width:33.33333%;" class="input-text" value="" placeholder="输入邮箱"
-                       id="userEmail" name="userEmail" datatype="e" nullmsg="请输入正确的邮箱">
-            </div>
-
+            <label class="form-label col-4"><span
+                    class="c-red">*</span>创建者：</label>
+            <div class="formControls col-7">
+                <input type="text" class="input-text" value="" readonly="readonly" id="classcreator" name="classcreator" ></div>
         </div>
 
         <div class="row cl">
-            <label class="form-label col-5"><span class="c-red">*</span>出生日期：</label>
-            <div class="">
-                <input type="text" style="width:33.33333%;" datatype="*" nullmsg="请选择出生日期"
-                       onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',skin:'twoer',maxDate: '%y-%M-%d'})" id="userBirth"
-                       class="input-text Wdate" name="userBirth">
+            <label class="form-label col-4"><span class="c-red">*</span>选择课程：</label>
+            <div class="formControls col-7">
+                    <span class="select-box">
+                        <select name="classcoursecode" id="courseCode" class="select"  datatype="*" nullmsg="请选择课程">
+                            <option value="">选择课程</option>
+
+                        </select>
+                    </span>
             </div>
         </div>
+
         <div class="row cl">
-            <label class="form-label col-5"><span class="c-red">*</span>手&nbsp;&nbsp;机&nbsp;&nbsp;号：</label>
-            <div class="">
-                <input type="text" style="width:33.33333%;" class="input-text" value="" placeholder="输入手机号"
-                       id="userPhon" name="userPhon" datatype="m" nullmsg="请输入正确的手机号">
+            <label class="form-label col-4"><span class="c-red">*</span>开始时间：</label>
+            <div class="formControls col-7">
+                <input type="text" datatype="*" nullmsg="请选择开始时间"
+                       onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',skin:'twoer',maxDate: '%y-%M-%d'})"
+                       class="input-text Wdate" id="datemin" name="classcreatetime">
             </div>
         </div>
-        <!--<div class="row cl">
-                <label class="form-label col-2"><span class="c-red">*</span>注册日期：</label>
-            <div class="formControls col-2">
-                <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}'})" id="datemax" class="input-text Wdate" name="userTime">
-            </div>
-        </div>-->
-        <!--
+
         <div class="row cl">
-            <label class="form-label col-2">缩略图：</label>
-            <div class="formControls col-10">
-                <div class="uploader-thum-container">
-                    <div id="fileList" class="uploader-list"></div>
-                    <div id="filePicker">选择图片</div>
-                    <button id="btn-star" class="btn btn-default btn-uploadstar radius ml-10">开始上传</button>
-                </div>
+                <label class="form-label col-4"><span class="c-red">*</span>结束日期：</label>
+            <div class="formControls col-7">
+                <input type="text" datatype="*" nullmsg="请选择结束时间"
+                       onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',skin:'twoer',minDate:'#F{$dp.$D(\'datemin\')}'})"
+                       id="classdeadline" class="input-text Wdate" name="classdeadline">
             </div>
         </div>
-        -->
-        <!--<div class="row cl">
-            <label class="form-label col-2"><span class="c-red">*</span>证件照上传：</label>
-            <div class="formControls col-10">
-                <div class="uploader-list-container">
-                    <div class="queueList">
-                        <div id="dndArea" class="placeholder">
-                            <div id="filePicker-2"></div>
-                            <p>或将照片拖到这里，可选多张照片</p>
-                        </div>
-                    </div>
-                    <div class="statusBar" style="display:none;">
-                        <div class="progress"> <span class="text">0%</span> <span class="percentage"></span> </div>
-                        <div class="info"></div>
-                        <div class="btns">
-                            <div id="filePicker2"></div>
-                            <div class="uploadBtn">开始上传</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>-->
+
         <div class="row cl">
             <div class="col-7 col-offset-5">
                 <button onClick="" class="btn btn-primary radius" type="submit"><i
                         class="Hui-iconfont">&#xe632;</i> 保存
                 </button>
-                <!--
-                <button onClick="article_save();" class="btn btn-secondary radius" type="button"><i class="Hui-iconfont">&#xe632;</i> 保存草稿</button>
-                -->
-                <button onClick="layer_close();" class="btn btn-default radius" type="reset">
+
+                <button id="cancelButton" onClick="layer_close();" class="btn btn-default radius" type="reset">
                     &nbsp;&nbsp;取消&nbsp;&nbsp;</button>
             </div>
+
         </div>
+
     </form>
 </div>
 </div>
@@ -176,23 +110,24 @@
 <script type="text/javascript" src="lib/Validform/5.3.2/Validform.min.js"></script>
 <script type="text/javascript" src="assets/js/H-ui.js"></script>
 <script type="text/javascript" src="assets/js/H-ui.admin.js"></script>
+<script type="text/javascript" src="lib/sweetalert-1.1.1/sweetalert.min.js"></script>
+<script type="text/javascript" src="assets/js/business/ip.js"></script>
+<script type="text/javascript" src="assets/js/business/class.js"></script>
+<script type="text/javascript" src="assets/js/business/course.js"></script>
 <script type="text/javascript">
     $(function () {
-        $('.skin-minimal input').iCheck({
-            checkboxClass: 'icheckbox-blue',
-            radioClass: 'iradio-blue',
-            increaseArea: '20%'
-        });
+        getCourseByTeacherCode();
+        var teacherCode = $(window.parent.document).find('#classcreator')[0].value;
+        $("#classcreator").val(teacherCode);
     });
-    $("#form-user-add").Validform({
-        tiptype: 3,
-        callback: function (form) {
-            form[0].submit();
-            var index = parent.layer.getFrameIndex(window.name);
-            parent.$('.btn-refresh').click();
-            parent.layer.close(index);
+    $("#form-class-add").Validform({
+        tiptype:2,
+        beforeSubmit:function(form){
+            addClass();
+            return false;
         }
     });
+
 </script>
 </body>
 </html>

@@ -209,8 +209,6 @@ function layer_show(title,url,id,w,h){
                     console.log(data.responseText)
                 }
             })
-		} else {
-        	console.log("usercode不能为空");
 		}
 
     }
@@ -221,7 +219,16 @@ function layer_show(title,url,id,w,h){
 		maxmin: true,
 		shade:0.4,
 		title: title,
-		content: url
+		content: url,
+		success: function (layero, index) {
+			var $id = layer.getChildFrame('#id', index);
+			$id.val(id);
+			var $code = layer.getChildFrame('#code', index);
+			//这里的id指的是code,比如coursecode
+			$code.val(id);
+			layer.getChildFrame('#loadData', index).click();
+
+    	}
 	});
 
 }
@@ -274,6 +281,7 @@ function layer_show_2(title, url , w, h, classCode, courseCode, fileType){
         }
     });
 }
+
 /*关闭弹出框口*/
 function layer_close(){
 	var index = parent.layer.getFrameIndex(window.name);

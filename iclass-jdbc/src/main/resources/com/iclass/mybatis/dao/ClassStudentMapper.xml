@@ -4,12 +4,12 @@
   <resultMap id="BaseResultMap" type="com.iclass.mybatis.po.ClassStudent" >
     <constructor >
       <idArg column="ClassStudentID" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="ClassCode" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="ClassID" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="StudentCode" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    ClassStudentID, ClassCode, StudentCode
+    ClassStudentID, ClassID, StudentCode
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -22,9 +22,9 @@
     where ClassStudentID = #{classstudentid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.iclass.mybatis.po.ClassStudent" >
-    insert into class_student (ClassStudentID, ClassCode, StudentCode
+    insert into class_student (ClassStudentID, ClassID, StudentCode
       )
-    values (#{classstudentid,jdbcType=INTEGER}, #{classcode,jdbcType=VARCHAR}, #{studentcode,jdbcType=VARCHAR}
+    values (#{classstudentid,jdbcType=INTEGER}, #{ClassID,jdbcType=INTEGER}, #{studentcode,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.iclass.mybatis.po.ClassStudent" >
@@ -33,8 +33,8 @@
       <if test="classstudentid != null" >
         ClassStudentID,
       </if>
-      <if test="classcode != null" >
-        ClassCode,
+      <if test="classid != null" >
+        ClassID,
       </if>
       <if test="studentcode != null" >
         StudentCode,
@@ -44,8 +44,8 @@
       <if test="classstudentid != null" >
         #{classstudentid,jdbcType=INTEGER},
       </if>
-      <if test="classcode != null" >
-        #{classcode,jdbcType=VARCHAR},
+      <if test="classid != null" >
+        #{classid,jdbcType=INTEGER},
       </if>
       <if test="studentcode != null" >
         #{studentcode,jdbcType=VARCHAR},
@@ -55,8 +55,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.iclass.mybatis.po.ClassStudent" >
     update class_student
     <set >
-      <if test="classcode != null" >
-        ClassCode = #{classcode,jdbcType=VARCHAR},
+      <if test="classid != null" >
+        ClassID = #{classid,jdbcType=VARCHAR},
       </if>
       <if test="studentcode != null" >
         StudentCode = #{studentcode,jdbcType=VARCHAR},
@@ -66,14 +66,14 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.iclass.mybatis.po.ClassStudent" >
     update class_student
-    set ClassCode = #{classcode,jdbcType=VARCHAR},
+    set ClassID = #{classid,jdbcType=VARCHAR},
       StudentCode = #{studentcode,jdbcType=VARCHAR}
     where ClassStudentID = #{classstudentid,jdbcType=INTEGER}
   </update>
-  <select id="selectByClassCode" resultType="com.iclass.mybatis.po.ClassStudent">
+  <select id="selectByClassID" resultType="com.iclass.mybatis.po.ClassStudent">
     select
     <include refid="Base_Column_List" />
     from class_student
-    where ClassCode = #{classCode}
+    where ClassID = #{classID}
   </select>
 </mapper>
