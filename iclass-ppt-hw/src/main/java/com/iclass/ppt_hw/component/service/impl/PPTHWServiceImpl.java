@@ -38,13 +38,19 @@ public class PPTHWServiceImpl implements PPTHWService {
     private UserMapper userMapper;
 
     /**
-     * 使用classCreator 去class表中查询ClassCode 和 ClassCourseCode
+     * 使用classCreator 去class表中查询ClassCode
      */
     @Autowired
     private ClassMapper classMapper;
 
     /**
-     * 根据ClassCourseCode 去course表中查询Course实体信息
+     * 使用ClassCode去查询courseCode
+     */
+    @Autowired
+    private ClassCourseMapper classCourseMapper;
+
+    /**
+     * 根据courseCode 去course表中查询Course实体信息
      */
     @Autowired
     private CourseMapper courseMapper;
@@ -67,7 +73,7 @@ public class PPTHWServiceImpl implements PPTHWService {
      * 根据classCode获取学生信息
      */
     @Autowired
-    private ClassStudentMapper classStudentMapper;
+    private ClassCourseStudentMapper classCourseStudentMapper;
 
     /**
      * 获取已上传课件页面所需展示的信息
@@ -96,7 +102,11 @@ public class PPTHWServiceImpl implements PPTHWService {
     }
 
     /**
-     *
+     * 1.先通过classCreator查询user表,查出user实体
+     * 2.再通过classCreator查询class表,查出该老师所创建的class
+     * 3.通过获取的classCode去class_course表中查询classCourse实体
+     * 4.通过courseCode查询出course数据
+     * 5.通过classCode去class_student表中查询学生数据
      * @param requestEntity datatables请求数据
      * @param classCreator teacherCode
      * @return PPTHWDTO 实体
@@ -112,10 +122,11 @@ public class PPTHWServiceImpl implements PPTHWService {
             serviceResult.setMessage("用户未登录");
             return serviceResult;
         }
+        //1.获取教师信息
         User teacher = userMapper.findByUsercode(classCreator);
         String teacherName = teacher.getUserfullname();
         Integer recordsTotal = classMapper.countByClassCreator(classCreator);
-        // 获取课堂信息
+        //2.获取课堂信息
         List<Class> classes = classMapper.selectByClassCreator(classCreator, start, length);
         if (classes != null && classes.size() == 0) {
             logger.info(teacherName + " 教师还没有创建课堂");
@@ -123,38 +134,51 @@ public class PPTHWServiceImpl implements PPTHWService {
             return serviceResult;
         }
         List<PPTHWDTO> ppthwdtoList = new ArrayList<>();
-        // 获取课堂的课程信息
+        //3.获取课堂的课程信息
         for (Class c : classes) {
-            PPTHWDTO ppthwdto = new PPTHWDTO();
-            String courseCode = c.getClasscoursecode();
-            //根据courseCode 获取Course 信息
-            Course course = courseMapper.selectByCourseCode(courseCode);
-            Integer classid = c.getClassid();
-            List<ClassStudent> classStudents = classStudentMapper.selectByClassID(classid);
-            List<SessionUser> sessionUsers = new ArrayList<>();
-            // 如果有学生的话
-            if (classStudents != null && classStudents.size() > 0) {
-                for (ClassStudent cs : classStudents) {
-                    String studentCode = cs.getStudentcode();
-                    User user = userMapper.findUserByUsercode(studentCode);
-                    sessionUsers.add(new SessionUser(user));
+            String classcode = c.getClasscode();
+
+            //3.1根据classCode查询courseCode
+            List<ClassCourse> classCourses = classCourseMapper.selectByClassCode(classcode);
+            for (ClassCourse classCourse : classCourses) {
+                //4.根据courseCode 获取Course 信息
+                Course course = courseMapper.selectByCourseCode(classCourse.getCoursecode());
+                //5.查询学生数据
+                List<SessionUser> sessionUsers = new ArrayList<>();
+                Integer classCourseId = classCourse.getClasscourseid();
+                List<ClassCourseStudent> classCourseStudents = classCourseStudentMapper.selectByClassCourseId(classCourseId);
+                // 如果有学生的话
+                if (classCourseStudents != null && classCourseStudents.size() > 0) {
+                    for (ClassCourseStudent cs : classCourseStudents) {
+                        String studentCode = cs.getStudentcode();
+                        User user = userMapper.findUserByUsercode(studentCode);
+                        sessionUsers.add(new SessionUser(user));
+                    }
                 }
+                PPTHWDTO ppthwdto = new PPTHWDTO();
+                ppthwdto.setStudents(sessionUsers);
+                ppthwdto.setaClass(c);
+                ppthwdto.setCourse(course);
+                ppthwdto.setTeacherName(teacherName);
+                ppthwdtoList.add(ppthwdto);
             }
-            ppthwdto.setStudents(sessionUsers);
-            ppthwdto.setaClass(c);
-            ppthwdto.setCourse(course);
-            ppthwdto.setTeacherName(teacherName);
-            ppthwdtoList.add(ppthwdto);
         }
         serviceResult.setSuccess(true);
         serviceResult.setData(ppthwdtoList);
         serviceResult.setDraw(draw);
-        serviceResult.setRecordsTotal(recordsTotal);
-        serviceResult.setRecordsFiltered(classes.size());
+        serviceResult.setRecordsTotal(ppthwdtoList.size());
+        serviceResult.setRecordsFiltered(ppthwdtoList.size());
         logger.info("PPTINFO 信息初始化完成");
         return serviceResult;
     }
 
+    /**
+     * 根据classCode和courseCode去查询FileCode
+     * 再通过FileCode去查询File信息
+     * @param requestEntity datatables请求数据
+     * @param fileQo fileQo
+     * @return
+     */
     @Override
     public ServiceResult<List<IclassfileDTO>> getPPTHWFileInfo(DataTablesRequestEntity requestEntity, FileQo fileQo) {
         ServiceResult<List<IclassfileDTO>> serviceResult = new ServiceResult<>();

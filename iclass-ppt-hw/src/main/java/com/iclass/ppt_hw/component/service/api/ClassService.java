@@ -47,14 +47,22 @@ public interface ClassService {
      * @param classCreator teacherCode
      * @return 该教师所创建的课堂信息
      */
-    ServiceResult<List<ClassDTO>> getClassesByClassCreator(DataTablesRequestEntity requestEntity, String classCreator);
+    ServiceResult<List<ClassDTO>> getClassesByClassCreator(DataTablesRequestEntity requestEntity, String classCreator, Boolean isLimit);
 
     /**
-     * 获取对应ClassCourseCode 的Class 实体
-     * @param classCourseCode ClassCourseCode
+     * 获取对应courseCode 的Class 实体
+     * @param courseCode ClassCourseCode
      * @return class 实体
      */
-    ServiceResult<List<ClassDTO>> getClassesByClassCourseCode(String classCourseCode);
+    ServiceResult<List<ClassDTO>> getClassesByCourseCode(String courseCode);
+
+    /**
+     * 获取还没有选该课的班级
+     * @param courseCode ClassCourseCode
+     * @param classCreator
+     * @return class 实体
+     */
+    ServiceResult<List<Class>> getUnRelatedClassesByCourseCode(String courseCode, String classCreator);
 
     /**
      * 检查classCode是否存在

@@ -1,6 +1,135 @@
 /**
  * Created by radishmaster on 07/04/17.
  */
+
+
+//获取课堂信息
+function getUnrelatedClassByCourseCode(courseCode) {
+    var teacherCode = $(window.parent.document).find('#classcreator')[0].value;
+    $.ajax({
+        type: "post",
+        dataType: "jsonp",
+        jsonp: "callback",
+        url: ppt_hw_url + "/class/getUnrelatedClass",
+        data: {
+            "classCreator": teacherCode,
+            "courseCode": courseCode
+        },
+        timeout: 3000,
+        success: function (responseData) {
+            if (responseData.success) {
+                var classes = responseData.data;
+                var size = classes.length;
+                var option;
+                for(var i = 0; i < size; i ++) {
+                    option = new Option(classes[i].classname, classes[i].classcode);
+                    $("#classCode")[0].add(option);
+                }
+            } else {
+                swal({
+                    title: "Sorry!",
+                    text: responseData.message,
+                    timer: 2000,
+                    type: "error"
+                });
+            }
+
+        },
+        error: function (responseData) {
+            swal({
+                title: "Sorry!",
+                text: "网络繁忙，请稍后再试",
+                timer: 2000,
+                type: "error"
+            });
+        }
+    });
+}
+
+//获取课堂信息
+function getClassByCourseCode(courseCode) {
+    $.ajax({
+        type: "post",
+        dataType: "jsonp",
+        jsonp: "callback",
+        url: ppt_hw_url + "/class/getClassesByCourseCode",
+        data: {
+            "courseCode" : courseCode,
+        },
+        timeout: 3000,
+        success: function (responseData) {
+            if (responseData.success) {
+                var classes = responseData.data;
+                var size = classes.length;
+                var option;
+                for(var i = 0; i < size; i ++) {
+                    option = new Option(classes[i].aClass.classname, classes[i].aClass.classcode);
+                    $("#classCode")[0].add(option);
+                }
+            } else {
+                swal({
+                    title: "Sorry!",
+                    text: responseData.message,
+                    timer: 2000,
+                    type: "error"
+                });
+            }
+
+        },
+        error: function (responseData) {
+            swal({
+                title: "Sorry!",
+                text: "网络繁忙，请稍后再试",
+                timer: 2000,
+                type: "error"
+            });
+        }
+    });
+}
+
+//获取课堂信息
+function getClassByCourseCodeNoLimit() {
+    var classCreator = $(window.parent.document).find('#classcreator')[0].value;
+    $.ajax({
+        type: "post",
+        dataType: "jsonp",
+        jsonp: "callback",
+        url: ppt_hw_url + "/class/getClass",
+        data: {
+            "classCreator" : classCreator,
+            "isLimit": false
+        },
+        async:false,
+        timeout: 3000,
+        success: function (responseData) {
+            if (responseData.success) {
+                var classes = responseData.data;
+                var size = classes.length;
+                var option;
+                for(var i = 0; i < size; i ++) {
+                    option = new Option(classes[i].aClass.classname, classes[i].aClass.classcode);
+                    $("#classCode")[0].add(option);
+                }
+            } else {
+                swal({
+                    title: "Sorry!",
+                    text: responseData.message,
+                    timer: 2000,
+                    type: "error"
+                });
+            }
+
+        },
+        error: function (responseData) {
+            swal({
+                title: "Sorry!",
+                text: "网络繁忙，请稍后再试",
+                timer: 2000,
+                type: "error"
+            });
+        }
+    });
+}
 function classTableHandler(formId, url) {
     var usercode = $(window.parent.document).find('#usercode')[0].value;
     if ( usercode == null ) {
@@ -20,15 +149,14 @@ function classTableHandler(formId, url) {
                 orderable: false,
                 data: "aClass.classid",
                 render: function (data, type, row, meta) {
-                    // console.log("data:"+data);
                     return "<input type='checkbox' value=" + data + " name='classid'>";
                 }
             },
             {
-                data: "aClass.classcode"
-            },
-            {
-                data: "aClass.classcoursecode"
+                data: "aClass.classcode",
+                render: function (data, type, row, meta) {
+                    return "<span class='label label-secondary radius'>" + data + "</span>";
+                }
             },
             {
                 data: "aClass.classname"
@@ -44,9 +172,6 @@ function classTableHandler(formId, url) {
             },
             {
                 data: "aClass.classcreatetime"
-            },
-            {
-                data: "aClass.classdeadline"
             },
             {
                 data: "aClass.classstatus",
@@ -67,20 +192,17 @@ function classTableHandler(formId, url) {
 
     var columnDefs =
         [{
-            targets: [2, -2, -1],
+            targets: [-2, -1],
             "createdCell": function (td, cellData, rowData, row, col) {
                 var classcode = rowData.aClass.classcode;
                 var id = rowData.aClass.classid;
-                var coursecode = rowData.aClass.classcoursecode;
-                if (col == 2) {
-                    $(td).wrapInner("<span style='cursor:pointer' title='查看课程信息' class='label label-secondary radius' onclick=show('" + coursecode + "','course-show.html','" + coursecode + "','360','300')></span>");
-                }
-                if (col == 8) {
+
+                if (col == 6) {
                     $(td).addClass("td-status");
                 }
-                if (col == 9) {
+                if (col == 7) {
                     $(td).addClass("td-manage");
-                    $(td).html("<a style='text-decoration:none' class='ml-5' title='编辑课堂' onclick=edit('编辑课堂','class-update.html','"+id+"','570','540')><i class='Hui-iconfont'>&#xe6df;</i></a> <a style='text-decoration:none' class='ml-5' onClick='stop(this,"+classcode+")'  title='下架课堂'><i class='Hui-iconfont'>&#xe6de;</i></a>");
+                    $(td).html("<a style='text-decoration:none' class='ml-5' title='编辑课堂' onclick=edit('编辑课堂','class-update.html','"+id+"','570','400')><i class='Hui-iconfont'>&#xe6df;</i></a> <a style='text-decoration:none' class='ml-5' onClick='stop(this,"+classcode+")'  title='下架课堂'><i class='Hui-iconfont'>&#xe6de;</i></a>");
                 }
             }
         }
@@ -103,6 +225,7 @@ function classTableHandler(formId, url) {
             dataType: "jsonp",
             data: {
                 "classCreator": usercode,
+                "isLimit": true
             },
             dataSrc: function (result) {
                 if (result.success) {

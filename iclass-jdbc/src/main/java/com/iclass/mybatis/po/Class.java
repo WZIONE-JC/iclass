@@ -17,21 +17,15 @@ public class Class implements Serializable{
 
     private String classcreatetime;
 
-    private String classdeadline;
-
-    private String classcoursecode;
-
     private Integer classstatus;
 
-    public Class(Integer classid, String classcode, String classname, String classdescription, String classcreator, String classcreatetime, String classdeadline, String classcoursecode, Integer classstatus) {
+    public Class(Integer classid, String classcode, String classname, String classdescription, String classcreator, String classcreatetime, Integer classstatus) {
         this.classid = classid;
         this.classcode = classcode;
         this.classname = classname;
         this.classdescription = classdescription;
         this.classcreator = classcreator;
         this.classcreatetime = IclassUtil.formatTime(classcreatetime);
-        this.classdeadline = IclassUtil.formatTime(classdeadline);
-        this.classcoursecode = classcoursecode;
         this.classstatus = classstatus;
     }
 
@@ -87,22 +81,6 @@ public class Class implements Serializable{
         this.classcreatetime = IclassUtil.formatTime(classcreatetime);
     }
 
-    public String getClassdeadline() {
-        return classdeadline;
-    }
-
-    public void setClassdeadline(String classdeadline) {
-        this.classdeadline = IclassUtil.formatTime(classdeadline);
-    }
-
-    public String getClasscoursecode() {
-        return classcoursecode;
-    }
-
-    public void setClasscoursecode(String classcoursecode) {
-        this.classcoursecode = classcoursecode == null ? null : classcoursecode.trim();
-    }
-
     public Integer getClassstatus() {
         return classstatus;
     }
@@ -120,8 +98,6 @@ public class Class implements Serializable{
                 ", classdescription='" + classdescription + '\'' +
                 ", classcreator='" + classcreator + '\'' +
                 ", classcreatetime=" + classcreatetime +
-                ", classdeadline=" + classdeadline +
-                ", classcoursecode='" + classcoursecode + '\'' +
                 ", classstatus=" + classstatus +
                 '}';
     }

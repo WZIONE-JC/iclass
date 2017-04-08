@@ -11,19 +11,16 @@
       <arg column="ClassDescription" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="ClassCreator" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="ClassCreateTime" jdbcType="TIMESTAMP" javaType="java.lang.String" />
-      <arg column="ClassDeadline" jdbcType="TIMESTAMP" javaType="java.lang.String" />
-      <arg column="ClassCourseCode" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="ClassStatus" jdbcType="INTEGER" javaType="java.lang.Integer" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    ClassID, ClassCode, ClassName, ClassDescription, ClassCreator, ClassCreateTime, ClassDeadline, 
-    ClassCourseCode, ClassStatus
+    ClassID, ClassCode, ClassName, ClassDescription, ClassCreator, ClassCreateTime, ClassStatus
   </sql>
-  <sql id="Base_Column_List_2" >
-    ClassCode, ClassName, ClassDescription, ClassCreator, ClassCreateTime, ClassDeadline,
-    ClassStatus
-  </sql>
+  <!--<sql id="Base_Column_List_2" >-->
+    <!--ClassCode, ClassName, ClassDescription, ClassCreator, ClassCreateTime, ClassDeadline,-->
+    <!--ClassStatus-->
+  <!--</sql>-->
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
@@ -37,11 +34,11 @@
   <insert id="insert" parameterType="com.iclass.mybatis.po.Class" >
     insert into class (ClassID, ClassCode, ClassName, 
       ClassDescription, ClassCreator, ClassCreateTime, 
-      ClassDeadline, ClassCourseCode, ClassStatus
+      ClassStatus
       )
     values (#{classid,jdbcType=INTEGER}, #{classcode,jdbcType=VARCHAR}, #{classname,jdbcType=VARCHAR}, 
       #{classdescription,jdbcType=VARCHAR}, #{classcreator,jdbcType=VARCHAR}, #{classcreatetime,jdbcType=TIMESTAMP}, 
-      #{classdeadline,jdbcType=TIMESTAMP}, #{classcoursecode,jdbcType=VARCHAR}, #{classstatus,jdbcType=INTEGER}
+      #{classstatus,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.iclass.mybatis.po.Class" >
@@ -64,12 +61,6 @@
       </if>
       <if test="classcreatetime != null" >
         ClassCreateTime,
-      </if>
-      <if test="classdeadline != null" >
-        ClassDeadline,
-      </if>
-      <if test="classcoursecode != null" >
-        ClassCourseCode,
       </if>
       <if test="classstatus != null" >
         ClassStatus,
@@ -94,12 +85,6 @@
       <if test="classcreatetime != null" >
         #{classcreatetime,jdbcType=TIMESTAMP},
       </if>
-      <if test="classdeadline != null" >
-        #{classdeadline,jdbcType=TIMESTAMP},
-      </if>
-      <if test="classcoursecode != null" >
-        #{classcoursecode,jdbcType=VARCHAR},
-      </if>
       <if test="classstatus != null" >
         #{classstatus,jdbcType=INTEGER},
       </if>
@@ -123,12 +108,6 @@
       <if test="classcreatetime != null" >
         ClassCreateTime = #{classcreatetime,jdbcType=TIMESTAMP},
       </if>
-      <if test="classdeadline != null" >
-        ClassDeadline = #{classdeadline,jdbcType=TIMESTAMP},
-      </if>
-      <if test="classcoursecode != null" >
-        ClassCourseCode = #{classcoursecode,jdbcType=VARCHAR},
-      </if>
       <if test="classstatus != null" >
         ClassStatus = #{classstatus,jdbcType=INTEGER},
       </if>
@@ -142,8 +121,6 @@
       ClassDescription = #{classdescription,jdbcType=VARCHAR},
       ClassCreator = #{classcreator,jdbcType=VARCHAR},
       ClassCreateTime = #{classcreatetime,jdbcType=TIMESTAMP},
-      ClassDeadline = #{classdeadline,jdbcType=TIMESTAMP},
-      ClassCourseCode = #{classcoursecode,jdbcType=VARCHAR},
       ClassStatus = #{classstatus,jdbcType=INTEGER}
     where ClassID = #{classid,jdbcType=INTEGER}
   </update>
@@ -162,13 +139,6 @@
     where ClassCreator = #{classCreator}
   </select>
 
-  <select id="selectByClassCourseCode" resultType="com.iclass.mybatis.po.Class">
-    select
-    <include refid="Base_Column_List" />
-    from class
-    where ClassCourseCode = #{classcoursecode} and ClassStatus = 1
-  </select>
-
   <select id="countByClassCreator" resultType="java.lang.Integer">
     select
     count(1)
@@ -181,5 +151,12 @@
     <include refid="Base_Column_List" />
     FROM class
     WHERE ClassCode = #{classcode,jdbcType=VARCHAR}
+  </select>
+  <select id="selectUnrelatedClassByCourseCode" resultType="com.iclass.mybatis.po.Class">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM class
+    WHERE ClassCreator = #{classcreator} AND ClassStatus = 1 AND ClassCode NOT IN
+    (SELECT ClassCode FROM class_course WHERE CourseCode = #{coursecode} AND Status = 1)
   </select>
 </mapper>

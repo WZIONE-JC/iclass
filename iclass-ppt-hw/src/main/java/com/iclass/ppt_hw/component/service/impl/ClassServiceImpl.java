@@ -1,9 +1,11 @@
 package com.iclass.ppt_hw.component.service.impl;
 
+import com.iclass.mybatis.dao.ClassCourseMapper;
 import com.iclass.mybatis.dao.ClassMapper;
 import com.iclass.mybatis.dao.UserMapper;
 import com.iclass.mybatis.dto.ClassDTO;
 import com.iclass.mybatis.po.Class;
+import com.iclass.mybatis.po.ClassCourse;
 import com.iclass.mybatis.po.Course;
 import com.iclass.mybatis.po.User;
 import com.iclass.ppt_hw.component.service.api.ClassService;
@@ -12,6 +14,7 @@ import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.msg.Msg;
 import com.iclass.user.component.msg.ResponseMsg;
 import com.iclass.user.component.utils.CheckDataTables;
+import com.iclass.user.component.utils.IclassUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
@@ -38,6 +41,9 @@ public class ClassServiceImpl implements ClassService {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private ClassCourseMapper classCourseMapper;
+
     /**
      *
      * @param c 课堂信息
@@ -50,6 +56,7 @@ public class ClassServiceImpl implements ClassService {
             serviceResult.setMessage("创建课堂失败,课堂信息不完整");
             return serviceResult;
         }
+        c.setClasscreatetime(IclassUtil.getDateTimeNow());
         c.setClassstatus(1);
         classMapper.insert(c);
         serviceResult.setSuccess(true);
@@ -83,7 +90,7 @@ public class ClassServiceImpl implements ClassService {
      * @return 课堂信息
      */
     @Override
-    public ServiceResult<List<ClassDTO>> getClassesByClassCreator(DataTablesRequestEntity requestEntity, String classCreator) {
+    public ServiceResult<List<ClassDTO>> getClassesByClassCreator(DataTablesRequestEntity requestEntity, String classCreator, Boolean isLimit) {
         ServiceResult<List<ClassDTO>> serviceResult = new ServiceResult<>();
         if (StringUtils.isNotBlank(classCreator)) {
             requestEntity = CheckDataTables.check(requestEntity);
@@ -94,8 +101,12 @@ public class ClassServiceImpl implements ClassService {
 
             Integer draw = requestEntity.getDraw();
 
-            List<Class> classes = classMapper.selectByClassCreator(classCreator, start, length);
-
+            List<Class> classes = new ArrayList<>();
+            if (isLimit) {
+                classes = classMapper.selectByClassCreator(classCreator, start, length);
+            } else {
+                classes = classMapper.selectByClassCreatorNoLimit(classCreator);
+            }
             User user = userMapper.findUserByUsercode(classCreator);
 
             String teacherName = user.getUserfullname();
@@ -128,11 +139,16 @@ public class ClassServiceImpl implements ClassService {
     }
 
     @Override
-    public ServiceResult<List<ClassDTO>> getClassesByClassCourseCode(String classCourseCode) {
+    public ServiceResult<List<ClassDTO>> getClassesByCourseCode(String courseCode) {
         ServiceResult<List<ClassDTO>> serviceResult = new ServiceResult<>();
-        if (StringUtils.isNotBlank(classCourseCode)) {
-            List<Class> classes = classMapper.selectByClassCourseCode(classCourseCode);
+        if (StringUtils.isNotBlank(courseCode)) {
             List<ClassDTO> classDTOS = new ArrayList<>();
+            List<ClassCourse> classCourses = classCourseMapper.selectByCourseCode(courseCode);
+            List<Class> classes = new ArrayList<>();
+            for (ClassCourse classCourse : classCourses) {
+                Class c = classMapper.selectByClassCode(classCourse.getClasscode());
+                classes.add(c);
+            }
             if (classes != null && classes.size() > 0) {
                for (Class c : classes) {
                    classDTOS.add(new ClassDTO(c));
@@ -140,12 +156,35 @@ public class ClassServiceImpl implements ClassService {
                 serviceResult.setSuccess(true);
                serviceResult.setData(classDTOS);
             } else {
-                logger.warn("在class表中没有找到classCourseCode：" + classCourseCode + "的记录");
+                logger.warn("在class表中没有找到courseCode：" + courseCode + "的记录");
                 serviceResult.setMessage("该课程还没有应用到课堂中,请先为某课堂添加该课程");
             }
         } else {
-            logger.warn("classCourseCode为空");
-            serviceResult.setMessage("classCourseCode为空");
+            logger.warn("courseCode为空");
+            serviceResult.setMessage("courseCode为空");
+        }
+        return serviceResult;
+    }
+
+    @Override
+    public ServiceResult<List<Class>> getUnRelatedClassesByCourseCode(String courseCode, String classCreator) {
+        ServiceResult<List<Class>> serviceResult = new ServiceResult<>();
+        if (StringUtils.isBlank(classCreator)) {
+            logger.warn("classCreator为空");
+            serviceResult.setMessage("未登录");
+            return serviceResult;
+        }
+        if (StringUtils.isBlank(courseCode)) {
+            logger.warn("courseCode为空");
+            serviceResult.setMessage("courseCode为空");
+            return serviceResult;
+        }
+        List<Class> classes = classMapper.selectUnrelatedClassByCourseCode(courseCode, classCreator);
+        if (classes != null && classes.size() > 0) {
+            serviceResult.setData(classes);
+            serviceResult.setSuccess(true);
+        } else {
+            serviceResult.setMessage("您创建的所有的班级都已创建该课程!");
         }
         return serviceResult;
     }
@@ -157,8 +196,8 @@ public class ClassServiceImpl implements ClassService {
             serviceResult.setMessage("课程编号不能为空");
             return serviceResult;
         }
-        List<Class> classes = classMapper.selectByClassCode(classCode);
-        if (classes != null && classes.size() > 0) {
+        Class classes = classMapper.selectByClassCode(classCode);
+        if (classes != null) {
             serviceResult.setData(new ResponseMsg(Msg.CLASS_CODE_EXISTED));
             return serviceResult;
         }

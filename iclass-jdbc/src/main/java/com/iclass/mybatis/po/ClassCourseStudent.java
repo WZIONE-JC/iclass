@@ -1,21 +1,19 @@
 package com.iclass.mybatis.po;
 
-import java.io.Serializable;
-
-public class ClassStudent implements Serializable{
+public class ClassCourseStudent {
     private Integer classstudentid;
 
-    private Integer classID;
+    private Integer classcourseid;
 
     private String studentcode;
 
-    public ClassStudent(Integer classstudentid, Integer classID, String studentcode) {
+    public ClassCourseStudent(Integer classstudentid, Integer classcourseid, String studentcode) {
         this.classstudentid = classstudentid;
-        this.classID = classID;
+        this.classcourseid = classcourseid;
         this.studentcode = studentcode;
     }
 
-    public ClassStudent() {
+    public ClassCourseStudent() {
         super();
     }
 
@@ -27,12 +25,12 @@ public class ClassStudent implements Serializable{
         this.classstudentid = classstudentid;
     }
 
-    public Integer getClassID() {
-        return classID;
+    public Integer getClasscourseid() {
+        return classcourseid;
     }
 
-    public void setClassID(Integer classID) {
-        this.classID = classID;
+    public void setClasscourseid(Integer classcourseid) {
+        this.classcourseid = classcourseid;
     }
 
     public String getStudentcode() {
@@ -45,9 +43,9 @@ public class ClassStudent implements Serializable{
 
     @Override
     public String toString() {
-        return "ClassStudent{" +
+        return "ClassCourseStudent{" +
                 "classstudentid=" + classstudentid +
-                ", classID=" + classID +
+                ", classcourseid=" + classcourseid +
                 ", studentcode='" + studentcode + '\'' +
                 '}';
     }

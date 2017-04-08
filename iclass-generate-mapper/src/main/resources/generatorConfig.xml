@@ -131,13 +131,13 @@
                <!--enableSelectByExample="false"-->
                <!--selectByExampleQueryId="false">-->
         <!--</table>-->
-        <table tableName="iclassfile"
-                        enableCountByExample="false"
-                        enableUpdateByExample="false"
-                        enableDeleteByExample="false"
-                        enableSelectByExample="false"
-                        selectByExampleQueryId="false">
-        </table>
+        <!--<table tableName="iclassfile"-->
+                        <!--enableCountByExample="false"-->
+                        <!--enableUpdateByExample="false"-->
+                        <!--enableDeleteByExample="false"-->
+                        <!--enableSelectByExample="false"-->
+                        <!--selectByExampleQueryId="false">-->
+        <!--</table>-->
         <!--<table tableName="iclassfile_class"-->
                <!--enableCountByExample="false"-->
                <!--enableUpdateByExample="false"-->
@@ -152,6 +152,19 @@
                <!--enableSelectByExample="false"-->
                <!--selectByExampleQueryId="false">-->
         <!--</table>-->
-
+        <!--<table tableName="class_course"-->
+               <!--enableCountByExample="false"-->
+               <!--enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false">-->
+        <!--</table>-->
+        <table tableName="class_course_student"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
     </context>
 </generatorConfiguration>

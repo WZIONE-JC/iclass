@@ -23,39 +23,61 @@
     <![endif]-->
     <link href="assets/css/style.css" rel="stylesheet" type="text/css"/>
     <link href="lib/sweetalert-1.1.1/sweetalert.css" rel="stylesheet" type="text/css" />
-    <title>修改班级</title>
+    <title>开设课堂</title>
 </head>
 <body>
 <div class="pd-20">
-    <form action="" method="post" class="form form-horizontal" id="form-class-update">
-        <input type="hidden" name="classid" id="id" value=""/>
+    <form action="" method="post" class="form form-horizontal" id="form-class-course-add">
+
         <div class="row cl">
-            <label class="form-label col-4"><span class="c-red">*</span>班级编号：</label>
+            <label class="form-label col-4"><span class="c-red">*</span>选择课程：</label>
             <div class="formControls col-7">
-                <input type="text" class="input-text readonly-input" value="加载中..." readonly="readonly"
-                       id="classcode" name="classcode" >
+                    <span class="select-box">
+                        <select name="coursecode" id="courseCode" class="select"  datatype="*" nullmsg="请选择课程">
+                            <option value="">选择课程</option>
+
+                        </select>
+                    </span>
             </div>
         </div>
-        <div class="row cl">
-            <label class="form-label col-4"><span class="c-red">*</span>班级名称：</label>
-            <div class="formControls col-7">
-                <input type="text" class="input-text" value="加载中..." placeholder="输入班级名称"
-                       id="classname" name="classname" datatype="*" nullmsg="请输入班级名称"></div>
-        </div>
-        <div class="row cl">
 
-            <label class="form-label col-4"><span
-                    class="c-red">*</span>班级描述：</label>
+        <div class="row cl">
+            <label class="form-label col-4"><span class="c-red">*</span>选择班级：</label>
             <div class="formControls col-7">
-                <input type="text" class="input-text" value="加载中..." placeholder="输入班级描述"
-                       id="classdescription" name="classdescription" datatype="*" nullmsg="输入班级描述"></div>
+                <span class="select-box">
+                        <select name="classcode" id="classCode" class="select"  datatype="*" nullmsg="请选择班级">
+                            <option value="">选择班级</option>
+
+                        </select>
+                    </span>
+            </div>
         </div>
+
+
+        <div class="row cl">
+            <label class="form-label col-4"><span class="c-red">*</span>开始时间：</label>
+            <div class="formControls col-7">
+                <input type="text" datatype="*" nullmsg="请选择开始时间"
+                       onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',skin:'twoer',maxDate: '%y-%M-%d'})"
+                       class="input-text Wdate" id="datemin" name="createtime">
+            </div>
+        </div>
+
+        <div class="row cl">
+                <label class="form-label col-4"><span class="c-red">*</span>结束日期：</label>
+            <div class="formControls col-7">
+                <input type="text" datatype="*" nullmsg="请选择结束时间"
+                       onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',skin:'twoer',minDate:'#F{$dp.$D(\'datemin\')}'})"
+                       id="deadline" class="input-text Wdate" name="deadline">
+            </div>
+        </div>
+
         <div class="row cl">
 
             <label class="form-label col-4"><span
                     class="c-red">*</span>创建者：</label>
             <div class="formControls col-7">
-                <input type="text" class="input-text readonly-input" value="加载中..." readonly="readonly" id="classcreator" name="classcreator" ></div>
+                <input type="text" class="input-text" value="" readonly="readonly" id="classcreator" name="classcreator" ></div>
         </div>
 
         <div class="row cl">
@@ -71,7 +93,6 @@
         </div>
 
     </form>
-    <a style="display: none" onclick="loadData()" id="loadData"></a>
 </div>
 </div>
 <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
@@ -85,19 +106,41 @@
 <script type="text/javascript" src="assets/js/business/ip.js"></script>
 <script type="text/javascript" src="assets/js/business/class.js"></script>
 <script type="text/javascript" src="assets/js/business/course.js"></script>
+<script type="text/javascript" src="assets/js/business/class-course.js"></script>
 <script type="text/javascript">
+    $(function () {
+        getCourseByTeacherCode(); //course.js
+        var teacherCode = $(window.parent.document).find('#classcreator')[0].value;
+        $("#classcreator").val(teacherCode);
+    });
 
-    $("#form-class-update").Validform({
+    // 监听课程选择事件
+    $(function () {
+        $("#courseCode").on("change", function () {
+            var courseCode = $("#courseCode").val();
+            if(courseCode != null && courseCode != "") {
+                //先清空Options
+                $("#classCode")[0].length = 0;
+                getUnrelatedClassByCourseCode(courseCode);
+            } else {
+                swal({
+                    title: "Sorry!",
+                    text: "请先选择课程信息",
+                    timer: 2000,
+                    type: "error"
+                });
+            }
+        })
+    });
+
+    $("#form-class-course-add").Validform({
         tiptype:2,
         beforeSubmit:function(form){
-            updateClass();
+            addClassCourse();
             return false;
         }
     });
-    function loadData () {
-        var $id = $("#id").val();
-        showClass($id);
-    }
+
 </script>
 </body>
 </html>

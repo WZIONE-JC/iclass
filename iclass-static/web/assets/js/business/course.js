@@ -5,7 +5,6 @@
 //获取课程信息
 function getCourseByTeacherCode() {
     var teacherCode = $(window.parent.document).find('#classcreator')[0].value;
-    // alert(teacherCode);
     $.ajax({
         type: "post",
         dataType: "jsonp",
@@ -14,6 +13,7 @@ function getCourseByTeacherCode() {
         data: {
             "teacherCode" : teacherCode
         },
+        async:false,
         timeout: 3000,
         success: function (responseData) {
             if (responseData.success) {
@@ -120,7 +120,7 @@ function courseTableHandler(formId, url) {
                 }
                 if (col == 8) {
                     $(td).addClass("td-manage");
-                    $(td).html("<a style='text-decoration:none' class='ml-5' title='编辑课程' onclick=edit('编辑课程','course-update.html','"+id+"','570','540')><i class='Hui-iconfont'>&#xe6df;</i></a> <a style='text-decoration:none' class='ml-5' onClick='stop(this,"+id+")'  title='下架'><i class='Hui-iconfont'>&#xe6de;</i></a>");
+                    $(td).html("<a style='text-decoration:none' class='ml-5' title='编辑课程' onclick=edit('编辑课程','course-update.html','"+id+"','570','400')><i class='Hui-iconfont'>&#xe6df;</i></a> <a style='text-decoration:none' class='ml-5' onClick='stop(this,"+id+")'  title='下架'><i class='Hui-iconfont'>&#xe6de;</i></a>");
                 }
             }
         }

@@ -33,22 +33,33 @@ public class ClassController {
      * @return 返回class实体集合
      */
     @RequestMapping("/getClass")
-    public ServiceResult<List<ClassDTO>> getClassesByClassCreator(DataTablesRequestEntity requestEntity, String classCreator) {
+    public ServiceResult<List<ClassDTO>> getClassesByClassCreator(DataTablesRequestEntity requestEntity, String classCreator, Boolean isLimit) {
 
-        return classService.getClassesByClassCreator(requestEntity, classCreator);
+        return classService.getClassesByClassCreator(requestEntity, classCreator, isLimit);
     }
 
     /**
      * 通过classCourseCode 来获取课堂信息
-     * @param classCourseCode 课程编号
+     * @param courseCode 课程编号
      * @return class实体 集合
      */
-    @RequestMapping("/getClassByClassCourseCode")
-    public ServiceResult<List<ClassDTO>> getClassesByClassCourseCode(String classCourseCode) {
+    @RequestMapping("/getClassesByCourseCode")
+    public ServiceResult<List<ClassDTO>> getClassesByCourseCode(String courseCode) {
 
-        return classService.getClassesByClassCourseCode(classCourseCode);
+        return classService.getClassesByCourseCode(courseCode);
     }
 
+    /**
+     * 获取还没有选该课的班级
+     * @param courseCode ClassCourseCode
+     * @param classCreator
+     * @return class 实体
+     */
+    @RequestMapping("/getUnrelatedClass")
+    ServiceResult<List<Class>> getUnRelatedClassesByCourseCode(String courseCode, String classCreator) {
+
+        return classService.getUnRelatedClassesByCourseCode(courseCode, classCreator);
+    }
     /**
      * 检查classCode是否存在
      * @param classCode

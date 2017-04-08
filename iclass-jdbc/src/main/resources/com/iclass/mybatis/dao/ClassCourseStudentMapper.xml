@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.iclass.mybatis.dao.ClassStudentMapper" >
-  <resultMap id="BaseResultMap" type="com.iclass.mybatis.po.ClassStudent" >
+<mapper namespace="com.iclass.mybatis.dao.ClassCourseStudentMapper" >
+  <resultMap id="BaseResultMap" type="com.iclass.mybatis.po.ClassCourseStudent" >
     <constructor >
       <idArg column="ClassStudentID" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="ClassID" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="ClassCourseID" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="StudentCode" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    ClassStudentID, ClassID, StudentCode
+    ClassStudentID, ClassCourseID, StudentCode
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from class_student
+    from class_course_student
     where ClassStudentID = #{classstudentid,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from class_student
+    delete from class_course_student
     where ClassStudentID = #{classstudentid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.iclass.mybatis.po.ClassStudent" >
-    insert into class_student (ClassStudentID, ClassID, StudentCode
+  <insert id="insert" parameterType="com.iclass.mybatis.po.ClassCourseStudent" >
+    insert into class_course_student (ClassStudentID, ClassCourseID, StudentCode
       )
-    values (#{classstudentid,jdbcType=INTEGER}, #{ClassID,jdbcType=INTEGER}, #{studentcode,jdbcType=VARCHAR}
+    values (#{classstudentid,jdbcType=INTEGER}, #{classcourseid,jdbcType=INTEGER}, #{studentcode,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.iclass.mybatis.po.ClassStudent" >
-    insert into class_student
+  <insert id="insertSelective" parameterType="com.iclass.mybatis.po.ClassCourseStudent" >
+    insert into class_course_student
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="classstudentid != null" >
         ClassStudentID,
       </if>
-      <if test="classid != null" >
-        ClassID,
+      <if test="classcourseid != null" >
+        ClassCourseID,
       </if>
       <if test="studentcode != null" >
         StudentCode,
@@ -44,19 +44,19 @@
       <if test="classstudentid != null" >
         #{classstudentid,jdbcType=INTEGER},
       </if>
-      <if test="classid != null" >
-        #{classid,jdbcType=INTEGER},
+      <if test="classcourseid != null" >
+        #{classcourseid,jdbcType=INTEGER},
       </if>
       <if test="studentcode != null" >
         #{studentcode,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.iclass.mybatis.po.ClassStudent" >
-    update class_student
+  <update id="updateByPrimaryKeySelective" parameterType="com.iclass.mybatis.po.ClassCourseStudent" >
+    update class_course_student
     <set >
-      <if test="classid != null" >
-        ClassID = #{classid,jdbcType=VARCHAR},
+      <if test="classcourseid != null" >
+        ClassCourseID = #{classcourseid,jdbcType=INTEGER},
       </if>
       <if test="studentcode != null" >
         StudentCode = #{studentcode,jdbcType=VARCHAR},
@@ -64,16 +64,16 @@
     </set>
     where ClassStudentID = #{classstudentid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.iclass.mybatis.po.ClassStudent" >
-    update class_student
-    set ClassID = #{classid,jdbcType=VARCHAR},
+  <update id="updateByPrimaryKey" parameterType="com.iclass.mybatis.po.ClassCourseStudent" >
+    update class_course_student
+    set ClassCourseID = #{classcourseid,jdbcType=INTEGER},
       StudentCode = #{studentcode,jdbcType=VARCHAR}
     where ClassStudentID = #{classstudentid,jdbcType=INTEGER}
   </update>
-  <select id="selectByClassID" resultType="com.iclass.mybatis.po.ClassStudent">
+  <select id="selectByClassCourseId" resultType="com.iclass.mybatis.po.ClassCourseStudent">
     select
     <include refid="Base_Column_List" />
-    from class_student
-    where ClassID = #{classID}
+    from class_course_student
+    where ClassCourseID = #{classcourseid}
   </select>
 </mapper>
