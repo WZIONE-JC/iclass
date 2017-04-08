@@ -25,6 +25,12 @@ public class CourseController {
     @Autowired
     private CourseService courseService;
 
+    /**
+     * 根据教师获取课程数据
+     * @param requestEntity
+     * @param teacherCode
+     * @return
+     */
     @RequestMapping("/get")
     public ServiceResult<List<CourseDTO>> getCourseByTeacherCode(DataTablesRequestEntity requestEntity, String teacherCode) {
 
