@@ -115,12 +115,18 @@ function courseTableHandler(formId, url) {
             targets: [-2, -1],
             "createdCell": function (td, cellData, rowData, row, col) {
                 var id = rowData.course.courseid;
+                var status = rowData.course.coursestatus;
                 if (col == 7) {
                     $(td).addClass("td-status");
                 }
                 if (col == 8) {
                     $(td).addClass("td-manage");
-                    $(td).html("<a style='text-decoration:none' class='ml-5' title='编辑课程' onclick=edit('编辑课程','course-update.html','"+id+"','570','400')><i class='Hui-iconfont'>&#xe6df;</i></a> <a style='text-decoration:none' class='ml-5' onClick='stop(this,"+id+")'  title='下架'><i class='Hui-iconfont'>&#xe6de;</i></a>");
+                    if(status == 1) {
+                        $(td).html("<a style='text-decoration:none' class='ml-5' title='编辑课程' onclick=edit('编辑课程','course-update.html','"+id+"','570','400')><i class='Hui-iconfont'>&#xe6df;</i></a> <a style='text-decoration:none' class='ml-5' onClick='stop(this,"+id+")'  title='下架'><i class='Hui-iconfont'>&#xe6de;</i></a>");
+                    } else {
+                        $(td).html("<a style='text-decoration:none' class='ml-5' title='编辑课程' onclick=edit('编辑课程','course-update.html','"+id+"','570','400')><i class='Hui-iconfont'>&#xe6df;</i></a> <a style='text-decoration:none' class='ml-5' onClick='start(this,"+id+")' title='发布'><i class='Hui-iconfont'>&#xe603;</i></a>");
+                    }
+
                 }
             }
         }

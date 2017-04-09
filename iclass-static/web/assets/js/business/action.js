@@ -13,8 +13,8 @@ function show(title,url,id,w,h){
 
 function stop(obj,id){
     layer.confirm('确认要下架吗？',function(index){
-        $(obj).parents("tr").find(".td-manage").append(' <a class="ml-5" style="text-decoration:none" onClick="start(this,id)" href="javascript:;" title="发布"><i class="Hui-iconfont">&#xe603;</i></a>');
-        $(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius" title="已下架">已下架</span>');
+        $(obj).parents("tr").find(".td-manage").append(" <a style='text-decoration:none' class='ml-5' onClick='start(this,"+id+")' title='发布'><i class='Hui-iconfont'>&#xe603;</i></a>");
+        $(obj).parents("tr").find(".td-status").html('<span class="label label-default radius" title="已下架">已下架</span>');
         $(obj).remove();
         layer.msg('已下架!',{icon: 5,time:1000});
     });
@@ -23,7 +23,7 @@ function stop(obj,id){
 
 function start(obj,id){
     layer.confirm('确认要发布吗？',function(index){
-        $(obj).parents("tr").find(".td-manage").append(' <a class="ml-5" style="text-decoration:none" onClick="stop(this,id)" href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe6de;</i></a>');
+        $(obj).parents("tr").find(".td-manage").append(" <a style='text-decoration:none' class='ml-5' onClick='stop(this,"+id+")' title='下架'><i class='Hui-iconfont'>&#xe6de;</i></a>");
         $(obj).parents("tr").find(".td-status").html("<span class='label label-success radius' title='已发布'>已发布</span>");
         $(obj).remove();
         layer.msg('已发布!',{icon: 6,time:1000});

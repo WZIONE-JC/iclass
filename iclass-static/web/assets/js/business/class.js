@@ -196,13 +196,18 @@ function classTableHandler(formId, url) {
             "createdCell": function (td, cellData, rowData, row, col) {
                 var classcode = rowData.aClass.classcode;
                 var id = rowData.aClass.classid;
-
+                var status = rowData.aClass.classstatus;
                 if (col == 6) {
                     $(td).addClass("td-status");
                 }
                 if (col == 7) {
                     $(td).addClass("td-manage");
-                    $(td).html("<a style='text-decoration:none' class='ml-5' title='编辑课堂' onclick=edit('编辑课堂','class-update.html','"+id+"','570','400')><i class='Hui-iconfont'>&#xe6df;</i></a> <a style='text-decoration:none' class='ml-5' onClick='stop(this,"+classcode+")'  title='下架课堂'><i class='Hui-iconfont'>&#xe6de;</i></a>");
+                    if (status == 1) {
+                        $(td).html("<a style='text-decoration:none' class='ml-5' title='编辑课堂' onclick=edit('编辑课堂','class-update.html','"+id+"','570','400')><i class='Hui-iconfont'>&#xe6df;</i></a> <a style='text-decoration:none' class='ml-5' onClick='stop(this,"+id+")'  title='下架课堂'><i class='Hui-iconfont'>&#xe6de;</i></a>");
+                    } else {
+                        $(td).html("<a style='text-decoration:none' class='ml-5' title='编辑课堂' onclick=edit('编辑课堂','class-update.html','"+id+"','570','400')><i class='Hui-iconfont'>&#xe6df;</i></a> <a style='text-decoration:none' class='ml-5' onClick='start(this,"+id+")' title='发布'><i class='Hui-iconfont'>&#xe603;</i></a>");
+                    }
+
                 }
             }
         }

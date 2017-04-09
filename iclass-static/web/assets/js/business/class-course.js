@@ -81,6 +81,7 @@ function classCourseTableHandler(formId, url) {
                 var id = rowData.classcourseId;
                 var coursecode = rowData.course.coursecode;
                 var coursename = rowData.course.coursename;
+                var status = rowData.status;
                 if (col == 1) {
                     $(td).wrapInner("<span style='cursor:pointer' title='查看课程信息' class='label label-success radius' onclick=course_show('" + coursename + "','course-show.html','" + coursecode + "','360','400')></span>");
                 }
@@ -89,7 +90,11 @@ function classCourseTableHandler(formId, url) {
                 }
                 if (col == 10) {
                     $(td).addClass("td-manage");
-                    $(td).html("<a style='text-decoration:none' class='ml-5' title='编辑课堂' onclick=edit('编辑课堂','class-course-update.html','"+id+"','570','400')><i class='Hui-iconfont'>&#xe6df;</i></a> <a style='text-decoration:none' class='ml-5' onClick='stop(this,"+id+")'  title='下架课堂'><i class='Hui-iconfont'>&#xe6de;</i></a>");
+                    if(status == 1) {
+                        $(td).html("<a style='text-decoration:none' class='ml-5' title='编辑课堂' onclick=edit('编辑课堂','class-course-update.html','"+id+"','570','400')><i class='Hui-iconfont'>&#xe6df;</i></a> <a style='text-decoration:none' class='ml-5' onClick='stop(this,"+id+")'  title='下架'><i class='Hui-iconfont'>&#xe6de;</i></a>");
+                    } else if(status == 0) {
+                        $(td).html("<a style='text-decoration:none' class='ml-5' title='编辑课堂' onclick=edit('编辑课堂','class-course-update.html','"+id+"','570','400')><i class='Hui-iconfont'>&#xe6df;</i></a> <a style='text-decoration:none' class='ml-5' onClick='start(this,"+id+")' title='发布'><i class='Hui-iconfont'>&#xe603;</i></a>");
+                    }
                 }
             }
         }
