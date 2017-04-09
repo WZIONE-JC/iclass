@@ -49,11 +49,11 @@ public class CacheInfoServiceImpl implements CacheInfoService {
                 serviceResult.setData(sessionUser);
                 serviceResult.setMessage("UserRequestCacheServiceImpl.setCache 缓存设置成功: " + sessionUser);
             } else if(reuslt.equals("404")){
-                logger.error("UserRequestCacheServiceImpl.setCache 缓存设置失败: " + sessionUser);
+                logger.warn("UserRequestCacheServiceImpl.setCache 缓存设置失败: " + sessionUser);
                 serviceResult.setMessage("UserRequestCacheServiceImpl.setCache 缓存设置失败: " + sessionUser);
             }
         } else {
-            logger.error("设置缓存失败,用户的usercoer不能为空");
+            logger.warn("设置缓存失败,用户的usercoer不能为空");
             serviceResult.setMessage("设置缓存失败,用户的usercode不能为空");
         }
         return serviceResult;

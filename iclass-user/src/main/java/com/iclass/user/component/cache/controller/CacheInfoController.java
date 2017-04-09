@@ -37,8 +37,9 @@ public class CacheInfoController {
      * @param request 获取session
      */
     @RequestMapping(value = "/setCache", method = {RequestMethod.POST, RequestMethod.GET})
-    public ServiceResult<SessionUser> setCache(HttpServletRequest request,
-                                               User user) {
+    public ServiceResult<SessionUser> setCache(HttpServletRequest request, User user) {
+        System.out.println(request.getHeader("User-Agent"));
+        System.out.println(request.getRemoteAddr());
         HttpSession session = request.getSession();
         String sessionid = session.getId();
         logger.info("设置缓存时,从客户端获取的参数:user = [" + user + "]");
