@@ -267,7 +267,7 @@ function check() {
 }
 
 
-//获取课程数据,根据id
+//获取课程数据,根据id或者code
 function showCourse(url,param) {
     $.ajax({
         type: "post",

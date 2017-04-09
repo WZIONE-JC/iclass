@@ -78,6 +78,7 @@ public class ClassCourseServiceImpl implements ClassCourseService{
                     Integer classcourseId = classCourse.getClasscourseid();
                     String createTime = classCourse.getCreatetime();
                     String deadline = classCourse.getDeadline();
+                    Integer status = classCourse.getStatus();
                     //3.根据courseCode去查询Course实体
                     String courseCode = classCourse.getCoursecode();
                     Course course = courseMapper.selectByCourseCode(courseCode);
@@ -94,7 +95,7 @@ public class ClassCourseServiceImpl implements ClassCourseService{
                             sessionUsers.add(new SessionUser(user));
                         }
                     }
-                    classCourseDTOs.add(new ClassCourseDTO(classcourseId, c, course, teacherName, sessionUsers, createTime, deadline));
+                    classCourseDTOs.add(new ClassCourseDTO(classcourseId, c, course, teacherName, sessionUsers, createTime, deadline, status));
                 }
             }
             serviceResult.setSuccess(true);
@@ -160,5 +161,47 @@ public class ClassCourseServiceImpl implements ClassCourseService{
         serviceResult.setSuccess(true);
         serviceResult.setData(classCourse);
         return serviceResult;
+    }
+
+    @Override
+    public ServiceResult<ResponseMsg> check(Integer classcourseId, String classCode, String courseCode) {
+        ServiceResult<ResponseMsg> serviceResult = new ServiceResult<>();
+        if (classcourseId == null) {
+            serviceResult.setMessage("课堂id不能为空");
+            return serviceResult;
+        }
+        if (StringUtils.isBlank(classCode)) {
+            serviceResult.setMessage("班级编号不能为空");
+            return serviceResult;
+        }
+        if (StringUtils.isBlank(courseCode)) {
+            serviceResult.setMessage("课程编号不能为空");
+            return serviceResult;
+        }
+        ClassCourse classCourse = classCourseMapper.selectByClassCodeAndCourseCode(classCode, courseCode);
+        //传入的id和查询出来的id不一致,才是修改了 classCode 和 courseCode
+        if (classCourse != null) {
+            Integer id = classCourse.getClasscourseid();
+            if (!id.equals(classcourseId)) {
+                serviceResult.setMessage("该课堂"+getClassRoomName(classCode, courseCode)+"已经存在");
+                return serviceResult;
+            }
+        }
+        serviceResult.setData(new ResponseMsg(Msg.OK));
+        serviceResult.setSuccess(true);
+        return serviceResult;
+    }
+
+    private String getClassRoomName(String classCode, String courseCode) {
+        StringBuilder result = new StringBuilder();
+        Class c = classMapper.selectByClassCode(classCode);
+        Course course = courseMapper.selectByCourseCode(courseCode);
+        if (c != null) {
+            result.append("[").append(c.getClassname());
+        }
+        if (course != null) {
+            result.append(":").append(course.getCoursename()).append("]");
+        }
+        return result.toString();
     }
 }

@@ -1,7 +1,7 @@
 package com.iclass.ppt_hw.component.controller;
 
+import com.iclass.mybatis.dto.ClassCourseDTO;
 import com.iclass.mybatis.dto.IclassfileDTO;
-import com.iclass.mybatis.dto.PPTHWDTO;
 import com.iclass.mybatis.qo.FileQo;
 import com.iclass.ppt_hw.component.service.api.PPTHWService;
 import com.iclass.user.component.entity.DataTablesRequestEntity;
@@ -26,13 +26,13 @@ public class PPTHWContorller {
     private PPTHWService ppthwService;
 
     @RequestMapping(value = "/getPPTInfo",method = {RequestMethod.POST, RequestMethod.GET})
-    public ServiceResult<List<PPTHWDTO>> getPPTInfo(DataTablesRequestEntity requestEntity, String classCreator) {
+    public ServiceResult<List<ClassCourseDTO>> getPPTInfo(DataTablesRequestEntity requestEntity, String classCreator) {
 
         return ppthwService.getPPTInfo(requestEntity, classCreator);
     }
 
     @RequestMapping(value = "/getHWInfo",method = {RequestMethod.POST, RequestMethod.GET})
-    public ServiceResult<List<PPTHWDTO>> getHWInfo(DataTablesRequestEntity requestEntity, String classCreator) {
+    public ServiceResult<List<ClassCourseDTO>> getHWInfo(DataTablesRequestEntity requestEntity, String classCreator) {
 
         return ppthwService.getHWInfo(requestEntity, classCreator);
     }

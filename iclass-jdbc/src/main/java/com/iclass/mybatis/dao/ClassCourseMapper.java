@@ -22,4 +22,5 @@ public interface ClassCourseMapper {
 
     List<ClassCourse> selectByCourseCode(@Param("coursecode") String courseCode);
 
+    ClassCourse selectByClassCodeAndCourseCode(@Param("classcode") String classCode, @Param("coursecode") String courseCode);
 }

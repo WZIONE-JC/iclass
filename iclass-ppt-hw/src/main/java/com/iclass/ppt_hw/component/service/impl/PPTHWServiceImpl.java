@@ -1,8 +1,8 @@
 package com.iclass.ppt_hw.component.service.impl;
 
 import com.iclass.mybatis.dao.*;
+import com.iclass.mybatis.dto.ClassCourseDTO;
 import com.iclass.mybatis.dto.IclassfileDTO;
-import com.iclass.mybatis.dto.PPTHWDTO;
 import com.iclass.mybatis.dto.SessionUser;
 import com.iclass.mybatis.po.Class;
 import com.iclass.mybatis.po.*;
@@ -83,7 +83,7 @@ public class PPTHWServiceImpl implements PPTHWService {
      * @return PPTHWDTO
      */
     @Override
-    public ServiceResult<List<PPTHWDTO>> getPPTInfo(DataTablesRequestEntity requestEntity, String classCreator) {
+    public ServiceResult<List<ClassCourseDTO>> getPPTInfo(DataTablesRequestEntity requestEntity, String classCreator) {
 
         return doData(requestEntity, classCreator);
     }
@@ -96,7 +96,7 @@ public class PPTHWServiceImpl implements PPTHWService {
      * @return PPTHWDTO
      */
     @Override
-    public ServiceResult<List<PPTHWDTO>> getHWInfo(DataTablesRequestEntity requestEntity, String classCreator) {
+    public ServiceResult<List<ClassCourseDTO>> getHWInfo(DataTablesRequestEntity requestEntity, String classCreator) {
 
         return doData(requestEntity, classCreator);
     }
@@ -111,12 +111,14 @@ public class PPTHWServiceImpl implements PPTHWService {
      * @param classCreator teacherCode
      * @return PPTHWDTO 实体
      */
-    private ServiceResult<List<PPTHWDTO>> doData(DataTablesRequestEntity requestEntity, String classCreator) {
-        ServiceResult<List<PPTHWDTO>> serviceResult = new ServiceResult<>();
+    private ServiceResult<List<ClassCourseDTO>> doData(DataTablesRequestEntity requestEntity, String classCreator) {
+        ServiceResult<List<ClassCourseDTO>> serviceResult = new ServiceResult<>();
+
         requestEntity = CheckDataTables.check(requestEntity);
         Integer draw = requestEntity.getDraw();
         Integer start = requestEntity.getStart();
         Integer length = requestEntity.getLength();
+
         if (StringUtils.isBlank(classCreator)) {
             logger.warn("classCreator不能为空");
             serviceResult.setMessage("用户未登录");
@@ -133,7 +135,7 @@ public class PPTHWServiceImpl implements PPTHWService {
             serviceResult.setMessage(teacherName + " 教师还没有创建课堂");
             return serviceResult;
         }
-        List<PPTHWDTO> ppthwdtoList = new ArrayList<>();
+        List<ClassCourseDTO> classCourseDTOS = new ArrayList<>();
         //3.获取课堂的课程信息
         for (Class c : classes) {
             String classcode = c.getClasscode();
@@ -145,6 +147,9 @@ public class PPTHWServiceImpl implements PPTHWService {
                 Course course = courseMapper.selectByCourseCode(classCourse.getCoursecode());
                 //5.查询学生数据
                 List<SessionUser> sessionUsers = new ArrayList<>();
+                String createTime = classCourse.getCreatetime();
+                String deadline = classCourse.getDeadline();
+                Integer status = classCourse.getStatus();
                 Integer classCourseId = classCourse.getClasscourseid();
                 List<ClassCourseStudent> classCourseStudents = classCourseStudentMapper.selectByClassCourseId(classCourseId);
                 // 如果有学生的话
@@ -155,19 +160,15 @@ public class PPTHWServiceImpl implements PPTHWService {
                         sessionUsers.add(new SessionUser(user));
                     }
                 }
-                PPTHWDTO ppthwdto = new PPTHWDTO();
-                ppthwdto.setStudents(sessionUsers);
-                ppthwdto.setaClass(c);
-                ppthwdto.setCourse(course);
-                ppthwdto.setTeacherName(teacherName);
-                ppthwdtoList.add(ppthwdto);
+                ClassCourseDTO classCourseDTO = new ClassCourseDTO(classCourseId, c, course, teacherName, sessionUsers, createTime, deadline, status);
+                classCourseDTOS.add(classCourseDTO);
             }
         }
         serviceResult.setSuccess(true);
-        serviceResult.setData(ppthwdtoList);
+        serviceResult.setData(classCourseDTOS);
         serviceResult.setDraw(draw);
-        serviceResult.setRecordsTotal(ppthwdtoList.size());
-        serviceResult.setRecordsFiltered(ppthwdtoList.size());
+        serviceResult.setRecordsTotal(classCourseDTOS.size());
+        serviceResult.setRecordsFiltered(classCourseDTOS.size());
         logger.info("PPTINFO 信息初始化完成");
         return serviceResult;
     }

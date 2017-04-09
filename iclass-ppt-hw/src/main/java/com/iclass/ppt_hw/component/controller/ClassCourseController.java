@@ -9,6 +9,7 @@ import com.iclass.user.component.msg.ResponseMsg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.xml.crypto.Data;
@@ -68,5 +69,18 @@ public class ClassCourseController {
     ServiceResult<ClassCourse> get(@PathVariable("id") Integer classCourseId) {
 
         return classCourseService.get(classCourseId);
+    }
+
+    /**
+     * 根据classCode和CourseCode查看课堂是否存在
+     * @param classcourseid
+     * @param classcode
+     * @param coursecode
+     * @return
+     */
+    @RequestMapping("/check")
+    ServiceResult<ResponseMsg> check(Integer classcourseid, String classcode, String coursecode) {
+
+        return classCourseService.check(classcourseid, classcode, coursecode);
     }
 }

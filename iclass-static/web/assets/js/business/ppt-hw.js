@@ -99,23 +99,26 @@ function classTableHandler(formId, url, fileType) {
             {
                 data: "teacherName",
                 render: function (data, type, row, meta) {
-                    return "<span class='label label-success radius'>" + data + "</span>";
+                    return "<span class='label label-default radius'>" + data + "</span>";
                 }
             },
             {
                 data: null,
             },
             {
-                data: "aClass.classcreatetime",
+                data: "creatTime",
             },
             {
-                data: "students.length",
+                data: "deadline",
+            },
+            {
+                data: "sessionUsers.length",
                 render: function (data, type, row, meta) {
                     return "<span class='label label-default radius'>" + data + "</span>";
                 }
             },
             {
-                data: "aClass.classstatus",
+                data: "status",
                 render: function (data, type, row, meta) {
                     if (data == 0) {
                        return "<span class='label label-default radius' title='课程已下架'>已下架</span>";
@@ -138,17 +141,17 @@ function classTableHandler(formId, url, fileType) {
                 var classname = rowData.aClass.classname;
                 var coursename = rowData.course.coursename;
                 var coursecode = rowData.course.coursecode;
-                // if (col == 1) {
-                //     if (fileType == 0) {
-                //         $(td).wrapInner("<span style='cursor:pointer' title='查看课堂信息' class='label label-secondary radius' onclick=class_show('" + classname + "','class-show.html','classcode=" + classcode + "','360','400')></span>");
-                //     } else {
-                //         $(td).wrapInner("<span style='cursor:pointer' title='查看课堂信息' class='label label-success radius' onclick=class_show('" + classname + "','class-show.html','classcode=" + classcode + "','360','400')></span>");
-                //     }
-                //
-                // }
+                if (col == 1) {
+                    if (fileType == 0) {
+                        $(td).wrapInner("<span style='cursor:pointer' title='查看班级信息' class='label label-secondary radius' onclick=class_show('" + classname + "','class-show.html','" + classcode + "','360','400')></span>");
+                    } else {
+                        $(td).wrapInner("<span style='cursor:pointer' title='查看班级信息' class='label label-success radius' onclick=class_show('" + classname + "','class-show.html','" + classcode + "','360','400')></span>");
+                    }
+
+                }
                 if (col == 2) {
                     if (fileType == 0) {
-                        $(td).wrapInner("<span style='cursor:pointer' title='查看课程信息' class='label label-secondary radius' onclick=course_show('" + coursename + "','course-show.html','" + coursecode + "','360','400')></span>");
+                        $(td).wrapInner("<span style='cursor:pointer' title='查看课程信息' class='label label-success radius' onclick=course_show('" + coursename + "','course-show.html','" + coursecode + "','360','400')></span>");
                     } else {
                         $(td).wrapInner("<span style='cursor:pointer' title='查看课程信息' class='label label-secondary radius' onclick=course_show('" + coursename + "','course-show.html','" + coursecode + "','360','400')></span>");
                     }
@@ -161,12 +164,12 @@ function classTableHandler(formId, url, fileType) {
                     if(fileType == 1) {
                         title = "查看课件";
                     }
-                    $(td).html("<span style='cursor:pointer' onclick=file_list_show('850','400','"+classcode+"','"+coursecode+"','"+fileType+"') title='"+title+"'><span class='label radius label-warning'>"+ title +"</span></span>");
-                }
-                if (col == 7) {
-                    $(td).addClass("td-status");
+                    $(td).html("<span style='cursor:pointer' onclick=file_list_show('850','400','"+classcode+"','"+coursecode+"','"+fileType+"') title='"+title+"'><span class='label radius label-primary'>"+ title +"</span></span>");
                 }
                 if (col == 8) {
+                    $(td).addClass("td-status");
+                }
+                if (col == 9) {
                     $(td).addClass("td-manage");
                     $(td).html("<a style='text-decoration:none' class='ml-5' title='编辑课堂' onclick=class_update('编辑课堂','class-update.html','"+classcode+"','570','400')><i class='Hui-iconfont'>&#xe6df;</i></a> <a style='text-decoration:none' class='ml-5' onClick='class_stop(this,"+classcode+")'  title='下架课堂'><i class='Hui-iconfont'>&#xe6de;</i></a>");
                 }

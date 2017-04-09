@@ -349,10 +349,10 @@ function check() {
 }
 
 //获取课堂数据,根据id
-function showClass(id) {
+function showClass(url, id) {
     $.ajax({
         type: "post",
-        url: ppt_hw_url + "/class/get/"+id,
+        url: ppt_hw_url + url +id,
         dataType: "jsonp",
         timeout: 3000,
         success: function (responseData) {
@@ -362,9 +362,20 @@ function showClass(id) {
                 $("#classname").val(data.classname);
                 $("#classdescription").val(data.classdescription);
                 $("#classcreator").val(data.classcreator);
-                $("#courseCode").val(data.classcoursecode);
-                $("#datemin").val(data.classcreatetime);
-                $("#classdeadline").val(data.classdeadline);
+
+                $("#classcode").text(data.classcode);
+                $("#classname").text(data.classname);
+                $("#classdescription").text(data.classdescription);
+                $("#classcreator").text(data.classcreator);
+                $("#classcreatetime").text(data.classcreatetime);
+                var status = data.classstatus;
+                if (status == 1) {
+                    status = "<span class='label label-success radius' title='已发布'>已发布</span>";
+                }
+                if (status == 0) {
+                    status = "<span class='label label-defaunt radius' title='已下架'>已下架</span>";
+                }
+                $("#classstatus").html(status);
             } else {
                 swal({
                     title: "Sorry!",

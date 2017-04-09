@@ -57,7 +57,7 @@ function classCourseTableHandler(formId, url) {
                 data: "deadline"
             },
             {
-                data: "aClass.classstatus",
+                data: "status",
                 render: function (data, type, row, meta) {
                     if (data == 0) {
                         return "<span class='label label-default radius' title='课堂已下架'>已下架</span>";
@@ -167,43 +167,41 @@ function classCourseTableHandler(formId, url) {
 }
 
 function addClassCourse() {
-    if (!$("#msg").hasClass("error")) {
-        $.ajax({
-            type: "post",
-            url: ppt_hw_url + "/classcourse/save",
-            dataType: "jsonp",
-            timeout: 3000,
-            data: $("#form-class-course-add").serialize(),
-            success: function (responseData) {
-                if(responseData.success) {
-                    swal({
-                        title: "Good Jop!",
-                        text: "课堂添加成功",
-                        timer: 2000,
-                        type: "success"
-                    }, function () {
-                        $(window.parent.document).find('#btn-refresh')[0].click();
-                        $("#cancelButton").click();
-                    });
-                } else {
-                    swal({
-                        title: "Sorry!",
-                        text:  responseData.message,
-                        timer: 2000,
-                        type: "error"
-                    });
-                }
-            },
-            error: function () {
+    $.ajax({
+        type: "post",
+        url: ppt_hw_url + "/classcourse/save",
+        dataType: "jsonp",
+        timeout: 3000,
+        data: $("#form-class-course-add").serialize(),
+        success: function (responseData) {
+            if(responseData.success) {
+                swal({
+                    title: "Good Jop!",
+                    text: "课堂添加成功",
+                    timer: 2000,
+                    type: "success"
+                }, function () {
+                    $(window.parent.document).find('#btn-refresh')[0].click();
+                    $("#cancelButton").click();
+                });
+            } else {
                 swal({
                     title: "Sorry!",
-                    text: "网络忙,请稍后再试",
+                    text:  responseData.message,
                     timer: 2000,
                     type: "error"
                 });
             }
-        });
-    }
+        },
+        error: function () {
+            swal({
+                title: "Sorry!",
+                text: "网络忙,请稍后再试",
+                timer: 2000,
+                type: "error"
+            });
+        }
+    });
 }
 
 //显示课堂信息
@@ -245,6 +243,82 @@ function showClassCourse(id) {
                 timer: 2000,
                 type: "error"
             });
+        }
+    });
+}
+
+function updateClassCourse() {
+    $.ajax({
+        type: "post",
+        url: ppt_hw_url + "/classcourse/update",
+        dataType: "jsonp",
+        timeout: 3000,
+        ansyc: false,
+        data: $("#form-class-course-update").serialize(),
+        success: function (responseData) {
+            if(responseData.success) {
+                swal({
+                    title: "Good Jop!",
+                    text: "课堂修改成功",
+                    timer: 2000,
+                    type: "success"
+                }, function () {
+                    $(window.parent.document).find('#btn-refresh')[0].click();
+                    $("#cancelButton").click();
+                });
+            } else {
+                swal({
+                    title: "Sorry!",
+                    text:  responseData.message,
+                    timer: 2000,
+                    type: "error"
+                });
+            }
+        },
+        error: function () {
+            swal({
+                title: "Sorry!",
+                text: "网络忙,请稍后再试",
+                timer: 2000,
+                type: "error"
+            });
+        }
+    });
+}
+
+//查看课堂是否存在
+function checkClassCourse() {
+    var result = false;
+    $.ajax({
+        type: "post",
+        url: ppt_hw_url + "/classcourse/check",
+        dataType: "jsonp",
+        timeout: 3000,
+        data: $("#form-class-course-update").serialize(),
+        success: function (responseData) {
+            if(!responseData.success) {
+                swal({
+                    title: "Sorry!",
+                    text:  responseData.message,
+                    timer: 2000,
+                    type: "error"
+                });
+            } else {
+                result = true;
+            }
+        },
+        error: function () {
+            swal({
+                title: "Sorry!",
+                text: "网络忙,请稍后再试",
+                timer: 2000,
+                type: "error"
+            });
+        },
+        complete: function () {
+            if(result) {
+                updateClassCourse();
+            }
         }
     });
 }

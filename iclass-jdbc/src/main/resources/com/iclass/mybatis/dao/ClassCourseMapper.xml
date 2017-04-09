@@ -109,13 +109,18 @@
     SELECT
     <include refid="Base_Column_List"/>
     FROM class_course
-    where ClassCode = #{classcode,jdbcType=VARCHAR} and status = 1
+    where ClassCode = #{classcode,jdbcType=VARCHAR}
   </select>
   <select id="selectByCourseCode" parameterType="java.lang.String" resultType="com.iclass.mybatis.po.ClassCourse">
     SELECT
     <include refid="Base_Column_List"/>
     FROM class_course
-    where CourseCode = #{coursecode,jdbcType=VARCHAR} and status = 1
+    where CourseCode = #{coursecode,jdbcType=VARCHAR} AND status = 1
   </select>
-
+  <select id="selectByClassCodeAndCourseCode" parameterType="java.lang.String" resultType="com.iclass.mybatis.po.ClassCourse">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM class_course
+    where ClassCode = #{classcode,jdbcType=VARCHAR} AND CourseCode = #{coursecode,jdbcType=VARCHAR} AND status = 1
+  </select>
 </mapper>

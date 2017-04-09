@@ -43,4 +43,13 @@ public interface ClassCourseService {
      * @return
      */
     ServiceResult<ClassCourse> get(Integer classCourseId);
+
+    /**
+     * 根据classCode和CourseCode查看课堂是否存在
+     * @param classcourseid
+     * @param classcode
+     * @param coursecode
+     * @return
+     */
+    ServiceResult<ResponseMsg> check(Integer classcourseid, String classcode, String coursecode);
 }

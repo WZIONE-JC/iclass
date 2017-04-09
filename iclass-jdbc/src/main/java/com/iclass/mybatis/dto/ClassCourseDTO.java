@@ -27,9 +27,11 @@ public class ClassCourseDTO implements Serializable {
 
     private String deadline;
 
+    private Integer status;
+
     public ClassCourseDTO(){}
 
-    public ClassCourseDTO(Integer classcourseId, Class aClass, Course course, String teacherName, List<SessionUser> sessionUsers, String creatTime, String deadline) {
+    public ClassCourseDTO(Integer classcourseId, Class aClass, Course course, String teacherName, List<SessionUser> sessionUsers, String creatTime, String deadline, Integer status) {
         this.classcourseId = classcourseId;
         this.aClass = aClass;
         this.course = course;
@@ -37,20 +39,9 @@ public class ClassCourseDTO implements Serializable {
         this.sessionUsers = sessionUsers;
         this.creatTime = creatTime;
         this.deadline = deadline;
+        this.status = status;
     }
 
-    @Override
-    public String toString() {
-        return "ClassCourseDTO{" +
-                "classcourseId=" + classcourseId +
-                ", aClass=" + aClass +
-                ", course=" + course +
-                ", teacherName='" + teacherName + '\'' +
-                ", sessionUsers=" + sessionUsers +
-                ", creatTime='" + creatTime + '\'' +
-                ", deadline='" + deadline + '\'' +
-                '}';
-    }
 
     public Integer getClasscourseId() {
         return classcourseId;
@@ -108,4 +99,25 @@ public class ClassCourseDTO implements Serializable {
         this.deadline = deadline;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "ClassCourseDTO{" +
+                "classcourseId=" + classcourseId +
+                ", aClass=" + aClass +
+                ", course=" + course +
+                ", teacherName='" + teacherName + '\'' +
+                ", sessionUsers=" + sessionUsers +
+                ", creatTime='" + creatTime + '\'' +
+                ", deadline='" + deadline + '\'' +
+                ", status=" + status +
+                '}';
+    }
 }

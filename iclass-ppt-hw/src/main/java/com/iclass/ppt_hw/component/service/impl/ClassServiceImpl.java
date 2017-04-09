@@ -220,6 +220,19 @@ public class ClassServiceImpl implements ClassService {
     }
 
     @Override
+    public ServiceResult<Class> getClassByCode(String classCode) {
+        ServiceResult<Class> serviceResult = new ServiceResult<>();
+        if (StringUtils.isBlank(classCode)) {
+            serviceResult.setMessage("班级编号不能为空");
+            return serviceResult;
+        }
+        Class c = classMapper.selectByClassCode(classCode);
+        serviceResult.setSuccess(true);
+        serviceResult.setData(c);
+        return serviceResult;
+    }
+
+    @Override
     public ServiceResult<ResponseMsg> updateClass(Class c) {
         ServiceResult<ResponseMsg> serviceResult = new ServiceResult<>();
         if (c == null) {

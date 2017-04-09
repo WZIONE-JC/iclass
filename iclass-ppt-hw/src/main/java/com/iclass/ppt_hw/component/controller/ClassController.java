@@ -88,6 +88,16 @@ public class ClassController {
         return classService.getClassById(id);
     }
 
+    /**
+     * 根据id获取class信息
+     * @param classCode
+     * @return
+     */
+    @RequestMapping("/getByCode/{code}")
+    ServiceResult<Class> getClassByCode(@PathVariable("code") String classCode) {
+
+        return classService.getClassByCode(classCode);
+    }
     @RequestMapping("/update")
     public ServiceResult<ResponseMsg> updateClass(Class c) {
 

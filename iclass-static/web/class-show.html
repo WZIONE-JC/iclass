@@ -28,27 +28,27 @@
 <input type="hidden" name="code" id="code" value="">
 <div class="cl pd-20" style=" background-color:#767897">
   <dl style="margin-left:22px; color:#eee">
-    <span><span class="f-18" id="coursename">正在加载...</span> <span class="ml-10">学分：<span class="f-12" id="coursegrade">正在加载...</span></span></span>
+    <span><span class="f-18" id="classname">正在加载...</span> <span class="ml-10">创建者：<span class="f-12" id="classcreator">正在加载...</span></span></span>
   </dl>
 </div>
 <div class="pd-20">
   <table class="table">
     <tbody>
       <tr>
-        <th style="vertical-align:top;" class="text-r">课程编号：</th>
-        <td id="coursecode">正在加载...</td>
+        <th style="vertical-align:top;" class="text-r">班级编号：</th>
+        <td id="classcode">正在加载...</td>
       </tr>
       <tr>
-        <th style="vertical-align:top;" class="text-r">课程状态：</th>
-        <td id="coursestatus">正在加载...</td>
+        <th style="vertical-align:top;" class="text-r">班级状态：</th>
+        <td id="classstatus">正在加载...</td>
       </tr>
       <tr>
         <th class="text-r">创建时间：</th>
-        <td id="coursecreatetime">正在加载...</td>
+        <td id="classcreatetime">正在加载...</td>
       </tr>
       <tr>
         <th class="text-r" width="80">课程描述：</th>
-        <td id="coursedescription">正在加载...</td>
+        <td id="classdescription">正在加载...</td>
       </tr>
     </tbody>
     <a style="display: none" onclick="loadData()" id="loadData"></a>
@@ -58,12 +58,13 @@
 <script type="text/javascript" src="assets/js/H-ui.js"></script>
 <script type="text/javascript" src="assets/js/H-ui.admin.js"></script>
 <script type="text/javascript" src="assets/js/business/ip.js"></script>
+<script type="text/javascript" src="assets/js/business/class.js"></script>
 <script type="text/javascript" src="assets/js/business/course.js"></script>
 <script type="text/javascript">
 
     function loadData () {
         var $code = $("#code").val();
-        showCourse("/course/getByCode/",$code);
+        showClass("/class/getByCode/", $code);
     }
 </script>
 </body>

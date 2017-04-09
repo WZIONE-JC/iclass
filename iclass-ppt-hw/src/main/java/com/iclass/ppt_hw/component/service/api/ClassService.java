@@ -79,6 +79,12 @@ public interface ClassService {
     ServiceResult<Class> getClassById(String id);
 
     /**
+     * 根据id获取class信息
+     * @param classCode
+     * @return
+     */
+    ServiceResult<Class> getClassByCode(String classCode);
+    /**
      * 更新class信息
      * @param c
      * @return
