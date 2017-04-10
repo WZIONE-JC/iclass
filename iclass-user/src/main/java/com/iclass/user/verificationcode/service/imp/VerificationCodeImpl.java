@@ -64,17 +64,14 @@ public class VerificationCodeImpl implements VerificationCode {
         }
         verificationCode = buffer.toString();
         session.setAttribute("verificationCode", verificationCode);
-		logger.info("服务器:生成验证码成功:" + session.getAttribute("verificationCode"));
         try {
             ImageIO.write(bi, "JPG", response.getOutputStream());
         } catch (IOException e) {
-            logger.error("验证码生成出错");
             e.printStackTrace();
         }
     }
 
     public String getVerificationCode(HttpServletRequest request) {
-        logger.info("获取字符串验证码时,sessionId为: "+request.getSession().getId());
         return (String)request.getSession().getAttribute("verificationCode");
     }
 

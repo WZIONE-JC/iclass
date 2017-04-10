@@ -119,4 +119,18 @@ public class ServiceResult<T> implements Serializable {
     public void setRecordsFiltered(Integer recordsFiltered) {
         this.recordsFiltered = recordsFiltered;
     }
+
+    @Override
+    public String toString() {
+        return "ServiceResult{" +
+                "success=" + success +
+                ", data=" + data +
+                ", responseMsg=" + responseMsg +
+                ", message='" + message + '\'' +
+                ", draw=" + draw +
+                ", recordsTotal=" + recordsTotal +
+                ", recordsFiltered=" + recordsFiltered +
+                '}';
+    }
+
 }

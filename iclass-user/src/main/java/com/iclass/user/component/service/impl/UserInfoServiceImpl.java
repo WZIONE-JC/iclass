@@ -52,7 +52,6 @@ public class UserInfoServiceImpl implements UserInfoService{
             sessionUsers.add(new SessionUser(user));
         }
         Integer total = userMapper.findCount();
-        logger.info("获取到全部用户信息,总数:"+total);
         serviceResult.setDraw(draw);
         serviceResult.setData(sessionUsers);
         serviceResult.setRecordsTotal(total);
@@ -68,21 +67,17 @@ public class UserInfoServiceImpl implements UserInfoService{
      */
     @Override
     public ServiceResult<ResponseMsg> updatePersonalInfo(User user) {
-        logger.info("修改的用户信息:"+user);
         ServiceResult<ResponseMsg> serviceResult = new ServiceResult<>();
 
         if(user != null) {
             if(StringUtils.isNotBlank(user.getUsercode())) {
                 userMapper.updateByUsercodeSelective(user);
-                logger.info("修改用户信息成功");
                 serviceResult.setSuccess(true);
                 serviceResult.setData(new ResponseMsg(Msg.UPDATE_USER_SUCCESS));
             } else {
-                logger.error("修改用户信息失败,usercode参数不能为空");
                 serviceResult.setMessage("修改用户信息失败,usercode参数不能为空");
             }
         } else {
-            logger.error("修改用户信息失败,用户信息不能为空");
             serviceResult.setMessage("修改用户信息失败,用户信息不能为空");
             serviceResult.setData(new ResponseMsg(Msg.UPDATE_USER_FAILED));
         }
@@ -103,7 +98,6 @@ public class UserInfoServiceImpl implements UserInfoService{
         if(StringUtils.isNotBlank(usercode)) {
             if(StringUtils.isNotBlank(oldPassword) && StringUtils.isNotBlank(newPassword)) {
                 if(oldPassword.equals(newPassword)) {
-                    logger.warn("不能和原始密码相同");
                     serviceResult.setMessage("不能和原始密码相同");
                 } else {
                     String oldpwd = MD5.getPwd(oldPassword);
@@ -111,24 +105,26 @@ public class UserInfoServiceImpl implements UserInfoService{
                     int result = userMapper.updatePasswordByUserCodeAndOldPassword(usercode, oldpwd, newPwd);
                     if(result == 1) {
                         serviceResult.setSuccess(true);
-                        logger.info("修改密码成功");
                         serviceResult.setData(new ResponseMsg(Msg.UPDATE_PASSWORD_SUCCESS));
                     } else {
-                        logger.warn("原始密码不正确");
                         serviceResult.setMessage("原始密码不正确");
                     }
                 }
             } else {
-                logger.error("修改密码失败,原始密码和新密码不能为空");
                 serviceResult.setMessage("修改密码失败,原始密码和新密码不能为空");
             }
         } else {
-            logger.error("修改密码失败,userid不能为空");
             serviceResult.setMessage("修改密码失败,userid不能为空");
         }
         return serviceResult;
     }
 
+    /**
+     * 方法保留
+     * @param usercode 用户工号
+     * @param useremail
+     * @return
+     */
     @Override
     public ServiceResult<ResponseMsg> sendMail(String usercode, String useremail) {
         ServiceResult<ResponseMsg> serviceResult = new ServiceResult<>();

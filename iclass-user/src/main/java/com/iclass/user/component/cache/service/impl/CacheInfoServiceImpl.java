@@ -41,19 +41,15 @@ public class CacheInfoServiceImpl implements CacheInfoService {
         if(user != null && StringUtils.isNotBlank(user.getUsercode())) {
             user = userMapper.findUserByUsercode(user.getUsercode());
             sessionUser.setUser(user);
-            logger.info("设置缓存时,从数据库中获取的用户信息:" + sessionUser);
             String reuslt = dataCache.setCache(sessionid, sessionUser);
             if(reuslt.equals("200")) {
-                logger.info("UserRequestCacheServiceImpl.setCache 缓存设置成功: " + sessionUser);
                 serviceResult.setSuccess(true);
                 serviceResult.setData(sessionUser);
                 serviceResult.setMessage("UserRequestCacheServiceImpl.setCache 缓存设置成功: " + sessionUser);
             } else if(reuslt.equals("404")){
-                logger.warn("UserRequestCacheServiceImpl.setCache 缓存设置失败: " + sessionUser);
                 serviceResult.setMessage("UserRequestCacheServiceImpl.setCache 缓存设置失败: " + sessionUser);
             }
         } else {
-            logger.warn("设置缓存失败,用户的usercoer不能为空");
             serviceResult.setMessage("设置缓存失败,用户的usercode不能为空");
         }
         return serviceResult;
@@ -72,7 +68,6 @@ public class CacheInfoServiceImpl implements CacheInfoService {
             serviceResult.setData(sessionUser);
             serviceResult.setSuccess(true);
         } else {
-            logger.warn("从缓存中获取不到用户信息,sessionId为: " + sessionid);
             serviceResult.setMessage("从缓存中获取不到用户信息,sessionId为: " + sessionid);
         }
         return serviceResult;

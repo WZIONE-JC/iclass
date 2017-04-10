@@ -42,7 +42,8 @@ public class ValidateExistServiceImpl implements ValidateExistService {
         if(StringUtils.isNotBlank(username)) {
             result = userMapper.findByUsername(username) != null;
         } else {
-            logger.error("用户名不能为空");
+            serviceResult.setMessage("用户名不能为空");
+            return serviceResult;
         }
         if(result) {
             responseMsg.setMsg(Msg.USERNAME_EXISTED);
@@ -70,7 +71,8 @@ public class ValidateExistServiceImpl implements ValidateExistService {
         if(StringUtils.isNotBlank(usercode)) {
             result = userMapper.findByUsercode(usercode) != null;
         } else {
-            logger.error("工号不能为空");
+            serviceResult.setMessage("工号不能为空");
+            return serviceResult;
         }if(result) {
             responseMsg.setMsg(Msg.USERCODE_EXISTED);
         } else {

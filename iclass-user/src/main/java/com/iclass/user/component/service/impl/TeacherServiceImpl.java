@@ -31,11 +31,9 @@ public class TeacherServiceImpl implements TeacherService{
                 serviceResult.setSuccess(true);
                 serviceResult.setData(teacher);
             } else {
-                logger.error("sava:教师信息保存失败");
                 serviceResult.setMessage("sava:教师信息保存失败");
             }
         } else {
-            logger.error("save:保存教师信息出错,教师信息不能为空");
             serviceResult.setMessage("save:保存教师信息出错,教师信息不能为空");
         }
         return serviceResult;

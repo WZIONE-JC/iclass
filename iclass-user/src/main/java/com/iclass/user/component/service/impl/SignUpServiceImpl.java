@@ -49,7 +49,6 @@ public class SignUpServiceImpl implements SignUpService {
     @Override
     @Transactional
     public ServiceResult<ResponseMsg> signup(User user) {
-        logger.info("注册时,获取的用户信息为:" + user);
 
         boolean isSuccess = false;
         ServiceResult<ResponseMsg> serviceResult = new ServiceResult<>();
@@ -63,11 +62,11 @@ public class SignUpServiceImpl implements SignUpService {
         responseMsg = serviceResult.getData();
 
         if (responseMsg.getMsg().equals(Msg.USERCODE_EXISTED)) {
-            logger.error("工号:" + user.getUsercode() + "已经存在");
+            logger.info("工号:" + user.getUsercode() + "已经存在");
         } else {
             serviceResult = validateExistService.isExistUsername(user.getUsername());
             if (responseMsg.getMsg().equals(Msg.USERNAME_EXISTED)) {
-                logger.error("用户名:" + user.getUsername() + "已经存在");
+                logger.info("用户名:" + user.getUsername() + "已经存在");
             } else {
                 //如果用户名 和 工号都不存在的话，就执行插入、
                 //加密密码
@@ -105,7 +104,6 @@ public class SignUpServiceImpl implements SignUpService {
                     if(isSuccess) {
                         responseMsg.setMsg(Msg.SIGNUP_SUCCESS);
                         serviceResult.setSuccess(true);
-                        logger.info("注册成功");
                     } else {
                         responseMsg.setMsg(Msg.LOGIN_FAILED);
                         logger.info("注册失败,result = " + result);

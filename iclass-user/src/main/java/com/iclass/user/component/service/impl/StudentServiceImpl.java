@@ -32,11 +32,9 @@ public class StudentServiceImpl implements StudentService {
                 serviceResult.setSuccess(true);
                 serviceResult.setData(student);
             } else {
-                logger.error("sava:学生信息保存失败");
                 serviceResult.setMessage("sava:学生信息保存失败");
             }
         } else {
-            logger.error("save:保存学生信息出错,信息不能为空");
             serviceResult.setMessage("save:保存学生信息出错,信息不能为空");
         }
         return serviceResult;

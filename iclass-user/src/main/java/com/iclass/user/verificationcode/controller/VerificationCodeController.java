@@ -31,8 +31,6 @@ public class VerificationCodeController {
     @RequestMapping(value = "/generate")
     public void generate(HttpServletRequest request, HttpServletResponse response) {
 
-        logger.info("生成验证码时,sessionId为："+request.getSession().getId());
-
         verificationCode.genVerificationCode(request, response);
     }
 

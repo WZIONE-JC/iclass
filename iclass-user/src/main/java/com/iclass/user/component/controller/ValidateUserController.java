@@ -25,13 +25,11 @@ public class ValidateUserController {
 
     @RequestMapping(value = "/validateUsername", method = {RequestMethod.GET, RequestMethod.POST})
     public ServiceResult<ResponseMsg> validateUsername(String username) {
-        logger.info("ValidateUserController.validateUsername: " + username);
         return validateIsExistImpl.isExistUsername(username);
     }
 
     @RequestMapping(value = "/validateUsercode", method = {RequestMethod.GET, RequestMethod.POST})
     public ServiceResult<ResponseMsg> validateUsercode(String usercode) {
-        logger.info("ValidateUserController.validateUsercode: " + usercode);
         return validateIsExistImpl.isExistUserCode(usercode);
 //        String jsonData = "{\"code\":\"1001\", \"msg\":\"zhangsan\", \"telephone\":\"13612345678\"}";
 //        String retStr = mycallback + "(" + jsonData + ")";

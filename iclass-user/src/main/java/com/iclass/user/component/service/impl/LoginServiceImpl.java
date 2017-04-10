@@ -74,11 +74,9 @@ public class LoginServiceImpl implements LoginService {
             if(m.matches()) {
                 //参数username是usercode
                 String usercode = username;
-                logger.info("使用工号登录:" + usercode);
                 user = userMapper.findByUsercodeAndPassword(usercode, newPassword, userrole);
             } else {
                 //使用用户名的方式去登录
-                logger.info("使用用户名登录" + username);
                 user = userMapper.findByUsernameAndPassword(username, newPassword, userrole);
             }
             if(user != null) {
@@ -96,11 +94,9 @@ public class LoginServiceImpl implements LoginService {
             } else {
                 //user为空，表示没有查找到用户信息
                 responseMsg.setMsg(Msg.LOGIN_FAILED);
-                logger.error("登录失败:request = [" + request + "], userrole = [" + userrole + "], username = [" + username + "], password = [" + password + "], code = [" + code + "]");
             }
         } else {
             responseMsg.setMsg(Msg.CODE_ERROR);
-            logger.error("验证码错误");
         }
         serviceResult.setData(responseMsg);
         return serviceResult;
@@ -116,13 +112,8 @@ public class LoginServiceImpl implements LoginService {
         if(StringUtils.isNotBlank(code)) {
             String stringCode = verificationCode.getVerificationCode(request);
             if(stringCode != null) {
-                logger.info("生成的验证码:" + stringCode + ",用户输入的验证码:" + code.trim());
                 return stringCode.equalsIgnoreCase(code.trim());
-            } else {
-                logger.info("从session中没有获取到验证码,session已过期");
             }
-        } else {
-            logger.info("验证码不能为空,用户输入的验证码:" + code);
         }
         return false;
     }
@@ -143,7 +134,6 @@ public class LoginServiceImpl implements LoginService {
         SessionUser user = (SessionUser)session.getAttribute(session.getId());
         if(user == null) {
             serviceResult.setMessage("用户未登录");
-            logger.error("用户未登录");
         } else {
             serviceResult.setSuccess(true);
             serviceResult.setData(user);
@@ -157,7 +147,6 @@ public class LoginServiceImpl implements LoginService {
         ResponseMsg responseMsg = new ResponseMsg();
         HttpSession session = request.getSession();
         String sessionId = session.getId();
-        logger.info("logout:用户登出操作,使用的SessionId:" + sessionId);
         session.removeAttribute(sessionId);
         responseMsg.setMsg(Msg.LOGOUT_SUCCESS);
         serviceResult.setSuccess(true);

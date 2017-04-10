@@ -39,14 +39,12 @@ public class PersonalInfoServiceImpl implements PersonalInfoService {
                 sessionUser.setUser(user);
                 serviceResult.setSuccess(true);
                 serviceResult.setData(sessionUser);
-                logger.info("通过usercode:"+usercode+",获取到的信息:" + user);
             } else {
-                logger.info("没有找到usercode:" + usercode +",对应的用户信息");
                 serviceResult.setMessage("没有找到usercode:" + usercode +",对应的用户信息");
             }
         } else {
             serviceResult.setMessage("使用工号获取用户信息时,工号不可以为空");
-            logger.error("使用工号获取用户信息时,工号不可以为空");
+            logger.info("使用工号获取用户信息时,工号不可以为空");
         }
         return serviceResult;
     }
@@ -77,17 +75,14 @@ public class PersonalInfoServiceImpl implements PersonalInfoService {
                     List<SessionUser> sessionUsers = new ArrayList<>();
                     sessionUsers.add(new SessionUser(user));
                     serviceResult.setData(sessionUsers);
-                    logger.info("通过usercode:"+usercode+",获取到的信息:" + user);
                 } else {
-                    logger.info("没有找到usercode:" + usercode +",对应的用户信息");
                     serviceResult.setMessage("没有找到usercode:" + usercode +",对应的用户信息");
                 }
             } else {
-                logger.error("根据session获取用户信息时,usercode不能为空");
                 serviceResult.setMessage("根据session获取用户信息时,usercode不能为空");
             }
         } else {
-            logger.error("从session中通过sessionId获取用户信息出错,session已过期,或用户未登录");
+            logger.info("从session中通过sessionId获取用户信息出错,session已过期,或用户未登录");
             serviceResult.setMessage("用户未登录");
         }
         return serviceResult;

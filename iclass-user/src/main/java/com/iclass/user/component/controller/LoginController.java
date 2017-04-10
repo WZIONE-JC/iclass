@@ -40,7 +40,6 @@ public class LoginController {
     @RequestMapping(value = "/login", method = {RequestMethod.POST, RequestMethod.GET})
     public ServiceResult<ResponseMsg> login(HttpServletRequest request, String userrole, String username,
                                             String password, String code, @RequestParam(required = false) String remember) {
-        logger.info("request = [" + request.getSession().getId() + "], userrole = [" + userrole + "], username = [" + username + "], password = [" + password + "], code = [" + code + "], remember = [" + remember + "]");
         return loginService.login(request, userrole, username, password, code, remember);
     }
 
@@ -52,7 +51,6 @@ public class LoginController {
     @RequestMapping(value = "/getLoginedUserInfo", method = {RequestMethod.GET, RequestMethod.POST})
     public ServiceResult<SessionUser> getLoginedUserInfo(HttpServletRequest request) {
         ServiceResult<SessionUser> serviceResult = loginService.getLoginedUserInfo(request);
-        logger.info("获取的用户登录信息为:" + serviceResult.getData());
         return serviceResult;
     }
 

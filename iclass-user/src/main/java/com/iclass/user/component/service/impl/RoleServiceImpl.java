@@ -34,11 +34,9 @@ public class RoleServiceImpl implements RoleService {
             ServiceResult<List<Role>> serviceResult = new ServiceResult<>();
             if(StringUtils.isNotBlank(device)) {
                 List<Role> roles = roleMapper.findRoleNameByDevice(device);
-                logger.info("通过设备标识来获取角色信息成功:"+roles);
                 serviceResult.setSuccess(true);
                 serviceResult.setData(roles);
             } else {
-                logger.error("通过设备标识来获取角色信息时,device参数不能为空");
                 serviceResult.setMessage("通过设备标识来获取角色信息时,device参数不能为空");
                 return serviceResult;
             }
