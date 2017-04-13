@@ -3,7 +3,7 @@
  */
     //request url
     var ip = "localhost";
-    //var ip = "115.159.63.34";
+    //var ip = "123.206.89.164";
     var user_port = "52020";
     var ph_port = "52021";
     var posfix = "/iclass";

@@ -45,7 +45,7 @@
     background: #ebebe4;
 }
 .system-log-info-textarea {
-    height: 224px;
+    height: 100px;
     width: 243px;
     resize: vertical;
     background-color:transparent;
@@ -88,4 +88,6 @@ select {
     padding-left: 16%;
     margin: 0;
 }
-
+.displayNone {
+    display: none;
+}

@@ -1,4 +1,4 @@
-package com.iclass.ppt_hw.config.file;
+package com.iclass.ppt_hw.config.fileConfig;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

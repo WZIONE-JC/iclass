@@ -19,9 +19,9 @@ public interface ClassCourseService {
     /**
      * 获取该教师所创建的课堂和所带的课程
      * @param classCreator 教师编号
-     * @return 课程与课堂
+     * @return 课堂
      */
-    ServiceResult<List<ClassCourseDTO>> getClassCourse(DataTablesRequestEntity requestEntity, String classCreator);
+    ServiceResult<List<ClassCourseDTO>> getClassCourse(DataTablesRequestEntity requestEntity, String classCreator, Boolean isLimit);
 
     /**
      * 开设课堂
@@ -52,4 +52,26 @@ public interface ClassCourseService {
      * @return
      */
     ServiceResult<ResponseMsg> check(Integer classcourseid, String classcode, String coursecode);
+
+    /**
+     * 根据学生的code获取已经选的课程
+     * @param studentCode
+     * @return
+     */
+    ServiceResult<List<ClassCourseDTO>> getSelectedClassRoom(String studentCode);
+
+    /**
+     * 根据学生的code获取已经选的课程
+     * @param studentCode
+     * @return
+     */
+    ServiceResult<List<ClassCourseDTO>> getUnSelectedClassRoom(String studentCode);
+
+    /**
+     * 学生加入课堂
+     * @param studentCode
+     * @param classCourseId
+     * @return
+     */
+    ServiceResult<ResponseMsg> joinClassRoom(String studentCode, Integer classCourseId);
 }

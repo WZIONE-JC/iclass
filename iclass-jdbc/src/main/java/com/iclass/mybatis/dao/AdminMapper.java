@@ -2,6 +2,7 @@ package com.iclass.mybatis.dao;
 
 
 import com.iclass.mybatis.po.Admin;
+import org.apache.ibatis.annotations.Param;
 
 public interface AdminMapper {
     int deleteByPrimaryKey(Integer adminid);
@@ -15,4 +16,6 @@ public interface AdminMapper {
     int updateByPrimaryKeySelective(Admin record);
 
     int updateByPrimaryKey(Admin record);
+
+    Admin selectByAdminCode(@Param("admincode") String adminCode);
 }

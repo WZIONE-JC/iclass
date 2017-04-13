@@ -26,9 +26,9 @@
     from log
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.util.ArrayList" >
     delete from log
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id}
   </delete>
   <insert id="insert" parameterType="com.iclass.mybatis.po.Log" >
     insert into log (id, ip, device, 
@@ -36,7 +36,7 @@
       args, exetime, logtime, 
       logdata, logerror)
     values (#{id,jdbcType=INTEGER}, #{ip,jdbcType=VARCHAR}, #{device,jdbcType=VARCHAR}, 
-      #{httpMethod,jdbcType=VARCHAR}, #{operation,jdbcType=VARCHAR}, #{method,jdbcType=VARCHAR}, 
+      #{http_method,jdbcType=VARCHAR}, #{operation,jdbcType=VARCHAR}, #{method,jdbcType=VARCHAR},
       #{args,jdbcType=VARCHAR}, #{exetime,jdbcType=VARCHAR}, #{logtime,jdbcType=TIMESTAMP}, 
       #{logdata,jdbcType=LONGVARCHAR}, #{logerror,jdbcType=LONGVARCHAR})
   </insert>
@@ -52,7 +52,7 @@
       <if test="device != null" >
         device,
       </if>
-      <if test="httpMethod != null" >
+      <if test="http_method != null" >
         http_method,
       </if>
       <if test="operation != null" >
@@ -87,8 +87,8 @@
       <if test="device != null" >
         #{device,jdbcType=VARCHAR},
       </if>
-      <if test="httpMethod != null" >
-        #{httpMethod,jdbcType=VARCHAR},
+      <if test="http_method != null" >
+        #{http_method,jdbcType=VARCHAR},
       </if>
       <if test="operation != null" >
         #{operation,jdbcType=VARCHAR},
@@ -122,8 +122,8 @@
       <if test="device != null" >
         device = #{device,jdbcType=VARCHAR},
       </if>
-      <if test="httpMethod != null" >
-        http_method = #{httpMethod,jdbcType=VARCHAR},
+      <if test="http_method != null" >
+        http_method = #{http_method,jdbcType=VARCHAR},
       </if>
       <if test="operation != null" >
         operation = #{operation,jdbcType=VARCHAR},
@@ -153,7 +153,7 @@
     update log
     set ip = #{ip,jdbcType=VARCHAR},
       device = #{device,jdbcType=VARCHAR},
-      http_method = #{httpMethod,jdbcType=VARCHAR},
+      http_method = #{http_method,jdbcType=VARCHAR},
       operation = #{operation,jdbcType=VARCHAR},
       method = #{method,jdbcType=VARCHAR},
       args = #{args,jdbcType=VARCHAR},
@@ -161,4 +161,14 @@
       logtime = #{logtime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="countLogRecord" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    SELECT
+    count(*)
+    FROM log
+  </select>
+  <select id="selectAll" resultType="com.iclass.mybatis.po.Log">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM log ORDER BY id DESC limit #{start}, #{length}
+  </select>
 </mapper>

@@ -39,4 +39,18 @@ public interface PPTHWService {
      * @return
      */
     ServiceResult<List<IclassfileDTO>> getPPTHWFileInfo(DataTablesRequestEntity requestEntity, FileQo fileQo);
+
+    /**
+     * 根据课堂id去获取它的文件信息
+     * @param classCourseId
+     * @return
+     */
+    ServiceResult<List<IclassfileDTO>> getPPTFileInfo(Integer classCourseId);
+
+    /**
+     * 根据课堂id去获取它的文件信息
+     * @param classCourseId
+     * @return
+     */
+    ServiceResult<List<IclassfileDTO>> getHWFileInfo(Integer classCourseId);
 }

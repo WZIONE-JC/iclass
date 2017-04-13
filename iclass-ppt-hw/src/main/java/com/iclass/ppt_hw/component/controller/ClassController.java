@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.websocket.server.PathParam;
 import java.util.List;
 
 /**
@@ -74,7 +73,7 @@ public class ClassController {
     @RequestMapping("/save")
     public ServiceResult<ResponseMsg> save(Class c) {
 
-        return classService.createClass(c);
+        return classService.save(c);
     }
 
     /**

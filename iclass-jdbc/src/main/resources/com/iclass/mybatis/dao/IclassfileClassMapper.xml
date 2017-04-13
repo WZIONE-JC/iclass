@@ -7,12 +7,11 @@
     <constructor >
       <idArg column="FileClassID" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="FileCode" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="ClassCode" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="CourseCode" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="ClassCourseId" jdbcType="INTEGER" javaType="java.lang.Integer" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    FileClassID, FileCode, ClassCode, CourseCode
+    FileClassID, FileCode, ClassCourseId
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -25,10 +24,8 @@
     where FileClassID = #{fileclassid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.iclass.mybatis.po.IclassfileClass" >
-    insert into iclassfile_class (FileClassID, FileCode, ClassCode, 
-      CourseCode)
-    values (#{fileclassid,jdbcType=INTEGER}, #{filecode,jdbcType=VARCHAR}, #{classcode,jdbcType=VARCHAR}, 
-      #{coursecode,jdbcType=VARCHAR})
+    insert into iclassfile_class (FileClassID, FileCode, ClassCourseId)
+    values (#{fileclassid,jdbcType=INTEGER}, #{filecode,jdbcType=VARCHAR},#{classcourseid,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.iclass.mybatis.po.IclassfileClass" >
     insert into iclassfile_class
@@ -39,11 +36,8 @@
       <if test="filecode != null" >
         FileCode,
       </if>
-      <if test="classcode != null" >
-        ClassCode,
-      </if>
-      <if test="coursecode != null" >
-        CourseCode,
+      <if test="classcourseid != null" >
+        ClassCourseId,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -53,11 +47,8 @@
       <if test="filecode != null" >
         #{filecode,jdbcType=VARCHAR},
       </if>
-      <if test="classcode != null" >
-        #{classcode,jdbcType=VARCHAR},
-      </if>
-      <if test="coursecode != null" >
-        #{coursecode,jdbcType=VARCHAR},
+      <if test="classcourseid != null" >
+        #{classcourseid,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -67,11 +58,8 @@
       <if test="filecode != null" >
         FileCode = #{filecode,jdbcType=VARCHAR},
       </if>
-      <if test="classcode != null" >
-        ClassCode = #{classcode,jdbcType=VARCHAR},
-      </if>
-      <if test="coursecode != null" >
-        CourseCode = #{coursecode,jdbcType=VARCHAR},
+      <if test="classcourseid != null" >
+        ClassCourseId = #{classcourseid,jdbcType=INTEGER},
       </if>
     </set>
     where FileClassID = #{fileclassid,jdbcType=INTEGER}
@@ -79,14 +67,19 @@
   <update id="updateByPrimaryKey" parameterType="com.iclass.mybatis.po.IclassfileClass" >
     update iclassfile_class
     set FileCode = #{filecode,jdbcType=VARCHAR},
-      ClassCode = #{classcode,jdbcType=VARCHAR},
-      CourseCode = #{coursecode,jdbcType=VARCHAR}
+      ClassCourseId = #{classcode,jdbcType=INTEGER},
     where FileClassID = #{fileclassid,jdbcType=INTEGER}
   </update>
-  <select id="selectByClassCodeAndCourseCode" resultType="com.iclass.mybatis.po.IclassfileClass">
+  <select id="selectByClassCourseId" resultType="com.iclass.mybatis.po.IclassfileClass">
     SELECT
     <include refid="Base_Column_List" />
     from iclassfile_class
-    where ClassCode = #{classcode,jdbcType=VARCHAR} and CourseCode = #{coursecode,jdbcType=VARCHAR} limit #{start}, #{length}
+    where ClassCourseId = #{classcourseid,jdbcType=INTEGER} limit #{start}, #{length}
+  </select>
+  <select id="selectByClassCourseIdNoLimit" resultType="com.iclass.mybatis.po.IclassfileClass">
+    SELECT
+    <include refid="Base_Column_List" />
+    from iclassfile_class
+    where ClassCourseId = #{classcourseid,jdbcType=INTEGER}
   </select>
 </mapper>

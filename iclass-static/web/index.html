@@ -31,7 +31,7 @@
 		<ul>
 			<li class="dropDown dropDown_click"><a href="javascript:;" class="dropDown_A"><i class="Hui-iconfont">&#xe600;</i> 新增 <i class="Hui-iconfont">&#xe6d5;</i></a>
 				<ul class="dropDown-menu radius box-shadow">
-					<li><a href="javascript:;" onClick="file_upload('课件上传','ppt-add.html','600','570')"><i class="Hui-iconfont">&#xe613;</i> 添加课件</a></li>
+					<li><a href="javascript:;" onClick="file_upload('课件上传','ppt-add.html','600','570')"><i class="Hui-iconfont">&#xe642;</i> 添加课件</a></li>
 					<li><a href="javascript:;" onClick="member_add('添加用户','user-add.html','600','570')"><i class="Hui-iconfont">&#xe60d;</i> 添加用户</a></li>
 				</ul>
 			</li>
@@ -63,8 +63,8 @@
 	<a aria-hidden="false" class="Hui-nav-toggle" href="#"></a> </header>
 <aside class="Hui-aside">
 	<!--<input runat="server" id="divScrollValue" type="hidden" value="" />-->
-	<div class="menu_dropdown bk_2">
-		<dl id="menu-article">
+	<div id="menu" class="menu_dropdown bk_2 displayNone">
+		<dl id="menu-user">
 
 			<dt><i class="Hui-iconfont">&#xe60d;</i> 用户管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
@@ -75,7 +75,7 @@
 				</ul>
 			</dd>
 		</dl>
-		<dl id="menu-picture">
+		<dl id="menu-ppt">
 			<dt><i class="Hui-iconfont">&#xe642;</i> PPT共享<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
@@ -86,7 +86,7 @@
 			</dd>
 		</dl>
 
-		<dl id="menu-comments">
+		<dl id="menu-homework">
 			<dt><i class="Hui-iconfont">&#xe60c;</i> 作业管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
@@ -97,7 +97,7 @@
 				</ul>
 			</dd>
 		</dl>
-		<dl id="menu-product">
+		<dl id="menu-rollcall">
 			<dt><i class="Hui-iconfont">&#xe64d;</i> 自动点名<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
@@ -107,7 +107,7 @@
 			</dd>
 		</dl>
 
-		<dl id="menu-member">
+		<dl id="menu-classhd">
 			<dt><i class="Hui-iconfont">&#xe62b;</i> 课堂互动<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
@@ -116,7 +116,7 @@
 				</ul>
 			</dd>
 		</dl>
-		<dl id="menu-class">
+		<dl id="menu-class-course">
 			<dt><i class="Hui-iconfont">&#xe6c6;</i> 课程课堂<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
@@ -126,7 +126,7 @@
 				</ul>
 			</dd>
 		</dl>
-		<dl id="menu-system">
+		<dl id="menu-system" class="displayNone">
 			<dt><i class="Hui-iconfont">&#xe62e;</i> 系统管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>

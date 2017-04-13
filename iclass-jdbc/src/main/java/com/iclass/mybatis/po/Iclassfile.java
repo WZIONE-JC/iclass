@@ -13,6 +13,8 @@ public class Iclassfile implements Serializable{
 
     private String filepath;
 
+    private String filerelativepath;
+
     private String filedesc;
 
     private String filecreator;
@@ -25,15 +27,15 @@ public class Iclassfile implements Serializable{
 
     private Integer filestatus;
 
-    public Iclassfile(Integer fileid, String filecode, String filename, String filepath, String filedesc, String filecreator, String filecreatetime, Integer filetype, Integer filedownloadtime, Integer filestatus) {
+    public Iclassfile(Integer fileid, String filecode, String filename, String filepath, String filerelativepath, String filedesc, String filecreator, String filecreatetime, Integer filetype, Integer filedownloadtime, Integer filestatus) {
         this.fileid = fileid;
         this.filecode = filecode;
         this.filename = filename;
         this.filepath = filepath;
+        this.filerelativepath = filerelativepath;
         this.filedesc = filedesc;
         this.filecreator = filecreator;
         this.filecreatetime = filecreatetime;
-        this.filecreatetime = IclassUtil.formatTime(this.filecreatetime);
         this.filetype = filetype;
         this.filedownloadtime = filedownloadtime;
         this.filestatus = filestatus;
@@ -73,6 +75,14 @@ public class Iclassfile implements Serializable{
 
     public void setFilepath(String filepath) {
         this.filepath = filepath;
+    }
+
+    public String getFilerelativepath() {
+        return filerelativepath;
+    }
+
+    public void setFilerelativepath(String filerelativepath) {
+        this.filerelativepath = filerelativepath;
     }
 
     public String getFiledesc() {
@@ -130,6 +140,7 @@ public class Iclassfile implements Serializable{
                 ", filecode='" + filecode + '\'' +
                 ", filename='" + filename + '\'' +
                 ", filepath='" + filepath + '\'' +
+                ", filerelativepath='" + filerelativepath + '\'' +
                 ", filedesc='" + filedesc + '\'' +
                 ", filecreator='" + filecreator + '\'' +
                 ", filecreatetime='" + filecreatetime + '\'' +

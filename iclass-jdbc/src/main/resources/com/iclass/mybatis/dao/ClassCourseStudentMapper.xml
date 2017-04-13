@@ -76,4 +76,21 @@
     from class_course_student
     where ClassCourseID = #{classcourseid}
   </select>
+  <select id="selectByStudentCode" resultType="com.iclass.mybatis.po.ClassCourseStudent">
+    SELECT
+    <include refid="Base_Column_List" />
+    from class_course_student
+    where StudentCode = #{studentcode,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByNotEqualsStudentCode" resultType="com.iclass.mybatis.po.ClassCourseStudent">
+    SELECT distinct ClassCourseID
+    from class_course_student
+    where StudentCode != (#{studentcode,jdbcType=VARCHAR})
+  </select>
+  <select id="selectByClassCourseIdAndStudentCode" resultType="com.iclass.mybatis.po.ClassCourseStudent">
+    SELECT
+    <include refid="Base_Column_List" />
+    from class_course_student
+    where ClassCourseID = #{classcourseid} AND StudentCode = #{studentcode,jdbcType=VARCHAR}
+  </select>
 </mapper>

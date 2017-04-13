@@ -45,7 +45,7 @@ function classCourseTableHandler(formId, url) {
                 }
             },
             {
-                data: "sessionUsers.length",
+                data: "students.length",
                 render: function (data, type, row, meta) {
                     return "<span class='label label-default radius'>" + data + "</span>";
                 }

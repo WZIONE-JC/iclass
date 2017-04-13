@@ -6,7 +6,6 @@ import com.iclass.mybatis.dao.UserMapper;
 import com.iclass.mybatis.dto.ClassDTO;
 import com.iclass.mybatis.po.Class;
 import com.iclass.mybatis.po.ClassCourse;
-import com.iclass.mybatis.po.Course;
 import com.iclass.mybatis.po.User;
 import com.iclass.ppt_hw.component.service.api.ClassService;
 import com.iclass.user.component.entity.DataTablesRequestEntity;
@@ -16,7 +15,6 @@ import com.iclass.user.component.msg.ResponseMsg;
 import com.iclass.user.component.utils.CheckDataTables;
 import com.iclass.user.component.utils.IclassUtil;
 import org.apache.commons.lang.StringUtils;
-import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,10 +48,10 @@ public class ClassServiceImpl implements ClassService {
      * @return 返回处理信息
      */
     @Override
-    public ServiceResult<ResponseMsg> createClass(Class c) {
+    public ServiceResult<ResponseMsg> save(Class c) {
         ServiceResult<ResponseMsg> serviceResult = new ServiceResult<>();
         if (c == null) {
-            serviceResult.setMessage("创建课堂失败,课堂信息不完整");
+            serviceResult.setMessage("创建班级失败,班级信息不完整");
             return serviceResult;
         }
         c.setClasscreatetime(IclassUtil.getDateTimeNow());
@@ -71,15 +69,6 @@ public class ClassServiceImpl implements ClassService {
      */
     @Override
     public ServiceResult<ResponseMsg> updateClassStatus(int status) {
-        return null;
-    }
-
-    /**
-     *
-     * @return
-     */
-    @Override
-    public ServiceResult<List<ClassDTO>> getAllClasses() {
         return null;
     }
 
@@ -126,8 +115,8 @@ public class ClassServiceImpl implements ClassService {
                 serviceResult.setRecordsFiltered(classes.size());
                 serviceResult.setSuccess(true);
             } else {
-                logger.info("编号为:" + classCreator + "的教师,没有创建课堂");
-                serviceResult.setMessage("编号为:" + classCreator + "的教师,没有创建课堂");
+                logger.info("编号为:" + classCreator + "的教师,没有创建班级");
+                serviceResult.setMessage("编号为:" + classCreator + "的教师,没有创建班级");
                 serviceResult.setRecordsTotal(0);
                 serviceResult.setRecordsFiltered(0);
             }
@@ -156,7 +145,7 @@ public class ClassServiceImpl implements ClassService {
                 serviceResult.setSuccess(true);
                serviceResult.setData(classDTOS);
             } else {
-                logger.warn("在class表中没有找到courseCode：" + courseCode + "的记录");
+                logger.warn("在class_course表中没有找到courseCode：" + courseCode + "的记录");
                 serviceResult.setMessage("该课程还没有应用到课堂中,请先为某课堂添加该课程");
             }
         } else {
@@ -236,7 +225,7 @@ public class ClassServiceImpl implements ClassService {
     public ServiceResult<ResponseMsg> updateClass(Class c) {
         ServiceResult<ResponseMsg> serviceResult = new ServiceResult<>();
         if (c == null) {
-            serviceResult.setMessage("更新课堂信息失败,课堂信息不完整");
+            serviceResult.setMessage("更新班级信息失败,班级信息不完整");
             return serviceResult;
         }
         classMapper.updateByPrimaryKeySelective(c);

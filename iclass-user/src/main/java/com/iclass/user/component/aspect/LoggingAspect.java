@@ -67,7 +67,7 @@ public class LoggingAspect {
 
         String args = Arrays.toString(joinPoint.getArgs());
 
-        String data = "无内容";
+        String data = null;
 
         String error = null;
 
@@ -77,18 +77,18 @@ public class LoggingAspect {
             startTime.set(System.currentTimeMillis());
 
             // 记录下请求内容
-            logger.info("Ip : " + ip);
-            logger.info("Device : " + device);
-            logger.info("HTTP_METHOD : " + http_method);
-            logger.info("Operation : " + operation);
-            logger.info("CLASS_METHOD : " +  method);
-            logger.info("ARGS : " + args);
+//            logger.info("Ip : " + ip);
+//            logger.info("Device : " + device);
+//            logger.info("HTTP_METHOD : " + http_method);
+//            logger.info("Operation : " + operation);
+//            logger.info("CLASS_METHOD : " +  method);
+//            logger.info("ARGS : " + args);
 
             result = joinPoint.proceed();
 
             exeTime = System.currentTimeMillis() - startTime.get() + "ms";
 
-            logger.info("Data： {}", result);
+//            logger.info("Data： {}", result);
 
             if (result instanceof ServiceResult) {
                 ServiceResult serviceResult = (ServiceResult) result;
@@ -104,11 +104,12 @@ public class LoggingAspect {
 
             error = throwable.toString();
         }
-        // 保存日志
-        Log log = new Log(null, ip, device, http_method, operation, method, args, exeTime, IclassUtil.getDateTimeNow(), data, error);
+        if (data != null) {
+            // 保存日志
+            Log log = new Log(null, ip, device, http_method, operation, method, args, exeTime, IclassUtil.getDateTimeNow(), data, error);
 
-        logMapper.insert(log);
-
+            logMapper.insert(log);
+        }
         return result;
     }
 }

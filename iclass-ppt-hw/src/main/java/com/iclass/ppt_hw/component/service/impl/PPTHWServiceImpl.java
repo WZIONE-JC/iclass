@@ -56,7 +56,7 @@ public class PPTHWServiceImpl implements PPTHWService {
     private CourseMapper courseMapper;
 
     /**
-     * 根据ClassCode 和 ClassCourseCode 在iclassfile_class 表中查询FileCode
+     * 根据classCourseId 在iclassfile_class 表中查询FileCode
      * 可能为空
      */
     @Autowired
@@ -125,14 +125,15 @@ public class PPTHWServiceImpl implements PPTHWService {
             return serviceResult;
         }
         //1.获取教师信息
-        User teacher = userMapper.findByUsercode(classCreator);
-        String teacherName = teacher.getUserfullname();
+        User user = userMapper.findByUsercode(classCreator);
+        String teacherName = user.getUserfullname();
+        String role = user.getUserrole();
         Integer recordsTotal = classMapper.countByClassCreator(classCreator);
         //2.获取课堂信息
         List<Class> classes = classMapper.selectByClassCreator(classCreator, start, length);
         if (classes != null && classes.size() == 0) {
-            logger.info(teacherName + " 教师还没有创建课堂");
-            serviceResult.setMessage(teacherName + " 教师还没有创建课堂");
+            logger.info(role + " " + teacherName + "还没有创建课堂");
+            serviceResult.setMessage(role + " " + teacherName + "还没有创建课堂");
             return serviceResult;
         }
         List<ClassCourseDTO> classCourseDTOS = new ArrayList<>();
@@ -156,8 +157,8 @@ public class PPTHWServiceImpl implements PPTHWService {
                 if (classCourseStudents != null && classCourseStudents.size() > 0) {
                     for (ClassCourseStudent cs : classCourseStudents) {
                         String studentCode = cs.getStudentcode();
-                        User user = userMapper.findUserByUsercode(studentCode);
-                        sessionUsers.add(new SessionUser(user));
+                        User student = userMapper.findUserByUsercode(studentCode);
+                        sessionUsers.add(new SessionUser(student));
                     }
                 }
                 ClassCourseDTO classCourseDTO = new ClassCourseDTO(classCourseId, c, course, teacherName, sessionUsers, createTime, deadline, status);
@@ -188,29 +189,32 @@ public class PPTHWServiceImpl implements PPTHWService {
         Integer start = requestEntity.getStart();
         Integer length = requestEntity.getLength();
         if (fileQo == null) {
-            logger.info("fileQo为空");
             serviceResult.setMessage("参数错误");
             return serviceResult;
         }
         if (StringUtils.isBlank(fileQo.getClassCode())) {
-            logger.warn("classCode为空");
-            serviceResult.setMessage("classCode为空");
+            serviceResult.setMessage("班级编号不能为空");
             return serviceResult;
         }
         if (StringUtils.isBlank(fileQo.getCourseCode())) {
-            logger.warn("courseCode为空");
-            serviceResult.setMessage("courseCode为空");
+            serviceResult.setMessage("课程编号不能为空");
             return serviceResult;
         }
         if (fileQo.getFileType() == null) {
-            logger.warn("fileType为空");
-            serviceResult.setMessage("fileType为空");
+            serviceResult.setMessage("文件类型为空");
             return serviceResult;
         }
-        List<IclassfileClass> iclassfileClassList = iclassfileClassMapper.selectByClassCodeAndCourseCode(fileQo.getClassCode(), fileQo.getCourseCode(), start, length);
+
+        ClassCourse classCourse = classCourseMapper.selectByClassCodeAndCourseCode(fileQo.getClassCode(), fileQo.getCourseCode());
+
+        if (classCourse == null) {
+            serviceResult.setMessage("没有找到班级编号为:" + fileQo.getClassCode() + ",课程编号为:" + fileQo.getCourseCode() + "的课堂");
+            return serviceResult;
+        }
+        List<IclassfileClass> iclassfileClassList = iclassfileClassMapper.selectByClassCourseId(classCourse.getClasscourseid(), start, length);
         if (iclassfileClassList == null || iclassfileClassList.size() == 0) {
-            logger.info("classcode为{}, courseCode为{} 的文件信息没有找到", fileQo.getClassCode(), fileQo.getCourseCode());
             serviceResult.setMessage("没有找到文件信息");
+            return serviceResult;
         }
         List<IclassfileDTO> iclassfileList = new ArrayList<>();
         for (IclassfileClass file : iclassfileClassList) {
@@ -219,16 +223,79 @@ public class PPTHWServiceImpl implements PPTHWService {
             if (iclassfile != null) {
                 User teacher = userMapper.findByUsercode(iclassfile.getFilecreator());
                 String teacherName = teacher.getUserfullname();
-                iclassfileList.add(new IclassfileDTO(iclassfile, teacherName));
-        }
+                String fileRelativePath = iclassfile.getFilerelativepath();
+                fileRelativePath = fileRelativePath.replace("\\", "/");
+                String url = "www.aiiclass.cn" + "/files/" + fileRelativePath;
+                iclassfileList.add(new IclassfileDTO(iclassfile, url, teacherName));
+            }
         }
         serviceResult.setData(iclassfileList);
-        logger.info("文件信息查询成功" + iclassfileList.toString());
         serviceResult.setSuccess(true);
         serviceResult.setDraw(draw);
         // 以后如果加入过滤就需要修改这里
         serviceResult.setRecordsFiltered(iclassfileList.size());
         serviceResult.setRecordsTotal(iclassfileList.size());
         return serviceResult;
+    }
+
+    @Override
+    public ServiceResult<List<IclassfileDTO>> getPPTFileInfo(Integer classCourseId) {
+        ServiceResult<List<IclassfileDTO>> serviceResult = new ServiceResult<>();
+        if (classCourseId == null) {
+            serviceResult.setMessage("课堂编号不能为空");
+            return serviceResult;
+        }
+        List<IclassfileClass> iclassfileClassList = iclassfileClassMapper.selectByClassCourseIdNoLimit(classCourseId);
+        if (iclassfileClassList == null || iclassfileClassList.size() == 0) {
+            serviceResult.setMessage("没有找到文件信息");
+            return serviceResult;
+        }
+        List<IclassfileDTO> iclassfileList = getFile(iclassfileClassList, 1);
+
+        serviceResult.setData(iclassfileList);
+        serviceResult.setSuccess(true);
+        return serviceResult;
+    }
+
+    @Override
+    public ServiceResult<List<IclassfileDTO>> getHWFileInfo(Integer classCourseId) {
+        ServiceResult<List<IclassfileDTO>> serviceResult = new ServiceResult<>();
+        if (classCourseId == null) {
+            serviceResult.setMessage("课堂编号不能为空");
+            return serviceResult;
+        }
+        List<IclassfileClass> iclassfileClassList = iclassfileClassMapper.selectByClassCourseIdNoLimit(classCourseId);
+        if (iclassfileClassList == null || iclassfileClassList.size() == 0) {
+            serviceResult.setMessage("没有找到文件信息");
+            return serviceResult;
+        }
+        List<IclassfileDTO> iclassfileList = getFile(iclassfileClassList, 0);
+
+        serviceResult.setData(iclassfileList);
+        serviceResult.setSuccess(true);
+        return serviceResult;
+    }
+
+    /**
+     * 获取文件数据
+     * @param iclassfileClassList
+     * @param fileType 1,表示ppt数据  0,表示作业数据
+     * @return
+     */
+    private List<IclassfileDTO> getFile( List<IclassfileClass> iclassfileClassList, Integer fileType) {
+        List<IclassfileDTO> iclassfileList = new ArrayList<>();
+        for (IclassfileClass file : iclassfileClassList) {
+            String fileCode = file.getFilecode();
+            Iclassfile iclassfile = iclassfileMapper.selectByFileCode(fileCode, fileType);
+            if (iclassfile != null) {
+                User teacher = userMapper.findByUsercode(iclassfile.getFilecreator());
+                String teacherName = teacher.getUserfullname();
+                String fileRelativePath = iclassfile.getFilerelativepath();
+                fileRelativePath = fileRelativePath.replace("\\", "/");
+                String url = "www.aiiclass.cn" + "/files/" + fileRelativePath;
+                iclassfileList.add(new IclassfileDTO(iclassfile, url, teacherName));
+            }
+        }
+        return iclassfileList;
     }
 }

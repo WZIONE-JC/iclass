@@ -18,34 +18,27 @@ import java.util.List;
 public interface ClassService {
 
     /**
-     * 创建课堂
+     * 创建班级
      *
-     * @param c 课堂信息
+     * @param c 班级信息
      * @return 处理信息
      */
-    ServiceResult<ResponseMsg> createClass(Class c);
+    ServiceResult<ResponseMsg> save(Class c);
 
     /**
-     * 改变课程状态
+     * 改变班级状态
      *
-     * @param status 0：表示课堂失效， 1：表示课程有效
+     * @param status 0：表示班级失效， 1：表示班级有效
      * @return
      */
     ServiceResult<ResponseMsg> updateClassStatus(int status);
 
     /**
-     * 获取所有课堂信息
-     *
-     * @return 课堂信息
-     */
-    ServiceResult<List<ClassDTO>> getAllClasses();
-
-    /**
-     * 获取教师所创建的课程
+     * 获取教师所创建的班级
      *
      * @param requestEntity datatable请求过来的数据
      * @param classCreator teacherCode
-     * @return 该教师所创建的课堂信息
+     * @return 该教师所创建的班级信息
      */
     ServiceResult<List<ClassDTO>> getClassesByClassCreator(DataTablesRequestEntity requestEntity, String classCreator, Boolean isLimit);
 

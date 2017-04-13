@@ -15,13 +15,15 @@ public class ClassCourseDTO implements Serializable {
 
     private Integer classcourseId;
 
+    private String classRoomName;
+
     private Class aClass;
 
     private Course course;
 
     private String teacherName;
 
-    private List<SessionUser> sessionUsers;
+    private List<SessionUser> students;
 
     private String creatTime;
 
@@ -31,17 +33,28 @@ public class ClassCourseDTO implements Serializable {
 
     public ClassCourseDTO(){}
 
-    public ClassCourseDTO(Integer classcourseId, Class aClass, Course course, String teacherName, List<SessionUser> sessionUsers, String creatTime, String deadline, Integer status) {
+    public ClassCourseDTO(Integer classcourseId, Class aClass, Course course, String teacherName, List<SessionUser> students, String creatTime, String deadline, Integer status) {
         this.classcourseId = classcourseId;
         this.aClass = aClass;
         this.course = course;
         this.teacherName = teacherName;
-        this.sessionUsers = sessionUsers;
+        this.students = students;
         this.creatTime = creatTime;
         this.deadline = deadline;
         this.status = status;
     }
 
+    public ClassCourseDTO(Integer classcourseId, String classRoomName, Class aClass, Course course, String teacherName, List<SessionUser> students, String creatTime, String deadline, Integer status) {
+        this.classcourseId = classcourseId;
+        this.classRoomName = classRoomName;
+        this.aClass = aClass;
+        this.course = course;
+        this.teacherName = teacherName;
+        this.students = students;
+        this.creatTime = creatTime;
+        this.deadline = deadline;
+        this.status = status;
+    }
 
     public Integer getClasscourseId() {
         return classcourseId;
@@ -49,6 +62,14 @@ public class ClassCourseDTO implements Serializable {
 
     public void setClasscourseId(Integer classcourseId) {
         this.classcourseId = classcourseId;
+    }
+
+    public String getClassRoomName() {
+        return classRoomName;
+    }
+
+    public void setClassRoomName(String classRoomName) {
+        this.classRoomName = classRoomName;
     }
 
     public Class getaClass() {
@@ -75,12 +96,12 @@ public class ClassCourseDTO implements Serializable {
         this.teacherName = teacherName;
     }
 
-    public List<SessionUser> getSessionUsers() {
-        return sessionUsers;
+    public List<SessionUser> getStudents() {
+        return students;
     }
 
-    public void setSessionUsers(List<SessionUser> sessionUsers) {
-        this.sessionUsers = sessionUsers;
+    public void setStudents(List<SessionUser> students) {
+        this.students = students;
     }
 
     public String getCreatTime() {
@@ -114,7 +135,7 @@ public class ClassCourseDTO implements Serializable {
                 ", aClass=" + aClass +
                 ", course=" + course +
                 ", teacherName='" + teacherName + '\'' +
-                ", sessionUsers=" + sessionUsers +
+                ", students=" + students +
                 ", creatTime='" + creatTime + '\'' +
                 ", deadline='" + deadline + '\'' +
                 ", status=" + status +

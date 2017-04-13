@@ -7,12 +7,8 @@ import com.iclass.user.component.entity.DataTablesRequestEntity;
 import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.msg.ResponseMsg;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.xml.crypto.Data;
 import java.util.List;
 
 /**
@@ -33,9 +29,11 @@ public class ClassCourseController {
      * @return 课堂和课程数据
      */
     @RequestMapping("/getClassCourse")
-    public ServiceResult<List<ClassCourseDTO>> getClassCourse(DataTablesRequestEntity requestEntity, String classCreator) {
-
-        return classCourseService.getClassCourse(requestEntity, classCreator);
+    public ServiceResult<List<ClassCourseDTO>> getClassCourse(DataTablesRequestEntity requestEntity, String classCreator, @RequestParam(required = false) Boolean isLimit) {
+        if (isLimit == null) {
+            isLimit = Boolean.TRUE;
+        }
+        return classCourseService.getClassCourse(requestEntity, classCreator, isLimit);
     }
 
     /**
@@ -82,5 +80,39 @@ public class ClassCourseController {
     ServiceResult<ResponseMsg> check(Integer classcourseid, String classcode, String coursecode) {
 
         return classCourseService.check(classcourseid, classcode, coursecode);
+    }
+
+    /**
+     * 根据学生的code获取已经选的课程
+     * @param studentCode
+     * @return
+     */
+    @RequestMapping(value = "/getClassRoom",method = RequestMethod.POST)
+    ServiceResult<List<ClassCourseDTO>> getSelectedClassRoom(String studentCode) {
+
+        return classCourseService.getSelectedClassRoom(studentCode);
+    }
+
+    /**
+     * 根据学生的code获取未选的课程
+     * @param studentCode
+     * @return
+     */
+    @RequestMapping(value = "/getClassRoom2", method = RequestMethod.POST)
+    ServiceResult<List<ClassCourseDTO>> getUnSelectedClassRoom(String studentCode) {
+
+        return classCourseService.getUnSelectedClassRoom(studentCode);
+    }
+
+    /**
+     * 学生加入课堂
+     * @param studentCode
+     * @param classCourseId
+     * @return
+     */
+    @RequestMapping(value = "/join", method = RequestMethod.POST)
+    ServiceResult<ResponseMsg> joinClassRoom(String studentCode, Integer classCourseId) {
+
+        return classCourseService.joinClassRoom(studentCode, classCourseId);
     }
 }

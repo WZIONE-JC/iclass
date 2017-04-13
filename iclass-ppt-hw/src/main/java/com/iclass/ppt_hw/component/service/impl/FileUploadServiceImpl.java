@@ -1,12 +1,14 @@
 package com.iclass.ppt_hw.component.service.impl;
 
+import com.iclass.mybatis.dao.ClassCourseMapper;
 import com.iclass.mybatis.dao.IclassfileClassMapper;
 import com.iclass.mybatis.dao.IclassfileMapper;
+import com.iclass.mybatis.po.ClassCourse;
 import com.iclass.mybatis.po.Iclassfile;
 import com.iclass.mybatis.po.IclassfileClass;
 import com.iclass.mybatis.qo.FileQo;
 import com.iclass.ppt_hw.component.service.api.FileUploadService;
-import com.iclass.ppt_hw.config.file.FileConfig;
+import com.iclass.ppt_hw.config.fileConfig.FileConfig;
 import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.msg.Msg;
 import com.iclass.user.component.msg.ResponseMsg;
@@ -48,6 +50,9 @@ public class FileUploadServiceImpl implements FileUploadService {
     private IclassfileClassMapper iclassfileClassMapper;
 
     @Autowired
+    private ClassCourseMapper classCourseMapper;
+
+    @Autowired
     private FileConfig fileConfig;
 
     /**
@@ -59,6 +64,12 @@ public class FileUploadServiceImpl implements FileUploadService {
      * 上传文件的文件名
      */
     private String fileName;
+
+    /**
+     * 文件存放的相对路径
+     * /2017-04-11/xxxx-xxxx.doc
+     */
+    private String fileRelativePath;
     /**
      *
      * @param request 获取服务器路径，来存储文件
@@ -82,6 +93,9 @@ public class FileUploadServiceImpl implements FileUploadService {
             String filePath = uplpadResult.getData();
             Iclassfile iclassFile = new Iclassfile();
             IclassfileClass fileClass = new IclassfileClass();
+            if(StringUtils.isNotBlank(fileRelativePath)) {
+                iclassFile.setFilerelativepath(fileRelativePath);
+            }
             if(StringUtils.isNotBlank(filePath)) {
                 iclassFile.setFilepath(filePath);
             }
@@ -101,30 +115,35 @@ public class FileUploadServiceImpl implements FileUploadService {
             if (StringUtils.isNotBlank(fileQo.getFileDesc())) {
                 iclassFile.setFiledesc(fileQo.getFileDesc());
             }
-            if (StringUtils.isNotBlank(fileQo.getClassCode())) {
-               fileClass.setClasscode(fileQo.getClassCode());
-            }
-            if (StringUtils.isNotBlank(fileQo.getCourseCode())) {
-                fileClass.setCoursecode(fileQo.getCourseCode());
-            }
-            iclassFile.setFilecreatetime(IclassUtil.getDateTimeNow());
-
-            int fileResult = iclassfileMapper.insertSelective(iclassFile);
-            if (fileResult == 1) {
-                int fileClassResult = iclassfileClassMapper.insertSelective(fileClass);
-                if(fileClassResult == 1) {
-                    serviceResult.setSuccess(true);
-                    serviceResult.setData(new ResponseMsg(Msg.FILE_UPLOAD_SUCCESS));
-                } else {
-                    logger.warn("文件关系表建立失败");
-                    serviceResult.setMessage("文件关系表建立失败");
-                    delete(filePath);
-                }
-            } else {
-                logger.warn("文件记录失败");
-                serviceResult.setMessage("文件记录失败");
+            if (StringUtils.isBlank(fileQo.getClassCode())) {
+                serviceResult.setMessage("班级编号不能为空");
                 delete(filePath);
+                return serviceResult;
             }
+            if (StringUtils.isBlank(fileQo.getCourseCode())) {
+                serviceResult.setMessage("课程编号不能为空");
+                delete(filePath);
+                return serviceResult;
+            }
+            String classCode = fileQo.getClassCode();
+
+            String courseCode = fileQo.getCourseCode();
+
+            ClassCourse classCourse = classCourseMapper.selectByClassCodeAndCourseCode(classCode, courseCode);
+
+            if (classCourse == null) {
+                serviceResult.setMessage("没有找到班级编号为:" + classCode + ",课程编号为:" + courseCode + "的课堂");
+                delete(filePath);
+                return serviceResult;
+            }
+            fileClass.setClasscourseid(classCourse.getClasscourseid());
+            //保存课件信息
+            iclassFile.setFilecreatetime(IclassUtil.getDateTimeNow());
+            iclassfileMapper.insertSelective(iclassFile);
+            //保存课堂-文件记录
+            iclassfileClassMapper.insert(fileClass);
+            serviceResult.setSuccess(true);
+            serviceResult.setData(new ResponseMsg(Msg.FILE_UPLOAD_SUCCESS));
         }
         serviceResult.setMessage(uplpadResult.getMessage());
         return serviceResult;
@@ -224,6 +243,9 @@ public class FileUploadServiceImpl implements FileUploadService {
         //fileCode
         fileCode = UUID.randomUUID()+"";
 
+        //初始化文件相对路径
+        fileRelativePath = fileFloder + fileCode + "-" + fileName;
+
         //文件存放目录
         File dest = new File(filePath + fileCode + "-" + fileName);
 
@@ -267,6 +289,7 @@ public class FileUploadServiceImpl implements FileUploadService {
         File file = new File(filepath);
         if(file.exists()) {
             file.delete();
+            logger.info("遇到错误,成功删除文件" + filepath);
         }
     }
 }

@@ -2,8 +2,6 @@ package com.iclass.mybatis.po;
 
 import com.iclass.user.component.utils.IclassUtil;
 
-import java.util.Date;
-
 public class Log {
     private Integer id;
 
@@ -11,7 +9,7 @@ public class Log {
 
     private String device;
 
-    private String httpMethod;
+    private String http_method;
 
     private String operation;
 
@@ -29,11 +27,11 @@ public class Log {
 
     public Log() {}
 
-    public Log(Integer id, String ip, String device, String httpMethod, String operation, String method, String args, String exetime, String logtime, String logdata, String logerror) {
+    public Log(Integer id, String ip, String device, String http_method, String operation, String method, String args, String exetime, String logtime, String logdata, String logerror) {
         this.id = id;
         this.ip = ip;
         this.device = device;
-        this.httpMethod = httpMethod;
+        this.http_method = http_method;
         this.operation = operation;
         this.method = method;
         this.args = args;
@@ -67,12 +65,12 @@ public class Log {
         this.device = device;
     }
 
-    public String getHttpMethod() {
-        return httpMethod;
+    public String getHttp_method() {
+        return http_method;
     }
 
-    public void setHttpMethod(String httpMethod) {
-        this.httpMethod = httpMethod;
+    public void setHttp_method(String http_method) {
+        this.http_method = http_method;
     }
 
     public String getOperation() {
@@ -137,7 +135,7 @@ public class Log {
                 "id=" + id +
                 ", ip='" + ip + '\'' +
                 ", device='" + device + '\'' +
-                ", httpMethod='" + httpMethod + '\'' +
+                ", httpMethod='" + http_method + '\'' +
                 ", operation='" + operation + '\'' +
                 ", method='" + method + '\'' +
                 ", args='" + args + '\'' +

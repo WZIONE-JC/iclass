@@ -67,7 +67,7 @@ public class LoggingAspect {
 
         String args = Arrays.toString(joinPoint.getArgs());
 
-        String data = "无内容";
+        String data = null;
 
         String error = null;
 
@@ -76,24 +76,13 @@ public class LoggingAspect {
 
             startTime.set(System.currentTimeMillis());
 
-            // 记录下请求内容
-            logger.info("Ip : " + ip);
-            logger.info("Device : " + device);
-            logger.info("HTTP_METHOD : " + http_method);
-            logger.info("Operation : " + operation);
-            logger.info("CLASS_METHOD : " +  method);
-            logger.info("ARGS : " + args);
-
             result = joinPoint.proceed();
 
             exeTime = System.currentTimeMillis() - startTime.get() + "ms";
 
-            logger.info("Data： {}", result);
-
         } catch (Throwable throwable) {
             throwable.printStackTrace();
             logger.info("Error： {}", throwable);
-
             error = throwable.toString();
         }
 

@@ -7,19 +7,16 @@ public class IclassfileClass implements Serializable{
 
     private String filecode;
 
-    private String classcode;
-
-    private String coursecode;
-
-    public IclassfileClass(Integer fileclassid, String filecode, String classcode, String coursecode) {
-        this.fileclassid = fileclassid;
-        this.filecode = filecode;
-        this.classcode = classcode;
-        this.coursecode = coursecode;
-    }
+    private Integer classcourseid;
 
     public IclassfileClass() {
         super();
+    }
+
+    public IclassfileClass(Integer fileclassid, String filecode, Integer classcourseid) {
+        this.fileclassid = fileclassid;
+        this.filecode = filecode;
+        this.classcourseid = classcourseid;
     }
 
     public Integer getFileclassid() {
@@ -38,20 +35,13 @@ public class IclassfileClass implements Serializable{
         this.filecode = filecode == null ? null : filecode.trim();
     }
 
-    public String getClasscode() {
-        return classcode;
+
+    public Integer getClasscourseid() {
+        return classcourseid;
     }
 
-    public void setClasscode(String classcode) {
-        this.classcode = classcode == null ? null : classcode.trim();
-    }
-
-    public String getCoursecode() {
-        return coursecode;
-    }
-
-    public void setCoursecode(String coursecode) {
-        this.coursecode = coursecode == null ? null : coursecode.trim();
+    public void setClasscourseid(Integer classcourseid) {
+        this.classcourseid = classcourseid;
     }
 
     @Override
@@ -59,8 +49,7 @@ public class IclassfileClass implements Serializable{
         return "IclassfileClass{" +
                 "fileclassid=" + fileclassid +
                 ", filecode='" + filecode + '\'' +
-                ", classcode='" + classcode + '\'' +
-                ", coursecode='" + coursecode + '\'' +
+                ", classcourseid=" + classcourseid +
                 '}';
     }
 }

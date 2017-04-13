@@ -14,7 +14,13 @@ var Logined = function () {
                 timeout: 3000,
                 success: function (logineduserdata) {
                     if (logineduserdata.success) {
-                        $("#rolename").text(logineduserdata.data.user.userrole);
+                        $("#menu").removeClass("displayNone");
+                        var role = logineduserdata.data.user.userrole;
+                        if (role == "管理员") {
+                            $("#menu-system").removeClass("displayNone");
+                        }
+                        $("#rolename").text(role);
+
                         var username = logineduserdata.data.user.username;
                         $("#username").text(username);
                         var usercode = logineduserdata.data.user.usercode;

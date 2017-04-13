@@ -121,6 +121,6 @@
     SELECT
     <include refid="Base_Column_List"/>
     FROM class_course
-    where ClassCode = #{classcode,jdbcType=VARCHAR} AND CourseCode = #{coursecode,jdbcType=VARCHAR} AND status = 1
+    where ClassCode = #{classcode,jdbcType=VARCHAR} AND CourseCode = #{coursecode,jdbcType=VARCHAR}
   </select>
 </mapper>

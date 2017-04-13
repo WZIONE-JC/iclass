@@ -317,7 +317,7 @@ if(!Array.prototype.indexOf){
 	// canvg(target, s)
 	// empty parameters: replace all 'svg' elements on page with 'canvas' elements
 	// target: canvas element or the id of a canvas element
-	// s: svg string, url to svg file, or xml document
+	// s: svg string, url to svg fileConfig, or xml document
 	// opts: optional hash of options
 	//		 ignoreMouse: true => ignore mouse events
 	//		 ignoreAnimation: true => ignore animations

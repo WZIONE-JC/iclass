@@ -14,8 +14,7 @@ $(function () {
             return false;
         } else if(filePath.indexOf("ppt")!=-1 || filePath.indexOf("pptx")!=-1
             || filePath.indexOf("doc")!=-1 || filePath.indexOf("docx")!=-1
-            || filePath.indexOf("xls")!=-1 || filePath.indexOf("xlsx")!=-1
-            || filePath.indexOf("txt")!=-1 || filePath.indexOf("pdf")!=-1){
+            || filePath.indexOf("xls")!=-1 || filePath.indexOf("xlsx")!=-1){
             var maxsize = 5*1024*1024;//5M
             var errMsg = "上传的附件文件不能超过5M！！！";
             var tipMsg = "您的浏览器暂不支持计算上传文件的大小，确保上传文件不要超过5M，建议使用IE、FireFox、Chrome浏览器。";
@@ -83,7 +82,7 @@ function uploadfile(form, fileType){
                 if(responseData.success) {
                     swal({
                         title: "Good Job!",
-                        text: responseData.msg,
+                        text: responseData.data.msg,
                         timer: 2000,
                         showConfirmButton: false,
                         type: "success"

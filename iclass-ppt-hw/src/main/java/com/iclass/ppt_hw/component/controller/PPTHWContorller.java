@@ -42,4 +42,26 @@ public class PPTHWContorller {
 
         return ppthwService.getPPTHWFileInfo(requestEntity, fileQo);
     }
+
+    /**
+     * 根据课堂id去获取它的文件信息
+     * @param classCourseId
+     * @return
+     */
+    @RequestMapping(value = "/getPPTFile", method = RequestMethod.POST)
+    ServiceResult<List<IclassfileDTO>> getPPTFileInfo(Integer classCourseId) {
+
+        return ppthwService.getPPTFileInfo(classCourseId);
+    }
+
+    /**
+     * 根据课堂id去获取它的文件信息
+     * @param classCourseId
+     * @return
+     */
+    @RequestMapping(value = "/getHWFile", method = RequestMethod.POST)
+    ServiceResult<List<IclassfileDTO>> getHWFileInfo(Integer classCourseId) {
+
+        return ppthwService.getHWFileInfo(classCourseId);
+    }
 }

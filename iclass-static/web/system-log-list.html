@@ -26,7 +26,7 @@
   <title>系统日志</title>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 系统管理 <span class="c-gray en">&gt;</span> 系统日志 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 系统管理 <span class="c-gray en">&gt;</span> 系统日志 <a class="btn btn-success radius r mr-20" id="btn-refresh" style="line-height:1.6em;margin-top:3px" href="#" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="pd-20">
   <div class="text-c"> 日期范围：
     <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}'})" id="logmin" class="input-text Wdate" style="width:120px;">
@@ -34,34 +34,24 @@
     <input type="text" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'logmin\')}'})" id="logmax" class="input-text Wdate" style="width:120px;">
     <button name="" id="" class="btn btn-success radius" type="submit"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
   </div>
-  <div class="cl pd-5 bg-1 bk-gray mt-10"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-default radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a></span> <span class="r total-record">共有数据：<strong>0</strong> 条</span> </div>
+  <div class="cl pd-5 bg-1 bk-gray mt-10"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-default radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a></span> <span class="r total-record">共有数据：<strong id="totalRecord">0</strong> 条</span> </div>
   <div class="mt-10">
     <table id="form-log" class="table table-border table-bordered table-bg table-hover table-sort">
       <thead>
         <tr class="text-c">
-          <th width="3%"><input type="checkbox" name="" value=""></th>
-          <th width="5%">ID</th>
-          <th width="10%">用户编号</th>
+          <th width="3%">ID</th>
           <th width="10%">IP</th>
           <th width="10%">设备</th>
+          <th width="10%">Http请求</th>
           <th width="10%">操作</th>
-          <th width="20%">内容</th>
-          <th width="10%">时间</th>
+          <th width="10%">方法</th>
+          <th width="10%">参数</th>
+          <th width="8%">执行时间</th>
+          <th width="10%">操作时间</th>
           <th width="10%">操作</th>
         </tr>
       </thead>
       <tbody >
-        <tr class="text-c">
-          <td><input type="checkbox" value="" name=""></td>
-          <td>15686</td>
-          <td>1308030305</td>
-          <td>61.233.7.80</td>
-          <td>Mozilla/5.0 (Windows NT 10.0; WOW64)</td>
-          <td>/iclass/user/login</td>
-          <td>登录成功!</td>
-          <td>2017-3-22 11:11:42</td>
-          <td><a title="详情" href="javascript:;" onclick="log_detail('日志详情','system-log-detail.html','10001')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe665;</i></a> <a title="删除" href="javascript:;" onclick="log_del(this,'10001')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
-        </tr>
       </tbody>
     </table>
   </div>
@@ -73,20 +63,16 @@
 <script type="text/javascript" src="assets/js/H-ui.js"></script>
 <script type="text/javascript" src="assets/js/H-ui.admin.js"></script>
 <script type="text/javascript" src="lib/sweetalert-1.1.1/sweetalert.min.js"></script>
+<script type="text/javascript" src="assets/js/business/ip.js"></script>
+<script type="text/javascript" src="assets/js/business/log.js"></script>
 <script type="text/javascript">
-  $('#form-log').DataTable({
+  $(function () {
+      var table = logTableHandler("#form-log", "/log/getAll");
+      $("#btn-refresh").on("click",function () {
+          table.api().ajax.reload();
+      });
   });
-  /*日志-详情*/
-  function log_detail(title,url,id){
-      layer_show(title,url,id,400,500);
-  }
-  /*日志-删除*/
-  function log_del(obj,id){
-    layer.confirm('确认要删除吗？',function(index){
-        $(obj).parents("tr").remove();
-        layer.msg('已删除!',{icon:1,time:1000});
-    });
-  }
+
 </script>
 </body>
 </html>

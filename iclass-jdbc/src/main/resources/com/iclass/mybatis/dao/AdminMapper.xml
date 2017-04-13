@@ -53,8 +53,14 @@
         where adminID = #{adminid,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.iclass.mybatis.po.Admin" >
-    update admin
-    set adminCode = #{admincode,jdbcType=VARCHAR}
-    where adminID = #{adminid,jdbcType=INTEGER}
-  </update>
+        update admin
+        set adminCode = #{admincode,jdbcType=VARCHAR}
+        where adminID = #{adminid,jdbcType=INTEGER}
+    </update>
+    <select id="selectByAdminCode" resultType="com.iclass.mybatis.po.Admin">
+        SELECT
+        <include refid="Base_Column_List" />
+        from admin
+        where adminCode = #{admincode,jdbcType=VARCHAR}
+    </select>
 </mapper>

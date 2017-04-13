@@ -7,6 +7,7 @@
       <arg column="FileCode" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="FileName" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="FilePath" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="FileRelativePath" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="FileDesc" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="FileCreator" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="FileCreateTime" jdbcType="TIMESTAMP" javaType="java.lang.String" />
@@ -16,7 +17,7 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    FileID, FileCode, FileName, FilePath, FileDesc, FileCreator, FileCreateTime, Filetype, FileDownloadTime,
+    FileID, FileCode, FileName, FilePath, FileRelativePath, FileDesc, FileCreator, FileCreateTime, Filetype, FileDownloadTime,
     FileStatus
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -30,11 +31,12 @@
     where FileID = #{fileid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.iclass.mybatis.po.Iclassfile" >
-    insert into iclassfiles (FileID, FileCode, FileName, FilePath,
+    insert into iclassfiles (FileID, FileCode, FileName, FilePath, FileRelativePath,
     FileDesc, FileCreator, FileCreateTime,
     Filetype, FileDownloadTime, FileStatus
     )
     values (#{fileid,jdbcType=INTEGER}, #{filecode,jdbcType=VARCHAR}, #{filename,jdbcType=VARCHAR}, #{filepath,jdbcType=VARCHAR},
+    #{filerelativepath,jdbcType=VARCHAR},
     #{filedesc,jdbcType=VARCHAR}, #{filecreator,jdbcType=VARCHAR}, #{filecreatetime,jdbcType=TIMESTAMP},
     #{filetype,jdbcType=INTEGER}, #{filedownloadtime,jdbcType=INTEGER}, #{filestatus,jdbcType=INTEGER}
     )
@@ -53,6 +55,9 @@
       </if>
       <if test="filepath != null" >
         FilePath,
+      </if>
+      <if test="filerelativepath != null" >
+        FileRelativePath,
       </if>
       <if test="filedesc != null" >
         FileDesc,
@@ -86,6 +91,9 @@
       <if test="filepath != null" >
         #{filepath,jdbcType=VARCHAR},
       </if>
+      <if test="filerelativepath != null" >
+        #{filerelativepath,jdbcType=VARCHAR},
+      </if>
       <if test="filedesc != null" >
         #{filedesc,jdbcType=VARCHAR},
       </if>
@@ -118,6 +126,9 @@
       <if test="filepath != null" >
         FilePath = #{filepath,jdbcType=VARCHAR},
       </if>
+      <if test="filerelativepath != null" >
+        FileRelativePath = #{filerelativepath,jdbcType=VARCHAR},
+      </if>
       <if test="filedesc != null" >
         FileDesc = #{filedesc,jdbcType=VARCHAR},
       </if>
@@ -144,6 +155,7 @@
     set FileCode = #{filecode,jdbcType=VARCHAR},
     FileName = #{filename,jdbcType=VARCHAR},
     FilePath = #{filepath,jdbcType=VARCHAR},
+    FileRelativePath = #{filerelativepath,jdbcType=VARCHAR},
     FileDesc = #{filedesc,jdbcType=VARCHAR},
     FileCreator = #{filecreator,jdbcType=VARCHAR},
     FileCreateTime = #{filecreatetime,jdbcType=TIMESTAMP},

@@ -1217,7 +1217,7 @@ pathAnim = {
 }(win.jQuery));
 
 
-// check for a custom HighchartsAdapter defined prior to this file
+// check for a custom HighchartsAdapter defined prior to this fileConfig
 var globalAdapter = win.HighchartsAdapter,
 	adapter = globalAdapter || {};
 	

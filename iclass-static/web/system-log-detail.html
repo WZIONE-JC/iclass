@@ -22,12 +22,14 @@
   <script>DD_belatedPNG.fix('*');</script>
   <![endif]-->
   <link href="assets/css/style.css" rel="stylesheet" type="text/css">
+  <link href="lib/sweetalert-1.1.1/sweetalert.css" rel="stylesheet" type="text/css" />
   <title>日志详情</title>
 </head>
 <body>
 <div class="cl pd-20" style=" background-color:#767897">
-  <dl style="margin-left:80px; color:#eee">
-    <dt><span class="f-18" id="username">正在加载...</span> <span class="pl-10 f-12" id="logType">类型：<span>正在加载...</span></span></dt>
+  <input type="hidden" id="id" name="id" >
+  <dl style="margin-left:5%; color:#eee">
+    <dt class="f-18">日志ID：  <span class="f-18" id="logId">正在加载...</span></dt>
   </dl>
 </div>
 <div class="pd-20">
@@ -42,21 +44,28 @@
         <td id="logOperation">正在加载...</td>
       </tr>
       <tr>
-        <th class="text-r">时间：</th>
-        <td id="logTime">正在加载...</td>
+        <th style="vertical-align:top;" class="text-r">错误信息：</th>
+        <td><textarea class="system-log-info-textarea" id="logError">正在加载...</textarea></td>
       </tr>
       <tr>
         <th style="vertical-align:top;" class="text-r">详细信息：</th>
-        <td id="logDetail"><textarea class="system-log-info-textarea">正在加载...正在加载...正在加载...正在加载...正在加载...正在加载...正在加载...正在加载...正在加载...正在加载...正在加载...正在加载...正在加载...正在加载...正在加载...正在加载...正在加载...正在加载...正在加载...正在加载...正在加载...正在加载...正在加载...正在加载...正在加载...正在加载...</textarea></td>
+        <td><textarea class="system-log-info-textarea" id="logDetail">正在加载...</textarea></td>
       </tr>
     </tbody>
+    <a style="display: none" onclick="loadData()" id="loadData"></a>
   </table>
 </div>
 <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="assets/js/H-ui.js"></script>
 <script type="text/javascript" src="assets/js/H-ui.admin.js"></script>
+<script type="text/javascript" src="lib/sweetalert-1.1.1/sweetalert.min.js"></script>
+<script type="text/javascript" src="assets/js/business/ip.js"></script>
+<script type="text/javascript" src="assets/js/business/log.js"></script>
 <script type="text/javascript">
-
+    function loadData () {
+        var $id = $("#id").val();
+        showLog($id);
+    }
 </script>
 </body>
 </html>

@@ -27,7 +27,7 @@ public class FileQo implements Serializable{
     private String courseCode;
 
     /**
-     * 课堂编号(班级)
+     * 班级编号
      */
     private String classCode;
 
@@ -35,6 +35,8 @@ public class FileQo implements Serializable{
      * 文件描述
      */
     private String fileDesc;
+
+    private Integer classcourseId;
 
     public Integer getFileType() {
         return fileType;
@@ -76,14 +78,23 @@ public class FileQo implements Serializable{
         this.fileDesc = fileDesc;
     }
 
+    public Integer getClasscourseId() {
+        return classcourseId;
+    }
+
+    public void setClasscourseId(Integer classcourseId) {
+        this.classcourseId = classcourseId;
+    }
+
     @Override
     public String toString() {
         return "FileQo{" +
-                ", fileType='" + fileType + '\'' +
+                "fileType=" + fileType +
                 ", fileCreator='" + fileCreator + '\'' +
                 ", courseCode='" + courseCode + '\'' +
                 ", classCode='" + classCode + '\'' +
                 ", fileDesc='" + fileDesc + '\'' +
+                ", classcourseId=" + classcourseId +
                 '}';
     }
 }
