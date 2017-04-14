@@ -88,6 +88,12 @@ select {
     padding-left: 16%;
     margin: 0;
 }
-.displayNone {
+.admin {
+    display: none;
+}
+.user {
+    display: none;
+}
+.unlogined{
     display: none;
 }

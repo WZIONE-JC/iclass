@@ -2,7 +2,6 @@ package com.iclass.ppt_hw.component.controller;
 
 import com.iclass.mybatis.qo.FileQo;
 import com.iclass.ppt_hw.component.service.api.FileUploadService;
-import com.iclass.ppt_hw.config.fileConfig.FileConfig;
 import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.msg.ResponseMsg;
 import org.slf4j.Logger;
@@ -32,9 +31,6 @@ public class FileUploadController {
     @Autowired
     private FileUploadService fileUploadService;
 
-    @Autowired
-    private FileConfig fileConfig;
-
     /**
      *
      * @param request 获取web应用的路径，来存放文件
@@ -47,7 +43,6 @@ public class FileUploadController {
     public ServiceResult<ResponseMsg> upload(HttpServletRequest request, HttpServletResponse response, MultipartFile file, FileQo fileQo) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods", "POST");
-        logger.info("file = [" + file + "], fileQo = [" + fileQo + "]");
         return fileUploadService.doData(request, file, fileQo);
     }
 

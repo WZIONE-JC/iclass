@@ -1,7 +1,7 @@
 /**
- * Created by radishmaster on 08/04/17.
+ * Created by JasonTang on 4/14/2017.
  */
-function classCourseTableHandler(formId, url) {
+function classhdTableHandler() {
     var usercode = $(window.parent.document).find('#usercode')[0].value;
     if ( usercode == null ) {
         swal({
@@ -13,27 +13,30 @@ function classCourseTableHandler(formId, url) {
         return;
     }
     $("#classcreator").val(usercode);
-    $(formId).prop("width", "100%");
+    $("#form-classhd-table").prop("width", "100%");
     var colmuns =
         [
             {
                 orderable: false,
-                data: "classcourseId",
+                data: "classhd.classhdid",
                 render: function (data, type, row, meta) {
                     return "<input type='checkbox' value=" + data + " name='classid'>";
                 }
             },
             {
                 data: "classRoomName",
+            },
+            {
+                data: "classhd.classhdcontent",
+            },
+            {
+                data: "classhd.classhdoptions"
+            },
+            {
+                data: "classhd.classhdanswer",
                 render: function (data, type, row, meta) {
-                    return "<span class='label label-default radius'>" + data + "</span>";
+                    return "<span class='label label-secondary radius'>" + data + "</span>";
                 }
-            },
-            {
-                data: "course.coursename",
-            },
-            {
-                data: "aClass.classname"
             },
             {
                 data: "teacherName",
@@ -42,24 +45,21 @@ function classCourseTableHandler(formId, url) {
                 }
             },
             {
-                data: "students.length",
+                data: "classhd.classhdcreatetime"
+            },
+            {
+                data: "classhd.rightnumber",
                 render: function (data, type, row, meta) {
                     return "<span class='label label-default radius'>" + data + "</span>";
                 }
             },
             {
-                data: "creatTime"
-            },
-            {
-                data: "deadline"
-            },
-            {
-                data: "status",
+                data: "classhd.classhdstatus",
                 render: function (data, type, row, meta) {
                     if (data == 0) {
-                        return "<span class='label label-default radius' title='课堂已下架'>已下架</span>";
+                        return "<span class='label label-default radius' title='已下架'>已下架</span>";
                     } else if (data == 1) {
-                        return "<span class='label label-success radius' title='课堂已发布'>已发布</span>";
+                        return "<span class='label label-success radius' title='已发布'>已发布</span>";
                     }
                     return "<input type='checkbox' value=" + data + " name='classid'>";
                 }
@@ -72,14 +72,14 @@ function classCourseTableHandler(formId, url) {
 
     var columnDefs =
         [{
-            targets: [2, -2, -1],
+            targets: [1, -2, -1],
             "createdCell": function (td, cellData, rowData, row, col) {
-                var id = rowData.classcourseId;
-                var coursecode = rowData.course.coursecode;
-                var coursename = rowData.course.coursename;
-                var status = rowData.status;
-                if (col == 2) {
-                    $(td).wrapInner("<span style='cursor:pointer' title='查看课程信息' class='label label-success radius' onclick=course_show('" + coursename + "','course-show.html','" + coursecode + "','360','400')></span>");
+                var id = rowData.classhd.classhdid;
+                var classroomid = rowData.classhd.classcourseid;
+                var classRoomName = rowData.classRoomName;
+                var status = rowData.classhd.classhdstatus;
+                if (col == 1) {
+                    $(td).wrapInner("<span style='cursor:pointer' title='查看课堂信息' class='label label-default radius' onclick=show('" + classRoomName + "','classhd-show.html','" + classroomid + "','360','400')></span>");
                 }
                 if (col == 8) {
                     $(td).addClass("td-status");
@@ -87,16 +87,16 @@ function classCourseTableHandler(formId, url) {
                 if (col == 9) {
                     $(td).addClass("td-manage");
                     if(status == 1) {
-                        $(td).html("<a style='text-decoration:none' class='ml-5' title='编辑课堂' onclick=edit('编辑课堂','class-course-update.html','"+id+"','570','400')><i class='Hui-iconfont'>&#xe6df;</i></a> <a style='text-decoration:none' class='ml-5' onClick='stop(this,"+id+")'  title='下架'><i class='Hui-iconfont'>&#xe6de;</i></a>");
+                        $(td).html("<a style='text-decoration:none' class='ml-5' title='编辑' onclick=edit('编辑','classhd-update.html','"+id+"','570','400')><i class='Hui-iconfont'>&#xe6df;</i></a> <a style='text-decoration:none' class='ml-5' onClick='delClasshd("+id+")' title='删除'><i class='Hui-iconfont'>&#xe6e2;</i></a> <a style='text-decoration:none' class='ml-5' onClick='stop(this,"+id+")'  title='下架'><i class='Hui-iconfont'>&#xe6de;</i></a>");
                     } else if(status == 0) {
-                        $(td).html("<a style='text-decoration:none' class='ml-5' title='编辑课堂' onclick=edit('编辑课堂','class-course-update.html','"+id+"','570','400')><i class='Hui-iconfont'>&#xe6df;</i></a> <a style='text-decoration:none' class='ml-5' onClick='start(this,"+id+")' title='发布'><i class='Hui-iconfont'>&#xe603;</i></a>");
+                        $(td).html("<a style='text-decoration:none' class='ml-5' title='编辑' onclick=edit('编辑','classhd-update.html','"+id+"','570','400')><i class='Hui-iconfont'>&#xe6df;</i></a> <a style='text-decoration:none' class='ml-5' onClick='delClasshd("+id+")' title='删除'><i class='Hui-iconfont'>&#xe6e2;</i></a> <a style='text-decoration:none' class='ml-5' onClick='start(this,"+id+")' title='发布'><i class='Hui-iconfont'>&#xe603;</i></a>");
                     }
                 }
             }
         }
         ];
 
-    var table = $(formId).dataTable({
+    var table = $("#form-classhd-table").dataTable({
         // processing: true,
         order: [], //默认没有排序的,在后面指定具体排序的类
         stateSave: true, //允许浏览器缓存Datatables，以便下次恢复之前的状态
@@ -109,10 +109,10 @@ function classCourseTableHandler(formId, url) {
         autoWidth: true,
         columnDefs: columnDefs,
         ajax: {
-            url: ppt_hw_url + url,
+            url: ppt_hw_url + "/classhd/getAll",
             dataType: "jsonp",
             data: {
-                "classCreator": usercode,
+                "classhdCreator": usercode,
             },
             dataSrc: function (result) {
                 if (result.success) {
@@ -161,24 +161,66 @@ function classCourseTableHandler(formId, url) {
                     tr.find('input[type=checkbox]').prop("checked",true);
                 }
             });
-            $("#classcreator").val(usercode);
         }
     });
     return table;
 }
 
-function addClassCourse() {
+/**
+* 添加课堂互动内容
+*/
+function addClasshd() {
     $.ajax({
         type: "post",
-        url: ppt_hw_url + "/classcourse/save",
+        url: ppt_hw_url + "/classhd/save",
         dataType: "jsonp",
         timeout: 3000,
-        data: $("#form-class-course-add").serialize(),
+        data: $("#form-classhd-add").serialize(),
         success: function (responseData) {
             if(responseData.success) {
                 swal({
                     title: "Good Jop!",
-                    text: "课堂添加成功",
+                    text: "课堂互动内容添加成功",
+                    timer: 2000,
+                    type: "success"
+                }, function () {
+                    $(window.parent.document).find('#btn-refresh')[0].click();
+                    $("#cancelButton").click();
+                });
+            } else {
+                swal({
+                    title: "Sorry!",
+                    text:  responseData.message,
+                    timer: 2000,
+                    type: "error"
+                });
+            }
+        },
+        error: function () {
+            swal({
+                title: "Sorry!",
+                text: "网络忙,请稍后再试",
+                timer: 2000,
+                type: "error"
+            });
+        }
+    });
+}
+/**
+* 更新课堂互动内容
+*/
+function updateClasshd() {
+    $.ajax({
+        type: "post",
+        url: ppt_hw_url + "/classhd/update",
+        dataType: "jsonp",
+        timeout: 3000,
+        data: $("#form-classhd-update").serialize(),
+        success: function (responseData) {
+            if(responseData.success) {
+                swal({
+                    title: "Good Jop!",
+                    text: "课堂互动内容更新成功",
                     timer: 2000,
                     type: "success"
                 }, function () {
@@ -205,11 +247,14 @@ function addClassCourse() {
     });
 }
 
-//显示课堂信息
-function showClassCourse(id) {
+/**
+ * 显示课堂互动信息
+ * @param id 课堂互动id
+ */
+function showClasshd(id) {
     $.ajax({
         type: "post",
-        url: ppt_hw_url + "/classcourse/get/"+id,
+        url: ppt_hw_url + "/classhd/get/"+id,
         dataType: "jsonp",
         timeout: 3000,
         ansyc: false,
@@ -217,17 +262,18 @@ function showClassCourse(id) {
             if(responseData.success) {
                 var data = responseData.data;
                 $("#courseCode option").each(function () {
-                   if($(this).val() == data.coursecode) {
-                       $(this).attr("selected", "true");
-                   }
-                });
-                $("#classCode option").each(function () {
-                    if($(this).val() == data.classcode) {
+                    if($(this).val() == data.courseCode) {
                         $(this).attr("selected", "true");
                     }
                 });
-                $("#datemin").val(data.createtime);
-                $("#deadline").val(data.deadline);
+                $("#classCode option").each(function () {
+                    if($(this).val() == data.classCode) {
+                        $(this).attr("selected", "true");
+                    }
+                });
+                $("#classhdcontent").val(data.classhd.classhdcontent);
+                $("#classhdoptions").val(data.classhd.classhdoptions);
+                $("#classhdanswer").val(data.classhd.classhdanswer);
             } else {
                 swal({
                     title: "Sorry!",
@@ -247,83 +293,55 @@ function showClassCourse(id) {
         }
     });
 }
-
-function updateClassCourse() {
-    $.ajax({
-        type: "post",
-        url: ppt_hw_url + "/classcourse/update",
-        dataType: "jsonp",
-        timeout: 3000,
-        ansyc: false,
-        data: $("#form-class-course-update").serialize(),
-        success: function (responseData) {
-            if(responseData.success) {
-                swal({
-                    title: "Good Jop!",
-                    text: "课堂修改成功",
-                    timer: 2000,
-                    type: "success"
-                }, function () {
-                    $(window.parent.document).find('#btn-refresh')[0].click();
-                    $("#cancelButton").click();
-                });
-            } else {
-                swal({
-                    title: "Sorry!",
-                    text:  responseData.message,
-                    timer: 2000,
-                    type: "error"
-                });
-            }
-        },
-        error: function () {
-            swal({
-                title: "Sorry!",
-                text: "网络忙,请稍后再试",
-                timer: 2000,
-                type: "error"
-            });
+/**
+ * 删除课堂互动
+ * @param id
+ */
+function delClasshd(id){
+    swal({
+            title: "确定删除?",
+            text: "即将删除这个问题",
+            type: "warning",
+            showCancelButton: true,
+            cancelButtonText: "取消",
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "删除!",
+            closeOnConfirm: false,
+            showLoaderOnConfirm: true
+        }, function () {
+            setTimeout(function() {
+                $.ajax({
+                    type: "post",
+                    url: ppt_hw_url + "/classhd/del/" + id,
+                    dataType: "jsonp",
+                    timeout: 3000,
+                    success: function (responseData) {
+                        if(responseData.success) {
+                            swal({
+                                title: "Good Job!",
+                                text: "删除成功",
+                                timer: 1200,
+                                type: "success"
+                            });
+                            $("#btn-refresh").click();
+                        } else {
+                            swal({
+                                title: "Sorry!",
+                                text: responseData.message,
+                                timer: 2000,
+                                type: "error"
+                            });
+                        }
+                    },
+                    error: function () {
+                        swal({
+                            title: "Sorry!",
+                            text: "网络忙,请稍后再试",
+                            timer: 2000,
+                            type: "error"
+                        });
+                    }
+            })},1200);
         }
-    });
-}
-
-//查看课堂是否存在
-function checkClassCourse() {
-    var result = false;
-    $.ajax({
-        type: "post",
-        url: ppt_hw_url + "/classcourse/check",
-        dataType: "jsonp",
-        timeout: 3000,
-        data: $("#form-class-course-update").serialize(),
-        success: function (responseData) {
-            if(!responseData.success) {
-                swal({
-                    title: "Sorry!",
-                    text:  responseData.message,
-                    timer: 2000,
-                    type: "error"
-                });
-            } else {
-                result = true;
-            }
-        },
-        error: function () {
-            swal({
-                title: "Sorry!",
-                text: "网络忙,请稍后再试",
-                timer: 2000,
-                type: "error"
-            });
-        },
-        complete: function () {
-            if(result) {
-                updateClassCourse();
-            }
-        }
-    });
-}
-/*课程-查看*/
-function course_show(title,url,id,w,h){
-    layer_show(title,url,id,w,h);
+    );
 }

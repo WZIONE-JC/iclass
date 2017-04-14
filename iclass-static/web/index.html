@@ -63,18 +63,21 @@
 	<a aria-hidden="false" class="Hui-nav-toggle" href="#"></a> </header>
 <aside class="Hui-aside">
 	<!--<input runat="server" id="divScrollValue" type="hidden" value="" />-->
-	<div id="menu" class="menu_dropdown bk_2 displayNone">
+	<div id="menu" class="menu_dropdown bk_2 unlogined">
 		<dl id="menu-user">
 
 			<dt><i class="Hui-iconfont">&#xe60d;</i> 用户管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
 					<li><a _href="personal.html" href="javascript:void(0)"><i class="Hui-iconfont">&#xe62d;</i> 个人信息维护</a></li>
-					<li><a _href="user-list.html" href="javascript:void(0)"><i class="Hui-iconfont">&#xe6df;</i> 用户信息维护</a></li>
-					<li><a _href="coding.html" href="javascript:void(0)"><i class="Hui-iconfont">&#xe645;</i> 批量导入用户数据</a></li>
+					<div class="admin">
+						<li><a _href="user-list.html" href="javascript:void(0)"><i class="Hui-iconfont">&#xe6df;</i> 用户信息维护</a></li>
+						<li><a _href="coding.html" href="javascript:void(0)"><i class="Hui-iconfont">&#xe645;</i> 批量导入用户数据</a></li>
+					</div>
 				</ul>
 			</dd>
 		</dl>
+		<div class="user">
 		<dl id="menu-ppt">
 			<dt><i class="Hui-iconfont">&#xe642;</i> PPT共享<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
@@ -126,7 +129,8 @@
 				</ul>
 			</dd>
 		</dl>
-		<dl id="menu-system" class="displayNone">
+		</div>
+		<dl id="menu-system" class="admin">
 			<dt><i class="Hui-iconfont">&#xe62e;</i> 系统管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>

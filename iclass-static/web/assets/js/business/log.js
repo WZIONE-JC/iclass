@@ -65,7 +65,7 @@ function logTableHandler(formId, url) {
                 var id = rowData.id;
                 if (col == 9) {
                     $(td).addClass("td-manage");
-                    $(td).html("<a title='详情' onclick=log_detail('日志详情','system-log-detail.html','"+id+"') class='ml-5' style='text-decoration:none'><i class='Hui-iconfont'>&#xe665;</i></a> <a title='删除' onclick=log_del(this,'"+id+"') class='ml-5' style='text-decoration:none'><i class='Hui-iconfont'>&#xe6e2;</i></a>");
+                    $(td).html("<a title='详情' onclick=log_detail('日志详情','system-log-detail.html','"+id+"') class='ml-5' style='text-decoration:none'><i class='Hui-iconfont'>&#xe665;</i></a> <a title='删除' onclick=log_del('"+id+"') class='ml-5' style='text-decoration:none'><i class='Hui-iconfont'>&#xe6e2;</i></a>");
                 }
             }
         }
@@ -184,38 +184,50 @@ function showLog(id) {
 }
 
 function del(id) {
-    $.ajax({
-        type: "post",
-        url: ppt_hw_url + "/log/del",
-        data: {
-            "id": id
-        },
-        timeout: 3000,
-        success: function (responseData) {
-            if(responseData.success) {
-                swal({
-                    title: "Good Job!",
-                    text: "删除成功",
-                    timer: 2000,
-                    type: "success"
-                });
-            } else {
+    swal({
+        title: "确定删除?",
+        text: "即将删除这条日志",
+        type: "warning",
+        showCancelButton: true,
+        cancelButtonText: "取消",
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "删除!",
+        closeOnConfirm: false,
+        showLoaderOnConfirm: true
+    }, function () {
+        setTimeout(function() {$.ajax({
+            type: "post",
+            url: ppt_hw_url + "/log/del",
+            data: {
+                "id": id
+            },
+            timeout: 3000,
+            success: function (responseData) {
+                if(responseData.success) {
+                    swal({
+                        title: "Good Job!",
+                        text: "删除成功",
+                        timer: 1300,
+                        type: "success"
+                    });
+                } else {
+                    swal({
+                        title: "Sorry!",
+                        text: responseData.message,
+                        timer: 2000,
+                        type: "error"
+                    });
+                }
+            },
+            error: function () {
                 swal({
                     title: "Sorry!",
-                    text: responseData.message,
+                    text: "网络忙,请稍后再试",
                     timer: 2000,
                     type: "error"
                 });
             }
-        },
-        error: function () {
-            swal({
-                title: "Sorry!",
-                text: "网络忙,请稍后再试",
-                timer: 2000,
-                type: "error"
-            });
-        }
+        })}, 600);
     });
 }
 
@@ -224,12 +236,8 @@ function log_detail(title,url,id){
     layer_show(title,url,id,400,500);
 }
 /*日志-删除*/
-function log_del(obj,id){
-    layer.confirm('确认要删除吗？',function(index){
-        del(id);
-        $(obj).parents("tr").remove();
-        layer.close(index);
-        $("#btn-refresh").click();
-        // layer.msg('已删除!',{icon:1,time:1000});
-    });
+function log_del(id){
+    del(id);
+    $("#btn-refresh").click();
+    // layer.msg('已删除!',{icon:1,time:1000});
 }

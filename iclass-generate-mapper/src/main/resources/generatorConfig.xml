@@ -166,7 +166,14 @@
                <!--enableSelectByExample="false"-->
                <!--selectByExampleQueryId="false">-->
         <!--</table>-->
-        <table tableName="log"
+        <!--<table tableName="log"-->
+               <!--enableCountByExample="false"-->
+               <!--enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false">-->
+        <!--</table>-->
+        <table tableName="classhd"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"

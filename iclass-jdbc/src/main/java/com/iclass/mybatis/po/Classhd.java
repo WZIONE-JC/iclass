@@ -1,9 +1,11 @@
 package com.iclass.mybatis.po;
 
-import java.io.Serializable;
+import com.iclass.user.component.utils.IclassUtil;
 
-public class Classhd implements Serializable{
+public class Classhd {
     private Integer classhdid;
+
+    private Integer classcourseid;
 
     private String classhdcontent;
 
@@ -11,14 +13,24 @@ public class Classhd implements Serializable{
 
     private String classhdanswer;
 
-    private String classcode;
+    private String classhdcreator;
 
-    public Classhd(Integer classhdid, String classhdcontent, String classhdoptions, String classhdanswer, String classcode) {
+    private String classhdcreatetime;
+
+    private Integer rightnumber;
+
+    private Integer classhdstatus;
+
+    public Classhd(Integer classhdid, Integer classcourseid, String classhdcontent, String classhdoptions, String classhdanswer, String classhdcreator, String classhdcreatetime, Integer rightnumber, Integer classhdstatus) {
         this.classhdid = classhdid;
+        this.classcourseid = classcourseid;
         this.classhdcontent = classhdcontent;
         this.classhdoptions = classhdoptions;
         this.classhdanswer = classhdanswer;
-        this.classcode = classcode;
+        this.classhdcreator = classhdcreator;
+        this.classhdcreatetime = IclassUtil.formatTime(classhdcreatetime);
+        this.rightnumber = rightnumber;
+        this.classhdstatus = classhdstatus;
     }
 
     public Classhd() {
@@ -31,6 +43,14 @@ public class Classhd implements Serializable{
 
     public void setClasshdid(Integer classhdid) {
         this.classhdid = classhdid;
+    }
+
+    public Integer getClasscourseid() {
+        return classcourseid;
+    }
+
+    public void setClasscourseid(Integer classcourseid) {
+        this.classcourseid = classcourseid;
     }
 
     public String getClasshdcontent() {
@@ -57,12 +77,36 @@ public class Classhd implements Serializable{
         this.classhdanswer = classhdanswer == null ? null : classhdanswer.trim();
     }
 
-    public String getClasscode() {
-        return classcode;
+    public String getClasshdcreator() {
+        return classhdcreator;
     }
 
-    public void setClasscode(String classcode) {
-        this.classcode = classcode == null ? null : classcode.trim();
+    public void setClasshdcreator(String classhdcreator) {
+        this.classhdcreator = classhdcreator == null ? null : classhdcreator.trim();
+    }
+
+    public String getClasshdcreatetime() {
+        return classhdcreatetime;
+    }
+
+    public void setClasshdcreatetime(String classhdcreatetime) {
+        this.classhdcreatetime = IclassUtil.formatTime(classhdcreatetime);
+    }
+
+    public Integer getRightnumber() {
+        return rightnumber;
+    }
+
+    public void setRightnumber(Integer rightnumber) {
+        this.rightnumber = rightnumber;
+    }
+
+    public Integer getClasshdstatus() {
+        return classhdstatus;
+    }
+
+    public void setClasshdstatus(Integer classhdstatus) {
+        this.classhdstatus = classhdstatus;
     }
 
     @Override
@@ -72,7 +116,10 @@ public class Classhd implements Serializable{
                 ", classhdcontent='" + classhdcontent + '\'' +
                 ", classhdoptions='" + classhdoptions + '\'' +
                 ", classhdanswer='" + classhdanswer + '\'' +
-                ", classcode='" + classcode + '\'' +
+                ", classhdcreator='" + classhdcreator + '\'' +
+                ", classhdcreatetime='" + classhdcreatetime + '\'' +
+                ", rightnumber=" + rightnumber +
+                ", classhdstatus=" + classhdstatus +
                 '}';
     }
 }

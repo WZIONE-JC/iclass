@@ -272,7 +272,7 @@ function fileTableHandler(classCode, courseCode, fileType) {
     var formId = "#file-info-table";
     // alert("表格数据:"+classCode+","+courseCode+","+fileType);
     $(formId).prop("width", "100%");
-    var colmuns =
+    var columns =
         [
             {
                 orderable: false,
@@ -356,6 +356,7 @@ function fileTableHandler(classCode, courseCode, fileType) {
         bStateSave: true,//状态保存
         autoWidth: true,
         columnDefs: columnDefs,
+        columns: columns,
         ajax: {
             url: ppt_hw_url + "/ppthw/getPPTFileInfo",
             dataType: "jsonp",
@@ -390,7 +391,7 @@ function fileTableHandler(classCode, courseCode, fileType) {
                 $("#hw-info-table_processing").hide();
             }
         },
-        columns: colmuns,
+
         "preDrawCallback": function () {
         },
         "initComplete": function (settings, json) {
@@ -443,8 +444,13 @@ function file_add(title,url){
     });
     layer.full(index);
 }
+/**
+ * 没有使用
+ * @param fileCode
+ * @param fileType
+ */
 function download(fileCode,fileType) {
-    console.log(fileCode);
+    // console.log(fileCode);
     var $form = $("#download-form").attr("action", ppt_hw_url+"/file/download");
     $("#fileCode").val(fileCode);
     $("#fileType").val(fileType);

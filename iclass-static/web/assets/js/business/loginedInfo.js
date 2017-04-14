@@ -14,10 +14,12 @@ var Logined = function () {
                 timeout: 3000,
                 success: function (logineduserdata) {
                     if (logineduserdata.success) {
-                        $("#menu").removeClass("displayNone");
+                        $("#menu").removeClass("unlogined");
                         var role = logineduserdata.data.user.userrole;
                         if (role == "管理员") {
-                            $("#menu-system").removeClass("displayNone");
+                            $(".admin").removeClass("admin");
+                        } else {
+                            $(".user").removeClass("user");
                         }
                         $("#rolename").text(role);
 

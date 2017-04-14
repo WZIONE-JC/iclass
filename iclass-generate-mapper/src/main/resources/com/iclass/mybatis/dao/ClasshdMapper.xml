@@ -9,7 +9,7 @@
       <arg column="ClasshdOptions" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="ClasshdAnswer" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="ClasshdCreator" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="ClasshdCreateTime" jdbcType="TIMESTAMP" javaType="java.lang.String" />
+      <arg column="ClasshdCreateTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="RightNumber" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="ClasshdStatus" jdbcType="INTEGER" javaType="java.lang.Integer" />
     </constructor>
@@ -140,37 +140,5 @@
       RightNumber = #{rightnumber,jdbcType=INTEGER},
       ClasshdStatus = #{classhdstatus,jdbcType=INTEGER}
     where ClasshdID = #{classhdid,jdbcType=INTEGER}
-  </update>
-
-  <select id="selectByClasshdCreator" resultType="com.iclass.mybatis.po.Classhd">
-    SELECT
-    <include refid="Base_Column_List" />
-    FROM classhd
-    WHERE ClasshdCreator = #{classhdcreator,jdbcType=VARCHAR} ORDER BY ClasshdID DESC limit #{start}, #{length}
-  </select>
-
-  <select id="selectByClasshdCreatorNolimit" resultType="com.iclass.mybatis.po.Classhd">
-    SELECT
-    <include refid="Base_Column_List" />
-    FROM classhd
-    WHERE ClasshdCreator = #{classhdcreator,jdbcType=VARCHAR} ORDER BY ClasshdID DESC AND ClasshdStatus = 1
-  </select>
-
-  <select id="countByClasshdCreator" resultType="java.lang.Integer">
-    SELECT
-    count(*)
-    FROM classhd
-  </select>
-
-  <update id="updateRightNumber">
-    UPDATE classhd
-    SET RightNumber = RightNumber + 1
-    WHERE ClasshdID = #{classhdid,jdbcType=INTEGER} AND ClasshdStatus = 1
-  </update>
-  
-  <update id="updateStatus" parameterType="java.lang.Integer">
-    UPDATE classhd
-    SET RightNumber = #{classhdstatus}
-    WHERE ClasshdID = #{classhdid,jdbcType=INTEGER}
   </update>
 </mapper>
