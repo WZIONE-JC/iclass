@@ -68,7 +68,8 @@ function classhdTableHandler() {
                 data: null,
                 orderable: false,
                 width: "5%"
-            }];
+            }
+        ];
 
     var columnDefs =
         [{
@@ -93,8 +94,7 @@ function classhdTableHandler() {
                     }
                 }
             }
-        }
-        ];
+        }];
 
     var table = $("#form-classhd-table").dataTable({
         // processing: true,
@@ -129,7 +129,7 @@ function classhdTableHandler() {
                     return false;
                 }
             },
-            timeout: 3000,
+            timeout: 5000,
             error: function () {
                 swal({
                     title: "Sorry!",
@@ -174,7 +174,7 @@ function addClasshd() {
         type: "post",
         url: ppt_hw_url + "/classhd/save",
         dataType: "jsonp",
-        timeout: 3000,
+        timeout: 5000,
         data: $("#form-classhd-add").serialize(),
         success: function (responseData) {
             if(responseData.success) {
@@ -214,7 +214,7 @@ function updateClasshd() {
         type: "post",
         url: ppt_hw_url + "/classhd/update",
         dataType: "jsonp",
-        timeout: 3000,
+        timeout: 5000,
         data: $("#form-classhd-update").serialize(),
         success: function (responseData) {
             if(responseData.success) {
@@ -256,7 +256,7 @@ function showClasshd(id) {
         type: "post",
         url: ppt_hw_url + "/classhd/get/"+id,
         dataType: "jsonp",
-        timeout: 3000,
+        timeout: 5000,
         ansyc: false,
         success: function (responseData) {
             if(responseData.success) {
@@ -314,7 +314,7 @@ function delClasshd(id){
                     type: "post",
                     url: ppt_hw_url + "/classhd/del/" + id,
                     dataType: "jsonp",
-                    timeout: 3000,
+                    timeout: 5000,
                     success: function (responseData) {
                         if(responseData.success) {
                             swal({

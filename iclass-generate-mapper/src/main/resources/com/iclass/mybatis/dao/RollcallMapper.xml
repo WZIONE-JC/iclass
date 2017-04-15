@@ -7,7 +7,7 @@
       <arg column="ClassCourseId" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="StudentCode" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="TeacherCode" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="RollCallTime" jdbcType="TIMESTAMP" javaType="java.lang.String" />
+      <arg column="RollCallTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="RollCallStatus" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>

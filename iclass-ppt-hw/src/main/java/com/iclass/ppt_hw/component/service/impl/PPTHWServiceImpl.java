@@ -151,6 +151,8 @@ public class PPTHWServiceImpl implements PPTHWService {
                 String createTime = classCourse.getCreatetime();
                 String deadline = classCourse.getDeadline();
                 Integer status = classCourse.getStatus();
+
+                String classRoomName = "[" + c.getClassname() + ":" + course.getCoursename() + "]";
                 Integer classCourseId = classCourse.getClasscourseid();
                 List<ClassCourseStudent> classCourseStudents = classCourseStudentMapper.selectByClassCourseId(classCourseId);
                 // 如果有学生的话
@@ -161,7 +163,7 @@ public class PPTHWServiceImpl implements PPTHWService {
                         sessionUsers.add(new SessionUser(student));
                     }
                 }
-                ClassCourseDTO classCourseDTO = new ClassCourseDTO(classCourseId, c, course, teacherName, sessionUsers, createTime, deadline, status);
+                ClassCourseDTO classCourseDTO = new ClassCourseDTO(classCourseId, classRoomName, c, course, teacherName, sessionUsers, createTime, deadline, status);
                 classCourseDTOS.add(classCourseDTO);
             }
         }

@@ -105,7 +105,7 @@ function logTableHandler(formId, url) {
                     return false;
                 }
             },
-            timeout: 3000,
+            timeout: 5000,
             error: function () {
                 swal({
                     title: "Sorry!",
@@ -150,7 +150,7 @@ function showLog(id) {
         data: {
             id: id
         },
-        timeout: 3000,
+        timeout: 5000,
         success: function (responseData) {
             if(responseData.success) {
                 var data = responseData.data;
@@ -201,7 +201,7 @@ function del(id) {
             data: {
                 "id": id
             },
-            timeout: 3000,
+            timeout: 5000,
             success: function (responseData) {
                 if(responseData.success) {
                     swal({

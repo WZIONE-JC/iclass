@@ -23,7 +23,7 @@ public class SessionUser {
         this.user = user;
         this.user = UserInfoHandler.userPasswordHandler(user);
         this.user = UserInfoHandler.userRegisterDateHandler(user);
-        this.user = UserInfoHandler.userPhoneHandler(user);
+        this.user = user;
     }
 
     public User getUser() {
@@ -34,7 +34,7 @@ public class SessionUser {
         this.user = user;
         this.user = UserInfoHandler.userPasswordHandler(user);
         this.user = UserInfoHandler.userRegisterDateHandler(user);
-        this.user = UserInfoHandler.userPhoneHandler(user);
+        this.user = user;
     }
 
     @Override

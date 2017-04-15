@@ -11,7 +11,7 @@ var Logined = function () {
                 dataType: "jsonp",
                 jsonp: "callback",
                 url: user_url + "/user/getLoginedUserInfo",
-                timeout: 3000,
+                timeout: 5000,
                 success: function (logineduserdata) {
                     if (logineduserdata.success) {
                         $("#menu").removeClass("unlogined");
@@ -39,7 +39,7 @@ var Logined = function () {
                         });
                     }
                 },
-                error: function (logineduserdata) {
+                error: function () {
                     swal({
                         title: "Sorry!",
                         text: "网络繁忙，请稍后再试",
@@ -75,7 +75,7 @@ var Logined = function () {
                                         dataType: "jsonp",
                                         jsonp: "callback",
                                         url: user_url + "/user/logout",
-                                        timeout: 3000,
+                                        timeout: 5000,
                                         success: function (responseData) {
                                             if (responseData.success) {
                                                 swal({

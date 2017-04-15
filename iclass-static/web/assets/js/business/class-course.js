@@ -129,7 +129,7 @@ function classCourseTableHandler(formId, url) {
                     return false;
                 }
             },
-            timeout: 3000,
+            timeout: 5000,
             error: function () {
                 swal({
                     title: "Sorry!",
@@ -172,7 +172,7 @@ function addClassCourse() {
         type: "post",
         url: ppt_hw_url + "/classcourse/save",
         dataType: "jsonp",
-        timeout: 3000,
+        timeout: 5000,
         data: $("#form-class-course-add").serialize(),
         success: function (responseData) {
             if(responseData.success) {
@@ -211,7 +211,7 @@ function showClassCourse(id) {
         type: "post",
         url: ppt_hw_url + "/classcourse/get/"+id,
         dataType: "jsonp",
-        timeout: 3000,
+        timeout: 5000,
         ansyc: false,
         success: function (responseData) {
             if(responseData.success) {
@@ -253,7 +253,7 @@ function updateClassCourse() {
         type: "post",
         url: ppt_hw_url + "/classcourse/update",
         dataType: "jsonp",
-        timeout: 3000,
+        timeout: 5000,
         ansyc: false,
         data: $("#form-class-course-update").serialize(),
         success: function (responseData) {
@@ -294,7 +294,7 @@ function checkClassCourse() {
         type: "post",
         url: ppt_hw_url + "/classcourse/check",
         dataType: "jsonp",
-        timeout: 3000,
+        timeout: 5000,
         data: $("#form-class-course-update").serialize(),
         success: function (responseData) {
             if(!responseData.success) {

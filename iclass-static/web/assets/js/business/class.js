@@ -56,7 +56,7 @@ function getClassByCourseCode(courseCode) {
         data: {
             "courseCode" : courseCode,
         },
-        timeout: 3000,
+        timeout: 5000,
         success: function (responseData) {
             if (responseData.success) {
                 var classes = responseData.data;
@@ -100,7 +100,7 @@ function getClassByCourseCodeNoLimit() {
             "isLimit": false
         },
         async:false,
-        timeout: 3000,
+        timeout: 5000,
         success: function (responseData) {
             if (responseData.success) {
                 var classes = responseData.data;
@@ -247,7 +247,7 @@ function classTableHandler(formId, url) {
                     return false;
                 }
             },
-            timeout: 3000,
+            timeout: 5000,
             error: function () {
                 swal({
                     title: "Sorry!",
@@ -291,7 +291,7 @@ function addClass() {
             type: "post",
             url: ppt_hw_url + "/class/save",
             dataType: "jsonp",
-            timeout: 3000,
+            timeout: 5000,
             data: $("#form-class-add").serialize(),
             success: function (responseData) {
                 if(responseData.success) {
@@ -331,7 +331,7 @@ function check() {
             type: "post",
             url: ppt_hw_url + "/class/check/"+classcode,
             dataType: "jsonp",
-            timeout: 3000,
+            timeout: 5000,
             success: function (responseData) {
                 if(!responseData.success) {
                     $("#msg").addClass("error");
@@ -359,7 +359,7 @@ function showClass(url, id) {
         type: "post",
         url: ppt_hw_url + url +id,
         dataType: "jsonp",
-        timeout: 3000,
+        timeout: 5000,
         success: function (responseData) {
             if(responseData.success) {
                 var data = responseData.data;
@@ -406,7 +406,7 @@ function updateClass() {
         type: "put",
         url: ppt_hw_url + "/class/update",
         dataType: "jsonp",
-        timeout: 3000,
+        timeout: 5000,
         data: $("#form-class-update").serialize(),
         success: function (responseData) {
             if(responseData.success) {

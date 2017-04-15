@@ -1,31 +1,27 @@
 package com.iclass.mybatis.po;
 
-import java.io.Serializable;
-import java.util.Date;
+import com.iclass.user.component.utils.IclassUtil;
 
-public class Rollcall implements Serializable{
+public class Rollcall {
     private Integer rollcallid;
 
-    private String rollcallcode;
+    private Integer classcourseid;
 
-    private Date rollcalltime;
-
-    private String rollcallstatus;
-
-    private String classcode;
+    private String studentcode;
 
     private String teachercode;
 
-    private String coursecode;
+    private String rollcalltime;
 
-    public Rollcall(Integer rollcallid, String rollcallcode, Date rollcalltime, String rollcallstatus, String classcode, String teachercode, String coursecode) {
+    private String rollcallstatus;
+
+    public Rollcall(Integer rollcallid, Integer classcourseid, String studentcode, String teachercode, String rollcalltime, String rollcallstatus) {
         this.rollcallid = rollcallid;
-        this.rollcallcode = rollcallcode;
-        this.rollcalltime = rollcalltime;
-        this.rollcallstatus = rollcallstatus;
-        this.classcode = classcode;
+        this.classcourseid = classcourseid;
+        this.studentcode = studentcode;
         this.teachercode = teachercode;
-        this.coursecode = coursecode;
+        this.rollcalltime = IclassUtil.formatTime(rollcalltime);
+        this.rollcallstatus = rollcallstatus;
     }
 
     public Rollcall() {
@@ -40,36 +36,20 @@ public class Rollcall implements Serializable{
         this.rollcallid = rollcallid;
     }
 
-    public String getRollcallcode() {
-        return rollcallcode;
+    public Integer getClasscourseid() {
+        return classcourseid;
     }
 
-    public void setRollcallcode(String rollcallcode) {
-        this.rollcallcode = rollcallcode == null ? null : rollcallcode.trim();
+    public void setClasscourseid(Integer classcourseid) {
+        this.classcourseid = classcourseid;
     }
 
-    public Date getRollcalltime() {
-        return rollcalltime;
+    public String getStudentcode() {
+        return studentcode;
     }
 
-    public void setRollcalltime(Date rollcalltime) {
-        this.rollcalltime = rollcalltime;
-    }
-
-    public String getRollcallstatus() {
-        return rollcallstatus;
-    }
-
-    public void setRollcallstatus(String rollcallstatus) {
-        this.rollcallstatus = rollcallstatus == null ? null : rollcallstatus.trim();
-    }
-
-    public String getClasscode() {
-        return classcode;
-    }
-
-    public void setClasscode(String classcode) {
-        this.classcode = classcode == null ? null : classcode.trim();
+    public void setStudentcode(String studentcode) {
+        this.studentcode = studentcode == null ? null : studentcode.trim();
     }
 
     public String getTeachercode() {
@@ -80,24 +60,31 @@ public class Rollcall implements Serializable{
         this.teachercode = teachercode == null ? null : teachercode.trim();
     }
 
-    public String getCoursecode() {
-        return coursecode;
+    public String getRollcalltime() {
+        return rollcalltime;
     }
 
-    public void setCoursecode(String coursecode) {
-        this.coursecode = coursecode == null ? null : coursecode.trim();
+    public void setRollcalltime(String rollcalltime) {
+        this.rollcalltime = IclassUtil.formatTime(rollcalltime);
+    }
+
+    public String getRollcallstatus() {
+        return rollcallstatus;
+    }
+
+    public void setRollcallstatus(String rollcallstatus) {
+        this.rollcallstatus = rollcallstatus == null ? null : rollcallstatus.trim();
     }
 
     @Override
     public String toString() {
         return "Rollcall{" +
                 "rollcallid=" + rollcallid +
-                ", rollcallcode='" + rollcallcode + '\'' +
-                ", rollcalltime=" + rollcalltime +
-                ", rollcallstatus='" + rollcallstatus + '\'' +
-                ", classcode='" + classcode + '\'' +
+                ", classcourseid=" + classcourseid +
+                ", studentcode='" + studentcode + '\'' +
                 ", teachercode='" + teachercode + '\'' +
-                ", coursecode='" + coursecode + '\'' +
+                ", rollcalltime='" + rollcalltime + '\'' +
+                ", rollcallstatus='" + rollcallstatus + '\'' +
                 '}';
     }
 }

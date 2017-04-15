@@ -11,7 +11,7 @@ var GetCache = function () {
                 dataType: "jsonp",
                 jsonp: "callback",
                 url: user_url + "/cache/getCache",
-                timeout: 3000,
+                timeout: 5000,
                 success: function (responseData) {
                     if(responseData.success) {
                         $("#userid").val(responseData.data.user.userid);
