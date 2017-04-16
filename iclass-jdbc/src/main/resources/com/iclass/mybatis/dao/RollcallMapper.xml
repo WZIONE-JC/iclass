@@ -8,7 +8,7 @@
       <arg column="StudentCode" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="TeacherCode" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="RollCallTime" jdbcType="TIMESTAMP" javaType="java.lang.String" />
-      <arg column="RollCallStatus" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="RollCallStatus" jdbcType="VARCHAR" javaType="java.lang.Integer" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
@@ -29,7 +29,7 @@
       TeacherCode, RollCallTime, RollCallStatus
       )
     values (#{rollcallid,jdbcType=INTEGER}, #{classcourseid,jdbcType=INTEGER}, #{studentcode,jdbcType=VARCHAR}, 
-      #{teachercode,jdbcType=VARCHAR}, #{rollcalltime,jdbcType=TIMESTAMP}, #{rollcallstatus,jdbcType=VARCHAR}
+      #{teachercode,jdbcType=VARCHAR}, #{rollcalltime,jdbcType=TIMESTAMP}, #{rollcallstatus,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.iclass.mybatis.po.Rollcall" >
@@ -71,7 +71,7 @@
         #{rollcalltime,jdbcType=TIMESTAMP},
       </if>
       <if test="rollcallstatus != null" >
-        #{rollcallstatus,jdbcType=VARCHAR},
+        #{rollcallstatus,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -91,7 +91,7 @@
         RollCallTime = #{rollcalltime,jdbcType=TIMESTAMP},
       </if>
       <if test="rollcallstatus != null" >
-        RollCallStatus = #{rollcallstatus,jdbcType=VARCHAR},
+        RollCallStatus = #{rollcallstatus,jdbcType=INTEGER},
       </if>
     </set>
     where RollCallID = #{rollcallid,jdbcType=INTEGER}
@@ -102,7 +102,19 @@
       StudentCode = #{studentcode,jdbcType=VARCHAR},
       TeacherCode = #{teachercode,jdbcType=VARCHAR},
       RollCallTime = #{rollcalltime,jdbcType=TIMESTAMP},
-      RollCallStatus = #{rollcallstatus,jdbcType=VARCHAR}
+      RollCallStatus = #{rollcallstatus,jdbcType=INTEGER}
     where RollCallID = #{rollcallid,jdbcType=INTEGER}
   </update>
+  <select id="selectByTeacherCode" resultType="com.iclass.mybatis.po.Rollcall" >
+    SELECT
+    <include refid="Base_Column_List" />
+    from rollcall
+    where TeacherCode = #{teachercode,jdbcType=VARCHAR} ORDER BY RollCallID DESC limit #{start}, #{length}
+  </select>
+  <select id="selectByTeacherCodeNoLimit" resultType="com.iclass.mybatis.po.Rollcall" >
+    SELECT
+    <include refid="Base_Column_List" />
+    from rollcall
+    where TeacherCode = #{teachercode,jdbcType=VARCHAR} ORDER BY RollCallID DESC
+  </select>
 </mapper>

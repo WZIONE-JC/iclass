@@ -1,6 +1,10 @@
 package com.iclass.mybatis.dao;
 
+import com.iclass.mybatis.dto.RollCallDTO;
 import com.iclass.mybatis.po.Rollcall;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface RollcallMapper {
     int deleteByPrimaryKey(Integer rollcallid);
@@ -14,4 +18,9 @@ public interface RollcallMapper {
     int updateByPrimaryKeySelective(Rollcall record);
 
     int updateByPrimaryKey(Rollcall record);
+
+    List<Rollcall> selectByTeacherCode(@Param("teachercode") String teacherCode, @Param("start") Integer start, @Param("length") Integer length);
+            ;
+    List<Rollcall> selectByTeacherCodeNoLimit(@Param("teachercode") String teacherCode);
+
 }

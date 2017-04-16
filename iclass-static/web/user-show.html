@@ -21,10 +21,12 @@
   <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
   <script>DD_belatedPNG.fix('*');</script>
   <![endif]-->
+  <link href="lib/sweetalert-1.1.1/sweetalert.css" rel="stylesheet" type="text/css" />
   <title>用户查看</title>
 </head>
 <body>
 <div class="cl pd-20" style=" background-color:#5bacb6">
+  <input id="code" type="hidden">
   <img class="avatar size-XL l" src="assets/images/user.png">
   <dl style="margin-left:80px; color:#fff">
     <dt><span class="f-18" id="userfullname">正在加载...</span> <span class="pl-10 f-12" id="userrole">角色：<span>正在加载...</span></span></dt>
@@ -56,16 +58,23 @@
       </tr>
     </tbody>
   </table>
+  <a style="display: none" onclick="loadData()" id="loadData"></a>
 </div>
 <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="assets/js/H-ui.js"></script>
 <script type="text/javascript" src="assets/js/H-ui.admin.js"></script>
 <script type="text/javascript" src="assets/js/business/ip.js"></script>
+<script type="text/javascript" src="lib/sweetalert-1.1.1/sweetalert.min.js"></script>
 <script type="text/javascript" src="assets/js/business/cacheInfo.js"></script>
+<script type="text/javascript" src="assets/js/business/person.js"></script>
 <script type="text/javascript">
-    $((function () {
+    $(function () {
         GetCache.init();
-    }));
+    });
+    function loadData () {
+        var $code = $("#code").val();
+        show($code);
+    }
 </script>
 </body>
 </html>

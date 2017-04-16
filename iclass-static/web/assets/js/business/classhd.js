@@ -79,9 +79,9 @@ function classhdTableHandler() {
                 var classroomid = rowData.classhd.classcourseid;
                 var classRoomName = rowData.classRoomName;
                 var status = rowData.classhd.classhdstatus;
-                if (col == 1) {
-                    $(td).wrapInner("<span style='cursor:pointer' title='查看课堂信息' class='label label-default radius' onclick=show('" + classRoomName + "','classhd-show.html','" + classroomid + "','360','400')></span>");
-                }
+                // if (col == 1) {
+                //     $(td).wrapInner("<span style='cursor:pointer' title='查看课堂信息' class='label label-default radius' onclick=show('" + classRoomName + "','classhd-show.html','" + classroomid + "','360','400')></span>");
+                // }
                 if (col == 8) {
                     $(td).addClass("td-status");
                 }

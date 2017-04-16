@@ -13,9 +13,9 @@ public class Rollcall {
 
     private String rollcalltime;
 
-    private String rollcallstatus;
+    private Integer rollcallstatus;
 
-    public Rollcall(Integer rollcallid, Integer classcourseid, String studentcode, String teachercode, String rollcalltime, String rollcallstatus) {
+    public Rollcall(Integer rollcallid, Integer classcourseid, String studentcode, String teachercode, String rollcalltime, Integer rollcallstatus) {
         this.rollcallid = rollcallid;
         this.classcourseid = classcourseid;
         this.studentcode = studentcode;
@@ -68,12 +68,12 @@ public class Rollcall {
         this.rollcalltime = IclassUtil.formatTime(rollcalltime);
     }
 
-    public String getRollcallstatus() {
+    public Integer getRollcallstatus() {
         return rollcallstatus;
     }
 
-    public void setRollcallstatus(String rollcallstatus) {
-        this.rollcallstatus = rollcallstatus == null ? null : rollcallstatus.trim();
+    public void setRollcallstatus(Integer rollcallstatus) {
+        this.rollcallstatus = rollcallstatus;
     }
 
     @Override

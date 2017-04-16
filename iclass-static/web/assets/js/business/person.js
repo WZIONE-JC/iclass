@@ -1,4 +1,51 @@
 
+function show(code) {
+    $.ajax({
+        type: "post",
+        dataType: "jsonp",
+        jsonp: "callback",
+        url: user_url + "/user/getUserInfoByUsercode",
+        data: {
+            usercode: code
+        },
+        timeout: 5000,
+        success: function (responseData) {
+            if(responseData.success) {
+                var userfullname = $("#userfullname");
+                userfullname.text(responseData.data.user.userfullname);
+                var username = $("#username");
+                username.text(responseData.data.user.username);
+                var usercode = $("#usercode");
+                usercode.text(responseData.data.user.usercode);
+                var userbirth = $("#userbirth");
+                userbirth.text(responseData.data.user.userbirth);
+                $("#usersex").text(responseData.data.user.usersex);
+                var userphonenum = $("#userphonenum");
+                userphonenum.text(responseData.data.user.userphonenum);
+                var useremail = $("#useremail");
+                useremail.text(responseData.data.user.useremail);
+                $("#userregisterdate").text(responseData.data.user.userregisterdate);
+                var userrole = $("#userrole");
+                userrole.text(responseData.data.user.userrole);
+            } else {
+                swal({
+                    title: "Sorry!",
+                    text: responseData.message,
+                    timer: 2000,
+                    type: "error"
+                });
+            }
+        },
+        error: function () {
+            swal({
+                title: "Sorry!",
+                text: "网络繁忙，请稍后再试",
+                timer: 2000,
+                type: "error"
+            });
+        }
+    })
+}
 //修改用户信息
 function updateUser () {
     $.ajax({

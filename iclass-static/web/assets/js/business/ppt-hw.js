@@ -91,9 +91,6 @@ function classTableHandler(formId, url, fileType) {
             },
             {
                 data: "classRoomName",
-                render: function (data, type, row, meta) {
-                    return "<span class='label label-default radius'>" + data + "</span>";
-                }
             },
             {
                 data: "aClass.classname"
