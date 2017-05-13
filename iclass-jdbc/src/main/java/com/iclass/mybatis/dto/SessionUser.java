@@ -3,12 +3,14 @@ package com.iclass.mybatis.dto;
 import com.iclass.mybatis.UserInfoHandler;
 import com.iclass.mybatis.po.User;
 
+import java.io.Serializable;
+
 /**
  * iclass
  * <p>
  * Created by JasonTang on 2/20/2017 11:45 PM.
  */
-public class SessionUser {
+public class SessionUser implements Serializable{
 
     /**
      * 用户信息

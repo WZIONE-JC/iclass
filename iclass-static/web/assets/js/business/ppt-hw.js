@@ -13,7 +13,7 @@ function getCourseByTeacherCode() {
         data: {
           "teacherCode" : teacherCode
         },
-        timeout: 5000,
+        timeout: 10000,
         success: function (responseData) {
             if (responseData.success) {
                 var courses = responseData.data;
@@ -80,13 +80,13 @@ function classTableHandler(formId, url, fileType) {
     }
     $("#usercode").val(usercode);
     $(formId).prop("width", "100%");
-    var colmuns =
+    var columns =
         [
             {
+                data: null,
                 orderable: false,
-                data: "classcourseId",
                 render: function (data, type, row, meta) {
-                    return "<input type='checkbox' value=" + data + " name='classid'>";
+                    return "<span class='label label-default radius orderNum'>" + data + "</span>";
                 }
             },
             {
@@ -123,7 +123,7 @@ function classTableHandler(formId, url, fileType) {
                 data: "status",
                 render: function (data, type, row, meta) {
                     if (data == 0) {
-                       return "<span class='label label-default radius' title='课程已下架'>已下架</span>";
+                       return "<span class='label label-default radius' title='课程已关闭'>已关闭</span>";
                     } else if (data == 1) {
                         return "<span class='label label-success radius' title='课程已发布'>已发布</span>";
                     }
@@ -144,6 +144,7 @@ function classTableHandler(formId, url, fileType) {
                 var coursename = rowData.course.coursename;
                 var coursecode = rowData.course.coursecode;
                 var id = rowData.classcourseId;
+                var fileCount = rowData.fileCount;
                 var status = rowData.status;
                 if (col == 2) {
                     if (fileType == 0) {
@@ -162,13 +163,22 @@ function classTableHandler(formId, url, fileType) {
                 }
                 if (col == 5) {
                     var title;
-                    if(fileType == 0) {
-                        title = "查看作业";
+                    if (fileCount > 0) {
+                        if(fileType == 0) {
+                            title = "查看作业";
+                        }
+                        if(fileType == 1) {
+                            title = "查看课件";
+                        }
+                        $(td).html("<span style='cursor:pointer' onclick=file_list_show('850','400','"+classcode+"','"+coursecode+"','"+fileType+"') title='"+title+"'><span class='label radius label-primary'>"+ title +"</span></span>");
+                    } else{
+                        if(fileType == 0) {
+                            $(td).html("没有作业");
+                        }
+                        if(fileType == 1) {
+                            $(td).html("没有课件");
+                        }
                     }
-                    if(fileType == 1) {
-                        title = "查看课件";
-                    }
-                    $(td).html("<span style='cursor:pointer' onclick=file_list_show('850','400','"+classcode+"','"+coursecode+"','"+fileType+"') title='"+title+"'><span class='label radius label-primary'>"+ title +"</span></span>");
                 }
                 if (col == 9) {
                     $(td).addClass("td-status");
@@ -176,7 +186,7 @@ function classTableHandler(formId, url, fileType) {
                 if (col == 10) {
                     $(td).addClass("td-manage");
                     if (status == 1) {
-                        $(td).html("<a style='text-decoration:none' class='ml-5' title='编辑课堂' onclick=class_update('编辑课堂','class-update.html','"+classcode+"','570','400')><i class='Hui-iconfont'>&#xe6df;</i></a> <a style='text-decoration:none' class='ml-5' onClick='stop(this,"+id+")'  title='下架'><i class='Hui-iconfont'>&#xe6de;</i></a>");
+                        $(td).html("<a style='text-decoration:none' class='ml-5' title='编辑课堂' onclick=class_update('编辑课堂','class-update.html','"+classcode+"','570','400')><i class='Hui-iconfont'>&#xe6df;</i></a> <a style='text-decoration:none' class='ml-5' onClick='stop(this,"+id+")'  title='关闭'><i class='Hui-iconfont'>&#xe6de;</i></a>");
                     } else {
                         $(td).html("<a style='text-decoration:none' class='ml-5' title='编辑课堂' onclick=class_update('编辑课堂','class-update.html','"+classcode+"','570','400')><i class='Hui-iconfont'>&#xe6df;</i></a> <a style='text-decoration:none' class='ml-5' onClick='start(this,"+id+")' title='发布'><i class='Hui-iconfont'>&#xe603;</i></a>");
                     }
@@ -220,7 +230,7 @@ function classTableHandler(formId, url, fileType) {
                     return false;
                 }
             },
-            timeout: 5000,
+            timeout: 10000,
             error: function () {
                 swal({
                     title: "Sorry!",
@@ -231,7 +241,7 @@ function classTableHandler(formId, url, fileType) {
                 $("#hw-info-table_processing").hide();
             }
         },
-        columns: colmuns,
+        columns: columns,
         "preDrawCallback": function () {
             // alert("2");
         },
@@ -243,6 +253,7 @@ function classTableHandler(formId, url, fileType) {
             //row 是某一行 ， data是 ajax返回数据 ， index是行标(0)
             //行渲染回调,在这里可以对该行dom元素进行任何操作
             //给当前行加样式
+            $(row).find(".orderNum").text((index+1));
             $(row).addClass("text-c");
         },
 
@@ -278,10 +289,10 @@ function fileTableHandler(classCode, courseCode, fileType) {
     var columns =
         [
             {
+                data: null,
                 orderable: false,
-                data: "iclassfile.fileid",
                 render: function (data, type, row, meta) {
-                    return "<input type='checkbox' value=" + data + " name='classid'>";
+                    return "<span class='label label-default radius orderNum'>" + data + "</span>";
                 }
             },
             {
@@ -309,7 +320,7 @@ function fileTableHandler(classCode, courseCode, fileType) {
                 data: "iclassfile.filestatus",
                 render: function (data, type, row, meta) {
                     if (data == 0) {
-                        return "<span class='label label-default radius' title='下架'>已下架</span>";
+                        return "<span class='label label-default radius' title='已关闭'>已关闭</span>";
                     } else if (data == 1) {
                         return "<span class='label label-success radius' title='已发布'>已发布</span>";
                     }
@@ -337,7 +348,7 @@ function fileTableHandler(classCode, courseCode, fileType) {
                 if (col == 7) {
                     $(td).addClass("td-manage");
                     if (status == 1) {
-                        $(td).html("<a style='text-decoration:none' class='ml-5' title='编辑' onclick=class_update('编辑',fileConfig,'"+fileCode+"','500','370')><i class='Hui-iconfont'>&#xe6df;</i></a> <a style='text-decoration:none' class='ml-5' onClick='stop(this,"+id+")'  title='下架'><i class='Hui-iconfont'>&#xe6de;</i></a>");
+                        $(td).html("<a style='text-decoration:none' class='ml-5' title='编辑' onclick=class_update('编辑',fileConfig,'"+fileCode+"','500','370')><i class='Hui-iconfont'>&#xe6df;</i></a> <a style='text-decoration:none' class='ml-5' onClick='stop(this,"+id+")'  title='关闭'><i class='Hui-iconfont'>&#xe6de;</i></a>");
                     } else {
                         $(td).html("<a style='text-decoration:none' class='ml-5' title='编辑' onclick=class_update('编辑','file-update.html','"+fileCode+"','500','370')><i class='Hui-iconfont'>&#xe6df;</i></a> <a style='text-decoration:none' class='ml-5' onClick='start(this,"+id+")' title='发布'><i class='Hui-iconfont'>&#xe603;</i></a>");
                     }
@@ -383,7 +394,7 @@ function fileTableHandler(classCode, courseCode, fileType) {
                     return false;
                 }
             },
-            timeout: 3000,
+            timeout: 10000,
             error: function () {
                 swal({
                     title: "Sorry!",
@@ -404,6 +415,7 @@ function fileTableHandler(classCode, courseCode, fileType) {
             //row 是某一行 ， data是 ajax返回数据 ， index是行标(0)
             //行渲染回调,在这里可以对该行dom元素进行任何操作
             //给当前行加样式
+            $(row).find(".orderNum").text((index+1));
             $(row).addClass("text-c");
         },
 

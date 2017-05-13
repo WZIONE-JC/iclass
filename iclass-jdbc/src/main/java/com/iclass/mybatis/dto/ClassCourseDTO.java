@@ -23,7 +23,11 @@ public class ClassCourseDTO implements Serializable {
 
     private String teacherName;
 
+    private Integer fileCount;
+
     private List<SessionUser> students;
+
+    private String attendTime;
 
     private String creatTime;
 
@@ -33,24 +37,28 @@ public class ClassCourseDTO implements Serializable {
 
     public ClassCourseDTO(){}
 
-    public ClassCourseDTO(Integer classcourseId, Class aClass, Course course, String teacherName, List<SessionUser> students, String creatTime, String deadline, Integer status) {
-        this.classcourseId = classcourseId;
-        this.aClass = aClass;
-        this.course = course;
-        this.teacherName = teacherName;
-        this.students = students;
-        this.creatTime = creatTime;
-        this.deadline = deadline;
-        this.status = status;
-    }
-
-    public ClassCourseDTO(Integer classcourseId, String classRoomName, Class aClass, Course course, String teacherName, List<SessionUser> students, String creatTime, String deadline, Integer status) {
+    public ClassCourseDTO(Integer classcourseId, String classRoomName, Class aClass, Course course, String teacherName, List<SessionUser> students, String attendTime, String creatTime, String deadline, Integer status) {
         this.classcourseId = classcourseId;
         this.classRoomName = classRoomName;
         this.aClass = aClass;
         this.course = course;
         this.teacherName = teacherName;
         this.students = students;
+        this.attendTime = attendTime;
+        this.creatTime = creatTime;
+        this.deadline = deadline;
+        this.status = status;
+    }
+
+    public ClassCourseDTO(Integer classcourseId, String classRoomName, Class aClass, Course course, String teacherName, Integer fileCount, List<SessionUser> students, String attendTime, String creatTime, String deadline, Integer status) {
+        this.classcourseId = classcourseId;
+        this.classRoomName = classRoomName;
+        this.aClass = aClass;
+        this.course = course;
+        this.teacherName = teacherName;
+        this.fileCount = fileCount;
+        this.students = students;
+        this.attendTime = attendTime;
         this.creatTime = creatTime;
         this.deadline = deadline;
         this.status = status;
@@ -104,6 +112,39 @@ public class ClassCourseDTO implements Serializable {
         this.students = students;
     }
 
+    public String getAttendTime() {
+        return attendTime;
+    }
+
+    public void setAttendTime(String attendTime) {
+        this.attendTime = attendTime;
+    }
+
+    @Override
+    public String toString() {
+        return "ClassCourseDTO{" +
+                "classcourseId=" + classcourseId +
+                ", classRoomName='" + classRoomName + '\'' +
+                ", aClass=" + aClass +
+                ", course=" + course +
+                ", teacherName='" + teacherName + '\'' +
+                ", fileCount=" + fileCount +
+                ", students=" + students +
+                ", attendTime='" + attendTime + '\'' +
+                ", creatTime='" + creatTime + '\'' +
+                ", deadline='" + deadline + '\'' +
+                ", status=" + status +
+                '}';
+    }
+
+    public Integer getFileCount() {
+        return fileCount;
+    }
+
+    public void setFileCount(Integer fileCount) {
+        this.fileCount = fileCount;
+    }
+
     public String getCreatTime() {
         return creatTime;
     }
@@ -128,17 +169,4 @@ public class ClassCourseDTO implements Serializable {
         this.status = status;
     }
 
-    @Override
-    public String toString() {
-        return "ClassCourseDTO{" +
-                "classcourseId=" + classcourseId +
-                ", aClass=" + aClass +
-                ", course=" + course +
-                ", teacherName='" + teacherName + '\'' +
-                ", students=" + students +
-                ", creatTime='" + creatTime + '\'' +
-                ", deadline='" + deadline + '\'' +
-                ", status=" + status +
-                '}';
-    }
 }

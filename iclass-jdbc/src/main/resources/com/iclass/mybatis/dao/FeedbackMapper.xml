@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iclass.mybatis.dao.FeedbackMapper">
+  <resultMap id="BaseResultMap" type="com.iclass.mybatis.po.Feedback">
+    <constructor>
+      <idArg column="FeedBackID" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="ParentId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="Title" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="Content" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="ClassCourseId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="FileId" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="FeedBackCode" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="TeacherCode" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="CreateTime" javaType="java.lang.String" jdbcType="TIMESTAMP" />
+      <arg column="Status" javaType="java.lang.Byte" jdbcType="TINYINT" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    FeedBackID, ParentId, Title, Content, ClassCourseId, FileId, FeedBackCode, TeacherCode, 
+    CreateTime, Status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from FeedBack
+    where FeedBackID = #{feedbackid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from FeedBack
+    where FeedBackID = #{feedbackid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.iclass.mybatis.po.Feedback">
+    insert into FeedBack (FeedBackID, ParentId, Title, 
+      Content, ClassCourseId, FileId, 
+      FeedBackCode, TeacherCode, CreateTime, 
+      Status)
+    values (#{feedbackid,jdbcType=INTEGER}, #{parentid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR}, #{classcourseid,jdbcType=INTEGER}, #{fileid,jdbcType=INTEGER}, 
+      #{feedbackcode,jdbcType=VARCHAR}, #{teachercode,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.iclass.mybatis.po.Feedback">
+    insert into FeedBack
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="feedbackid != null">
+        FeedBackID,
+      </if>
+      <if test="parentid != null">
+        ParentId,
+      </if>
+      <if test="title != null">
+        Title,
+      </if>
+      <if test="content != null">
+        Content,
+      </if>
+      <if test="classcourseid != null">
+        ClassCourseId,
+      </if>
+      <if test="fileid != null">
+        FileId,
+      </if>
+      <if test="feedbackcode != null">
+        FeedBackCode,
+      </if>
+      <if test="teachercode != null">
+        TeacherCode,
+      </if>
+      <if test="createtime != null">
+        CreateTime,
+      </if>
+      <if test="status != null">
+        Status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="feedbackid != null">
+        #{feedbackid,jdbcType=INTEGER},
+      </if>
+      <if test="parentid != null">
+        #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="classcourseid != null">
+        #{classcourseid,jdbcType=INTEGER},
+      </if>
+      <if test="fileid != null">
+        #{fileid,jdbcType=INTEGER},
+      </if>
+      <if test="feedbackcode != null">
+        #{feedbackcode,jdbcType=VARCHAR},
+      </if>
+      <if test="teachercode != null">
+        #{teachercode,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.iclass.mybatis.po.Feedback">
+    update FeedBack
+    <set>
+      <if test="parentid != null">
+        ParentId = #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        Title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        Content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="classcourseid != null">
+        ClassCourseId = #{classcourseid,jdbcType=INTEGER},
+      </if>
+      <if test="fileid != null">
+        FileId = #{fileid,jdbcType=INTEGER},
+      </if>
+      <if test="feedbackcode != null">
+        FeedBackCode = #{feedbackcode,jdbcType=VARCHAR},
+      </if>
+      <if test="teachercode != null">
+        TeacherCode = #{teachercode,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        Status = #{status,jdbcType=TINYINT},
+      </if>
+    </set>
+    where FeedBackID = #{feedbackid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.iclass.mybatis.po.Feedback">
+    update FeedBack
+    set ParentId = #{parentid,jdbcType=INTEGER},
+      Title = #{title,jdbcType=VARCHAR},
+      Content = #{content,jdbcType=VARCHAR},
+      ClassCourseId = #{classcourseid,jdbcType=INTEGER},
+      FileId = #{fileid,jdbcType=INTEGER},
+      FeedBackCode = #{feedbackcode,jdbcType=VARCHAR},
+      TeacherCode = #{teachercode,jdbcType=VARCHAR},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      Status = #{status,jdbcType=TINYINT}
+    where FeedBackID = #{feedbackid,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByTeacherCode" resultType="com.iclass.mybatis.po.Feedback">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM FeedBack
+    WHERE  TeacherCode = #{teachercode,jdbcType=VARCHAR} AND ParentId = #{parentId,jdbcType=INTEGER}
+    <if test="parentId == 0" > ORDER BY FeedBackID DESC </if>
+    limit #{start}, #{length}
+  </select>
+
+  <select id="selectByTeacherCodeNoLimit" resultType="com.iclass.mybatis.po.Feedback">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM FeedBack
+    WHERE  TeacherCode = #{teachercode,jdbcType=VARCHAR} AND ParentId = #{parentId,jdbcType=INTEGER}
+    <if test="parentId == 0" > ORDER BY FeedBackID DESC </if>
+  </select>
+
+  <select id="selectByUserCode" resultType="com.iclass.mybatis.po.Feedback">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM FeedBack
+    WHERE
+    ClassCourseId IN
+    (SELECT ClassCourseID from class_course_student where StudentCode = #{usercode})
+    AND ParentId = #{parentId,jdbcType=INTEGER}
+    <if test="parentId == 0" > ORDER BY FeedBackID DESC </if>
+    limit #{start}, #{length}
+  </select>
+
+  <select id="selectByUserCodeNoLimit" resultType="com.iclass.mybatis.po.Feedback">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM FeedBack
+    WHERE
+    ClassCourseId IN
+    (SELECT ClassCourseID from class_course_student where StudentCode = #{usercode})
+    AND ParentId = #{parentId,jdbcType=INTEGER}
+    <if test="parentId == 0" > ORDER BY FeedBackID DESC </if>
+  </select>
+
+  <select id="countByParentId" resultType="java.lang.Integer" >
+    select
+      count(*)
+    FROM FeedBack
+    WHERE
+      ParentId = #{parentid,jdbcType=INTEGER}
+  </select>
+</mapper>

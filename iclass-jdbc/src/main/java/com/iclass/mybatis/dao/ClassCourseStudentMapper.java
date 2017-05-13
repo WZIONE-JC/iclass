@@ -20,7 +20,19 @@ public interface ClassCourseStudentMapper {
 
     List<ClassCourseStudent> selectByClassCourseId(Integer classcourseid);
 
+    /**
+     * 获取学生已选的课堂
+     * @param studentcode
+     * @return
+     */
     List<ClassCourseStudent> selectByStudentCode(String studentcode);
+
+    /**
+     * 获取学生未选的课堂,应该在ClassCourseMapper中
+     * @param studentcode
+     * @return
+     */
+//    List<ClassCourseStudent> selectByStudentCode2(String studentcode);
 
     List<ClassCourseStudent> selectByNotEqualsStudentCode(String studentcode);
 

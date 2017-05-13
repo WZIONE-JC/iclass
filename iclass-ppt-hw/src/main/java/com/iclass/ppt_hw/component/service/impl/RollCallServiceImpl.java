@@ -3,8 +3,9 @@ package com.iclass.ppt_hw.component.service.impl;
 import com.iclass.mybatis.dao.*;
 import com.iclass.mybatis.dto.RollCallDTO;
 import com.iclass.mybatis.dto.SessionUser;
-import com.iclass.mybatis.po.*;
 import com.iclass.mybatis.po.Class;
+import com.iclass.mybatis.po.*;
+import com.iclass.mybatis.vo.RollcallVo;
 import com.iclass.ppt_hw.component.service.api.RollCallService;
 import com.iclass.user.component.entity.DataTablesRequestEntity;
 import com.iclass.user.component.entity.ServiceResult;
@@ -13,27 +14,28 @@ import com.iclass.user.component.msg.ResponseMsg;
 import com.iclass.user.component.utils.CheckDataTables;
 import com.iclass.user.component.utils.IclassUtil;
 import org.apache.commons.lang.StringUtils;
-import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by radishmaster on 15/04/17.
+ *
  */
 @Service("rollCallService")
 public class RollCallServiceImpl implements RollCallService{
 
+    private final Logger logger = LoggerFactory.getLogger(RollCallServiceImpl.class);
+
+    private final String TIMEOUT = "timeout";
+
     /**
      * 字典
      */
-    private final String[] worldtable = {"你", "我", "他", "苹", "果", "句", "啊", "喝", "赢", "住", "猫", "机", "哈", "塔", "大", "思", "起", "瞎", "五", "韩", "去", "同", "问", "也", "不", "空", "跑", "女", "如", "部", "补", "次"
-    ,"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"
+    private final String[] worldtable = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"
     ,"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
 
     /**
@@ -44,18 +46,17 @@ public class RollCallServiceImpl implements RollCallService{
     /**
      * 默认时间
      */
-    private final Integer defaultTime = 15;
+    private final Integer defaultTime = 60;
 
     /**
      * 生成的口令
      */
-    private HashMap <Integer, String> word;
+    private Map<Integer, String> word = new HashMap<>();
 
-    private final String TIMEOUT = "timeout";
     /**
      * 计时器
      */
-    private ThreadLocal<Long> endTime = new ThreadLocal<>();
+    private Map<Integer, Long> timer = new HashMap<>();
 
     @Autowired
     private UserMapper userMapper;
@@ -103,7 +104,7 @@ public class RollCallServiceImpl implements RollCallService{
             String courseCode = classCourse.getCoursecode();
             Course course = courseMapper.selectByCourseCode(courseCode);
             String courseName = course.getCoursename();
-            String classRoomName = "[" + className + ":" + courseName + "]";
+            String classRoomName = className + ":" + courseName;
             //5.获取学生信息
             String studentCode = rollcall.getStudentcode();
             User student = userMapper.findByUsercode(studentCode);
@@ -111,6 +112,7 @@ public class RollCallServiceImpl implements RollCallService{
         }
         serviceResult.setData(rollCallDTOList);
         serviceResult.setSuccess(true);
+        serviceResult.setDraw(draw);
         serviceResult.setRecordsFiltered(rollCallDTOList.size());
         serviceResult.setRecordsTotal(rollCallDTOList.size());
         return serviceResult;
@@ -140,7 +142,8 @@ public class RollCallServiceImpl implements RollCallService{
             serviceResult.setMessage("课堂编号不能为空");
             return serviceResult;
         }
-        String result = getWord(time);
+        String result = getWord(classCourseId, time);
+        logger.info("教师设置的时间为 {}", timer.get(classCourseId));
         // 设置口令
         word.put(classCourseId, result);
         serviceResult.setData(result);
@@ -163,24 +166,19 @@ public class RollCallServiceImpl implements RollCallService{
             serviceResult.setMessage("点名还没开始");
             return serviceResult;
         }
+        Rollcall rollcall;
+        int status;
         if (word.get(classCourseId).equals(content) || word.get(classCourseId).equals(TIMEOUT)) {
-            ClassCourse classCourse = classCourseMapper.selectByPrimaryKey(classCourseId);
-            String classCode = classCourse.getClasscode();
-            Class c = classMapper.selectByClassCode(classCode);
-            String teacherCode = c.getClasscreator();
-            Rollcall rollcall = new Rollcall();
-            rollcall.setStudentcode(studentCode);
-            rollcall.setTeachercode(teacherCode);
-            rollcall.setRollcalltime(IclassUtil.getDateTimeNow());
-            rollcall.setClasscourseid(classCourseId);
             //如果超时
             Long currentTime = System.currentTimeMillis();
-            if (currentTime > endTime.get() || word.get(classCourseId).equals(TIMEOUT)) {
+            Long endtime = timer.get(classCourseId);
+            if (currentTime > endtime || word.get(classCourseId).equals(TIMEOUT)) {
                 word.put(classCourseId, TIMEOUT);
-                rollcall.setRollcallstatus(0);
+                status = 0;
             } else {
-                rollcall.setRollcallstatus(1);
+                status = 1;
             }
+            rollcall = setValue(classCourseId, studentCode, status);
             rollcallMapper.insert(rollcall);
 
             serviceResult.setSuccess(true);
@@ -192,17 +190,57 @@ public class RollCallServiceImpl implements RollCallService{
     }
 
     /**
+     * 获取当前课堂的点名情况
+     * @param classCourseId
+     * @return
+     */
+    @Override
+    public ServiceResult<RollcallVo> show(Integer classCourseId) {
+        ServiceResult<RollcallVo> serviceResult = new ServiceResult<>();
+        //1.根据课堂Id获取当前课堂的学生信息
+        if (classCourseId == null) {
+            serviceResult.setMessage("课堂编号不能为空");
+            return serviceResult;
+        }
+//        List<Rollcall> rollcalls = rollcallMapper.selectByClassCourseId(classCourseId,);
+//        for (Rollcall rollcall : rollcalls) {
+
+//        }
+        return null;
+    }
+
+    /**
+     * 设置数据
+     * @param classCourseId
+     * @param studentCode
+     * @param status
+     * @return
+     */
+    private Rollcall setValue(Integer classCourseId, String studentCode, int status) {
+        ClassCourse classCourse = classCourseMapper.selectByPrimaryKey(classCourseId);
+        String classCode = classCourse.getClasscode();
+        Class c = classMapper.selectByClassCode(classCode);
+        String teacherCode = c.getClasscreator();
+        Rollcall rollcall = new Rollcall();
+        rollcall.setStudentcode(studentCode);
+        rollcall.setTeachercode(teacherCode);
+        rollcall.setRollcalltime(IclassUtil.getDateTimeNow());
+        rollcall.setClasscourseid(classCourseId);
+        rollcall.setRollcallstatus(status);
+        return rollcall;
+    }
+    /**
      * 获得口令,并设置时间,默认为defaultTime
      * @param time
      * @return
      */
-    private String getWord(Integer time) {
+    private String getWord(Integer classCourseId, Integer time) {
         StringBuilder result = new StringBuilder();
         Random randomWord = new Random();
         if (time == null) {
             time = defaultTime;
         }
-        endTime.set(System.currentTimeMillis() + time * 1000);
+        timer.put(classCourseId, System.currentTimeMillis() + time * 1000);
         for (int i = 0; i < count; i ++) {
             Integer wordIndex = randomWord.nextInt(worldtable.length);
             result.append(worldtable[wordIndex]);

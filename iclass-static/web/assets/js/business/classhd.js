@@ -18,9 +18,9 @@ function classhdTableHandler() {
         [
             {
                 orderable: false,
-                data: "classhd.classhdid",
+                data: null,
                 render: function (data, type, row, meta) {
-                    return "<input type='checkbox' value=" + data + " name='classid'>";
+                    return "<span class='label label-default radius orderNum'>" + data + "</span>";
                 }
             },
             {
@@ -112,7 +112,7 @@ function classhdTableHandler() {
             url: ppt_hw_url + "/classhd/getAll",
             dataType: "jsonp",
             data: {
-                "classhdCreator": usercode,
+                "userCode": usercode,
             },
             dataSrc: function (result) {
                 if (result.success) {
@@ -129,7 +129,7 @@ function classhdTableHandler() {
                     return false;
                 }
             },
-            timeout: 5000,
+            timeout: 10000,
             error: function () {
                 swal({
                     title: "Sorry!",
@@ -145,6 +145,7 @@ function classhdTableHandler() {
         "initComplete": function (settings, json) {
         },
         "createdRow": function (row, data, index) {
+            $(row).find(".orderNum").text((index+1));
             $(row).addClass("text-c");
         },
 
@@ -174,7 +175,7 @@ function addClasshd() {
         type: "post",
         url: ppt_hw_url + "/classhd/save",
         dataType: "jsonp",
-        timeout: 5000,
+        timeout: 10000,
         data: $("#form-classhd-add").serialize(),
         success: function (responseData) {
             if(responseData.success) {
@@ -214,7 +215,7 @@ function updateClasshd() {
         type: "post",
         url: ppt_hw_url + "/classhd/update",
         dataType: "jsonp",
-        timeout: 5000,
+        timeout: 10000,
         data: $("#form-classhd-update").serialize(),
         success: function (responseData) {
             if(responseData.success) {
@@ -256,7 +257,7 @@ function showClasshd(id) {
         type: "post",
         url: ppt_hw_url + "/classhd/get/"+id,
         dataType: "jsonp",
-        timeout: 5000,
+        timeout: 10000,
         ansyc: false,
         success: function (responseData) {
             if(responseData.success) {
@@ -314,7 +315,7 @@ function delClasshd(id){
                     type: "post",
                     url: ppt_hw_url + "/classhd/del/" + id,
                     dataType: "jsonp",
-                    timeout: 5000,
+                    timeout: 10000,
                     success: function (responseData) {
                         if(responseData.success) {
                             swal({

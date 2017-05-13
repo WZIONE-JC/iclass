@@ -97,3 +97,8 @@ select {
 .unlogined{
     display: none;
 }
+
+.double-select{
+    width: 50%;
+    float: left;
+}

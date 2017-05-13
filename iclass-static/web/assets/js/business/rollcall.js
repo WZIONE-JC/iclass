@@ -18,9 +18,9 @@ function rollcallTableHandler() {
         [
             {
                 orderable: false,
-                data: "rollcall.rollcallid",
+                data: null,
                 render: function (data, type, row, meta) {
-                    return "<input type='checkbox' value=" + data + " name='classid'>";
+                    return "<span class='label label-default radius orderNum'>" + data + "</span>";
                 }
             },
             {
@@ -112,7 +112,7 @@ function rollcallTableHandler() {
                     return false;
                 }
             },
-            timeout: 5000,
+            timeout: 10000,
             error: function () {
                 swal({
                     title: "Sorry!",
@@ -128,6 +128,7 @@ function rollcallTableHandler() {
         "initComplete": function (settings, json) {
         },
         "createdRow": function (row, data, index) {
+            $(row).find(".orderNum").text((index+1));
             $(row).addClass("text-c");
         },
 
@@ -166,7 +167,7 @@ function delClasshd(id) {
                     type: "post",
                     url: ppt_hw_url + "/rollcall/del/" + id,
                     dataType: "jsonp",
-                    timeout: 5000,
+                    timeout: 10000,
                     success: function (responseData) {
                         if(responseData.success) {
                             swal({

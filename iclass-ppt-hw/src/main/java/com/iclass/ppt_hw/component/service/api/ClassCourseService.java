@@ -28,7 +28,7 @@ public interface ClassCourseService {
      * @param classCourse
      * @return
      */
-    ServiceResult<ResponseMsg> save(ClassCourse classCourse);
+    ServiceResult<ResponseMsg> save(ClassCourse classCourse, Integer attendnumber, Integer attendtime);
 
     /**
      * 更新课堂

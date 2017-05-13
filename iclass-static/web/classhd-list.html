@@ -16,7 +16,7 @@
 	<link href="assets/css/H-ui.min.css" rel="stylesheet" type="text/css" />
 	<link href="assets/css/H-ui.admin.css" rel="stylesheet" type="text/css" />
 	<link href="skin/default/skin.css" rel="stylesheet" type="text/css" id="skin" />
-	<link href="lib/Hui-iconfont/1.0.1/iconfont.css" rel="stylesheet" type="text/css" />
+	<link href="lib/Hui-iconfont/1.0.8/iconfont.css" rel="stylesheet" type="text/css" />
 	<!--[if IE 6]>
 	<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
 	<script>DD_belatedPNG.fix('*');</script>
@@ -36,13 +36,13 @@
 		<input type="text" name="" id="" placeholder=" 输入课堂" style="width:250px" class="input-text">
 		<button name="" id="" class="btn btn-success radius" type="submit"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
 	</div>
-	<div class="cl pd-5 bg-1 bk-gray mt-10"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a class="btn btn-secondary radius" onclick="addDialog('互动题目准备', 'classhd-add.html', 570, 500)" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加题目</a></span> <span class="r total-record">共有数据：<strong id="totalRecord">0</strong> 条</span> </div>
+	<div class="cl pd-5 bg-1 bk-gray mt-10"> <span class="l"> <a class="btn btn-secondary radius" onclick="addDialog('互动题目准备', 'classhd-add.html', 570, 500)" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加题目</a></span> <span class="r total-record">共有数据：<strong id="totalRecord">0</strong> 条</span> </div>
 	<div class="mt-10">
 		<table id="form-classhd-table" class="table table-border table-bordered table-bg table-hover table-sort">
 			<input type="hidden" id="classcreator" name="classcreator">
 			<thead>
 				<tr class="text-c">
-					<th width="3%"><input type="checkbox" name="" value=""></th>
+					<th width="3%">序号</th>
 					<th width="15%">课堂名称</th>
                     <th width="15%">互动题目</th>
                     <th width="15%">互动选项</th>

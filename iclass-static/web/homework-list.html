@@ -16,7 +16,7 @@
 	<link href="assets/css/H-ui.min.css" rel="stylesheet" type="text/css" />
 	<link href="assets/css/H-ui.admin.css" rel="stylesheet" type="text/css" />
 	<link href="skin/default/skin.css" rel="stylesheet" type="text/css" id="skin" />
-	<link href="lib/Hui-iconfont/1.0.1/iconfont.css" rel="stylesheet" type="text/css" />
+	<link href="lib/Hui-iconfont/1.0.8/iconfont.css" rel="stylesheet" type="text/css" />
 	<!--[if IE 6]>
 	<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
 	<script>DD_belatedPNG.fix('*');</script>
@@ -33,15 +33,15 @@
 		-
 		<input type="text" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'logmin\')}'})" id="logmax" class="input-text Wdate" style="width:120px;">
 		<input type="text" name="" id="" placeholder=" 输入课堂名称" style="width:250px" class="input-text">
-		<button name="" id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
+		<button name="" id="" class="btn btn-success radius" type="submit"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
 	</div>
-	<div class="cl pd-5 bg-1 bk-gray mt-10"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a class="btn btn-secondary radius" onclick="file_add('发布作业','homework-add.html')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 发布作业</a></span> <span class="r">共有数据：<strong id="totalRecord">0</strong> 条</span> </div>
+	<div class="cl pd-5 bg-1 bk-gray mt-10"> <span class="l"> <a class="btn btn-secondary radius" onclick="file_add('发布作业','homework-add.html')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 发布作业</a></span> <span class="r">共有数据：<strong id="totalRecord">0</strong> 条</span> </div>
 	<div class="mt-10">
 		<table id="hw-info-table" class="table table-border table-bordered table-bg table-hover table-sort">
 			<input type="hidden" id="usercode" name="classCreator">
 			<thead>
 			<tr class="text-c">
-				<th width="3%"><input name="" type="checkbox" value=""></th>
+				<th width="3%">序号</th>
 				<th width="15%">课堂名称</th>
 				<th width="10%">班级名称</th>
 				<th width="10%">课程名称</th>

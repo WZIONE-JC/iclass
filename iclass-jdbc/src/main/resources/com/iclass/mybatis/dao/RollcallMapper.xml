@@ -117,4 +117,25 @@
     from rollcall
     where TeacherCode = #{teachercode,jdbcType=VARCHAR} ORDER BY RollCallID DESC
   </select>
+  <select id="selectByClassCourseId" resultType="com.iclass.mybatis.po.Rollcall" >
+    SELECT
+    *
+    from rollcall, ClassCourseAttendTime as ccat
+    WHERE ClassCourseId = #{classcourseid,jdbcType=INTEGER}
+    AND ccat.ClassCourseId = #{classcourseid,jdbcType=INTEGER},
+  </select>
+  <select id="selectByClassCourseIdAndStatus" resultType="com.iclass.mybatis.po.Rollcall" >
+    SELECT
+    <include refid="Base_Column_List" />
+    from rollcall
+    WHERE ClassCourseId = #{classcourseid,jdbcType=INTEGER}
+    AND RollCallStatus = #{rollcallstatus,jdbcType=INTEGER}
+  </select>
+  <select id="countByClassCourseIdAndStatus" resultType="java.lang.Integer" >
+    SELECT
+    count(*)
+    FROM rollcall
+    WHERE ClassCourseId = #{classcourseid,jdbcType=INTEGER}
+    AND RollCallStatus = #{rollcallstatus,jdbcType=INTEGER}
+  </select>
 </mapper>

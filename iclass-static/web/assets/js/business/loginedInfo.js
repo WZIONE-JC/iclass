@@ -11,7 +11,7 @@ var Logined = function () {
                 dataType: "jsonp",
                 jsonp: "callback",
                 url: user_url + "/user/getLoginedUserInfo",
-                timeout: 5000,
+                timeout: 10000,
                 success: function (logineduserdata) {
                     if (logineduserdata.success) {
                         $("#menu").removeClass("unlogined");
@@ -23,12 +23,12 @@ var Logined = function () {
                         }
                         $("#rolename").text(role);
 
-                        var username = logineduserdata.data.user.username;
-                        $("#username").text(username);
+                        var userfullname = logineduserdata.data.user.userfullname;
+                        $("#userfullname").text(userfullname);
                         var usercode = logineduserdata.data.user.usercode;
                         $("#usercode").val(usercode);
                         $("#personalInfo").on("click", function () {
-                            member_show(username,'user-show.html','usercode='+usercode,'360','400');
+                            member_show(userfullname,'user-show.html','usercode='+usercode,'360','400');
                         });
                     } else {
                         swal({

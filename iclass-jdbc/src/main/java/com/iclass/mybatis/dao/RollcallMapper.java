@@ -1,6 +1,5 @@
 package com.iclass.mybatis.dao;
 
-import com.iclass.mybatis.dto.RollCallDTO;
 import com.iclass.mybatis.po.Rollcall;
 import org.apache.ibatis.annotations.Param;
 
@@ -20,7 +19,12 @@ public interface RollcallMapper {
     int updateByPrimaryKey(Rollcall record);
 
     List<Rollcall> selectByTeacherCode(@Param("teachercode") String teacherCode, @Param("start") Integer start, @Param("length") Integer length);
-            ;
+
     List<Rollcall> selectByTeacherCodeNoLimit(@Param("teachercode") String teacherCode);
 
+    List<Rollcall> selectByClassCourseId(@Param("classcourseId") Integer classCourseId, Integer attendNumber, Integer attendTime);
+
+    List<Rollcall> selectByClassCourseIdAndStatus(@Param("classcourseid") Integer classCourseId, @Param("rollcallstatus") int status);
+
+    Integer countByClassCourseIdAndStatus(@Param("classcourseid") Integer classCourseId, @Param("rollcallstatus") int status);
 }

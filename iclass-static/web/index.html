@@ -16,7 +16,7 @@
 	<link href="assets/css/H-ui.min.css" rel="stylesheet" type="text/css" />
 	<link href="assets/css/H-ui.admin.css" rel="stylesheet" type="text/css" />
 	<link href="skin/default/skin.css" rel="stylesheet" type="text/css" id="skin" />
-	<link href="lib/Hui-iconfont/1.0.1/iconfont.css" rel="stylesheet" type="text/css" />
+	<link href="lib/Hui-iconfont/1.0.8/iconfont.css" rel="stylesheet" type="text/css" />
 	<!--[if IE 6]>
 	<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
 	<script>DD_belatedPNG.fix('*');</script>
@@ -32,14 +32,14 @@
 			<li class="dropDown dropDown_click"><a href="javascript:;" class="dropDown_A"><i class="Hui-iconfont">&#xe600;</i> 新增 <i class="Hui-iconfont">&#xe6d5;</i></a>
 				<ul class="dropDown-menu radius box-shadow">
 					<li><a href="javascript:;" onClick="file_upload('课件上传','ppt-add.html','600','570')"><i class="Hui-iconfont">&#xe642;</i> 添加课件</a></li>
-					<li><a href="javascript:;" onClick="member_add('添加用户','user-add.html','600','570')"><i class="Hui-iconfont">&#xe60d;</i> 添加用户</a></li>
+					<li><a href="javascript:;" onClick="file_upload('作业上传','homework-add.html','600','570')"><i class="Hui-iconfont">&#xe720;</i> 添加作业</a></li>
 				</ul>
 			</li>
 		</ul>
 	</nav>
 	<ul class="Hui-userbar">
 		<li id="rolename"></li>
-		<li class="dropDown dropDown_hover"><a href="#" class="dropDown_A"><span id ="username"></span> <i class="Hui-iconfont">&#xe6d5;</i></a>
+		<li class="dropDown dropDown_hover"><a href="#" class="dropDown_A"><span id ="userfullname"></span> <i class="Hui-iconfont">&#xe6d5;</i></a>
 			<ul class="dropDown-menu radius box-shadow">
 				<li><a id="personalInfo" href="#">个人信息</a></li>
 				<li><a href="login.html">切换账户</a></li>
@@ -84,7 +84,7 @@
 				<ul>
 					<li><a onclick="file_upload('课件上传','ppt-add.html','600','570')" ><i class="Hui-iconfont">&#xe642;</i> 课件上传</a></li>
 					<li><a _href="ppt-list.html" href="javascript:void(0)"><i class="Hui-iconfont">&#xe695;</i> 已上传课件浏览</a></li>
-                    <li><a _href="coding.html" href="javascript:void(0)"><i class="Hui-iconfont">&#xe692;</i> 问题与反馈</a></li>
+                    <li><a _href="feedback-list.html" href="javascript:void(0)"><i class="Hui-iconfont">&#xe692;</i> 问题与反馈</a></li>
 				</ul>
 			</dd>
 		</dl>
@@ -96,7 +96,6 @@
 					<li><a onclick="file_upload('作业上传','homework-add.html','600','570')" ><i class="Hui-iconfont">&#xe642;</i> 发布作业</a></li>
 					<li><a _href="homework-list.html" href="javascript:void(0)"><i class="Hui-iconfont">&#xe695;</i> 已上传作业浏览</a></li>
 					<li><a _href="homework-show.html" href="javascript:void(0)"><i class="Hui-iconfont">&#xe618;</i> 作业统计</a></li>
-                    <li><a _href="coding.html" href="javascript:void(0)"><i class="Hui-iconfont">&#xe692;</i> 问题与反馈</a></li>
 				</ul>
 			</dd>
 		</dl>
@@ -105,7 +104,7 @@
 			<dd>
 				<ul>
 					<li><a _href="rollcall-list.html" href="javascript:void(0)"><i class="Hui-iconfont">&#xe695;</i> 点名记录</a></li>
-					<li><a _href="rollcall-show.html" href="javascript:void(0)"><i class="Hui-iconfont">&#xe61a;</i> 统计与分析</a></li>
+					<li><a _href="rollcall-show.html" href="javascript:void(0)"><i class="Hui-iconfont">&#xe61a;</i> 点名统计与分析</a></li>
 				</ul>
 			</dd>
 		</dl>
@@ -115,7 +114,7 @@
 			<dd>
 				<ul>
                 	<li><a _href="classhd-list.html" href="javascript:;"><i class="Hui-iconfont">&#xe695;</i> 互动题目浏览</a></li>
-					<li><a _href="classhd-show.html" href="javascript:;"><i class="Hui-iconfont">&#xe6cf;</i> 统计与分析</a></li>
+					<li><a _href="classhd-show.html" href="javascript:;"><i class="Hui-iconfont">&#xe6cf;</i> 互动统计与分析</a></li>
 				</ul>
 			</dd>
 		</dl>

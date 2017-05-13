@@ -16,7 +16,7 @@
     <link href="assets/css/H-ui.min.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/H-ui.admin.css" rel="stylesheet" type="text/css" />
     <link href="skin/default/skin.css" rel="stylesheet" type="text/css" id="skin" />
-    <link href="lib/Hui-iconfont/1.0.1/iconfont.css" rel="stylesheet" type="text/css" />
+    <link href="lib/Hui-iconfont/1.0.8/iconfont.css" rel="stylesheet" type="text/css" />
     <!--[if IE 6]>
     <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
     <script>DD_belatedPNG.fix('*');</script>
@@ -53,6 +53,30 @@
             </div>
         </div>
 
+        <div class="row cl">
+            <label class="form-label col-4"><span class="c-red">*</span>上课时间：</label>
+            <div class="formControls col-7">
+                <span class="select-box double-select">
+                        <select name="attendnumber" id="attendnumber" class="select"  datatype="*" nullmsg="请选择时间">
+                            <option value="">选择哪一节课</option>
+                            <option value="1">第1,2节</option>
+                            <option value="2">第3,4节</option>
+                            <option value="3">第5,6节</option>
+                            <option value="4">第7,8节</option>
+                        </select>
+                    </span>
+                <span class="select-box double-select">
+                        <select name="attendtime" id="attendtime" class="select"  datatype="*" nullmsg="请选择时间">
+                            <option value="">选择周几上课</option>
+                            <option value="1">周一</option>
+                            <option value="2">周二</option>
+                            <option value="3">周三</option>
+                            <option value="4">周四</option>
+                            <option value="5">周五</option>
+                        </select>
+                    </span>
+            </div>
+        </div>
 
         <div class="row cl">
             <label class="form-label col-4"><span class="c-red">*</span>开始时间：</label>

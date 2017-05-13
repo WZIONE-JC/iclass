@@ -8,7 +8,7 @@ function show(code) {
         data: {
             usercode: code
         },
-        timeout: 5000,
+        timeout: 10000,
         success: function (responseData) {
             if(responseData.success) {
                 var userfullname = $("#userfullname");
@@ -52,7 +52,7 @@ function updateUser () {
         type: "put",
         url: user_url + "/user/update",
         dataType: "jsonp",
-        timeout: 5000,
+        timeout: 10000,
         data: $("#form-user-update").serialize(),
         success: function (responseData) {
             if(responseData.success) {
@@ -90,7 +90,7 @@ function changePassword () {
         type: "post",
         url: user_url + "/user/changePwd",
         dataType: "jsonp",
-        timeout: 5000,
+        timeout: 10000,
         data: $("#form-changepassword").serialize(),
         success: function (responseData) {
             if(responseData.success) {
@@ -129,14 +129,6 @@ function userTableHandler (formId, isPersonal, url) {
     $(formId).prop("width","100%");
     var colmuns =
         [{
-            orderable: false,
-            data: "user.usercode",
-            render: function (data, type, row, meta) {
-                // console.log("data:"+data);
-                return "<input type='checkbox' value=" + data + " name='usercode'>";
-            }
-        },
-        {
             data: "user.username",
         },
         {
@@ -172,38 +164,38 @@ function userTableHandler (formId, isPersonal, url) {
 
     var columnDefs =
         [{
-            targets: [1,-2,-1],
+            targets: [0,-2,-1],
             "createdCell":function (td, cellData, rowData, row, col) {
 //					console.log(td);
                 var usercode = rowData.user.usercode;
                 var username = rowData.user.username;
                 var userrole = rowData.user.userrole;
                 if(userrole == "教师" ) {
-                    if(col == 1) {
+                    if(col == 0) {
                         $(td).wrapInner("<span style='cursor:pointer' title='查看个人信息' class='label label-secondary radius' onclick=member_show('"+username+"','user-show.html','usercode="+usercode+"','360','400')></span>");
                     }
-                    if(col == 9) {
+                    if(col == 8) {
                         $(td).addClass("td-status");
                         $(td).wrapInner("<span class='label label-success radius'></span>");
                     }
                 } else if(userrole == "学生") {
-                    if(col == 1) {
+                    if(col == 0) {
                         $(td).wrapInner("<span style='cursor:pointer' title='查看个人信息' class='label label-secondary radius' onclick=member_show('"+username+"','user-show.html','usercode="+usercode+"','360','400')></span>");
                     }
-                    if(col == 9) {
+                    if(col == 8) {
                         $(td).addClass("td-status");
                         $(td).wrapInner("<span class='label label-primary radius'></span>");
                     }
                 } else {
-                    if(col == 1) {
+                    if(col == 0) {
                         $(td).wrapInner("<span style='cursor:pointer' title='查看个人信息' class='label label-secondary radius' onclick=member_show('"+username+"','user-show.html','usercode="+usercode+"','360','400')></span>");
                     }
-                    if(col == 9) {
+                    if(col == 8) {
                         $(td).addClass("td-status");
                         $(td).wrapInner("<span class='label label-warning radius'></span>");
                     }
                 }
-                if(col == 10) {
+                if(col == 9) {
                     $(td).addClass("td-manage");
                     //个人页面不需要显示删除按钮
                     if(isPersonal == true) {
@@ -276,7 +268,9 @@ function userTableHandler (formId, isPersonal, url) {
             });
         },
         "initComplete": function ( settings, json ) {
-
+            $(".dataTables_length").hide();
+            $(".dataTables_filter").hide();
+            $("#personalInfo-table_paginate").hide();
         }
     });
     return table;

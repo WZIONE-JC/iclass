@@ -27,16 +27,16 @@ public class ClasshdController {
     /**
      * 根据教师编号获取教师所创建的互动内容
      * @param requestEntity
-     * @param classhdCreator
+     * @param userCode
      * @param isLimit web端需要分页, app端不需要分页
      * @return 返回状态为1的互动数据
      */
     @RequestMapping(value = "/getAll", method = {RequestMethod.POST, RequestMethod.GET})
-    ServiceResult<List<ClasshdDTO>> getAll(DataTablesRequestEntity requestEntity, String classhdCreator, Boolean isLimit) {
+    ServiceResult<List<ClasshdDTO>> getAll(DataTablesRequestEntity requestEntity, String userCode, Boolean isLimit) {
         if (isLimit == null) {
             isLimit = true;
         }
-        return classhdService.getAll(requestEntity, classhdCreator, isLimit);
+        return classhdService.getAll(requestEntity, userCode, isLimit);
     }
 
     /**

@@ -22,6 +22,10 @@ public interface ClasshdMapper {
 
     List<Classhd> selectByClasshdCreatorNolimit(@Param("classhdcreator") String classhdCreator);
 
+    List<Classhd> selectByStudentCode(@Param("studentcode") String studentCode, @Param("start") Integer start, @Param("length") Integer length);
+
+    List<Classhd> selectByStudentCodeNolimit(@Param("studentcode") String studentCode);
+
     Integer countByClasshdCreator(@Param("classhdcreator") String classhdCreator);
 
     int updateRightNumber(@Param("classhdid") Integer classhdId);

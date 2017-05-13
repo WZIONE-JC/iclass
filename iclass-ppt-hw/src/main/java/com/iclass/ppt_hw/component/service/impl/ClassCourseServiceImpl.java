@@ -11,14 +11,18 @@ import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.msg.Msg;
 import com.iclass.user.component.msg.ResponseMsg;
 import com.iclass.user.component.utils.CheckDataTables;
+import com.iclass.user.component.utils.IclassUtil;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * iclass
@@ -41,6 +45,12 @@ public class ClassCourseServiceImpl implements ClassCourseService{
 
     @Autowired
     private CourseMapper courseMapper;
+
+    /**
+     * 查询课堂的上课时间
+     */
+    @Autowired
+    private ClasscourseattendtimeMapper attendtimeMapping;
 
     @Autowired
     private ClassCourseStudentMapper classCourseStudentMapper;
@@ -91,6 +101,25 @@ public class ClassCourseServiceImpl implements ClassCourseService{
                     //4.查询学生数据
                     List<SessionUser> sessionUsers = new ArrayList<>();
                     Integer classCourseId = classCourse.getClasscourseid();
+                    //4.1获取课堂上课时间
+                    List<Classcourseattendtime> classcourseattendtimeList = attendtimeMapping.selectByClassCourseId(classCourseId);
+                    /**
+                     * map存放上课时间的数据
+                     * key: 周几     ccat.getAttendtime()
+                     * value: 1,2,3,4(第几节课)  ccat.getAttendnumber()
+                     */
+                    Map<Integer, String> data = new HashMap<>();
+                    for(Classcourseattendtime ccat : classcourseattendtimeList) {
+                        // 如果存在这天的记录,就组合
+                        if (data.containsKey(ccat.getAttendtime())) {
+                            String val = data.get(ccat.getAttendtime());
+                            val += "," + ccat.getAttendnumber();
+                            data.put(ccat.getAttendtime(), val);
+                        } else {
+                            data.put(ccat.getAttendtime(), ccat.getAttendnumber()+"");
+                        }
+                    }
+                    String attendTime = IclassUtil.getAttendTime(data);
                     List<ClassCourseStudent> classCourseStudents = classCourseStudentMapper.selectByClassCourseId(classCourseId);
                     // 如果有学生的话
                     if (classCourseStudents != null && classCourseStudents.size() > 0) {
@@ -102,7 +131,7 @@ public class ClassCourseServiceImpl implements ClassCourseService{
                         }
                     }
                     String classRoomName = getClassRoomName2(c.getClassname(), course.getCoursename());
-                    classCourseDTOs.add(new ClassCourseDTO(classcourseId, classRoomName, c, course, teacherName, sessionUsers, createTime, deadline, status));
+                    classCourseDTOs.add(new ClassCourseDTO(classcourseId, classRoomName, c, course, teacherName, sessionUsers, attendTime, createTime, deadline, status));
                 }
             }
             serviceResult.setSuccess(true);
@@ -120,7 +149,8 @@ public class ClassCourseServiceImpl implements ClassCourseService{
     }
 
     @Override
-    public ServiceResult<ResponseMsg> save(ClassCourse classCourse) {
+    @Transactional
+    public ServiceResult<ResponseMsg> save(ClassCourse classCourse, Integer attendnumber, Integer attendtime) {
         ServiceResult<ResponseMsg> serviceResult = new ServiceResult<>();
         if (classCourse == null) {
             serviceResult.setMessage("开设课堂失败,信息不完整");
@@ -136,6 +166,12 @@ public class ClassCourseServiceImpl implements ClassCourseService{
         }
         classCourse.setStatus(1);
         classCourseMapper.insert(classCourse);
+        logger.info("生成的课堂主键为:{}" ,classCourse.getClasscourseid());
+        Classcourseattendtime classcourseattendtime = new Classcourseattendtime();
+        classcourseattendtime.setAttendnumber(attendnumber);
+        classcourseattendtime.setAttendtime(attendtime);
+        classcourseattendtime.setClasscourseid(classCourse.getClasscourseid());
+        attendtimeMapping.insert(classcourseattendtime);
         serviceResult.setSuccess(true);
         serviceResult.setData(new ResponseMsg(Msg.OK));
         return serviceResult;
@@ -268,6 +304,7 @@ public class ClassCourseServiceImpl implements ClassCourseService{
         String userfullname = student.getUserfullname();
         String role = student.getUserrole();
         List<ClassCourseStudent> classCourseStudents = null;
+        List<ClassCourse> classCourses = null;
         if (isSelected) {
             //1.通过学生编号获取学生所选的课堂
             classCourseStudents = classCourseStudentMapper.selectByStudentCode(studentCode);
@@ -275,42 +312,18 @@ public class ClassCourseServiceImpl implements ClassCourseService{
                 serviceResult.setMessage(userfullname + " " + role + ",好像还木有加入课堂诶");
                 return serviceResult;
             }
+            for (ClassCourseStudent classCourseStudent : classCourseStudents) {
+                classCourseDTOList = doData(classCourseDTOList, classCourseStudent.getClasscourseid());
+            }
         } else {
             //1.通过学生编号获取学生所选的课堂
-            classCourseStudents = classCourseStudentMapper.selectByNotEqualsStudentCode(studentCode);
-            if (classCourseStudents.size() == 0) {
+            classCourses = classCourseMapper.selectUnselectedClassCourse(studentCode);
+            if (classCourses.size() == 0) {
                 serviceResult.setMessage(userfullname + " " + role + ",已经加入了全部的课堂了诶");
                 return serviceResult;
             }
-        }
-        for (ClassCourseStudent classCourseStudent : classCourseStudents) {
-            Integer classcourseId = classCourseStudent.getClasscourseid();
-            //2.根据classCourseId去获取课堂的信息
-            ClassCourse classCourse = classCourseMapper.selectByPrimaryKey(classcourseId);
-            //3.只加入启用的课程
-            if(classCourse != null && classCourse.getStatus() == 1) {
-                String createTime = classCourse.getCreatetime();
-                String deadLine = classCourse.getDeadline();
-                //3.根据classCode获取班级信息
-                String classCode = classCourse.getClasscode();
-                Class c = classMapper.selectByClassCode(classCode);
-                String teacherCode = c.getClasscreator();
-                User teacher = userMapper.findByUsercode(teacherCode);
-                String teacherName = teacher.getUserfullname();
-                //5.根据courseCode获取课程信息
-                String courseCode = classCourse.getCoursecode();
-                Course course = courseMapper.selectByCourseCode(courseCode);
-                String classRoomName = getClassRoomName2(c.getClassname(), course.getCoursename());
-                //6.根据classcourseId去查询这个课堂有多少学生选了
-                List<ClassCourseStudent> classCourseStudentList = classCourseStudentMapper.selectByClassCourseId(classcourseId);
-                List<SessionUser> students = new ArrayList<>();
-                for (ClassCourseStudent ccs : classCourseStudentList) {
-                    String studentCode2 = ccs.getStudentcode();
-                    User student2 = userMapper.findByUsercode(studentCode2);
-                    students.add(new SessionUser(student2));
-                }
-                //状态默认为1
-                classCourseDTOList.add(new ClassCourseDTO(classcourseId, classRoomName, c, course, teacherName, students, createTime, deadLine, 1));
+            for (ClassCourse cc : classCourses) {
+                classCourseDTOList = doData(classCourseDTOList, cc.getClasscourseid());
             }
         }
         serviceResult.setData(classCourseDTOList);
@@ -318,22 +331,80 @@ public class ClassCourseServiceImpl implements ClassCourseService{
         return serviceResult;
     }
 
+    /**
+     * 处理选课数据
+     * @param classCourseDTOList
+     * @param classcourseId
+     * @return
+     */
+    private List<ClassCourseDTO> doData(List<ClassCourseDTO> classCourseDTOList, Integer classcourseId) {
+        //2.根据classCourseId去获取课堂的信息
+        ClassCourse classCourse = classCourseMapper.selectByPrimaryKey(classcourseId);
+
+        //2.1获取课堂上课时间
+        List<Classcourseattendtime> classcourseattendtimeList = attendtimeMapping.selectByClassCourseId(classcourseId);
+        /**
+         * map存放上课时间的数据
+         * key: 周几     ccat.getAttendtime()
+         * value: 1,2,3,4(第几节课)  ccat.getAttendnumber()
+         */
+        Map<Integer, String> data = new HashMap<>();
+        for(Classcourseattendtime ccat : classcourseattendtimeList) {
+            // 如果存在这天的记录,就组合
+            if (data.containsKey(ccat.getAttendtime())) {
+                String val = data.get(ccat.getAttendtime());
+                val += "," + ccat.getAttendnumber();
+                data.put(ccat.getAttendtime(), val);
+            } else {
+                data.put(ccat.getAttendtime(), ccat.getAttendnumber()+"");
+            }
+        }
+        String attendTime = IclassUtil.getAttendTime(data);
+
+        //3.只加入启用的课程
+        if(classCourse != null && classCourse.getStatus() == 1) {
+            String createTime = classCourse.getCreatetime();
+            String deadLine = classCourse.getDeadline();
+            //3.根据classCode获取班级信息
+            String classCode = classCourse.getClasscode();
+            Class c = classMapper.selectByClassCode(classCode);
+            String teacherCode = c.getClasscreator();
+            User teacher = userMapper.findByUsercode(teacherCode);
+            String teacherName = teacher.getUserfullname();
+            //5.根据courseCode获取课程信息
+            String courseCode = classCourse.getCoursecode();
+            Course course = courseMapper.selectByCourseCode(courseCode);
+            String classRoomName = getClassRoomName2(c.getClassname(), course.getCoursename());
+            //6.根据classcourseId去查询这个课堂有多少学生选了
+            List<ClassCourseStudent> classCourseStudentList = classCourseStudentMapper.selectByClassCourseId(classcourseId);
+            List<SessionUser> students = new ArrayList<>();
+            for (ClassCourseStudent ccs : classCourseStudentList) {
+                String studentCode2 = ccs.getStudentcode();
+                User student2 = userMapper.findByUsercode(studentCode2);
+                students.add(new SessionUser(student2));
+            }
+            //状态默认为1
+            classCourseDTOList.add(new ClassCourseDTO(classcourseId, classRoomName, c, course, teacherName, students, attendTime, createTime, deadLine, 1));
+        }
+        return classCourseDTOList;
+    }
+
     private String getClassRoomName(String classCode, String courseCode) {
         StringBuilder result = new StringBuilder();
         Class c = classMapper.selectByClassCode(classCode);
         Course course = courseMapper.selectByCourseCode(courseCode);
         if (c != null) {
-            result.append("[").append(c.getClassname());
+            result.append(c.getClassname());
         }
         if (course != null) {
-            result.append(":").append(course.getCoursename()).append("]");
+            result.append(":").append(course.getCoursename());
         }
         return result.toString();
     }
 
     private String getClassRoomName2(String className, String courseName) {
-        StringBuilder result = new StringBuilder("[");
-        result.append(className).append(":").append(courseName).append("]");
+        StringBuilder result = new StringBuilder();
+        result.append(className).append(":").append(courseName);
         return result.toString();
     }
 }

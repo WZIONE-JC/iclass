@@ -42,9 +42,9 @@ public class ClassCourseController {
      * @return
      */
     @RequestMapping("/save")
-    ServiceResult<ResponseMsg> save(ClassCourse classCourse) {
+    ServiceResult<ResponseMsg> save(ClassCourse classCourse, Integer attendnumber, Integer attendtime) {
 
-        return classCourseService.save(classCourse);
+        return classCourseService.save(classCourse, attendnumber, attendtime);
     }
 
     /**

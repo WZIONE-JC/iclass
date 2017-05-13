@@ -24,7 +24,7 @@
     delete from class_course
     where ClassCourseID = #{classcourseid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.iclass.mybatis.po.ClassCourse" >
+  <insert id="insert" parameterType="com.iclass.mybatis.po.ClassCourse" useGeneratedKeys="true" keyProperty="classcourseid">
     insert into class_course (ClassCourseID, ClassCode, CourseCode,
       CreateTime, DeadLine, Status
       )
@@ -122,5 +122,16 @@
     <include refid="Base_Column_List"/>
     FROM class_course
     where ClassCode = #{classcode,jdbcType=VARCHAR} AND CourseCode = #{coursecode,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectUnselectedClassCourse" resultType="com.iclass.mybatis.po.ClassCourse">
+    select
+    <include refid="Base_Column_List"/>
+    FROM class_course
+    where ClassCourseID NOT IN (
+      SELECT ClassCourseID
+      FROM class_course_student
+      WHERE StudentCode = #{studentcode}
+    )
   </select>
 </mapper>

@@ -11,6 +11,7 @@ import com.iclass.ppt_hw.component.service.api.PPTHWService;
 import com.iclass.user.component.entity.DataTablesRequestEntity;
 import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.utils.CheckDataTables;
+import com.iclass.user.component.utils.IclassUtil;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +19,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * iclass
@@ -48,6 +51,12 @@ public class PPTHWServiceImpl implements PPTHWService {
      */
     @Autowired
     private ClassCourseMapper classCourseMapper;
+
+    /**
+     * 查询课堂的上课时间
+     */
+    @Autowired
+    private ClasscourseattendtimeMapper attendtimeMapping;
 
     /**
      * 根据courseCode 去course表中查询Course实体信息
@@ -85,7 +94,7 @@ public class PPTHWServiceImpl implements PPTHWService {
     @Override
     public ServiceResult<List<ClassCourseDTO>> getPPTInfo(DataTablesRequestEntity requestEntity, String classCreator) {
 
-        return doData(requestEntity, classCreator);
+        return doData(requestEntity, classCreator, 1);
     }
 
     /**
@@ -98,7 +107,7 @@ public class PPTHWServiceImpl implements PPTHWService {
     @Override
     public ServiceResult<List<ClassCourseDTO>> getHWInfo(DataTablesRequestEntity requestEntity, String classCreator) {
 
-        return doData(requestEntity, classCreator);
+        return doData(requestEntity, classCreator, 0);
     }
 
     /**
@@ -111,7 +120,7 @@ public class PPTHWServiceImpl implements PPTHWService {
      * @param classCreator teacherCode
      * @return PPTHWDTO 实体
      */
-    private ServiceResult<List<ClassCourseDTO>> doData(DataTablesRequestEntity requestEntity, String classCreator) {
+    private ServiceResult<List<ClassCourseDTO>> doData(DataTablesRequestEntity requestEntity, String classCreator, Integer fileType) {
         ServiceResult<List<ClassCourseDTO>> serviceResult = new ServiceResult<>();
 
         requestEntity = CheckDataTables.check(requestEntity);
@@ -128,7 +137,6 @@ public class PPTHWServiceImpl implements PPTHWService {
         User user = userMapper.findByUsercode(classCreator);
         String teacherName = user.getUserfullname();
         String role = user.getUserrole();
-        Integer recordsTotal = classMapper.countByClassCreator(classCreator);
         //2.获取课堂信息
         List<Class> classes = classMapper.selectByClassCreator(classCreator, start, length);
         if (classes != null && classes.size() == 0) {
@@ -152,8 +160,29 @@ public class PPTHWServiceImpl implements PPTHWService {
                 String deadline = classCourse.getDeadline();
                 Integer status = classCourse.getStatus();
 
-                String classRoomName = "[" + c.getClassname() + ":" + course.getCoursename() + "]";
+                String classRoomName = c.getClassname() + ":" + course.getCoursename();
                 Integer classCourseId = classCourse.getClasscourseid();
+                // 查询当前课堂的课件数
+                Integer fileCount = iclassfileClassMapper.countByClassCourseIdAndFileType(classCourseId, fileType);
+                // 查询当前课堂有没有文件数据
+                List<Classcourseattendtime> classcourseattendtimeList = attendtimeMapping.selectByClassCourseId(classCourseId);
+                /**
+                 * map存放上课时间的数据
+                 * key: 周几     ccat.getAttendtime()
+                 * value: 1,2,3,4(第几节课)  ccat.getAttendnumber()
+                 */
+                Map<Integer, String> data = new HashMap<>();
+                for(Classcourseattendtime ccat : classcourseattendtimeList) {
+                    // 如果存在这天的记录,就组合
+                    if (data.containsKey(ccat.getAttendtime())) {
+                        String val = data.get(ccat.getAttendtime());
+                        val += "," + ccat.getAttendnumber();
+                        data.put(ccat.getAttendtime(), val);
+                    } else {
+                        data.put(ccat.getAttendtime(), ccat.getAttendnumber()+"");
+                    }
+                }
+                String attendTime = IclassUtil.getAttendTime(data);
                 List<ClassCourseStudent> classCourseStudents = classCourseStudentMapper.selectByClassCourseId(classCourseId);
                 // 如果有学生的话
                 if (classCourseStudents != null && classCourseStudents.size() > 0) {
@@ -163,7 +192,7 @@ public class PPTHWServiceImpl implements PPTHWService {
                         sessionUsers.add(new SessionUser(student));
                     }
                 }
-                ClassCourseDTO classCourseDTO = new ClassCourseDTO(classCourseId, classRoomName, c, course, teacherName, sessionUsers, createTime, deadline, status);
+                ClassCourseDTO classCourseDTO = new ClassCourseDTO(classCourseId, classRoomName, c, course, teacherName, fileCount, sessionUsers, attendTime, createTime, deadline, status);
                 classCourseDTOS.add(classCourseDTO);
             }
         }
@@ -216,6 +245,8 @@ public class PPTHWServiceImpl implements PPTHWService {
         List<IclassfileClass> iclassfileClassList = iclassfileClassMapper.selectByClassCourseId(classCourse.getClasscourseid(), start, length);
         if (iclassfileClassList == null || iclassfileClassList.size() == 0) {
             serviceResult.setMessage("没有找到文件信息");
+            serviceResult.setRecordsFiltered(0);
+            serviceResult.setRecordsTotal(0);
             return serviceResult;
         }
         List<IclassfileDTO> iclassfileList = new ArrayList<>();
@@ -240,6 +271,11 @@ public class PPTHWServiceImpl implements PPTHWService {
         return serviceResult;
     }
 
+    /**
+     * app 端
+     * @param classCourseId
+     * @return
+     */
     @Override
     public ServiceResult<List<IclassfileDTO>> getPPTFileInfo(Integer classCourseId) {
         ServiceResult<List<IclassfileDTO>> serviceResult = new ServiceResult<>();
@@ -259,6 +295,11 @@ public class PPTHWServiceImpl implements PPTHWService {
         return serviceResult;
     }
 
+    /**
+     * app端
+     * @param classCourseId
+     * @return
+     */
     @Override
     public ServiceResult<List<IclassfileDTO>> getHWFileInfo(Integer classCourseId) {
         ServiceResult<List<IclassfileDTO>> serviceResult = new ServiceResult<>();

@@ -16,12 +16,12 @@
 	<link href="assets/css/H-ui.min.css" rel="stylesheet" type="text/css" />
 	<link href="assets/css/H-ui.admin.css" rel="stylesheet" type="text/css" />
 	<link href="skin/default/skin.css" rel="stylesheet" type="text/css" id="skin" />
-	<link href="lib/Hui-iconfont/1.0.1/iconfont.css" rel="stylesheet" type="text/css" />
+	<link href="lib/Hui-iconfont/1.0.8/iconfont.css" rel="stylesheet" type="text/css" />
 	<!--[if IE 6]>
 	<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
 	<script>DD_belatedPNG.fix('*');</script>
 	<![endif]-->
-<title>3D柱状图</title>
+<title>点名统计</title>
 </head>
 <body>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 自动点名 <span class="c-gray en">&gt;</span> 点名统计 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
@@ -35,7 +35,7 @@
 <script type="text/javascript" src="lib/Highcharts/4.1.7/js/highcharts.js"></script>
 <script type="text/javascript" src="lib/Highcharts/4.1.7/js/modules/exporting.js"></script>
 <script type="text/javascript" src="lib/Highcharts/4.1.7/js/highcharts-3d.js"></script>
-<script type="text/javascript">
+<script type="text/javascript" >
 ﻿$(function () {
     // Set up the chart
     var chart = new Highcharts.Chart({
@@ -52,18 +52,49 @@
             }
         },
         title: {
-            text: 'Chart rotation demo'
+            text: '点名统计'
         },
         subtitle: {
-            text: 'Test options by dragging the sliders below'
+            text: '当前班级：计科1302班:计算机组成原理'
+        },
+        credits: {
+            href: "#",
+            text: "www.aiiclass.cn"
         },
         plotOptions: {
             column: {
                 depth: 25
             }
         },
+        yAxis: {
+            min: 0,
+			max: 100,
+            title: {
+                text: '百分比( % )'
+            }
+        },
+        xAxis: {
+            categories: [
+                '一月',
+                '二月',
+                '三月',
+                '四月',
+                '五月',
+                '六月',
+                '七月',
+                '八月',
+                '九月',
+                '十月',
+                '十一月',
+                '十二月'
+            ]
+        },
+        tooltip: {
+            valueSuffix: "%"
+		},
         series: [{
-            data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+            name: '出勤率',
+            data: [98.1, 99.2, 100.0, 99.2, 97.3, 96.2, 99.1, 98.2, 97.1, 97.2, 98.5, 99.6]
         }]
     });
     

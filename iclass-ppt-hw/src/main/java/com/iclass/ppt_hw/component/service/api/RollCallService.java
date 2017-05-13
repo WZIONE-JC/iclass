@@ -1,6 +1,7 @@
 package com.iclass.ppt_hw.component.service.api;
 
 import com.iclass.mybatis.dto.RollCallDTO;
+import com.iclass.mybatis.vo.RollcallVo;
 import com.iclass.user.component.entity.DataTablesRequestEntity;
 import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.msg.ResponseMsg;
@@ -48,4 +49,10 @@ public interface RollCallService {
      */
     ServiceResult<ResponseMsg> signIn(String studentCode, Integer classCourseId, String content);
 
+    /**
+     * 查看当前课堂的点名统计信息
+     * @param classCourseId
+     * @return
+     */
+    ServiceResult<RollcallVo> show(Integer classCourseId);
 }

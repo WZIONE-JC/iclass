@@ -82,4 +82,17 @@
     from iclassfile_class
     where ClassCourseId = #{classcourseid,jdbcType=INTEGER}
   </select>
+
+  <select id="countByClassCourseIdAndFileType" resultType="java.lang.Integer" >
+    SELECT
+    count(*)
+    FROM iclassfile_class
+    WHERE
+    ClassCourseId = #{classcourseid,jdbcType=INTEGER}
+    AND
+    FileCode IN
+    (
+      select FileCode from iclassfiles where Filetype = #{filetype}
+    )
+  </select>
 </mapper>

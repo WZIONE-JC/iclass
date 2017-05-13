@@ -18,16 +18,16 @@ function classCourseTableHandler(formId, url) {
         [
             {
                 orderable: false,
-                data: "classcourseId",
+                data: null,
                 render: function (data, type, row, meta) {
-                    return "<input type='checkbox' value=" + data + " name='classid'>";
+                    return "<span class='label label-default radius orderNum'>" + data + "</span>";
                 }
             },
             {
                 data: "classRoomName",
-                render: function (data, type, row, meta) {
-                    return "<span class='label label-default radius'>" + data + "</span>";
-                }
+                // render: function (data, type, row, meta) {
+                //     return "<span class='label label-default radius'>" + data + "</span>";
+                // }
             },
             {
                 data: "course.coursename",
@@ -46,6 +46,10 @@ function classCourseTableHandler(formId, url) {
                 render: function (data, type, row, meta) {
                     return "<span class='label label-default radius'>" + data + "</span>";
                 }
+            },
+            {
+                data: "attendTime",
+
             },
             {
                 data: "creatTime"
@@ -81,10 +85,10 @@ function classCourseTableHandler(formId, url) {
                 if (col == 2) {
                     $(td).wrapInner("<span style='cursor:pointer' title='查看课程信息' class='label label-success radius' onclick=course_show('" + coursename + "','course-show.html','" + coursecode + "','360','400')></span>");
                 }
-                if (col == 8) {
+                if (col == 9) {
                     $(td).addClass("td-status");
                 }
-                if (col == 9) {
+                if (col == 10) {
                     $(td).addClass("td-manage");
                     if(status == 1) {
                         $(td).html("<a style='text-decoration:none' class='ml-5' title='编辑课堂' onclick=edit('编辑课堂','class-course-update.html','"+id+"','570','400')><i class='Hui-iconfont'>&#xe6df;</i></a> <a style='text-decoration:none' class='ml-5' onClick='stop(this,"+id+")'  title='下架'><i class='Hui-iconfont'>&#xe6de;</i></a>");
@@ -129,7 +133,7 @@ function classCourseTableHandler(formId, url) {
                     return false;
                 }
             },
-            timeout: 5000,
+            timeout: 10000,
             error: function () {
                 swal({
                     title: "Sorry!",
@@ -145,6 +149,7 @@ function classCourseTableHandler(formId, url) {
         "initComplete": function (settings, json) {
         },
         "createdRow": function (row, data, index) {
+            $(row).find(".orderNum").text((index+1));
             $(row).addClass("text-c");
         },
 
@@ -172,7 +177,7 @@ function addClassCourse() {
         type: "post",
         url: ppt_hw_url + "/classcourse/save",
         dataType: "jsonp",
-        timeout: 5000,
+        timeout: 10000,
         data: $("#form-class-course-add").serialize(),
         success: function (responseData) {
             if(responseData.success) {
@@ -211,7 +216,7 @@ function showClassCourse(id) {
         type: "post",
         url: ppt_hw_url + "/classcourse/get/"+id,
         dataType: "jsonp",
-        timeout: 5000,
+        timeout: 10000,
         ansyc: false,
         success: function (responseData) {
             if(responseData.success) {
@@ -253,7 +258,7 @@ function updateClassCourse() {
         type: "post",
         url: ppt_hw_url + "/classcourse/update",
         dataType: "jsonp",
-        timeout: 5000,
+        timeout: 10000,
         ansyc: false,
         data: $("#form-class-course-update").serialize(),
         success: function (responseData) {
@@ -294,7 +299,7 @@ function checkClassCourse() {
         type: "post",
         url: ppt_hw_url + "/classcourse/check",
         dataType: "jsonp",
-        timeout: 5000,
+        timeout: 10000,
         data: $("#form-class-course-update").serialize(),
         success: function (responseData) {
             if(!responseData.success) {

@@ -25,7 +25,7 @@ import java.util.List;
  * Created by JasonTang on 4/14/2017 4:06 PM.
  */
 @Service("classhdService")
-public class ClassdServiceImpl implements ClasshdService {
+public class ClasshdServiceImpl implements ClasshdService {
 
     @Autowired
     private UserMapper userMapper;
@@ -43,51 +43,46 @@ public class ClassdServiceImpl implements ClasshdService {
     private CourseMapper courseMapper;
 
     @Override
-    public ServiceResult<List<ClasshdDTO>> getAll(DataTablesRequestEntity requestEntity, String classhdCreator, Boolean isLimit) {
+    public ServiceResult<List<ClasshdDTO>> getAll(DataTablesRequestEntity requestEntity, String userCode, Boolean isLimit) {
         ServiceResult<List<ClasshdDTO>> serviceResult = new ServiceResult<>();
-        if (StringUtils.isBlank(classhdCreator)) {
+        if (StringUtils.isBlank(userCode)) {
             serviceResult.setMessage("用户未登录");
             return serviceResult;
         }
 
-        User teacher = userMapper.findByUsercode(classhdCreator);
-        if (teacher == null) {
+        User user = userMapper.findByUsercode(userCode);
+        if (user == null) {
             serviceResult.setMessage("您好像还不是我们系统的用户,快去注册吧");
             return serviceResult;
         }
-        String teacherName = teacher.getUserfullname();
-
         requestEntity = CheckDataTables.check(requestEntity);
         Integer draw = requestEntity.getDraw();
         Integer start = requestEntity.getStart();
         Integer length = requestEntity.getLength();
-
+        String teacherName = "";
         //1.获取课堂互动数据
-        List<Classhd> classhds;
-        if (isLimit) {
-            classhds = classhdMapper.selectByClasshdCreator(classhdCreator, start, length);
-        } else {
-            classhds = classhdMapper.selectByClasshdCreatorNolimit(classhdCreator);
+        List<Classhd> classhds = null;
+        if (user.getUserrole().equals("教师")) {
+            teacherName = user.getUserfullname();
+            if (isLimit) {
+                classhds = classhdMapper.selectByClasshdCreator(userCode, start, length);
+            } else {
+                classhds = classhdMapper.selectByClasshdCreatorNolimit(userCode);
+            }
+        } else if (user.getUserrole().equals("学生")) {
+            if (isLimit) {
+                classhds = classhdMapper.selectByStudentCode(userCode, start, length);
+            } else {
+                classhds = classhdMapper.selectByClasshdCreatorNolimit(userCode);
+            }
         }
+
         List<ClasshdDTO> classhdDTOList = new ArrayList<>();
         //2.获取课堂数据
         for (Classhd classhd : classhds) {
-            Integer classcourseId = classhd.getClasscourseid();
-            //2.1根据课堂id获取课堂数据
-            ClassCourse classRoom = classCourseMapper.selectByPrimaryKey(classcourseId);
-            String classCode = classRoom.getClasscode();
-            //2.2获取班级信息
-            Class c = classMapper.selectByClassCode(classCode);
-            String className = c.getClassname();
-            //2.3获取课堂信息
-            String courseCode = classRoom.getCoursecode();
-            Course course = courseMapper.selectByCourseCode(courseCode);
-            String courseName = course.getCoursename();
-            //2.4生成课堂名字
-            String classRoomName = "[" + className + ":" + courseName + "]";
-            classhdDTOList.add(new ClasshdDTO(classhd, classRoom, classRoomName, teacherName));
+            classhdDTOList.add(doData(classhd, classhd.getClasscourseid(), teacherName));
         }
-        Integer count = classhdMapper.countByClasshdCreator(classhdCreator);
+        Integer count = classhdMapper.countByClasshdCreator(userCode);
         serviceResult.setDraw(draw);
         serviceResult.setData(classhdDTOList);
         serviceResult.setRecordsFiltered(classhdDTOList.size());
@@ -204,5 +199,24 @@ public class ClassdServiceImpl implements ClasshdService {
      */
     private Boolean checkAnswer(Classhd classhd, String answer) {
         return classhd.getClasshdanswer().equalsIgnoreCase(answer);
+    }
+
+    /**
+     *  处理数据
+     */
+    public ClasshdDTO doData(Classhd classhd, Integer classcourseId, String teacherName) {
+        //2.1根据课堂id获取课堂数据
+        ClassCourse classRoom = classCourseMapper.selectByPrimaryKey(classcourseId);
+        String classCode = classRoom.getClasscode();
+        //2.2获取班级信息
+        Class c = classMapper.selectByClassCode(classCode);
+        String className = c.getClassname();
+        //2.3获取课堂信息
+        String courseCode = classRoom.getCoursecode();
+        Course course = courseMapper.selectByCourseCode(courseCode);
+        String courseName = course.getCoursename();
+        //2.4生成课堂名字
+        String classRoomName = className + ":" + courseName ;
+        return new ClasshdDTO(classhd, classRoom, classRoomName, teacherName);
     }
 }

@@ -156,6 +156,20 @@
     WHERE ClasshdCreator = #{classhdcreator,jdbcType=VARCHAR} ORDER BY ClasshdID DESC AND ClasshdStatus = 1
   </select>
 
+  <select id="selectByStudentCode" resultType="com.iclass.mybatis.po.Classhd">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM classhd
+    WHERE ClassCourseId IN (SELECT ClassCourseID FROM class_course_student WHERE StudentCode = #{studentcode,jdbcType=VARCHAR}) AND ClasshdStatus = 1 ORDER BY ClasshdID DESC limit #{start}, #{length}
+  </select>
+
+  <select id="selectByStudentCodeNolimit" resultType="com.iclass.mybatis.po.Classhd">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM classhd
+    WHERE ClassCourseId IN (SELECT ClassCourseID FROM class_course_student WHERE StudentCode = #{studentcode,jdbcType=VARCHAR}) ORDER BY ClasshdID DESC AND ClasshdStatus = 1
+  </select>
+
   <select id="countByClasshdCreator" resultType="java.lang.Integer">
     SELECT
     count(*)

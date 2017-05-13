@@ -15,7 +15,7 @@ function getUnrelatedClassByCourseCode(courseCode) {
             "classCreator": teacherCode,
             "courseCode": courseCode
         },
-        timeout: 3000,
+        timeout: 10000,
         success: function (responseData) {
             if (responseData.success) {
                 var classes = responseData.data;
@@ -56,7 +56,7 @@ function getClassByCourseCode(courseCode) {
         data: {
             "courseCode" : courseCode,
         },
-        timeout: 5000,
+        timeout: 10000,
         success: function (responseData) {
             if (responseData.success) {
                 var classes = responseData.data;
@@ -100,7 +100,7 @@ function getClassByCourseCodeNoLimit() {
             "isLimit": false
         },
         async:false,
-        timeout: 5000,
+        timeout: 10000,
         success: function (responseData) {
             if (responseData.success) {
                 var classes = responseData.data;
@@ -147,9 +147,9 @@ function classTableHandler(formId, url) {
         [
             {
                 orderable: false,
-                data: "aClass.classid",
+                data: null,
                 render: function (data, type, row, meta) {
-                    return "<input type='checkbox' value=" + data + " name='classid'>";
+                    return "<span class='label label-default radius orderNum'>" + data + "</span>";
                 }
             },
             {
@@ -247,7 +247,7 @@ function classTableHandler(formId, url) {
                     return false;
                 }
             },
-            timeout: 5000,
+            timeout: 10000,
             error: function () {
                 swal({
                     title: "Sorry!",
@@ -263,6 +263,7 @@ function classTableHandler(formId, url) {
         "initComplete": function (settings, json) {
         },
         "createdRow": function (row, data, index) {
+            $(row).find(".orderNum").text((index+1));
             $(row).addClass("text-c");
         },
 
@@ -291,7 +292,7 @@ function addClass() {
             type: "post",
             url: ppt_hw_url + "/class/save",
             dataType: "jsonp",
-            timeout: 5000,
+            timeout: 10000,
             data: $("#form-class-add").serialize(),
             success: function (responseData) {
                 if(responseData.success) {
@@ -331,7 +332,7 @@ function check() {
             type: "post",
             url: ppt_hw_url + "/class/check/"+classcode,
             dataType: "jsonp",
-            timeout: 5000,
+            timeout: 10000,
             success: function (responseData) {
                 if(!responseData.success) {
                     $("#msg").addClass("error");
@@ -359,7 +360,7 @@ function showClass(url, id) {
         type: "post",
         url: ppt_hw_url + url +id,
         dataType: "jsonp",
-        timeout: 5000,
+        timeout: 10000,
         success: function (responseData) {
             if(responseData.success) {
                 var data = responseData.data;
@@ -406,7 +407,7 @@ function updateClass() {
         type: "put",
         url: ppt_hw_url + "/class/update",
         dataType: "jsonp",
-        timeout: 5000,
+        timeout: 10000,
         data: $("#form-class-update").serialize(),
         success: function (responseData) {
             if(responseData.success) {

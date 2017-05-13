@@ -74,7 +74,7 @@ public class SignUpServiceImpl implements SignUpService {
                 //处理注册日期
                 user.setUserregisterdate(IclassUtil.getDateTimeNow());
 
-                int result = userMapper.insert(user);
+                int result = userMapper.insertSelective(user);
 
                 if (result == 1) {
 
