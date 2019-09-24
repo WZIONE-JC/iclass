@@ -19,4 +19,10 @@ public interface CourseMapper {
     Course selectByCourseCode(@Param("courseCode") String courseCode);
 
     int updateStatusById(@Param("courseid") Integer courseid, int status);
+
+    /**
+     * 查询所有的课堂数据
+     * @return
+     */
+    int countAll();
 }

@@ -60,5 +60,25 @@ public interface ClassMapper {
      */
     Class selectByClassCode(@Param("classcode") String classCode);
 
+    /**
+     * 查询未与课程关联的班级
+     *
+     * @param courseCode
+     * @param classcreator
+     * @return
+     */
     List<Class> selectUnrelatedClassByCourseCode(@Param("coursecode") String courseCode, @Param("classcreator") String classcreator);
+
+    /**
+     *
+     * @param studentCode
+     * @return
+     */
+    Class selectByStudetCode(@Param("studentcode") String studentCode);
+
+    /**
+     * 查询所有的班级
+     * @return
+     */
+    Integer countAll();
 }

@@ -30,7 +30,7 @@ public class SignUpServiceImpl implements SignUpService {
     private final Logger logger = LoggerFactory.getLogger(SignUpServiceImpl.class);
 
     @Autowired
-    UserMapper userMapper;
+    private UserMapper userMapper;
 
     @Autowired
     private ValidateExistService validateExistService;

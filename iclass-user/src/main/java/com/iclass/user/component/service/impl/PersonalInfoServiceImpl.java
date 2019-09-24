@@ -1,6 +1,8 @@
 package com.iclass.user.component.service.impl;
 
+import com.iclass.mybatis.dao.ClassMapper;
 import com.iclass.mybatis.dao.UserMapper;
+import com.iclass.mybatis.po.Class;
 import com.iclass.user.component.entity.DataTablesRequestEntity;
 import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.service.api.PersonalInfoService;
@@ -26,17 +28,28 @@ import java.util.List;
 public class PersonalInfoServiceImpl implements PersonalInfoService {
 
     private final Logger logger = LoggerFactory.getLogger(PersonalInfoServiceImpl.class);
+
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private ClassMapper classMapper;
 
     @Override
     public ServiceResult<SessionUser> getPersonalInfoByUsercode(String usercode) {
         ServiceResult<SessionUser> serviceResult = new ServiceResult<>();
-        SessionUser sessionUser = new SessionUser();
+        SessionUser sessionUser = null;
         if (StringUtils.isNotBlank(usercode)) {
             User user = userMapper.findUserByUsercode(usercode);
             if(user != null) {
-                sessionUser.setUser(user);
+                Class c = classMapper.selectByStudetCode(user.getUsercode());
+                // 如果c不为空,则表示此用户为学生
+                if (c!= null) {
+                    String className = c.getClassname();
+                    sessionUser = new SessionUser(user, className);
+                } else {
+                    sessionUser = new SessionUser(user);
+                }
                 serviceResult.setSuccess(true);
                 serviceResult.setData(sessionUser);
             } else {

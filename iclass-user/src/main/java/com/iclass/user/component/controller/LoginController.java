@@ -38,7 +38,7 @@ public class LoginController {
      * @return 返回消息实体
      */
     @RequestMapping(value = "/login", method = {RequestMethod.POST, RequestMethod.GET})
-    public ServiceResult<ResponseMsg> login(HttpServletRequest request, String userrole, String username,
+    public ServiceResult<ResponseMsg> login(HttpServletRequest request, @RequestParam(required = false) String userrole, String username,
                                             String password, String code, @RequestParam(required = false) String remember) {
         return loginService.login(request, userrole, username, password, code, remember);
     }

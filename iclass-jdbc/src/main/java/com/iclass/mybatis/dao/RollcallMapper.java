@@ -27,4 +27,17 @@ public interface RollcallMapper {
     List<Rollcall> selectByClassCourseIdAndStatus(@Param("classcourseid") Integer classCourseId, @Param("rollcallstatus") int status);
 
     Integer countByClassCourseIdAndStatus(@Param("classcourseid") Integer classCourseId, @Param("rollcallstatus") int status);
+
+    Integer countByTeacherCode(@Param("teachercode") String teacherCode);
+
+    /**
+     * 获取点名数据
+     * @param classCourseId
+     * @param startDay
+     * @param endDay
+     * @return
+     */
+    List<Rollcall> selectByClassCourseIdAndDate(@Param("classcourseid") Integer classCourseId, @Param("startday") String startDay, @Param("endday") String endDay);
+
+    List<Rollcall> selectByClassCourseIdAndStudentCode(@Param("classcourseid") Integer classCourseId, @Param("studentcode") String studentCode);
 }

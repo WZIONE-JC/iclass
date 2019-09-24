@@ -56,7 +56,7 @@ public class PPTHWServiceImpl implements PPTHWService {
      * 查询课堂的上课时间
      */
     @Autowired
-    private ClasscourseattendtimeMapper attendtimeMapping;
+    private ClasscourseattendtimeMapper attendtimeMapper;
 
     /**
      * 根据courseCode 去course表中查询Course实体信息
@@ -92,9 +92,9 @@ public class PPTHWServiceImpl implements PPTHWService {
      * @return PPTHWDTO
      */
     @Override
-    public ServiceResult<List<ClassCourseDTO>> getPPTInfo(DataTablesRequestEntity requestEntity, String classCreator) {
+    public ServiceResult<List<ClassCourseDTO>> getPPTInfo(DataTablesRequestEntity requestEntity, String classCreator, Integer classCourseIdParam) {
 
-        return doData(requestEntity, classCreator, 1);
+        return doData(requestEntity, classCreator, 1, classCourseIdParam);
     }
 
     /**
@@ -105,9 +105,9 @@ public class PPTHWServiceImpl implements PPTHWService {
      * @return PPTHWDTO
      */
     @Override
-    public ServiceResult<List<ClassCourseDTO>> getHWInfo(DataTablesRequestEntity requestEntity, String classCreator) {
+    public ServiceResult<List<ClassCourseDTO>> getHWInfo(DataTablesRequestEntity requestEntity, String classCreator, Integer classCourseIdParam) {
 
-        return doData(requestEntity, classCreator, 0);
+        return doData(requestEntity, classCreator, 0, classCourseIdParam);
     }
 
     /**
@@ -120,7 +120,7 @@ public class PPTHWServiceImpl implements PPTHWService {
      * @param classCreator teacherCode
      * @return PPTHWDTO 实体
      */
-    private ServiceResult<List<ClassCourseDTO>> doData(DataTablesRequestEntity requestEntity, String classCreator, Integer fileType) {
+    private ServiceResult<List<ClassCourseDTO>> doData(DataTablesRequestEntity requestEntity, String classCreator, Integer fileType, Integer classCourseIdParam) {
         ServiceResult<List<ClassCourseDTO>> serviceResult = new ServiceResult<>();
 
         requestEntity = CheckDataTables.check(requestEntity);
@@ -133,74 +133,80 @@ public class PPTHWServiceImpl implements PPTHWService {
             serviceResult.setMessage("用户未登录");
             return serviceResult;
         }
+        Integer total = classCourseMapper.countByClassCreator(classCreator);
         //1.获取教师信息
         User user = userMapper.findByUsercode(classCreator);
         String teacherName = user.getUserfullname();
         String role = user.getUserrole();
         //2.获取课堂信息
-        List<Class> classes = classMapper.selectByClassCreator(classCreator, start, length);
-        if (classes != null && classes.size() == 0) {
+        List<ClassCourse> classCourseList = classCourseMapper.selectByClassCreator(classCreator, start, length);
+        if (classCourseList != null && classCourseList.size() == 0) {
             logger.info(role + " " + teacherName + "还没有创建课堂");
             serviceResult.setMessage(role + " " + teacherName + "还没有创建课堂");
             return serviceResult;
         }
         List<ClassCourseDTO> classCourseDTOS = new ArrayList<>();
         //3.获取课堂的课程信息
-        for (Class c : classes) {
-            String classcode = c.getClasscode();
-
-            //3.1根据classCode查询courseCode
-            List<ClassCourse> classCourses = classCourseMapper.selectByClassCode(classcode);
-            for (ClassCourse classCourse : classCourses) {
-                //4.根据courseCode 获取Course 信息
-                Course course = courseMapper.selectByCourseCode(classCourse.getCoursecode());
-                //5.查询学生数据
-                List<SessionUser> sessionUsers = new ArrayList<>();
-                String createTime = classCourse.getCreatetime();
-                String deadline = classCourse.getDeadline();
-                Integer status = classCourse.getStatus();
-
-                String classRoomName = c.getClassname() + ":" + course.getCoursename();
-                Integer classCourseId = classCourse.getClasscourseid();
-                // 查询当前课堂的课件数
-                Integer fileCount = iclassfileClassMapper.countByClassCourseIdAndFileType(classCourseId, fileType);
-                // 查询当前课堂有没有文件数据
-                List<Classcourseattendtime> classcourseattendtimeList = attendtimeMapping.selectByClassCourseId(classCourseId);
-                /**
-                 * map存放上课时间的数据
-                 * key: 周几     ccat.getAttendtime()
-                 * value: 1,2,3,4(第几节课)  ccat.getAttendnumber()
-                 */
-                Map<Integer, String> data = new HashMap<>();
-                for(Classcourseattendtime ccat : classcourseattendtimeList) {
-                    // 如果存在这天的记录,就组合
-                    if (data.containsKey(ccat.getAttendtime())) {
-                        String val = data.get(ccat.getAttendtime());
-                        val += "," + ccat.getAttendnumber();
-                        data.put(ccat.getAttendtime(), val);
-                    } else {
-                        data.put(ccat.getAttendtime(), ccat.getAttendnumber()+"");
-                    }
-                }
-                String attendTime = IclassUtil.getAttendTime(data);
-                List<ClassCourseStudent> classCourseStudents = classCourseStudentMapper.selectByClassCourseId(classCourseId);
-                // 如果有学生的话
-                if (classCourseStudents != null && classCourseStudents.size() > 0) {
-                    for (ClassCourseStudent cs : classCourseStudents) {
-                        String studentCode = cs.getStudentcode();
-                        User student = userMapper.findUserByUsercode(studentCode);
-                        sessionUsers.add(new SessionUser(student));
-                    }
-                }
-                ClassCourseDTO classCourseDTO = new ClassCourseDTO(classCourseId, classRoomName, c, course, teacherName, fileCount, sessionUsers, attendTime, createTime, deadline, status);
-                classCourseDTOS.add(classCourseDTO);
+        for (ClassCourse classCourse : classCourseList) {
+            // 当classCourseIdParam != 0,表示有筛选了,如果id不匹配就continue
+            if (classCourseIdParam != null && classCourseIdParam != 0 && !classCourseIdParam.equals(classCourse.getClasscourseid())) {
+                continue;
             }
+            String classCode = classCourse.getClasscode();
+            Class c = classMapper.selectByClassCode(classCode);
+            //4.根据courseCode 获取Course 信息
+            Course course = courseMapper.selectByCourseCode(classCourse.getCoursecode());
+            //5.查询学生数据
+            List<SessionUser> sessionUsers = new ArrayList<>();
+            String createTime = classCourse.getCreatetime();
+            String deadline = classCourse.getDeadline();
+            Integer status = classCourse.getStatus();
+
+            String classRoomName = c.getClassname() + ":" + course.getCoursename();
+            Integer classCourseId = classCourse.getClasscourseid();
+            // 查询当前课堂的课件数
+            Integer fileCount = iclassfileClassMapper.countByClassCourseIdAndFileType(classCourseId, fileType);
+            // 查询当前课堂有没有文件数据
+            List<Classcourseattendtime> classcourseattendtimeList = attendtimeMapper.selectByClassCourseId(classCourseId);
+            /**
+             * map存放上课时间的数据
+             * key: 周几     ccat.getAttendtime()
+             * value: 1,2,3,4(第几节课)  ccat.getAttendnumber()
+             */
+            Map<Integer, String> data = new HashMap<>();
+            for(Classcourseattendtime ccat : classcourseattendtimeList) {
+                // 如果存在这天的记录,就组合
+                if (data.containsKey(ccat.getAttendtime())) {
+                    String val = data.get(ccat.getAttendtime());
+                    val += "," + ccat.getAttendnumber();
+                    data.put(ccat.getAttendtime(), val);
+                } else {
+                    data.put(ccat.getAttendtime(), ccat.getAttendnumber()+"");
+                }
+            }
+            String attendTime = IclassUtil.getAttendTime(data);
+            List<ClassCourseStudent> classCourseStudents = classCourseStudentMapper.selectByClassCourseId(classCourseId);
+            // 如果有学生的话
+            if (classCourseStudents != null && classCourseStudents.size() > 0) {
+                for (ClassCourseStudent cs : classCourseStudents) {
+                    String studentCode = cs.getStudentcode();
+                    User student = userMapper.findUserByUsercode(studentCode);
+                    sessionUsers.add(new SessionUser(student));
+                }
+            }
+            ClassCourseDTO classCourseDTO = new ClassCourseDTO(classCourseId, classRoomName, c, course, teacherName, fileCount, sessionUsers, attendTime, createTime, deadline, status);
+            classCourseDTOS.add(classCourseDTO);
         }
         serviceResult.setSuccess(true);
-        serviceResult.setData(classCourseDTOS);
         serviceResult.setDraw(draw);
-        serviceResult.setRecordsTotal(classCourseDTOS.size());
-        serviceResult.setRecordsFiltered(classCourseDTOS.size());
+        serviceResult.setData(classCourseDTOS);
+        //如果没有过滤
+        if (classCourseIdParam != null && classCourseIdParam == 0) {
+            serviceResult.setRecordsFiltered(total);
+        } else {
+            serviceResult.setRecordsFiltered(classCourseDTOS.size());
+        }
+        serviceResult.setRecordsTotal(total);
         logger.info("PPTINFO 信息初始化完成");
         return serviceResult;
     }
@@ -258,7 +264,7 @@ public class PPTHWServiceImpl implements PPTHWService {
                 String teacherName = teacher.getUserfullname();
                 String fileRelativePath = iclassfile.getFilerelativepath();
                 fileRelativePath = fileRelativePath.replace("\\", "/");
-                String url = "www.aiiclass.cn" + "/files/" + fileRelativePath;
+                String url = "http://120.27.4.21:81" + "/files/" + fileRelativePath;
                 iclassfileList.add(new IclassfileDTO(iclassfile, url, teacherName));
             }
         }
@@ -335,7 +341,7 @@ public class PPTHWServiceImpl implements PPTHWService {
                 String teacherName = teacher.getUserfullname();
                 String fileRelativePath = iclassfile.getFilerelativepath();
                 fileRelativePath = fileRelativePath.replace("\\", "/");
-                String url = "www.aiiclass.cn" + "/files/" + fileRelativePath;
+                String url = "http://120.27.4.21:81" + "/files/" + fileRelativePath;
                 iclassfileList.add(new IclassfileDTO(iclassfile, url, teacherName));
             }
         }

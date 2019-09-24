@@ -1,6 +1,7 @@
 /**
  * Created by radishmaster on 15/04/17.
  */
+
 function rollcallTableHandler() {
     var usercode = $(window.parent.document).find('#usercode')[0].value;
     if ( usercode == null ) {
@@ -31,6 +32,9 @@ function rollcallTableHandler() {
             },
             {
                 data: "student.user.userfullname"
+            },
+            {
+                data: "className"
             },
             {
                 data: "teacherName",
@@ -66,13 +70,16 @@ function rollcallTableHandler() {
                 var id = rowData.rollcall.rollcallid;
                 var studentName = rowData.student.user.userfullname;
                 var studentCode = rowData.student.user.usercode;
+                if (col == 1) {
+                    $(td).css("text-align", "left");
+                }
                 if (col == 2) {
                     $(td).wrapInner("<span style='cursor:pointer' title='查看个人信息' class='label label-success radius' onclick=show('"+studentName+"','user-show.html','"+studentCode+"','360','400')></span>");
                 }
-                if (col == 6) {
+                if (col == 7) {
                     $(td).addClass("td-status");
                 }
-                if (col == 7) {
+                if (col == 8) {
                     $(td).addClass("td-manage");
                     $(td).html(" <a style='text-decoration:none' class='ml-5' onClick='delClasshd("+id+")' title='删除'><i class='Hui-iconfont'>&#xe6e2;</i></a>");
                 }
@@ -91,13 +98,16 @@ function rollcallTableHandler() {
         bStateSave: true,//状态保存
         autoWidth: true,
         columnDefs: columnDefs,
+        destroy: true, //每次请求都销毁列表
         ajax: {
             url: ppt_hw_url + "/rollcall/getAll",
             dataType: "jsonp",
             data: {
                 "teacherCode": usercode,
+                "classCourseId": $("#classcourse").val()
             },
             dataSrc: function (result) {
+                // console.log($("#classcourse").val());
                 if (result.success) {
                     //显示总数
                     $("#totalRecord").text(result.recordsFiltered);
@@ -124,6 +134,7 @@ function rollcallTableHandler() {
         },
         columns: colmuns,
         "preDrawCallback": function () {
+            $(".dataTables_filter").hide();
         },
         "initComplete": function (settings, json) {
         },

@@ -11,7 +11,9 @@ function getCourseByTeacherCode() {
         jsonp: "callback",
         url: ppt_hw_url + "/course/get",
         data: {
-          "teacherCode" : teacherCode
+          "teacherCode" : teacherCode,
+            "start": 0,
+            "length": 1000
         },
         timeout: 10000,
         success: function (responseData) {
@@ -137,7 +139,7 @@ function classTableHandler(formId, url, fileType) {
 
     var columnDefs =
         [{
-            targets: [2, 3, 5, -2, -1],
+            targets: [1, 2, 3, 5, -2, -1],
             "createdCell": function (td, cellData, rowData, row, col) {
                 var classcode = rowData.aClass.classcode;
                 var classname = rowData.aClass.classname;
@@ -146,6 +148,9 @@ function classTableHandler(formId, url, fileType) {
                 var id = rowData.classcourseId;
                 var fileCount = rowData.fileCount;
                 var status = rowData.status;
+                if (col == 1) {
+                    $(td).css("text-align", "left");
+                }
                 if (col == 2) {
                     if (fileType == 0) {
                         $(td).wrapInner("<span style='cursor:pointer' title='查看班级信息' class='label label-secondary radius' onclick=class_show('" + classname + "','class-show.html','" + classcode + "','360','400')></span>");
@@ -208,12 +213,14 @@ function classTableHandler(formId, url, fileType) {
         bStateSave: true,//状态保存
         autoWidth: true,
         columnDefs: columnDefs,
+        destroy: true, //每次请求都销毁列表
         ajax: {
             url: ppt_hw_url + url,
             dataType: "jsonp",
             data: {
                 "classCreator": usercode,
-                "fileType": fileType
+                "fileType": fileType,
+                "classCourseId": $("#classcourse").val()
             },
             dataSrc: function (result) {
                 if (result.success) {
@@ -230,7 +237,7 @@ function classTableHandler(formId, url, fileType) {
                     return false;
                 }
             },
-            timeout: 10000,
+            timeout: 5000,
             error: function () {
                 swal({
                     title: "Sorry!",
@@ -243,6 +250,7 @@ function classTableHandler(formId, url, fileType) {
         },
         columns: columns,
         "preDrawCallback": function () {
+            $(".dataTables_filter").hide();
             // alert("2");
         },
         "initComplete": function (settings, json) {
@@ -409,6 +417,7 @@ function fileTableHandler(classCode, courseCode, fileType) {
         "preDrawCallback": function () {
         },
         "initComplete": function (settings, json) {
+            $(".dataTables_filter").hide();
         },
         "createdRow": function (row, data, index) {
             //http://datatables.club/reference/option/createdRow.html

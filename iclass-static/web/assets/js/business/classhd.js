@@ -54,10 +54,16 @@ function classhdTableHandler() {
                 }
             },
             {
+                data: "studentNum",
+                render: function (data, type, row, meta) {
+                    return "<span class='label label-default radius'>" + data + "</span>";
+                }
+            },
+            {
                 data: "classhd.classhdstatus",
                 render: function (data, type, row, meta) {
                     if (data == 0) {
-                        return "<span class='label label-default radius' title='已下架'>已下架</span>";
+                        return "<span class='label label-default radius' title='已关闭'>已关闭</span>";
                     } else if (data == 1) {
                         return "<span class='label label-success radius' title='已发布'>已发布</span>";
                     }
@@ -82,13 +88,13 @@ function classhdTableHandler() {
                 // if (col == 1) {
                 //     $(td).wrapInner("<span style='cursor:pointer' title='查看课堂信息' class='label label-default radius' onclick=show('" + classRoomName + "','classhd-show.html','" + classroomid + "','360','400')></span>");
                 // }
-                if (col == 8) {
+                if (col == 9) {
                     $(td).addClass("td-status");
                 }
-                if (col == 9) {
+                if (col == 10) {
                     $(td).addClass("td-manage");
                     if(status == 1) {
-                        $(td).html("<a style='text-decoration:none' class='ml-5' title='编辑' onclick=edit('编辑','classhd-update.html','"+id+"','570','400')><i class='Hui-iconfont'>&#xe6df;</i></a> <a style='text-decoration:none' class='ml-5' onClick='delClasshd("+id+")' title='删除'><i class='Hui-iconfont'>&#xe6e2;</i></a> <a style='text-decoration:none' class='ml-5' onClick='stop(this,"+id+")'  title='下架'><i class='Hui-iconfont'>&#xe6de;</i></a>");
+                        $(td).html("<a style='text-decoration:none' class='ml-5' title='编辑' onclick=edit('编辑','classhd-update.html','"+id+"','570','400')><i class='Hui-iconfont'>&#xe6df;</i></a> <a style='text-decoration:none' class='ml-5' onClick='delClasshd("+id+")' title='删除'><i class='Hui-iconfont'>&#xe6e2;</i></a> <a style='text-decoration:none' class='ml-5' onClick='stop(this,"+id+")'  title='关闭'><i class='Hui-iconfont'>&#xe6de;</i></a>");
                     } else if(status == 0) {
                         $(td).html("<a style='text-decoration:none' class='ml-5' title='编辑' onclick=edit('编辑','classhd-update.html','"+id+"','570','400')><i class='Hui-iconfont'>&#xe6df;</i></a> <a style='text-decoration:none' class='ml-5' onClick='delClasshd("+id+")' title='删除'><i class='Hui-iconfont'>&#xe6e2;</i></a> <a style='text-decoration:none' class='ml-5' onClick='start(this,"+id+")' title='发布'><i class='Hui-iconfont'>&#xe603;</i></a>");
                     }
@@ -108,11 +114,13 @@ function classhdTableHandler() {
         bStateSave: true,//状态保存
         autoWidth: true,
         columnDefs: columnDefs,
+        destroy: true, //每次请求都销毁列表
         ajax: {
             url: ppt_hw_url + "/classhd/getAll",
             dataType: "jsonp",
             data: {
                 "userCode": usercode,
+                "classCourseId": $("#classcourse").val()
             },
             dataSrc: function (result) {
                 if (result.success) {
@@ -141,6 +149,7 @@ function classhdTableHandler() {
         },
         columns: colmuns,
         "preDrawCallback": function () {
+            $(".dataTables_filter").hide();
         },
         "initComplete": function (settings, json) {
         },

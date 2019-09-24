@@ -9,6 +9,7 @@ import com.iclass.user.component.entity.ServiceResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -26,15 +27,15 @@ public class PPTHWContorller {
     private PPTHWService ppthwService;
 
     @RequestMapping(value = "/getPPTInfo",method = {RequestMethod.POST, RequestMethod.GET})
-    public ServiceResult<List<ClassCourseDTO>> getPPTInfo(DataTablesRequestEntity requestEntity, String classCreator) {
+    public ServiceResult<List<ClassCourseDTO>> getPPTInfo(DataTablesRequestEntity requestEntity, String classCreator, @RequestParam(required = false) Integer classCourseId) {
 
-        return ppthwService.getPPTInfo(requestEntity, classCreator);
+        return ppthwService.getPPTInfo(requestEntity, classCreator, classCourseId);
     }
 
     @RequestMapping(value = "/getHWInfo",method = {RequestMethod.POST, RequestMethod.GET})
-    public ServiceResult<List<ClassCourseDTO>> getHWInfo(DataTablesRequestEntity requestEntity, String classCreator) {
+    public ServiceResult<List<ClassCourseDTO>> getHWInfo(DataTablesRequestEntity requestEntity, String classCreator, @RequestParam(required = false) Integer classCourseId) {
 
-        return ppthwService.getHWInfo(requestEntity, classCreator);
+        return ppthwService.getHWInfo(requestEntity, classCreator, classCourseId);
     }
 
     @RequestMapping(value = "/getPPTFileInfo", method = {RequestMethod.POST, RequestMethod.GET})

@@ -138,4 +138,32 @@
     WHERE ClassCourseId = #{classcourseid,jdbcType=INTEGER}
     AND RollCallStatus = #{rollcallstatus,jdbcType=INTEGER}
   </select>
+
+  <select id="countByTeacherCode" resultType="java.lang.Integer" >
+    SELECT
+    count(*)
+    FROM rollcall
+    WHERE
+    TeacherCode = #{teachercode,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByClassCourseIdAndDate" resultType="com.iclass.mybatis.po.Rollcall" >
+    SELECT
+    <include refid="Base_Column_List" />
+    from rollcall
+    WHERE
+    ClassCourseId = #{classcourseid,jdbcType=INTEGER}
+    AND
+    RollCallTime >= #{startday} AND RollCallTime &lt; #{endday}
+  </select>
+
+  <select id="selectByClassCourseIdAndStudentCode" resultType="com.iclass.mybatis.po.Rollcall" >
+    SELECT
+    <include refid="Base_Column_List" />
+    from rollcall
+    WHERE
+    ClassCourseId = #{classcourseid,jdbcType=INTEGER}
+    AND
+    StudentCode = #{studentcode,jdbcType=VARCHAR}
+  </select>
 </mapper>

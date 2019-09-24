@@ -2,6 +2,7 @@ package com.iclass.ppt_hw.component.service.impl;
 
 import com.iclass.mybatis.dao.ClassCourseMapper;
 import com.iclass.mybatis.dao.ClassMapper;
+import com.iclass.mybatis.dao.StudentClassMapper;
 import com.iclass.mybatis.dao.UserMapper;
 import com.iclass.mybatis.dto.ClassDTO;
 import com.iclass.mybatis.po.Class;
@@ -41,6 +42,9 @@ public class ClassServiceImpl implements ClassService {
 
     @Autowired
     private ClassCourseMapper classCourseMapper;
+
+    @Autowired
+    private StudentClassMapper studentClassMapper;
 
     /**
      *
@@ -103,7 +107,9 @@ public class ClassServiceImpl implements ClassService {
             List<ClassDTO> classDTOS = new ArrayList<>();
 
             for(Class c : classes) {
-                classDTOS.add(new ClassDTO(c, teacherName));
+                String classCode = c.getClasscode();
+                Integer studentNum = studentClassMapper.countByClassCode(classCode);
+                classDTOS.add(new ClassDTO(c, teacherName, studentNum));
             }
 
             Integer recordsTotal = classMapper.countByClassCreator(classCreator);
@@ -138,7 +144,7 @@ public class ClassServiceImpl implements ClassService {
                 Class c = classMapper.selectByClassCode(classCourse.getClasscode());
                 classes.add(c);
             }
-            if (classes != null && classes.size() > 0) {
+            if (classes.size() > 0) {
                for (Class c : classes) {
                    classDTOS.add(new ClassDTO(c));
                }

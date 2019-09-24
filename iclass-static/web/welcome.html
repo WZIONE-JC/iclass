@@ -19,6 +19,7 @@
   <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
   <script>DD_belatedPNG.fix('*');</script>
   <![endif]-->
+  <link href="lib/sweetalert-1.1.1/sweetalert.css" rel="stylesheet" type="text/css" />
 <title>我的桌面</title>
 </head>
 <body>
@@ -30,12 +31,13 @@
 
     <thead>
       <tr>
-        <th colspan="7" scope="col">信息统计</th>
+        <th colspan="7" scope="col">信息统计(您当前拥有的信息)</th>
       </tr>
       <tr class="text-c">
         <th>统计</th>
         <th>课堂</th>
-        <th>学生</th>
+        <th>班级</th>
+        <th>课堂</th>
         <th>PPT</th>
         <th>作业</th>
       </tr>
@@ -43,10 +45,11 @@
     <tbody>
       <tr class="text-c">
         <td>总数</td>
-        <td>2</td>
-        <td>9</td>
-        <td>0</td>
-        <td>8</td>
+        <td > <span id="classCourseNum" class="label radius">0</span></td>
+        <td > <span id="classNum" class="label radius">0</span></td>
+        <td > <span id="courseNum" class="label radius">0</span></td>
+        <td > <span id="pptNum" class="label radius">0</span></td>
+        <td > <span id="hwNum" class="label radius">0</span></td>
       </tr>
     </tbody>
   </table>
@@ -161,6 +164,8 @@
 </footer>
 <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="assets/js/H-ui.js"></script>
-
+<script type="text/javascript" src="assets/js/business/ip.js"></script>
+<script type="text/javascript" src="assets/js/business/welcome.js"></script>
+<script type="text/javascript" src="lib/sweetalert-1.1.1/sweetalert.min.js"></script>
 </body>
 </html>

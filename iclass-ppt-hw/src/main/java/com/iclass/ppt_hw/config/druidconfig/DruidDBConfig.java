@@ -7,6 +7,9 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * druid 配置
+ */
 @Configuration
 public class DruidDBConfig {
 
@@ -56,4 +59,4 @@ public class DruidDBConfig {
         return filterRegistrationBean;
 
     }
-}  
+}

@@ -21,4 +21,5 @@ public interface TeacherCourseMapper {
     List<TeacherCourse> selectByTeacherCode(@Param("teachercode") String teacherCode, @Param("start") Integer start, @Param("length") Integer length);
 
     int countByTeacherCode(@Param("teachercode") String teacherCode);
+
 }

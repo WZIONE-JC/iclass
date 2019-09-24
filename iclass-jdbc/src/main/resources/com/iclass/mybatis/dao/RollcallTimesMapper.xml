@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.iclass.mybatis.dao.RollcallTimesMapper" >
+  <resultMap id="BaseResultMap" type="com.iclass.mybatis.po.RollcallTimes" >
+    <constructor >
+      <idArg column="RollCallTimesId" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="ClassCourseId" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="TeacherCode" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="RollCallDate" jdbcType="DATE" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    RollCallTimesId, ClassCourseId, TeacherCode, RollCallDate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from rollcall_times
+    where RollCallTimesId = #{rollcalltimesid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from rollcall_times
+    where RollCallTimesId = #{rollcalltimesid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.iclass.mybatis.po.RollcallTimes" >
+    insert into rollcall_times (RollCallTimesId, ClassCourseId, TeacherCode, 
+      RollCallDate)
+    values (#{rollcalltimesid,jdbcType=INTEGER}, #{classcourseid,jdbcType=INTEGER}, #{teachercode,jdbcType=VARCHAR}, 
+      #{rollcalldate,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.iclass.mybatis.po.RollcallTimes" >
+    insert into rollcall_times
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rollcalltimesid != null" >
+        RollCallTimesId,
+      </if>
+      <if test="classcourseid != null" >
+        ClassCourseId,
+      </if>
+      <if test="teachercode != null" >
+        TeacherCode,
+      </if>
+      <if test="rollcalldate != null" >
+        RollCallDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rollcalltimesid != null" >
+        #{rollcalltimesid,jdbcType=INTEGER},
+      </if>
+      <if test="classcourseid != null" >
+        #{classcourseid,jdbcType=INTEGER},
+      </if>
+      <if test="teachercode != null" >
+        #{teachercode,jdbcType=VARCHAR},
+      </if>
+      <if test="rollcalldate != null" >
+        #{rollcalldate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.iclass.mybatis.po.RollcallTimes" >
+    update rollcall_times
+    <set >
+      <if test="classcourseid != null" >
+        ClassCourseId = #{classcourseid,jdbcType=INTEGER},
+      </if>
+      <if test="teachercode != null" >
+        TeacherCode = #{teachercode,jdbcType=VARCHAR},
+      </if>
+      <if test="rollcalldate != null" >
+        RollCallDate = #{rollcalldate,jdbcType=DATE},
+      </if>
+    </set>
+    where RollCallTimesId = #{rollcalltimesid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.iclass.mybatis.po.RollcallTimes" >
+    update rollcall_times
+    set ClassCourseId = #{classcourseid,jdbcType=INTEGER},
+      TeacherCode = #{teachercode,jdbcType=VARCHAR},
+      RollCallDate = #{rollcalldate,jdbcType=DATE}
+    where RollCallTimesId = #{rollcalltimesid,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByTeacherCodeAndClassCourseId" resultType="com.iclass.mybatis.po.RollcallTimes" >
+    select
+    <include refid="Base_Column_List" />
+    from rollcall_times
+    where
+      ClassCourseId = #{classcourseid,jdbcType=INTEGER}
+    AND
+      TeacherCode = #{teachercode,jdbcType=VARCHAR}
+  </select>
+
+
+  <select id="selectByClassCoureId" resultType="com.iclass.mybatis.po.Rollcall" >
+    SELECT
+    <include refid="Base_Column_List" />
+    from rollcall_times
+    WHERE
+    ClassCourseId = #{classcourseid,jdbcType=INTEGER}
+  </select>
+</mapper>

@@ -24,15 +24,23 @@ public interface FeedBackService {
      * @param isLimit app端不需要分页
      * @return
      */
-    ServiceResult<List<FeedBackDTO>> getAll(DataTablesRequestEntity requestEntity, String userCode, Integer parentId, Boolean isLimit);
+    ServiceResult<List<FeedBackDTO>> getAll(DataTablesRequestEntity requestEntity, String userCode, Integer parentId, Boolean isLimit, Integer classCourseId);
 
     /**
-     * 保存或者回复 问题
+     * 发布 问题
      *
      * @param feedback
      * @return
      */
     ServiceResult<ResponseMsg> save(Feedback feedback);
+
+    /**
+     * 回复问题（教师）
+     * @param feedback
+     * parentid、content、feedbackcode
+     * @return
+     */
+    ServiceResult<ResponseMsg> reply(Feedback feedback);
 
     /**
      * 修改问题 或者 修改他的状态

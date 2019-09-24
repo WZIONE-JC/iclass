@@ -43,6 +43,9 @@ function logTableHandler(formId, url) {
             },
             {
                 data: "method",
+                // render: function (data) {
+                //     return "<span class='hidetext'>" + data + "</span>";
+                // }
             },
             {
                 data: "args",
@@ -55,7 +58,8 @@ function logTableHandler(formId, url) {
             },
             {
                 data: null,
-                orderable: false,
+                width: "5%",
+                orderable: false
             }];
 
     var columnDefs =
@@ -117,6 +121,7 @@ function logTableHandler(formId, url) {
         },
         columns: colmuns,
         "preDrawCallback": function () {
+            $(".dataTables_filter").hide();
         },
         "initComplete": function (settings, json) {
         },

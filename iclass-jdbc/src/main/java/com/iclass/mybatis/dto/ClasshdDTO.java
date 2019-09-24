@@ -18,13 +18,16 @@ public class ClasshdDTO {
 
     private String teacherName;
 
+    private Integer studentNum;
+
     public ClasshdDTO() {}
 
-    public ClasshdDTO(Classhd classhd, ClassCourse classRoom, String classRoomName, String teacherName) {
+    public ClasshdDTO(Classhd classhd, ClassCourse classRoom, String classRoomName, String teacherName, Integer studentNum) {
         this.classhd = classhd;
         this.classRoom = classRoom;
         this.classRoomName = classRoomName;
         this.teacherName = teacherName;
+        this.studentNum = studentNum;
     }
 
     public Classhd getClasshd() {
@@ -59,6 +62,14 @@ public class ClasshdDTO {
         this.teacherName = teacherName;
     }
 
+    public Integer getStudentNum() {
+        return studentNum;
+    }
+
+    public void setStudentNum(Integer studentNum) {
+        this.studentNum = studentNum;
+    }
+
     @Override
     public String toString() {
         return "ClasshdDTO{" +
@@ -66,6 +77,7 @@ public class ClasshdDTO {
                 ", classRoom=" + classRoom +
                 ", classRoomName='" + classRoomName + '\'' +
                 ", teacherName='" + teacherName + '\'' +
+                ", studentNum=" + studentNum +
                 '}';
     }
 }

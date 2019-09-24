@@ -28,10 +28,11 @@
 <body>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 系统管理 <span class="c-gray en">&gt;</span> 系统日志 <a class="btn btn-success radius r mr-20" id="btn-refresh" style="line-height:1.6em;margin-top:3px" href="#" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="pd-20">
-  <div class="text-c"> 日期范围：
-    <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}'})" id="logmin" class="input-text Wdate" style="width:120px;">
-    -
-    <input type="text" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'logmin\')}'})" id="logmax" class="input-text Wdate" style="width:120px;">
+  <div class="text-c">
+    <!--日期范围：-->
+    <!--<input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}'})" id="logmin" class="input-text Wdate" style="width:120px;">-->
+    <!-- - -->
+    <!--<input type="text" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'logmin\')}'})" id="logmax" class="input-text Wdate" style="width:120px;">-->
     <button name="" id="" class="btn btn-success radius" type="submit"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
   </div>
   <div class="cl pd-5 bg-1 bk-gray mt-10"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-default radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a></span> <span class="r total-record">共有数据：<strong id="totalRecord">0</strong> 条</span> </div>
@@ -42,7 +43,7 @@
           <th width="3%">ID</th>
           <th width="10%">IP</th>
           <th width="10%">设备</th>
-          <th width="10%">Http请求</th>
+          <th width="12%">Http请求</th>
           <th width="10%">操作</th>
           <th width="10%">方法</th>
           <th width="10%">参数</th>

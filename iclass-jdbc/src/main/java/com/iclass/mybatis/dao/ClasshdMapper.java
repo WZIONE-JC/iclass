@@ -31,4 +31,11 @@ public interface ClasshdMapper {
     int updateRightNumber(@Param("classhdid") Integer classhdId);
 
     int updateStatus(@Param("classhdid") Integer classhdId, @Param("classhdstatus") int classhdStatus);
+
+    /**
+     * 按照课堂id获取所有的互动题目
+     * @param classCourseId
+     * @return
+     */
+    List<Classhd> selectByClassCourseId(@Param("classcourseid") Integer classCourseId);
 }

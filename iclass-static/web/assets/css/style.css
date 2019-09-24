@@ -102,3 +102,15 @@ select {
     width: 50%;
     float: left;
 }
+
+.hidetext {
+    white-space:nowrap; /*强制不换行*/
+    overflow:hidden; /*自动隐藏文字*/
+    text-overflow: ellipsis; /*文字隐藏后添加省略号*/
+}
+
+.reply-content {
+    width: 100%;
+    height: 140px;
+    margin-top: 10px;
+}

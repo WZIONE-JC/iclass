@@ -63,6 +63,7 @@ public class VerificationCodeImpl implements VerificationCode {
             buffer.append(ch[index]);
         }
         verificationCode = buffer.toString();
+        logger.info("生成的验证码:" + verificationCode + "sessionId:" + session.getId());
         session.setAttribute("verificationCode", verificationCode);
         try {
             ImageIO.write(bi, "JPG", response.getOutputStream());

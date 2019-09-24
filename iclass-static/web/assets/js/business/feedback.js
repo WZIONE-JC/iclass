@@ -82,11 +82,10 @@ function feedbackTableHandler(formId, url) {
                 }
                 if (col == 8) {
                     $(td).addClass("td-manage");
-                    $(td).html("<a style='text-decoration:none' class='ml-5' title='修改状态' onclick=edit('修改状态','feedback-update.html','"+ id +"','400','400')><i class='Hui-iconfont'>&#xe6df;</i></a> ");
+                    $(td).html("<a style='text-decoration:none' class='ml-5' title='修改状态' onclick=edit('修改状态','feedback-update.html','"+ id +"','400','400')><i class='Hui-iconfont'>&#xe6b3;</i></a> <a style='text-decoration:none' class='ml-5' title='回复' onclick=edit('回复','feedback-reply.html','"+ id +"','400','400')><i class='Hui-iconfont'>&#xe70c;</i></a>");
                 }
             }
-        }
-        ];
+        }];
 
     var table = $(formId).dataTable({
         // processing: true,
@@ -100,11 +99,13 @@ function feedbackTableHandler(formId, url) {
         bStateSave: true,//状态保存
         autoWidth: true,
         columnDefs: columnDefs,
+        destroy: true, //每次请求都销毁列表
         ajax: {
             url: ppt_hw_url + url,
             dataType: "jsonp",
             data: {
                 "userCode": usercode,
+                "classCourseId": $("#classcourse").val(),
                 "isLimit": true
             },
             dataSrc: function (result) {
@@ -134,6 +135,9 @@ function feedbackTableHandler(formId, url) {
             }
         },
         columns: colmuns,
+        "preDrawCallback": function () {
+            $(".dataTables_filter").hide();
+        },
         "createdRow": function (row, data, index) {
             $(row).find(".orderNum").text((index+1));
             $(row).addClass("text-c");
@@ -182,9 +186,6 @@ function feedbackShowTableHandler(formId, url, parentId) {
             },
             {
                 data: "classRoomName",
-            },
-            {
-                data: "feedback.title",
             },
             {
                 data: "feedback.content",
@@ -312,7 +313,7 @@ function updateStatus() {
     });
 }
 
-function getStatus(id) {
+function get(id) {
     $.ajax({
         type: "post",
         url: ppt_hw_url + "/feedback/get/" + id,
@@ -326,6 +327,49 @@ function getStatus(id) {
                         $(this).attr("selected", "true");
                     }
                 });
+                $("#title").text(data.title);
+                $("#content").text(data.content);
+                var usercode = $(window.parent.document).find('#usercode')[0].value;
+                $("#teacherCode").val(usercode);
+            } else {
+                swal({
+                    title: "Sorry!",
+                    text:  responseData.message,
+                    timer: 2000,
+                    type: "error"
+                });
+            }
+        },
+        error: function () {
+            swal({
+                title: "Sorry!",
+                text: "网络忙,请稍后再试",
+                timer: 2000,
+                type: "error"
+            });
+        }
+    });
+}
+
+function reply(form) {
+    $.ajax({
+        type: "post",
+        url: ppt_hw_url + "/feedback/reply",
+        dataType: "jsonp",
+        timeout: 10000,
+        data: form.serialize(),
+        success: function (responseData) {
+            if(responseData.success) {
+                swal({
+                    title: "Good Job!",
+                    text:  "发表成功!",
+                    timer: 2000,
+                    type: "success"
+                }, function () {
+                    $(window.parent.document).find('#btn-refresh')[0].click();
+                    $("#cancelButton").click();
+                });
+
             } else {
                 swal({
                     title: "Sorry!",

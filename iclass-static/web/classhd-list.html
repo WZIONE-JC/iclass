@@ -29,12 +29,16 @@
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 课堂互动 <span class="c-gray en">&gt;</span> 互动题目浏览 <a id="btn-refresh" class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="pd-20">
 	<div class="text-c">
-		日期范围：
-		<input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}'})" id="logmin" class="input-text Wdate" style="width:120px;">
-		-
-		<input type="text" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'logmin\')}'})" id="logmax" class="input-text Wdate" style="width:120px;">
-		<input type="text" name="" id="" placeholder=" 输入课堂" style="width:250px" class="input-text">
-		<button name="" id="" class="btn btn-success radius" type="submit"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
+		<!--日期范围：-->
+		<!--<input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}'})" id="logmin" class="input-text Wdate" style="width:120px;">-->
+		<!-- - -->
+		<!--<input type="text" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'logmin\')}'})" id="logmax" class="input-text Wdate" style="width:120px;">-->
+		<span class="select-box inline">
+			<select id="classcourse" name="classcourse" class="select" >
+				<option value="0">全部课堂</option>
+			</select>
+      	</span>
+		<button name="" id="searchBtn" class="btn btn-success radius" type="submit"><i class="Hui-iconfont">&#xe665;</i> 查询</button>
 	</div>
 	<div class="cl pd-5 bg-1 bk-gray mt-10"> <span class="l"> <a class="btn btn-secondary radius" onclick="addDialog('互动题目准备', 'classhd-add.html', 570, 500)" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加题目</a></span> <span class="r total-record">共有数据：<strong id="totalRecord">0</strong> 条</span> </div>
 	<div class="mt-10">
@@ -43,15 +47,16 @@
 			<thead>
 				<tr class="text-c">
 					<th width="3%">序号</th>
-					<th width="15%">课堂名称</th>
+					<th width="10%">课堂名称</th>
                     <th width="15%">互动题目</th>
                     <th width="15%">互动选项</th>
-					<th width="10%">互动答案</th>
-					<th width="8%">创建者</th>
+					<th width="7%">互动答案</th>
+					<th width="5%">创建者</th>
 			 		<th width="10%">发布时间</th>
-					<th width="5%">做对人数</th>
+					<th width="7%">做对人数</th>
+					<th width="5%">总人数</th>
 					<th width="5%">状态</th>
-					<th width="5%">操作</th>
+					<th width="6%">操作</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -70,9 +75,15 @@
 <script type="text/javascript" src="assets/js/business/ip.js"></script>
 <script type="text/javascript" src="assets/js/business/action.js"></script>
 <script type="text/javascript" src="assets/js/business/classhd.js"></script>
+<script type="text/javascript" src="assets/js/business/class-course.js"></script>
 <script type="text/javascript">
 	$(function () {
-       var table = classhdTableHandler();
+	    //获取课堂数据
+	    getClassCourseInfo();
+        $("#searchBtn").click(function () {
+            classhdTableHandler();
+        });
+        var table = classhdTableHandler();
         $("#btn-refresh").on("click",function () {
             table.api().ajax.reload();
         });

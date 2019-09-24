@@ -21,6 +21,7 @@
         <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
         <script>DD_belatedPNG.fix('*');</script>
         <![endif]-->
+        <link href="lib/sweetalert-1.1.1/sweetalert.css" rel="stylesheet" type="text/css" />
 	</head>
 	<body>
     <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 课堂互动 <span class="c-gray en">&gt;</span> 课堂互动统计 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
@@ -28,283 +29,22 @@
         <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
     </div>
 	</body>
-    <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
-    <script type="text/javascript" src="lib/layer/1.9.3/layer.js"></script>
-    <script type="text/javascript" src="assets/js/H-ui.js"></script>
-    <script type="text/javascript" src="lib/Highcharts/4.1.7/js/highcharts.js"></script>
-    <script type="text/javascript" src="assets/js/H-ui.admin.js"></script>
-    <script type="text/javascript" src="lib/Highcharts/4.1.7/js/modules/exporting.js"></script>
-    <script src="lib/Highcharts/4.1.7/js/modules/data.js"></script>
-    <script src="lib/Highcharts/4.1.7/js/modules/drilldown.js"></script>
-    <script type="text/javascript">
+<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="lib/layer/1.9.3/layer.js"></script>
+<script type="text/javascript" src="assets/js/H-ui.js"></script>
+<script type="text/javascript" src="lib/Highcharts/5.0.10/js/highcharts.js"></script>
+<script type="text/javascript" src="assets/js/H-ui.admin.js"></script>
+<script type="text/javascript" src="lib/Highcharts/5.0.10/js/modules/exporting.js"></script>
+<script type="text/javascript" src="lib/Highcharts/5.0.10/js/modules/data.js"></script>
+<script type="text/javascript" src="lib/Highcharts/5.0.10/js/modules/drilldown.js"></script>
+<script type="text/javascript" src="assets/js/business/ip.js"></script>
+<script type="text/javascript" src="lib/sweetalert-1.1.1/sweetalert.min.js"></script>
+<script type="text/javascript" src="assets/js/business/chart-classhd.js"></script>
+<script type="text/javascript">
+    $(function () {
+        // 初始化图表
+        init_chart();
+    })
+</script>
 
-        $(function () {
-            // Create the chart
-            $('#container').highcharts({
-                chart: {
-                    type: 'column'
-                },
-                title: {
-                    text: '课堂互动统计'
-                },
-                subtitle: {
-                    text: '点击柱形图查看详情',
-                },
-                xAxis: {
-                    type: 'category'
-                },
-                yAxis: {
-                    title: {
-                        text: '做对人数（人）'
-                    }
-
-                },
-                legend: {
-                    enabled: false
-                },
-                credits: {
-                    href: "#",
-                    text: "www.aiiclass.cn"
-                },
-                plotOptions: {
-                    series: {
-                        borderWidth: 0,
-                        dataLabels: {
-                            enabled: true,
-                            format: '{point.y:.1f}%'
-                        }
-                    }
-                },
-                tooltip: {
-                    headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-                    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
-                },
-
-                series: [{
-                    name: "Brands",
-                    colorByPoint: true,
-                    data: [{
-                        name: "计科1303班:数据结构",
-                        y: 56.33,
-                        drilldown: "计科1303班:数据结构"
-                    }, {
-                        name: "计科1303班:嵌入式",
-                        y: 24.030000000000005,
-                        drilldown: "计科1303班:嵌入式"
-                    }, {
-                        name: "计科1303班:计算机组成原理",
-                        y: 10.38,
-                        drilldown: "计科1303班:计算机组成原理"
-                    }, {
-                        name: "计科1302班:数据结构",
-                        y: 4.77,
-                        drilldown: "计科1302班:数据结构"
-                    }, {
-                        name: "计科1302班:嵌入式",
-                        y: 23.9100000000000001,
-                        drilldown: "计科1302班:嵌入式"
-                    }, {
-                        name: "计科1302班:计算机组成原理",
-                        y: 5.9,
-                        drilldown: "计科1302班:计算机组成原理"
-                    }, {
-                        name: "计科1301班:计算机组成原理",
-                        y: 55.6,
-                        drilldown: "计科1301班:计算机组成原理"
-                    }, {
-                        name: "软工1301班:机器学习",
-                        y: 44.8,
-                        drilldown: "软工1301班:机器学习"
-                    }]
-                }],
-                drilldown: {
-                    series: [{
-                        name: "计科1303班:数据结构",
-                        id: "计科1303班:数据结构",
-                        data: [
-                            [
-                                "第一题",
-                                24.13],
-                            [
-                                "第二题",
-                                17.2],
-                            [
-                                "第三题",
-                                8.11],
-                            [
-                                "第四题",
-                                5.33],
-                            [
-                                "第五题",
-                                1.06],
-                            [
-                                "第六题",
-                                0.5]
-                        ]
-                    }, {
-                        name: "计科1303班:嵌入式",
-                        id: "计科1303班:嵌入式",
-                        data: [
-                            [
-                                "第一题",
-                                5],
-                            [
-                                "第二题",
-                                4.32],
-                            [
-                                "第三题",
-                                3.68],
-                            [
-                                "第四题",
-                                2.96],
-                            [
-                                "第五题",
-                                2.53],
-                            [
-                                "第六题",
-                                1.45],
-                            [
-                                "第七题",
-                                1.24],
-                            [
-                                "第八题",
-                                0.85],
-                            [
-                                "第九题",
-                                0.6],
-                            [
-                                "第十题",
-                                0.55],
-                            [
-                                "第十一题",
-                                0.38]
-                        ]
-                    }, {
-                        name: "计科1303班:计算机组成原理",
-                        id: "计科1303班:计算机组成原理",
-                        data: [
-                            [
-                                "第一题",
-                                2.76],
-                            [
-                                "第二题",
-                                2.32],
-                            [
-                                "第三题",
-                                2.31],
-                            [
-                                "第四题",
-                                1.27],
-                            [
-                                "第五题",
-                                1.02],
-                            [
-                                "第六题",
-                                0.33],
-                            [
-                                "第七题",
-                                0.22],
-                            [
-                                "第八题",
-                                0.15]
-                        ]
-                    }, {
-                        name: "计科1302班:数据结构",
-                        id: "计科1302班:数据结构",
-                        data: [
-                            [
-                                "第一题",
-                                2.56],
-                            [
-                                "第二题",
-                                0.77],
-                            [
-                                "第三题",
-                                0.42],
-                            [
-                                "第四题",
-                                0.3],
-                            [
-                                "第五题",
-                                0.29],
-                            [
-                                "第六题",
-                                0.26],
-                            [
-                                "第七题",
-                                0.17]
-                        ]
-                    }, {
-                        name: "计科1302班:嵌入式",
-                        id: "计科1302班:嵌入式",
-                        data: [
-                            [
-                                "第一题",
-                                1.34],
-                            [
-                                "第二题",
-                                2.24],
-                            [
-                                "第三题",
-                                3.17],
-                            [
-                                "第四题",
-                                4.16]
-                        ]
-                    }, {
-                        name: "计科1302班:计算机组成原理",
-                        id: "计科1302班:计算机组成原理",
-                        data: [
-                            [
-                                "第一题",
-                                2.34],
-                            [
-                                "第二题",
-                                1.24],
-                            [
-                                "第三题",
-                                1.17],
-                            [
-                                "第四题",
-                                0.16]
-                        ]
-                    }, {
-                        name: "计科1301班:计算机组成原理",
-                        id: "计科1301班:计算机组成原理",
-                        data: [
-                            [
-                                "第一题",
-                                22.34],
-                            [
-                                "第二题",
-                                21.24],
-                            [
-                                "第三题",
-                                22.17],
-                            [
-                                "第四题",
-                                35.16]
-                        ]
-                    }, {
-                        name: "软工1301班:机器学习",
-                        id: "软工1301班:机器学习",
-                        data: [
-                            [
-                                "第一题",
-                                31.34],
-                            [
-                                "第二题",
-                                23.24],
-                            [
-                                "第三题",
-                                23.17],
-                            [
-                                "第四题",
-                                58.16]
-                        ]
-                    }]
-                }
-            });
-        });
-    </script>
 </html>

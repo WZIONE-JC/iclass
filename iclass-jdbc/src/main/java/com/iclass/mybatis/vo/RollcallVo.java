@@ -1,9 +1,5 @@
 package com.iclass.mybatis.vo;
 
-import com.iclass.mybatis.dto.SessionUser;
-
-import java.util.List;
-
 /**
  * iclass
  * <p>
@@ -11,74 +7,68 @@ import java.util.List;
  */
 public class RollcallVo {
 
-    private String classRoomName;
+    // 显示的名字
+    private String name;
 
-    private String teacherName;
+    // 值
+    private Integer y;
 
-    private Integer arrivedNum;
+    // 颜色
+    private String color;
 
-    private Integer absentNum;
+    // 切割
+    private Boolean sliced;
 
-    private List<SessionUser> absentStudents;
+    // 选中
+    private Boolean selected;
 
     public RollcallVo() {}
 
-    public RollcallVo(String classRoomName, String teacherName, Integer arrivedNum, Integer absentNum, List<SessionUser> absentStudents) {
-        this.classRoomName = classRoomName;
-        this.teacherName = teacherName;
-        this.arrivedNum = arrivedNum;
-        this.absentNum = absentNum;
-        this.absentStudents = absentStudents;
+    public RollcallVo(String name, Integer y, String color, Boolean sliced, Boolean selected) {
+        this.name = name;
+        this.y = y;
+        this.color = color;
+        this.sliced = sliced;
+        this.selected = selected;
     }
 
-    public String getClassRoomName() {
-        return classRoomName;
+    public String getName() {
+        return name;
     }
 
-    public void setClassRoomName(String classRoomName) {
-        this.classRoomName = classRoomName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getTeacherName() {
-        return teacherName;
+    public Integer getY() {
+        return y;
     }
 
-    public void setTeacherName(String teacherName) {
-        this.teacherName = teacherName;
+    public void setY(Integer y) {
+        this.y = y;
     }
 
-    public Integer getArrivedNum() {
-        return arrivedNum;
+    public String getColor() {
+        return color;
     }
 
-    public void setArrivedNum(Integer arrivedNum) {
-        this.arrivedNum = arrivedNum;
+    public void setColor(String color) {
+        this.color = color;
     }
 
-    public Integer getAbsentNum() {
-        return absentNum;
+    public Boolean getSliced() {
+        return sliced;
     }
 
-    public void setAbsentNum(Integer absentNum) {
-        this.absentNum = absentNum;
+    public void setSliced(Boolean sliced) {
+        this.sliced = sliced;
     }
 
-    public List<SessionUser> getAbsentStudents() {
-        return absentStudents;
+    public Boolean getSelected() {
+        return selected;
     }
 
-    public void setAbsentStudents(List<SessionUser> absentStudents) {
-        this.absentStudents = absentStudents;
-    }
-
-    @Override
-    public String toString() {
-        return "RollcallVo{" +
-                "classRoomName='" + classRoomName + '\'' +
-                ", teacherName='" + teacherName + '\'' +
-                ", arrivedNum=" + arrivedNum +
-                ", absentNum=" + absentNum +
-                ", absentStudents=" + absentStudents +
-                '}';
+    public void setSelected(Boolean selected) {
+        this.selected = selected;
     }
 }

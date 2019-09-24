@@ -81,8 +81,8 @@
         <div class="row cl">
             <label class="form-label col-4"><span class="c-red">*</span>开始时间：</label>
             <div class="formControls col-7">
-                <input type="text" datatype="*" nullmsg="请选择开始时间"
-                       onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',skin:'twoer',maxDate: '%y-%M-%d'})"
+                <input type="text" datatype="*" nullmsg="请选择开始日期"
+                       onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',skin:'twoer',maxDate: '%y-%M-%d'})"
                        class="input-text Wdate" id="datemin" name="createtime">
             </div>
         </div>
@@ -90,13 +90,13 @@
         <div class="row cl">
                 <label class="form-label col-4"><span class="c-red">*</span>结束日期：</label>
             <div class="formControls col-7">
-                <input type="text" datatype="*" nullmsg="请选择结束时间"
-                       onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',skin:'twoer',minDate:'#F{$dp.$D(\'datemin\')}'})"
+                <input type="text" datatype="*" nullmsg="请选择结束日期"
+                       onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',skin:'twoer',minDate:'#F{$dp.$D(\'datemin\')}'})"
                        id="deadline" class="input-text Wdate" name="deadline">
             </div>
         </div>
 
-        <div class="row cl">
+        <div class="row cl" style="display: none;">
 
             <label class="form-label col-4"><span
                     class="c-red">*</span>创建者：</label>

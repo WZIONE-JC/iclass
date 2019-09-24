@@ -14,36 +14,42 @@ var GetCache = function () {
                 timeout: 10000,
                 success: function (responseData) {
                     if(responseData.success) {
-                        $("#userid").val(responseData.data.user.userid);
+                        var data = responseData.data;
+                        if (data == null) {
+                            return;
+                        } else {
+                            data = responseData.data.user;
+                        }
+                        $("#userid").val(data.userid);
                         var userfullname = $("#userfullname");
-                        userfullname.text(responseData.data.user.userfullname);
-                        userfullname.val(responseData.data.user.userfullname);
+                        userfullname.text(data.userfullname);
+                        userfullname.val(data.userfullname);
                         var username = $("#username");
-                        username.text(responseData.data.user.username);
-                        username.val(responseData.data.user.username);
+                        username.text(data.username);
+                        username.val(data.username);
                         var usercode = $("#usercode");
-                        usercode.text(responseData.data.user.usercode);
-                        usercode.val(responseData.data.user.usercode);
+                        usercode.text(data.usercode);
+                        usercode.val(data.usercode);
                         var userbirth = $("#userbirth");
-                        userbirth.text(responseData.data.user.userbirth);
-                        userbirth.val(responseData.data.user.userbirth);
-                        $("#usersex").text(responseData.data.user.usersex);
-                        if(responseData.data.user.usersex == "男") {
+                        userbirth.text(data.userbirth);
+                        userbirth.val(data.userbirth);
+                        $("#usersex").text(data.usersex);
+                        if(data.usersex == "男") {
                             $("#sex-1").parent().addClass("checked").attr("checked","checked");
                         }
-                        if(responseData.data.user.usersex == "女") {
+                        if(data.usersex == "女") {
                             $("#sex-2").parent().addClass("checked").attr("checked","checked");
                         }
                         var userphonenum = $("#userphonenum");
-                        userphonenum.text(responseData.data.user.userphonenum);
-                        userphonenum.val(responseData.data.user.userphonenum);
+                        userphonenum.text(data.userphonenum);
+                        userphonenum.val(data.userphonenum);
                         var useremail = $("#useremail");
-                        useremail.text(responseData.data.user.useremail);
-                        useremail.val(responseData.data.user.useremail);
-                        $("#userregisterdate").text(responseData.data.user.userregisterdate);
+                        useremail.text(data.useremail);
+                        useremail.val(data.useremail);
+                        $("#userregisterdate").text(data.userregisterdate);
                         var userrole = $("#userrole");
-                        userrole.text(responseData.data.user.userrole);
-                        userrole.val(responseData.data.user.userrole);
+                        userrole.text(data.userrole);
+                        userrole.val(data.userrole);
                     } else {
                         swal({
                             title: "Sorry!",

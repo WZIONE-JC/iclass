@@ -6,11 +6,9 @@ import com.iclass.ppt_hw.component.service.api.FeedBackService;
 import com.iclass.user.component.entity.DataTablesRequestEntity;
 import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.msg.ResponseMsg;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -36,14 +34,14 @@ public class FeedBackController {
      * @return
      */
     @RequestMapping(value = "/getAll", method = {RequestMethod.POST, RequestMethod.GET})
-    ServiceResult<List<FeedBackDTO>> getAll(DataTablesRequestEntity requestEntity, String userCode, Integer parentId, Boolean isLimit) {
+    ServiceResult<List<FeedBackDTO>> getAll(DataTablesRequestEntity requestEntity, String userCode, Integer parentId, Boolean isLimit, @RequestParam(required = false) Integer classCourseId) {
         if (isLimit == null) {
-            isLimit = Boolean.FALSE;
+            isLimit = Boolean.TRUE;
         }
         if (parentId == null) {
             parentId = 0;
         }
-        return feedBackService.getAll(requestEntity, userCode, parentId, isLimit);
+        return feedBackService.getAll(requestEntity, userCode, parentId, isLimit, classCourseId);
     }
 
     /**
@@ -59,7 +57,19 @@ public class FeedBackController {
     }
 
     /**
-     * 修改问题 或者 修改他的状态
+     * 回复问题（教师）
+     *
+     * @param feedback parentid、content、feedbackcode
+     * @return
+     */
+    @RequestMapping("/reply")
+    ServiceResult<ResponseMsg> reply(Feedback feedback) {
+
+        return feedBackService.reply(feedback);
+    }
+
+    /**
+     * 修改问题 或者 修改状态
      * @param feedback
      * @return
      */

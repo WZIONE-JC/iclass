@@ -22,7 +22,39 @@ public interface ClassCourseMapper {
 
     List<ClassCourse> selectByCourseCode(@Param("coursecode") String courseCode);
 
-    ClassCourse selectByClassCodeAndCourseCode(@Param("classcode") String classCode, @Param("coursecode") String courseCode);
+    ClassCourse selectByClassCodeAndCourseCode(@Param("classcode") String classCode, 
+												@Param("coursecode") String courseCode);
 
     List<ClassCourse> selectUnselectedClassCourse(@Param("studentcode") String studentCode);
+
+
+    /**
+     * 根据创建者编码查询课堂信息
+     * @param classcreator
+     * @param start
+     * @param length
+     * @return
+     */
+    List<ClassCourse> selectByClassCreator(@Param("classcreator") String classcreator, @Param("start") Integer start,
+											@Param("length") Integer length);
+
+    /**
+     * 根据创建者编号来查询课堂信息,没有长度限制
+     * @param classcreator
+     * @return
+     */
+    List<ClassCourse> selectByClassCreatorNoLimit(@Param("classcreator") String classcreator);
+
+    /**
+     * 统计课堂数
+     * @param classcreator
+     * @return
+     */
+    Integer countByClassCreator(@Param("classcreator") String classcreator);
+
+    /**
+     * 统计所有的课堂
+     * @return
+     */
+    Integer countAll();
 }

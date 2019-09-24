@@ -15,15 +15,18 @@ public class ClassDTO implements Serializable{
 
     private String teacherName;
 
+    private Integer studentNum;
+
     public ClassDTO() {}
 
     public ClassDTO(Class aClass) {
         this.aClass = aClass;
     }
 
-    public ClassDTO(Class aClass, String teacherName) {
+    public ClassDTO(Class aClass, String teacherName, Integer studentNum) {
         this.aClass = aClass;
         this.teacherName = teacherName;
+        this.studentNum = studentNum;
     }
 
     public Class getaClass() {
@@ -42,11 +45,19 @@ public class ClassDTO implements Serializable{
         this.teacherName = teacherName;
     }
 
+    public Integer getStudentNum() {
+        return studentNum;
+    }
+
+    public void setStudentNum(Integer studentNum) {
+        this.studentNum = studentNum;
+    }
     @Override
     public String toString() {
         return "ClassDTO{" +
                 "aClass=" + aClass +
                 ", teacherName='" + teacherName + '\'' +
+                ", studentNum=" + studentNum +
                 '}';
     }
 }

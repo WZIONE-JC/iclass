@@ -2,6 +2,7 @@ package com.iclass.ppt_hw.component.controller;
 
 import com.iclass.mybatis.dto.ClasshdDTO;
 import com.iclass.mybatis.po.Classhd;
+import com.iclass.mybatis.vo.ChartClasshdData;
 import com.iclass.mybatis.vo.ClasshdVo;
 import com.iclass.ppt_hw.component.service.api.ClasshdService;
 import com.iclass.user.component.entity.DataTablesRequestEntity;
@@ -32,11 +33,11 @@ public class ClasshdController {
      * @return 返回状态为1的互动数据
      */
     @RequestMapping(value = "/getAll", method = {RequestMethod.POST, RequestMethod.GET})
-    ServiceResult<List<ClasshdDTO>> getAll(DataTablesRequestEntity requestEntity, String userCode, Boolean isLimit) {
+    ServiceResult<List<ClasshdDTO>> getAll(DataTablesRequestEntity requestEntity, String userCode, Boolean isLimit, @RequestParam(required = false) Integer classCourseId) {
         if (isLimit == null) {
             isLimit = true;
         }
-        return classhdService.getAll(requestEntity, userCode, isLimit);
+        return classhdService.getAll(requestEntity, userCode, isLimit, classCourseId);
     }
 
     /**
@@ -103,4 +104,15 @@ public class ClasshdController {
 //     * @return
 //     */
 //    ServiceResult<ResponseMsg> updateStatus(Classhd classhd, int status);
+
+    /**
+     * 获取图表数据
+     * @param classCreator
+     * @return
+     */
+    @RequestMapping("/getChartData")
+    ServiceResult<List<ChartClasshdData>> getChartData(String classCreator) {
+
+        return classhdService.getChartData(classCreator);
+    }
 }

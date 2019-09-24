@@ -28,14 +28,14 @@
 <body>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 课程课堂 <span class="c-gray en">&gt;</span> 班级管理 <a class="btn btn-success radius r mr-20" id="btn-refresh" style="line-height:1.6em;margin-top:3px" href="#" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="pd-20">
-	<div class="text-c">
-         日期范围：
-		<input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}'})" id="datemin" class="input-text Wdate" style="width:120px;">
-		-
-		<input type="text" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'datemin\')}'})" id="datemax" class="input-text Wdate" style="width:120px;">
-		<input type="text" class="input-text" style="width:250px" placeholder="输入班级名" id="className" name="className">
-		<button type="submit" class="btn btn-success radius" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 查询</button>
-	</div>
+	<!--<div class="text-c">-->
+         <!--日期范围：-->
+		<!--<input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}'})" id="datemin" class="input-text Wdate" style="width:120px;">-->
+		<!-- - -->
+		<!--<input type="text" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'datemin\')}'})" id="datemax" class="input-text Wdate" style="width:120px;">-->
+		<!--<input type="text" class="input-text" style="width:250px" placeholder="输入班级名" id="className" name="className">-->
+		<!--<button type="submit" class="btn btn-success radius" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 查询</button>-->
+	<!--</div>-->
 	<div class="cl pd-5 bg-1 bk-gray mt-10"> <span class="l"> <a href="javascript:;" onclick="addDialog('添加班级','class-add.html','570','400')" class="btn btn-success radius"><i class="Hui-iconfont">&#xe600;</i> 添加班级</a></span> <span class="r total-record">共有数据：<strong id="totalRecord">0</strong> 条</span> </div>
 	<div class="mt-10">
 	<table id="class-table" class="table table-border table-bordered table-hover table-bg table-sort">
@@ -46,8 +46,9 @@
 				<th width="5%">班级编号</th>
 				<th width="10%">班级名称</th>
 				<th width="20%">班级描述</th>
+				<th width="8%">班级人数</th>
 				<th width="5%">创建者</th>
-				<th width="15%">创建时间</th>
+				<th width="10%">创建时间</th>
 				<th width="10%">班级状态</th>
 				<th width="10%">操作</th>
 			</tr>

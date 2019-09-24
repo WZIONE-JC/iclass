@@ -129,6 +129,13 @@ function userTableHandler (formId, isPersonal, url) {
     $(formId).prop("width","100%");
     var colmuns =
         [{
+            orderable: false,
+            data: null,
+            render: function (data, type, row, meta) {
+                return "<span class='label label-default radius orderNum'>" + data + "</span>";
+            }
+        },
+        {
             data: "user.username",
         },
         {
@@ -164,38 +171,38 @@ function userTableHandler (formId, isPersonal, url) {
 
     var columnDefs =
         [{
-            targets: [0,-2,-1],
+            targets: [1,-2,-1],
             "createdCell":function (td, cellData, rowData, row, col) {
 //					console.log(td);
                 var usercode = rowData.user.usercode;
                 var username = rowData.user.username;
                 var userrole = rowData.user.userrole;
                 if(userrole == "教师" ) {
-                    if(col == 0) {
+                    if(col == 1) {
                         $(td).wrapInner("<span style='cursor:pointer' title='查看个人信息' class='label label-secondary radius' onclick=member_show('"+username+"','user-show.html','usercode="+usercode+"','360','400')></span>");
                     }
-                    if(col == 8) {
+                    if(col == 9) {
                         $(td).addClass("td-status");
                         $(td).wrapInner("<span class='label label-success radius'></span>");
                     }
                 } else if(userrole == "学生") {
-                    if(col == 0) {
+                    if(col == 1) {
                         $(td).wrapInner("<span style='cursor:pointer' title='查看个人信息' class='label label-secondary radius' onclick=member_show('"+username+"','user-show.html','usercode="+usercode+"','360','400')></span>");
                     }
-                    if(col == 8) {
+                    if(col == 9) {
                         $(td).addClass("td-status");
                         $(td).wrapInner("<span class='label label-primary radius'></span>");
                     }
                 } else {
-                    if(col == 0) {
+                    if(col == 1) {
                         $(td).wrapInner("<span style='cursor:pointer' title='查看个人信息' class='label label-secondary radius' onclick=member_show('"+username+"','user-show.html','usercode="+usercode+"','360','400')></span>");
                     }
-                    if(col == 8) {
+                    if(col == 9) {
                         $(td).addClass("td-status");
                         $(td).wrapInner("<span class='label label-warning radius'></span>");
                     }
                 }
-                if(col == 9) {
+                if(col == 10) {
                     $(td).addClass("td-manage");
                     //个人页面不需要显示删除按钮
                     if(isPersonal == true) {
@@ -246,6 +253,7 @@ function userTableHandler (formId, isPersonal, url) {
             //row 是某一行 ， data是 ajax返回数据 ， index是行标(0)
             //行渲染回调,在这里可以对该行dom元素进行任何操作
             //给当前行加样式
+            $(row).find(".orderNum").text((index+1));
             $(row).addClass("text-c");
         },
         "drawCallback": function( data, settings ) {

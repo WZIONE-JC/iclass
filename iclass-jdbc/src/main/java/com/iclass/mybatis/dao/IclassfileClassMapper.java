@@ -24,4 +24,8 @@ public interface IclassfileClassMapper {
     List<IclassfileClass> selectByClassCourseIdNoLimit(@Param("classcourseid") Integer classCourseId);
 
     Integer countByClassCourseIdAndFileType(@Param("classcourseid") Integer classCourseId, @Param("filetype") int fileType);
+
+    Integer countByTeacherCodeAndFileType(@Param("teachercode") String teacherCode, @Param("filetype") int fileType);
+
+    Integer countAllByFileType(@Param("filetype") int fileType);
 }

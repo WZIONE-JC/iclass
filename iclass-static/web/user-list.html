@@ -28,10 +28,11 @@
 <body>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 用户管理 <span class="c-gray en">&gt;</span> 用户信息维护 <a class="btn btn-success radius r mr-20" id="btn-refresh" style="line-height:1.6em;margin-top:3px" href="#" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="pd-20">
-	<div class="text-c"> 日期范围：
-		<input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}'})" id="datemin" class="input-text Wdate" style="width:120px;">
-		-
-		<input type="text" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d'})" id="datemax" class="input-text Wdate" style="width:120px;">
+	<div class="text-c">
+		<!--日期范围：-->
+		<!--<input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}'})" id="datemin" class="input-text Wdate" style="width:120px;">-->
+		<!-- - -->
+		<!--<input type="text" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d'})" id="datemax" class="input-text Wdate" style="width:120px;">-->
 		<input type="text" class="input-text" style="width:250px" placeholder="输入用户名" id="username" name="username">
 		<button type="submit" class="btn btn-success radius" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 查询</button>
 	</div>
@@ -40,7 +41,7 @@
 		<table id="user-info-table" class="table table-border table-bordered table-hover table-bg table-sort">
 			<thead>
 			<tr class="text-c">
-				<th width="2%"><input type="checkbox" name="" value=""></th>
+				<th width="3%">序号</th>
 				<th width="6%">用户名</th>
 				<th width="8%">学号</th>
 				<th width="6%">姓名</th>

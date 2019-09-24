@@ -26,77 +26,29 @@
 <body>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 作业管理 <span class="c-gray en">&gt;</span> 作业统计 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="pd-20">
+	<span class="select-box inline">
+		<select id="classcourse" name="classcourse" class="select classcourse" >
+			<option value="0">请选择课堂</option>
+		</select>
+	</span>
 	<div id="container" style="min-width:700px;height:400px"></div>
 </div>
 <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> 
 <script type="text/javascript" src="lib/layer/1.9.3/layer.js"></script>
 <script type="text/javascript" src="assets/js/H-ui.js"></script>
 <script type="text/javascript" src="assets/js/H-ui.admin.js"></script>
-<script type="text/javascript" src="lib/Highcharts/4.1.7/js/highcharts.js"></script>
-<script type="text/javascript" src="lib/Highcharts/4.1.7/js/modules/exporting.js"></script>
+<script type="text/javascript" src="lib/Highcharts/5.0.10/js/highcharts.js"></script>
+<script type="text/javascript" src="lib/Highcharts/5.0.10/js/modules/exporting.js"></script>
+<script type="text/javascript" src="assets/js/business/ip.js"></script>
+<script type="text/javascript" src="assets/js/business/class-course.js"></script>
+<script type="text/javascript" src="assets/js/business/chart-hw.js"></script>
 <script type="text/javascript">
 $(function () {
-    $('#container').highcharts({
-        chart: {
-            type: 'column'
-        },
-        title: {
-            text: '作业统计'
-        },
-        subtitle: {
-            text: '当前班级：计科1302班:计算机组成原理'
-        },
-        xAxis: {
-            categories: [
-                '一月',
-                '二月',
-                '三月',
-                '四月',
-                '五月',
-                '六月',
-                '七月',
-                '八月',
-                '九月',
-                '十月',
-                '十一月',
-                '十二月'
-            ]
-        },
-        yAxis: {
-            min: 0,
-            title: {
-                text: '人数'
-            }
-        },
-        credits: {
-            href: "#",
-            text: "www.aiiclass.cn"
-        },
-        tooltip: {
-            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y} 人</b></td></tr>',
-            footerFormat: '</table>',
-            shared: true,
-            useHTML: true
-        },
-        plotOptions: {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0
-            }
-        },
-        series: [{
-            name: '已交',
-            data: [49, 71, 106, 129, 144, 176, 135, 148, 216, 194, 95, 54]
+    // 获取班级数据
+    getClassCourseInfo();
 
-        }, {
-            name: '未交',
-            data: [3, 7, 9, 9, 10, 8, 10, 10, 9, 3, 6, 3]
-
-        }]
-    });
-});				
+    chart_init();
+});
 </script>
 </body>
 </html>

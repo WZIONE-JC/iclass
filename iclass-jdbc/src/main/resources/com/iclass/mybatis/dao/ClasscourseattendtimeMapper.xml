@@ -15,21 +15,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from ClassCourseAttendTime
+    from classcourseattendtime
     where ClassCourseAttendTimeId = #{classcourseattendtimeid,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from ClassCourseAttendTime
+    delete from classcourseattendtime
     where ClassCourseAttendTimeId = #{classcourseattendtimeid,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.iclass.mybatis.po.Classcourseattendtime" >
-    insert into ClassCourseAttendTime (ClassCourseAttendTimeId, ClassCourseId, 
+    insert into classcourseattendtime (ClassCourseAttendTimeId, ClassCourseId,
       AttendNumber, AttendTime)
     values (#{classcourseattendtimeid,jdbcType=INTEGER}, #{classcourseid,jdbcType=INTEGER}, 
       #{attendnumber,jdbcType=INTEGER}, #{attendtime,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.iclass.mybatis.po.Classcourseattendtime" >
-    insert into ClassCourseAttendTime
+    insert into classcourseattendtime
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="classcourseattendtimeid != null" >
         ClassCourseAttendTimeId,
@@ -60,7 +60,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.iclass.mybatis.po.Classcourseattendtime" >
-    update ClassCourseAttendTime
+    update classcourseattendtime
     <set >
       <if test="classcourseid != null" >
         ClassCourseId = #{classcourseid,jdbcType=INTEGER},
@@ -75,7 +75,7 @@
     where ClassCourseAttendTimeId = #{classcourseattendtimeid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.iclass.mybatis.po.Classcourseattendtime" >
-    update ClassCourseAttendTime
+    update classcourseattendtime
     set ClassCourseId = #{classcourseid,jdbcType=INTEGER},
       AttendNumber = #{attendnumber,jdbcType=INTEGER},
       AttendTime = #{attendtime,jdbcType=INTEGER}
@@ -85,7 +85,7 @@
   <select id="selectByClassCourseId" resultType="com.iclass.mybatis.po.Classcourseattendtime">
     SELECT
     <include refid="Base_Column_List" />
-    from ClassCourseAttendTime
+    from classcourseattendtime
     WHERE ClassCourseId = #{classCourseId}
   </select>
 </mapper>

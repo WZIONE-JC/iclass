@@ -6,8 +6,8 @@
       <idArg column="ClassCourseID" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="ClassCode" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="CourseCode" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="CreateTime" jdbcType="TIMESTAMP" javaType="java.lang.String" />
-      <arg column="DeadLine" jdbcType="TIMESTAMP" javaType="java.lang.String" />
+      <arg column="CreateTime" jdbcType="DATE" javaType="java.lang.String" />
+      <arg column="DeadLine" jdbcType="DATE" javaType="java.lang.String" />
       <arg column="Status" jdbcType="INTEGER" javaType="java.lang.Integer" />
     </constructor>
   </resultMap>
@@ -29,7 +29,7 @@
       CreateTime, DeadLine, Status
       )
     values (#{classcourseid,jdbcType=INTEGER}, #{classcode,jdbcType=VARCHAR}, #{coursecode,jdbcType=VARCHAR},
-      #{createtime,jdbcType=TIMESTAMP}, #{deadline,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}
+      #{createtime,jdbcType=DATE}, #{deadline,jdbcType=DATE}, #{status,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.iclass.mybatis.po.ClassCourse" >
@@ -65,10 +65,10 @@
         #{coursecode,jdbcType=VARCHAR},
       </if>
       <if test="createtime != null" >
-        #{createtime,jdbcType=TIMESTAMP},
+        #{createtime,jdbcType=DATE},
       </if>
       <if test="deadline != null" >
-        #{deadline,jdbcType=TIMESTAMP},
+        #{deadline,jdbcType=DATE},
       </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
@@ -85,10 +85,10 @@
         CourseCode = #{coursecode,jdbcType=VARCHAR},
       </if>
       <if test="createtime != null" >
-        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+        CreateTime = #{createtime,jdbcType=DATE},
       </if>
       <if test="deadline != null" >
-        DeadLine = #{deadline,jdbcType=TIMESTAMP},
+        DeadLine = #{deadline,jdbcType=DATE},
       </if>
       <if test="status != null" >
         Status = #{status,jdbcType=INTEGER},
@@ -100,8 +100,8 @@
     update class_course
     set ClassCode = #{classcode,jdbcType=VARCHAR},
       CourseCode = #{coursecode,jdbcType=VARCHAR},
-      CreateTime = #{createtime,jdbcType=TIMESTAMP},
-      DeadLine = #{deadline,jdbcType=TIMESTAMP},
+      CreateTime = #{createtime,jdbcType=DATE},
+      DeadLine = #{deadline,jdbcType=DATE},
       Status = #{status,jdbcType=INTEGER}
     where ClassCourseID = #{classcourseid,jdbcType=INTEGER}
   </update>
@@ -128,10 +128,62 @@
     select
     <include refid="Base_Column_List"/>
     FROM class_course
-    where ClassCourseID NOT IN (
+    where
+    Status = 1
+    AND
+    ClassCourseID
+    NOT IN
+    (
       SELECT ClassCourseID
       FROM class_course_student
       WHERE StudentCode = #{studentcode}
     )
+    AND ClassCourseID IN
+    (
+      SELECT ClassCourseID FROM class_course WHERE ClassCode =
+        (
+          SELECT ClassCode
+          FROM student_class
+          WHERE
+          StudentCode = #{studentcode}
+        )
+    )
+  </select>
+
+  <select id="selectByClassCreator" resultType="com.iclass.mybatis.po.ClassCourse" >
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM class_course
+    WHERE ClassCode IN
+    (
+      select ClassCode from class where ClassCreator = #{classcreator}
+    )
+    limit #{start}, #{length}
+  </select>
+
+  <select id="selectByClassCreatorNoLimit" resultType="com.iclass.mybatis.po.ClassCourse" >
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM class_course
+    WHERE ClassCode IN
+    (
+      select ClassCode from class where ClassCreator = #{classcreator}
+    )
+  </select>
+
+  <select id="countByClassCreator" resultType="java.lang.Integer" >
+    SELECT
+    COUNT(*)
+    FROM class_course
+    WHERE ClassCode IN
+    (
+      select ClassCode from class where ClassCreator = #{classcreator}
+    )
+  </select>
+
+  <select id="countAll" resultType="java.lang.Integer" >
+    SELECT
+    count(*)
+    FROM class_course
   </select>
 </mapper>

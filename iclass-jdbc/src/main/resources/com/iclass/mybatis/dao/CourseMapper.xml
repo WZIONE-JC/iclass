@@ -130,4 +130,11 @@
     SET CourseStatus = #{status}
     where CourseID = #{courseid,jdbcType=INTEGER}
   </update>
+
+  <select id="countAll" resultType="java.lang.Integer" >
+    SELECT
+    count(*)
+    FROM
+    course
+  </select>
 </mapper>

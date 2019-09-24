@@ -63,4 +63,25 @@ public class MD5Test {
         }
         return result.deleteCharAt(result.length()-1).toString();
     }
+
+    @Test
+    public void testDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            Date date = sdf.parse("2017-5-14" + " 00:00:00");
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) + 1);
+            System.out.println(sdf.format(calendar.getTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+//    @Test
+//    public void test() {
+//        Scanner scanner = new Scanner(System.in);
+//        String src = scanner.nextLine();
+//        System.out.println(src);
+//    }
 }

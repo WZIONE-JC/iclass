@@ -82,4 +82,5 @@
     FROM teacher_course
     where TeacherCode = #{teachercode,jdbcType=VARCHAR}
   </select>
+
 </mapper>

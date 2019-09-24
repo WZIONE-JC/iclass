@@ -18,4 +18,5 @@
 		<property name="basePackage" value="com.iclass.mybatis.dao" />
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 	</bean>
+
 </beans>

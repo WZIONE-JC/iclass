@@ -159,4 +159,23 @@
     WHERE ClassCreator = #{classcreator} AND ClassStatus = 1 AND ClassCode NOT IN
     (SELECT ClassCode FROM class_course WHERE CourseCode = #{coursecode} AND Status = 1)
   </select>
+
+  <select id="selectByStudetCode" resultType="com.iclass.mybatis.po.Class" >
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM class
+    WHERE ClassCode =
+    (
+      SELECT ClassCode
+      from student_class
+      where
+        StudentCode = #{studentcode}
+    )
+  </select>
+
+  <select id="countAll" resultType="java.lang.Integer" >
+    SELECT
+    count(*)
+    FROM class
+  </select>
 </mapper>

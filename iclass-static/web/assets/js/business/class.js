@@ -165,6 +165,12 @@ function classTableHandler(formId, url) {
                 data: "aClass.classdescription"
             },
             {
+                data: "studentNum",
+                render: function (data, type, row, meta) {
+                    return "<span class='label label-default radius'>" + data + "</span>";
+                }
+            },
+            {
                 data: "teacherName",
                 render: function (data, type, row, meta) {
                     return "<span class='label label-warning radius'>" + data + "</span>";
@@ -177,7 +183,7 @@ function classTableHandler(formId, url) {
                 data: "aClass.classstatus",
                 render: function (data, type, row, meta) {
                     if (data == 0) {
-                        return "<span class='label label-default radius' title='课堂已下架'>已下架</span>";
+                        return "<span class='label label-default radius' title='课堂已关闭'>已关闭</span>";
                     } else if (data == 1) {
                         return "<span class='label label-success radius' title='课堂已发布'>已发布</span>";
                     }
@@ -197,13 +203,13 @@ function classTableHandler(formId, url) {
                 var classcode = rowData.aClass.classcode;
                 var id = rowData.aClass.classid;
                 var status = rowData.aClass.classstatus;
-                if (col == 6) {
+                if (col == 7) {
                     $(td).addClass("td-status");
                 }
-                if (col == 7) {
+                if (col == 8) {
                     $(td).addClass("td-manage");
                     if (status == 1) {
-                        $(td).html("<a style='text-decoration:none' class='ml-5' title='编辑课堂' onclick=edit('编辑课堂','class-update.html','"+id+"','570','400')><i class='Hui-iconfont'>&#xe6df;</i></a> <a style='text-decoration:none' class='ml-5' onClick='stop(this,"+id+")'  title='下架课堂'><i class='Hui-iconfont'>&#xe6de;</i></a>");
+                        $(td).html("<a style='text-decoration:none' class='ml-5' title='编辑课堂' onclick=edit('编辑课堂','class-update.html','"+id+"','570','400')><i class='Hui-iconfont'>&#xe6df;</i></a> <a style='text-decoration:none' class='ml-5' onClick='stop(this,"+id+")'  title='关闭'><i class='Hui-iconfont'>&#xe6de;</i></a>");
                     } else {
                         $(td).html("<a style='text-decoration:none' class='ml-5' title='编辑课堂' onclick=edit('编辑课堂','class-update.html','"+id+"','570','400')><i class='Hui-iconfont'>&#xe6df;</i></a> <a style='text-decoration:none' class='ml-5' onClick='start(this,"+id+")' title='发布'><i class='Hui-iconfont'>&#xe603;</i></a>");
                     }
@@ -259,6 +265,7 @@ function classTableHandler(formId, url) {
         },
         columns: colmuns,
         "preDrawCallback": function () {
+            $(".dataTables_filter").hide();
         },
         "initComplete": function (settings, json) {
         },
@@ -290,7 +297,7 @@ function addClass() {
     if (!$("#msg").hasClass("error")) {
         $.ajax({
             type: "post",
-            url: ppt_hw_url + "/class/save",
+            url: ppt_hw_url + "/class/reply",
             dataType: "jsonp",
             timeout: 10000,
             data: $("#form-class-add").serialize(),
@@ -379,7 +386,7 @@ function showClass(url, id) {
                     status = "<span class='label label-success radius' title='已发布'>已发布</span>";
                 }
                 if (status == 0) {
-                    status = "<span class='label label-defaunt radius' title='已下架'>已下架</span>";
+                    status = "<span class='label label-defaunt radius' title='已关闭'>已关闭</span>";
                 }
                 $("#classstatus").html(status);
             } else {

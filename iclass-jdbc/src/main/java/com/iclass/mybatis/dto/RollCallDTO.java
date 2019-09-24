@@ -1,7 +1,6 @@
 package com.iclass.mybatis.dto;
 
 import com.iclass.mybatis.po.Rollcall;
-import com.iclass.mybatis.po.User;
 
 /**
  * Created by radishmaster on 15/04/17.
@@ -16,11 +15,14 @@ public class RollCallDTO {
 
     private SessionUser student;
 
-    public RollCallDTO(Rollcall rollcall, String teacherName, String classRoomName, SessionUser student) {
+    private String className;
+
+    public RollCallDTO(Rollcall rollcall, String teacherName, String classRoomName, SessionUser student, String className) {
         this.rollcall = rollcall;
         this.teacherName = teacherName;
         this.classRoomName = classRoomName;
         this.student = student;
+        this.className = className;
     }
 
     public RollCallDTO() {}
@@ -57,6 +59,14 @@ public class RollCallDTO {
         this.student = student;
     }
 
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
+    }
+
     @Override
     public String toString() {
         return "RollCallDTO{" +
@@ -64,6 +74,7 @@ public class RollCallDTO {
                 ", teacherName='" + teacherName + '\'' +
                 ", classRoomName='" + classRoomName + '\'' +
                 ", student=" + student +
+                ", className='" + className + '\'' +
                 '}';
     }
 }

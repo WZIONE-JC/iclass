@@ -42,10 +42,13 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public ServiceResult<ResponseMsg> login(HttpServletRequest request, String userrole, String username, String password, String code, String remember) {
+    public ServiceResult<ResponseMsg> login(HttpServletRequest request, String userrole, 
+											String username, String password, String code, 
+											String remember) {
 
         ServiceResult<ResponseMsg> serviceResult = new ServiceResult<>();
         ResponseMsg responseMsg = new ResponseMsg();
+
         /**
          * 首先验证验证码，通过validateVerificationCode 方法去验证
          * 这里我考虑是从前端去验证
@@ -56,7 +59,9 @@ public class LoginServiceImpl implements LoginService {
          * 如果登录方式是工号
          */
         Pattern p = Pattern.compile("[\\d]{10}");
+        Pattern p2 = Pattern.compile("[\\d]{11}");
         Matcher m = p.matcher(username);
+        Matcher m2 = p2.matcher(username);
 
         if(codeCorrect) {
             //将用户输入的密码进行加密
@@ -71,7 +76,7 @@ public class LoginServiceImpl implements LoginService {
             SessionUser sessionUser = new SessionUser();
 
             // 以工号的方式登录
-            if(m.matches()) {
+            if(m.matches() || m2.matches()) {
                 //参数username是usercode
                 String usercode = username;
                 user = userMapper.findByUsercodeAndPassword(usercode, newPassword, userrole);
@@ -89,7 +94,8 @@ public class LoginServiceImpl implements LoginService {
                 }
                 session.setAttribute(sessionId, sessionUser);
                 //查找到，就显示登录成功的信息，返回给前端
-                responseMsg.setMsg(Msg.LOGIN_SUCCESS);
+                serviceResult.setMessage(user.getUsercode());
+                responseMsg.setMsg(user.getUserrole());
                 serviceResult.setSuccess(true);
             } else {
                 //user为空，表示没有查找到用户信息
@@ -110,6 +116,7 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public boolean validateVerificationCode(HttpServletRequest request, String code) {
         if(StringUtils.isNotBlank(code)) {
+            logger.info("请求的sessionId:" + request.getSession().getId());
             String stringCode = verificationCode.getVerificationCode(request);
             if(stringCode != null) {
                 return stringCode.equalsIgnoreCase(code.trim());
@@ -129,14 +136,14 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public ServiceResult<SessionUser> getLoginedUserInfo(HttpServletRequest request) {
         ServiceResult<SessionUser> serviceResult = new ServiceResult<>();
-        HttpSession session = request.getSession();
-        //从session中获取session中的user数据
-        SessionUser user = (SessionUser)session.getAttribute(session.getId());
-        if(user == null) {
-            serviceResult.setMessage("用户未登录");
-        } else {
-            serviceResult.setSuccess(true);
-            serviceResult.setData(user);
+            HttpSession session = request.getSession();
+            //从session中获取session中的user数据
+            SessionUser user = (SessionUser)session.getAttribute(session.getId());
+            if(user == null) {
+                serviceResult.setMessage("用户未登录");
+            } else {
+                serviceResult.setSuccess(true);
+                serviceResult.setData(user);
         }
         return serviceResult;
     }

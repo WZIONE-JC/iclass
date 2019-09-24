@@ -34,4 +34,19 @@ public interface FeedbackMapper {
      * @return
      */
     Integer countByParentId(@Param("parentid") Integer parentId);
+
+    /**
+     * 统计教师的课堂的反馈问题
+     *
+     * @param teacherCode
+     * @return
+     */
+    Integer countByTeacherCode(@Param("teachercode") String teacherCode);
+
+    /**
+     * 统计学生加入的课堂的反馈问题
+     * @param studentCode
+     * @return
+     */
+    Integer countByStudentCode(@Param("studentcode") String studentCode);
 }

@@ -21,7 +21,7 @@ public interface PPTHWService {
      * @param classCreator teacherCode
      * @return 返回PPTHW 实体
      */
-    ServiceResult<List<ClassCourseDTO>> getPPTInfo(DataTablesRequestEntity requestEntity, String classCreator);
+    ServiceResult<List<ClassCourseDTO>> getPPTInfo(DataTablesRequestEntity requestEntity, String classCreator, Integer classCourseId);
 
 
     /**
@@ -30,7 +30,7 @@ public interface PPTHWService {
      * @param classCreator teacherCode
      * @return 返回PPTHW实体
      */
-    ServiceResult<List<ClassCourseDTO>> getHWInfo(DataTablesRequestEntity requestEntity, String classCreator);
+    ServiceResult<List<ClassCourseDTO>> getHWInfo(DataTablesRequestEntity requestEntity, String classCreator, Integer classCourseId);
 
     /**
      * 获取与课堂和课程相关联的文件信息

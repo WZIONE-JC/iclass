@@ -15,6 +15,10 @@ public class ResponseMsg {
 
     }
 
+    public ResponseMsg(String msg) {
+        this.msg = msg;
+    }
+
     public ResponseMsg(Msg msg) {
         this.msg = msg.getMsg();
     }

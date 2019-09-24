@@ -95,4 +95,26 @@
       select FileCode from iclassfiles where Filetype = #{filetype}
     )
   </select>
+
+  <select id="countByTeacherCodeAndFileType" resultType="java.lang.Integer" >
+    SELECT
+    COUNT(*)
+    FROM iclassfile_class
+    WHERE
+    FileCode IN
+    (
+      select FileCode from iclassfiles where Filetype = #{filetype} AND FileCreator = #{teachercode}
+    )
+  </select>
+
+  <select id="countAllByFileType" resultType="java.lang.Integer" >
+    SELECT
+    COUNT(*)
+    FROM iclassfile_class
+    WHERE
+    FileCode IN
+    (
+      select FileCode from iclassfiles where Filetype = #{filetype}
+    )
+  </select>
 </mapper>

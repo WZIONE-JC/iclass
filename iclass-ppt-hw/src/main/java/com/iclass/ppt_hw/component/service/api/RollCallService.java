@@ -1,7 +1,9 @@
 package com.iclass.ppt_hw.component.service.api;
 
 import com.iclass.mybatis.dto.RollCallDTO;
+import com.iclass.mybatis.vo.RollCallVoApp;
 import com.iclass.mybatis.vo.RollcallVo;
+import com.iclass.mybatis.vo.TimesVo;
 import com.iclass.user.component.entity.DataTablesRequestEntity;
 import com.iclass.user.component.entity.ServiceResult;
 import com.iclass.user.component.msg.ResponseMsg;
@@ -18,9 +20,10 @@ public interface RollCallService {
      *
      * @param requestEntity
      * @param teacherCode
+     * @param classCourseId 课堂id
      * @return
      */
-    ServiceResult<List<RollCallDTO>> getAll(DataTablesRequestEntity requestEntity, String teacherCode);
+    ServiceResult<List<RollCallDTO>> getAll(DataTablesRequestEntity requestEntity, String teacherCode, Integer classCourseId);
 
     /**
      * 删除点名记录
@@ -38,7 +41,7 @@ public interface RollCallService {
      * @param time
      * @return
      */
-    ServiceResult<String> rollcall(String teacherCode, Integer classCourseId, Integer time);
+    ServiceResult<ResponseMsg> rollcall(String teacherCode, Integer classCourseId, Integer time);
 
     /**
      * 签到
@@ -54,5 +57,17 @@ public interface RollCallService {
      * @param classCourseId
      * @return
      */
-    ServiceResult<RollcallVo> show(Integer classCourseId);
+    ServiceResult<List<RollcallVo>> show(String teacherCode, Integer classCourseId, Integer times);
+
+    /**
+     * 获取点名次数
+     * @param classCourseId
+     * @return
+     */
+    ServiceResult<List<TimesVo>> getTimes(Integer classCourseId);
+
+    /**
+     * app端获取该学生加入的课堂的所有点名数据
+     */
+    ServiceResult<List<RollCallVoApp>> getRollCallDataApp(String studentCode);
 }

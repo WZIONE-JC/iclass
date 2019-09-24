@@ -2,6 +2,7 @@ package com.iclass.ppt_hw.component.controller;
 
 import com.iclass.mybatis.dto.ClassCourseDTO;
 import com.iclass.mybatis.po.ClassCourse;
+import com.iclass.mybatis.vo.ClassCourseVo;
 import com.iclass.ppt_hw.component.service.api.ClassCourseService;
 import com.iclass.user.component.entity.DataTablesRequestEntity;
 import com.iclass.user.component.entity.ServiceResult;
@@ -114,5 +115,16 @@ public class ClassCourseController {
     ServiceResult<ResponseMsg> joinClassRoom(String studentCode, Integer classCourseId) {
 
         return classCourseService.joinClassRoom(studentCode, classCourseId);
+    }
+
+    /**
+     * 获取该教师创建的课堂
+     * @param teacherCode
+     * @return
+     */
+    @RequestMapping("/getClassCourseInfo")
+    ServiceResult<List<ClassCourseVo>> getClassCourseInfo(String teacherCode) {
+
+        return classCourseService.getClassCourseInfo(teacherCode);
     }
 }

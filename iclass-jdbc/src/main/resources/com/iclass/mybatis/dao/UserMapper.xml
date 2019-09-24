@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.iclass.mybatis.dao.UserMapper" >
   <!--开启缓存-->
-  <cache/>
+  <!--<cache/>-->
   <resultMap id="BaseResultMap" type="com.iclass.mybatis.po.User" >
     <constructor >
       <idArg column="UserID" jdbcType="INTEGER" javaType="java.lang.Integer" />
@@ -50,13 +50,19 @@
     select
     <include refid="Base_Column_List" />
     from user
-    where username = #{username} and userpassword = #{password} and userrole = #{userrole}
+    where username = #{username} and userpassword = #{password}
+    <if test="userrole != null" >
+      and userrole = #{userrole}
+    </if>
   </select>
   <select id="findByUsercodeAndPassword" resultMap="BaseResultMap" parameterType="String">
     select
     <include refid="Base_Column_List" />
     from user
-    where usercode = #{usercode} and userpassword = #{password} and userrole = #{userrole}
+    where usercode = #{usercode} and userpassword = #{password}
+    <if test="userrole != null" >
+      and userrole = #{userrole}
+    </if>
   </select>
   <select id="findAll" resultMap="BaseResultMap">
     select

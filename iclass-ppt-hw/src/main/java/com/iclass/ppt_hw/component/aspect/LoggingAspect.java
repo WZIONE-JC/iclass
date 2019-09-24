@@ -45,7 +45,8 @@ public class LoggingAspect {
     public Object beforeServiceImpl(ProceedingJoinPoint joinPoint) {
 
         // 接收到请求，记录请求内容
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder
+												.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
 
         Object result = null;
@@ -95,7 +96,8 @@ public class LoggingAspect {
             data = result.toString();
         }
         // 保存日志
-        Log log = new Log(null, ip, device, http_method, operation, method, args, exeTime, IclassUtil.getDateTimeNow(), data, error);
+        Log log = new Log(null, ip, device, http_method, operation, 
+					method, args, exeTime, IclassUtil.getDateTimeNow(), data, error);
 
         logMapper.insert(log);
 

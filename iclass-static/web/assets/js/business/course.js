@@ -11,7 +11,9 @@ function getCourseByTeacherCode() {
         jsonp: "callback",
         url: ppt_hw_url + "/course/get",
         data: {
-            "teacherCode" : teacherCode
+            "teacherCode" : teacherCode,
+            "start": 0,
+            "length": 1000
         },
         async:false,
         timeout: 10000,
@@ -82,6 +84,9 @@ function courseTableHandler(formId, url) {
             },
             {
                 data: "course.coursegrade",
+                render: function (data, type, row, meta) {
+                    return "<span class='label label-default radius'>" + data + "</span>";
+                }
             },
             {
                 data: "teacherName",
@@ -97,7 +102,7 @@ function courseTableHandler(formId, url) {
                 data: "course.coursestatus",
                 render: function (data, type, row, meta) {
                     if (data == 0) {
-                        return "<span class='label label-default radius' title='课程已下架'>已下架</span>";
+                        return "<span class='label label-default radius' title='课程已关闭'>已关闭</span>";
                     } else if (data == 1) {
                         return "<span class='label label-success radius' title='课程已发布'>已发布</span>";
                     }
@@ -112,17 +117,20 @@ function courseTableHandler(formId, url) {
 
     var columnDefs =
         [{
-            targets: [-2, -1],
+            targets: [3, -2, -1],
             "createdCell": function (td, cellData, rowData, row, col) {
                 var id = rowData.course.courseid;
                 var status = rowData.course.coursestatus;
+                if (col == 3) {
+                    $(td).css("text-align", "left");
+                }
                 if (col == 7) {
                     $(td).addClass("td-status");
                 }
                 if (col == 8) {
                     $(td).addClass("td-manage");
                     if(status == 1) {
-                        $(td).html("<a style='text-decoration:none' class='ml-5' title='编辑课程' onclick=edit('编辑课程','course-update.html','"+id+"','570','400')><i class='Hui-iconfont'>&#xe6df;</i></a> <a style='text-decoration:none' class='ml-5' onClick='stop(this,"+id+")'  title='下架'><i class='Hui-iconfont'>&#xe6de;</i></a>");
+                        $(td).html("<a style='text-decoration:none' class='ml-5' title='编辑课程' onclick=edit('编辑课程','course-update.html','"+id+"','570','400')><i class='Hui-iconfont'>&#xe6df;</i></a> <a style='text-decoration:none' class='ml-5' onClick='stop(this,"+id+")'  title='关闭'><i class='Hui-iconfont'>&#xe6de;</i></a>");
                     } else {
                         $(td).html("<a style='text-decoration:none' class='ml-5' title='编辑课程' onclick=edit('编辑课程','course-update.html','"+id+"','570','400')><i class='Hui-iconfont'>&#xe6df;</i></a> <a style='text-decoration:none' class='ml-5' onClick='start(this,"+id+")' title='发布'><i class='Hui-iconfont'>&#xe603;</i></a>");
                     }
@@ -177,6 +185,7 @@ function courseTableHandler(formId, url) {
         },
         columns: colmuns,
         "preDrawCallback": function () {
+            $(".dataTables_filter").hide();
         },
         "initComplete": function (settings, json) {
         },
@@ -208,7 +217,7 @@ function addCourse() {
     if (!$("#msg").hasClass("error")) {
         $.ajax({
             type: "post",
-            url: ppt_hw_url + "/course/save",
+            url: ppt_hw_url + "/course/reply",
             dataType: "jsonp",
             timeout: 10000,
             data: $("#form-course-add").serialize(),
@@ -298,7 +307,7 @@ function showCourse(url,param) {
                     status = "<span class='label label-success radius' title='已发布'>已发布</span>";
                 }
                 if (status == 0) {
-                    status = "<span class='label label-defaunt radius' title='已下架'>已下架</span>";
+                    status = "<span class='label label-defaunt radius' title='已关闭'>已关闭</span>";
                 }
                 $("#coursestatus").html(status);
                 $("#coursegrade").text(data.coursegrade);

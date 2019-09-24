@@ -17,15 +17,21 @@ public class SessionUser implements Serializable{
      */
     private User user;
 
+    private String className;
+
     public SessionUser() {
 
     }
 
     public SessionUser(User user) {
-        this.user = user;
         this.user = UserInfoHandler.userPasswordHandler(user);
-        this.user = UserInfoHandler.userRegisterDateHandler(user);
-        this.user = user;
+        this.user = UserInfoHandler.userRegisterDateHandler(this.user);
+    }
+
+    public SessionUser(User user, String className) {
+        this.user = UserInfoHandler.userPasswordHandler(user);
+        this.user = UserInfoHandler.userRegisterDateHandler(this.user);
+        this.className = className;
     }
 
     public User getUser() {
@@ -39,10 +45,19 @@ public class SessionUser implements Serializable{
         this.user = user;
     }
 
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
+    }
+
     @Override
     public String toString() {
         return "SessionUser{" +
                 "user=" + user +
+                ", className='" + className + '\'' +
                 '}';
     }
 }

@@ -2,6 +2,7 @@ package com.iclass.ppt_hw.component.service.api;
 
 import com.iclass.mybatis.dto.ClasshdDTO;
 import com.iclass.mybatis.po.Classhd;
+import com.iclass.mybatis.vo.ChartClasshdData;
 import com.iclass.mybatis.vo.ClasshdVo;
 import com.iclass.user.component.entity.DataTablesRequestEntity;
 import com.iclass.user.component.entity.ServiceResult;
@@ -23,7 +24,7 @@ public interface ClasshdService {
      * @param isLimit web端需要分页, app端不需要分页
      * @return 返回状态为1的互动数据
      */
-    ServiceResult<List<ClasshdDTO>> getAll(DataTablesRequestEntity requestEntity, String classhdCreator, Boolean isLimit);
+    ServiceResult<List<ClasshdDTO>> getAll(DataTablesRequestEntity requestEntity, String classhdCreator, Boolean isLimit, Integer classCourseId);
 
     /**
      * 检查学生作答的答案
@@ -71,4 +72,11 @@ public interface ClasshdService {
      * @return
      */
     ServiceResult<ResponseMsg> updateStatus(Classhd classhd, int status);
+
+    /**
+     * 获取图表数据
+     * @param classCreator
+     * @return
+     */
+    ServiceResult<List<ChartClasshdData>> getChartData(String classCreator);
 }

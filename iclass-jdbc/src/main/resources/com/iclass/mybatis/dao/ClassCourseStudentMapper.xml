@@ -93,4 +93,11 @@
     from class_course_student
     where ClassCourseID = #{classcourseid} AND StudentCode = #{studentcode,jdbcType=VARCHAR}
   </select>
+
+  <select id="countByClassCourseId" resultType="java.lang.Integer" >
+    SELECT
+    COUNT(*)
+    FROM class_course_student
+    where ClassCourseID = #{classcourseid}
+  </select>
 </mapper>

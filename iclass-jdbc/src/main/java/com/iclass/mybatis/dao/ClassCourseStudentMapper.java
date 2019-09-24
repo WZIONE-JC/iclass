@@ -37,4 +37,11 @@ public interface ClassCourseStudentMapper {
     List<ClassCourseStudent> selectByNotEqualsStudentCode(String studentcode);
 
     ClassCourseStudent selectByClassCourseIdAndStudentCode(@Param("classcourseid") Integer classcourseid, @Param("studentcode") String studentcode);
+
+    /**
+     * 统计课堂的学生数
+     * @param classcourseid
+     * @return
+     */
+    Integer countByClassCourseId(@Param("classcourseid") Integer classcourseid);
 }
